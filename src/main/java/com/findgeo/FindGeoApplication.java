@@ -8,8 +8,6 @@ public class FindGeoApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(FindGeoApplication.class, args);
-		System.out.println("test");
-		
 	}
 
 }
