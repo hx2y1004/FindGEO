@@ -20,8 +20,13 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig{
 
 	private MemberService memberService;
+	private final CustomOAuth2UserService customOAuth2UserService;
 	
-    
+    @Autowired
+    public SecurityConfig(MemberService memberService,@Lazy CustomOAuth2UserService customOAuth2UserService){
+		this.memberService = memberService;
+		this.customOAuth2UserService = customOAuth2UserService;
+    }
 	
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -45,7 +50,22 @@ public class SecurityConfig{
 	        .logoutSuccessUrl("/")
 		;
 
+        http.oauth2Login()
+	        .userInfoEndpoint()
+	        .userService(customOAuth2UserService)
+	        .and()
+	        .loginPage("/members/login")
+	        .defaultSuccessUrl("/")
+	        .failureUrl("/members/login/error")
+	        .and()
+	        .logout()
+	        .logoutRequestMatcher(new AntPathRequestMatcher("/members/logout"))
+	        .logoutSuccessUrl("/");
 
+	
+		http.exceptionHandling()
+		    .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+		;
 		
 
 //		http.csrf().disable();

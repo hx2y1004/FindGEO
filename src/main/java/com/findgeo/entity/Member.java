@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.findgeo.constant.Role;
 import com.findgeo.dto.MemberFormDto;
+import com.findgeo.entity.Member;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -56,6 +57,24 @@ public class Member {
 		return member;
 	}
 	
+	public Member createMember2(String nickname, String password, String email, PasswordEncoder passwordEncoder) {
+		Member member = new Member();
+		member.setNickname(nickname);
+		member.setEmail(email);
+		String pw = passwordEncoder.encode(password);
+		member.setPassword(pw);
+		member.setRole(Role.USER);
+		return member;
+	}
+	
+	public Member update(String nickname, String password, String email, PasswordEncoder passwordEncoder) {
+		this.nickname = nickname;
+		String pw = passwordEncoder.encode(password);
+		this.password = pw;
+		this.email = email;
+		return this;
+		
+	}
 	
 	public String getRoleKey() {
 		return this.role.getKey();

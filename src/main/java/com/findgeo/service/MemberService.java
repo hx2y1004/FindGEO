@@ -49,7 +49,4 @@ public class MemberService implements UserDetailsService{
 				.build();
 	}
 	
-//	Member principal = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); 
-//	UserDetails userDetails = (UserDetails)principal; 
-//	String name = userDetails.getUsername();
 }
