@@ -27,7 +27,7 @@ public class Member {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long Id;
+	private Long id;
 	
 	private String nickname;
 	
@@ -48,6 +48,7 @@ public class Member {
 	}
 	
 	public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) {
+		System.out.println("멤버 추가 ");
 		Member member = new Member();
 		member.setNickname(memberFormDto.getNickname());
 		member.setEmail(memberFormDto.getEmail());

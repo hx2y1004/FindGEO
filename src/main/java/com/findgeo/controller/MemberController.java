@@ -34,22 +34,22 @@ public class MemberController {
 	@GetMapping("/new")
 	public String memberForm(Model model) {
 		model.addAttribute("memberFormDto", new MemberFormDto());
+
 		return "member/memberForm";
 	}
 	
 	@PostMapping("/new")
 	public String newMember(@Validated MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
 		if(bindingResult.hasErrors()) {
-			System.out.println("에러1");
 			return "member/memberForm";
 		}
 		try {
 			Member member = Member.createMember(memberFormDto, passwordEncoder);
 			httpSession.setAttribute("user", new SessionMember(member));
+			System.out.println("멤버 저장");
 			memberService.saveMember(member);
 		}catch(IllegalStateException e){
 			model.addAttribute("errorMessage",e.getMessage());
-			System.out.println("에러2");
 			return "member/memberForm";
 		}
 		return "redirect:/";
