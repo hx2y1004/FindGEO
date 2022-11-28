@@ -24,7 +24,7 @@ public class IndexController {
 		if(principal!= null && member == null) {
 			model.addAttribute("name",principal.getName());
 		}else if(principal != null && member != null ) {
-			model.addAttribute("name",member.getEmail());
+			model.addAttribute("name",member.getNickname());
 		}
 	
 		return "index";

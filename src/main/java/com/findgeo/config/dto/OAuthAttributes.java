@@ -81,7 +81,7 @@ public class OAuthAttributes {
         return Member.builder()
                 .nickname(nickname)
                 .email(email)
-                .password(picture)
+                .password(nameAttributeKey)
                 .role(Role.USER)
                 .build();
     }
