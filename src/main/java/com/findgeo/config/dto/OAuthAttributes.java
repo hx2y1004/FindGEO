@@ -34,7 +34,7 @@ public class OAuthAttributes {
         }
 
         if("kakao".equals(registrationId)) {
-            return ofkakao("id",attributes);
+            return ofkakao("id", attributes);
         }
         
         return  ofGoogle(userNameAttributeName, attributes);
@@ -66,6 +66,7 @@ public class OAuthAttributes {
     {
 		Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
 	    Map<String, Object> profile = (Map<String, Object>)kakaoAccount.get("profile");
+	    System.out.println(userNameAttributeName);
         System.out.println("카카오" + (String)profile.get("nickname"));
         return OAuthAttributes.builder()
                 .nickname((String)profile.get("nickname"))

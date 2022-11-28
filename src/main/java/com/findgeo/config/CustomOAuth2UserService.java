@@ -32,15 +32,21 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
-
+     
+        // 현재 진행중인 서비스를 구분하기 위해 문자열로 받음. oAuth2UserRequest.getClientRegistration().getRegistrationId()에 값이 들어있다. {registrationId='naver'} 이런식으로
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
+
+        // OAuth2 로그인 시 키 값이 된다. 구글은 키 값이 "sub"이고, 네이버는 "response"이고, 카카오는 "id"이다. 각각 다르므로 이렇게 따로 변수로 받아서 넣어줘야함.
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails()
-                .getUserInfoEndpoint().getUserNameAttributeName();
-
+        			.getUserInfoEndpoint().getUserNameAttributeName();
+        
+        // OAuth2 로그인을 통해 가져온 OAuth2User의 attribute를 담아주는 of 메소드.
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
-
+        System.out.println(attributes.getAttributes());
+        
         Member mem = saveOrUpdate(attributes);
         httpSession.setAttribute("user", new SessionMember(mem));
+        System.out.println("체크"+attributes.getNameAttributeKey());
 
         return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority(mem.getRoleKey())),
