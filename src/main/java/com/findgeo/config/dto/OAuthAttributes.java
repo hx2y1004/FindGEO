@@ -54,6 +54,8 @@ public class OAuthAttributes {
 	private static OAuthAttributes ofNaver(String userNameAttributeName, Map<String, Object> attributes)
     {
         Map<String, Object> response = (Map<String, Object>) attributes.get("response");
+        System.out.println(OAuthAttributes.builder().attributes(response).nameAttributeKey(userNameAttributeName));
+        
         return OAuthAttributes.builder()
                 .nickname((String)response.get("name"))
                 .email((String)response.get("email"))
@@ -67,14 +69,11 @@ public class OAuthAttributes {
     {
 		Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
 	    Map<String, Object> profile = (Map<String, Object>)kakaoAccount.get("profile");
-	    System.out.println(userNameAttributeName);
-        System.out.println("카카오" + (String)profile.get("nickname"));
-        System.out.println(OAuthAttributes.builder().attributes(kakaoAccount).nameAttributeKey(userNameAttributeName));
-        System.out.println("테스트");
+	    System.out.println(OAuthAttributes.builder().attributes(kakaoAccount).nameAttributeKey(userNameAttributeName));
         return OAuthAttributes.builder()
                 .nickname((String)profile.get("nickname"))
                 .email((String)kakaoAccount.get("email"))
-                .picture((String)profile.get("image"))
+                .picture((String)profile.get("profile_image_url"))
                 .attributes(kakaoAccount)
                 .nameAttributeKey(userNameAttributeName)
                 .build();
@@ -85,6 +84,7 @@ public class OAuthAttributes {
                 .nickname(nickname)
                 .email(email)
                 .password(nameAttributeKey)
+                .picture(picture)
                 .role(Role.USER)
                 .build();
     }

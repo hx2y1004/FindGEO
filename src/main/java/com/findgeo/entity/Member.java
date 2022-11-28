@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.findgeo.constant.Role;
@@ -19,31 +21,33 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@DynamicInsert
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 public class Member {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	
+
 	private String nickname;
 	
+	@Id
 	@Column(unique = true)
 	private String email;
 	
 	private String password;
 	
+	@Column(columnDefinition = "varchar2(255) default '기본프로필.jpg'")
+	private String picture;
+	
 	@Enumerated(EnumType.STRING)
 	private Role role;
 	
 	@Builder
-	public Member(String nickname, String email,String password, Role role){
+	public Member(String nickname, String email,String password,String picture, Role role){
 		this.nickname = nickname;
 		this.email = email;
 		this.password = password;
+		this.picture = picture;
 		this.role = role;
 	}
 	
@@ -54,25 +58,28 @@ public class Member {
 		member.setEmail(memberFormDto.getEmail());
 		String pw = passwordEncoder.encode(memberFormDto.getPassword());
 		member.setPassword(pw);
+		member.setPicture(memberFormDto.getPicture());
 		member.setRole(Role.USER);
 		return member;
 	}
 	
-	public Member createMember2(String nickname, String password, String email, PasswordEncoder passwordEncoder) {
+	public Member createMember2(String nickname, String password, String email, String picture, PasswordEncoder passwordEncoder) {
 		Member member = new Member();
 		member.setNickname(nickname);
 		member.setEmail(email);
 		String pw = passwordEncoder.encode(password);
 		member.setPassword(pw);
+		member.setPicture(picture);
 		member.setRole(Role.USER);
 		return member;
 	}
 	
-	public Member update(String nickname, String password, String email, PasswordEncoder passwordEncoder) {
+	public Member update(String nickname, String password, String email,String picture, PasswordEncoder passwordEncoder) {
 		this.nickname = nickname;
 		String pw = passwordEncoder.encode(password);
 		this.password = pw;
 		this.email = email;
+		this.picture = picture;
 		return this;
 		
 	}

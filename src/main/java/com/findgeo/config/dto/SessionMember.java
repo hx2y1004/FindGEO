@@ -12,11 +12,13 @@ public class SessionMember implements Serializable{
 	private String nickname;
 	private String email;
 	private String password;
+	private String picture;
 	
 		public SessionMember(Member member) {
 			this.nickname = member.getNickname();
 			this.email = member.getEmail();
 			this.password = member.getPassword();
+			this.picture = member.getPicture();
 			
 	}
 }

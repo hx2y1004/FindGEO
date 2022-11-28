@@ -43,6 +43,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         // OAuth2 로그인을 통해 가져온 OAuth2User의 attribute를 담아주는 of 메소드.
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
         System.out.println(attributes.getAttributes());
+        System.out.println(attributes.getNameAttributeKey());
         
         Member mem = saveOrUpdate(attributes);
         httpSession.setAttribute("user", new SessionMember(mem));
@@ -59,7 +60,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     	if(member != null) {
     		Member mem = memberRepository.findByEmails(attributes.getEmail())
     				.map(entity -> entity.update(attributes.getNickname(), attributes.getNameAttributeKey(),
-    						attributes.getEmail(), passwordEncoder))
+    						attributes.getEmail(),attributes.getPicture(), passwordEncoder))
     				.orElse(attributes.toEntity());
     		
     		return memberRepository.save(mem);
@@ -67,7 +68,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     		Member mem = memberRepository.findByEmails(attributes.getEmail())
                 	.map(entity -> entity.createMember2(attributes.getNickname(), attributes.getNameAttributeKey(),
-                			attributes.getEmail(), passwordEncoder))
+                			attributes.getEmail(),attributes.getPicture(), passwordEncoder))
                 	.orElse(attributes.toEntity());
 
     		return memberRepository.save(mem);
