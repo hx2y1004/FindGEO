@@ -23,7 +23,7 @@ public class MemberService implements UserDetailsService{
 	
 	public Member saveMember(Member member) {
 		validateDuplicateMember(member);
-		System.out.println("멤버추가 2");
+		System.out.println("멤버추가 22");
 		return memberRepository.save(member);
 	}
 	
