@@ -8,6 +8,7 @@ import com.findgeo.constant.Role;
 
 import lombok.Builder;
 import lombok.Getter;
+import oracle.security.o3logon.a;
 
 @Getter
 public class OAuthAttributes {
@@ -68,6 +69,8 @@ public class OAuthAttributes {
 	    Map<String, Object> profile = (Map<String, Object>)kakaoAccount.get("profile");
 	    System.out.println(userNameAttributeName);
         System.out.println("카카오" + (String)profile.get("nickname"));
+        System.out.println(OAuthAttributes.builder().attributes(kakaoAccount));
+        System.out.println("체크111"+attributes.get("kakao_account"));
         return OAuthAttributes.builder()
                 .nickname((String)profile.get("nickname"))
                 .email((String)kakaoAccount.get("email"))
@@ -81,7 +84,7 @@ public class OAuthAttributes {
         return Member.builder()
                 .nickname(nickname)
                 .email(email)
-                .password(picture)
+                .password(nameAttributeKey)
                 .role(Role.USER)
                 .build();
     }
