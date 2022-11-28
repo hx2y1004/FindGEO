@@ -69,8 +69,8 @@ public class OAuthAttributes {
 	    Map<String, Object> profile = (Map<String, Object>)kakaoAccount.get("profile");
 	    System.out.println(userNameAttributeName);
         System.out.println("카카오" + (String)profile.get("nickname"));
-        System.out.println(OAuthAttributes.builder().attributes(kakaoAccount));
-        System.out.println("체크111"+attributes.get("kakao_account"));
+        System.out.println(OAuthAttributes.builder().attributes(kakaoAccount).nameAttributeKey(userNameAttributeName));
+        System.out.println("테스트");
         return OAuthAttributes.builder()
                 .nickname((String)profile.get("nickname"))
                 .email((String)kakaoAccount.get("email"))
@@ -80,7 +80,7 @@ public class OAuthAttributes {
                 .build();
      }
 
-    public Member toEntity() {
+    public Member toEntity() { 
         return Member.builder()
                 .nickname(nickname)
                 .email(email)
