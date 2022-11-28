@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout1}">
+      >
 
 <!-- 사용자 CSS 추가 -->
 <th:block layout:fragment="css">
@@ -11,7 +11,6 @@
         }
     </style>
 </th:block>
-
 <div layout:fragment="content">
 
   <form role="form" method="post" action="/members/login">
@@ -26,12 +25,26 @@
     </div>
     <p th:if="${loginErrorMsg}" class="error" th:text="${loginErrorMsg}"></p>
     <button type="submit" class="btn btn-primary">로그인</button>
-    <button type="button" class="btn btn-primary" onClick="location.href='/members/new'">회원가입</button>
+    
+    <!--구글-->
+    <button type="button" class="btn btn-primary" onClick="location.href='/oauth2/authorization/google'"><img th:src="@{/static/google_button.png}"></button>
+    <!--
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="881820240457-9lll9vtln96in2p1jru9qe5p99tc6np8.apps.googleusercontent.com">
+    <div class="g-signin2" data-onsuccess="onSignIn" onClick="location.href='/oauth2/authorization/google'"></div>
+     
+    "https://lh3.googleusercontent.com/a-/e2718281828459045235360uler"
+    -->
+    
+    <!--네이버-->
+    <div id="naver_id_login" style=""><a href="/oauth2/authorization/naver">
+    <img width="223" src="https://developers.naver.com/doc/review_201802/CK_bEFnWMeEBjXpQ5o8N_20180202_7aot50.png"/></a></div>
+    
     <button type="button" class="btn btn-primary" onClick="location.href='/oauth2/authorization/google'">구글 로그인</button>
-    <button type="button" class="btn btn-primary" onClick="location.href='/oauth2/authorization/naver'">네이버 로그인</button>
     <button type="button" class="btn btn-primary" onClick="location.href='/oauth2/authorization/kakao'">카카오 로그인</button>
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-	    
+    <button type="button" class="btn btn-primary" onClick="location.href='/members/new'">회원가입</button>
+	아이디/비밀번호 찾기    
   </form>
 </div>
 </html>
