@@ -12,7 +12,7 @@
             <label th:for="nickname">닉네임</label>
             <input type="text" th:field="*{nickname}" class="form-control" placeholder="닉네임을 입력해주세요">
             <p th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}" class="fieldError">Incorrect data</p>
-            닉네임 중복 경고문 필요
+         
         </div>
         <div class="form-group">
             <label th:for="password">비밀번호</label>
@@ -23,6 +23,10 @@
             <label th:for="password">비밀번호 확인</label>
             <input type="password" placeholder="비밀번호 입력" id="password_2">
             <div style="display: inline-block"><font id = "checkPw" size = "2"></font></div>
+<<<<<<< HEAD
+=======
+            
+>>>>>>> 4a85c2e98add244c1eb8c966fb3c6003a104fa94
         </div>
         <div class="form-group">
             <label th:for="email">이메일주소</label>
