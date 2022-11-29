@@ -36,6 +36,8 @@ public class Member {
 	
 	private String password;
 	
+	private String phone;
+	
 	@Column(columnDefinition = "varchar2(255) default '기본프로필.jpg'")
 	private String picture;
 	
@@ -43,10 +45,11 @@ public class Member {
 	private Role role;
 	
 	@Builder
-	public Member(String nickname, String email,String password,String picture, Role role){
+	public Member(String nickname, String email,String password, String phone, String picture, Role role){
 		this.nickname = nickname;
 		this.email = email;
 		this.password = password;
+		this.phone = phone;
 		this.picture = picture;
 		this.role = role;
 	}
@@ -56,6 +59,7 @@ public class Member {
 		Member member = new Member();
 		member.setNickname(memberFormDto.getNickname());
 		member.setEmail(memberFormDto.getEmail());
+		member.setPhone(memberFormDto.getPhone());
 		String pw = passwordEncoder.encode(memberFormDto.getPassword());
 		member.setPassword(pw);
 		member.setPicture(memberFormDto.getPicture());
@@ -63,21 +67,23 @@ public class Member {
 		return member;
 	}
 	
-	public Member createMember2(String nickname, String password, String email, String picture, PasswordEncoder passwordEncoder) {
+	public Member createMember2(String nickname, String password, String email, String phone, String picture, PasswordEncoder passwordEncoder) {
 		Member member = new Member();
 		member.setNickname(nickname);
 		member.setEmail(email);
 		String pw = passwordEncoder.encode(password);
 		member.setPassword(pw);
+		member.setPhone(phone);
 		member.setPicture(picture);
 		member.setRole(Role.USER);
 		return member;
 	}
 	
-	public Member update(String nickname, String password, String email,String picture, PasswordEncoder passwordEncoder) {
+	public Member update(String nickname, String password, String email, String phone, String picture, PasswordEncoder passwordEncoder) {
 		this.nickname = nickname;
 		String pw = passwordEncoder.encode(password);
 		this.password = pw;
+		this.phone = phone;
 		this.email = email;
 		this.picture = picture;
 		return this;

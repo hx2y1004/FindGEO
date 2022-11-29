@@ -16,13 +16,15 @@ public class OAuthAttributes {
     private String nameAttributeKey;
     private String nickname;
     private String email;
+    private String phone;
     private String picture;
 
     @Builder
-    public OAuthAttributes(Map<String, Object>  attributes, String nameAttributeKey, String nickname, String email, String picture) {
+    public OAuthAttributes(Map<String, Object>  attributes, String nameAttributeKey, String nickname, String phone, String email, String picture) {
         this.attributes = attributes;
         this.nameAttributeKey = nameAttributeKey;
         this.nickname = nickname;
+        this.phone = phone;
         this.email = email;
         this.picture = picture;
     }

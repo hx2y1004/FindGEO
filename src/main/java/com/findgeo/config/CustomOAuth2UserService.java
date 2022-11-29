@@ -60,7 +60,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     	if(member != null) {
     		Member mem = memberRepository.findByEmails(attributes.getEmail())
     				.map(entity -> entity.update(attributes.getNickname(), attributes.getNameAttributeKey(),
-    						attributes.getEmail(),attributes.getPicture(), passwordEncoder))
+    						attributes.getEmail(),attributes.getPhone(), attributes.getPicture(), passwordEncoder))
     				.orElse(attributes.toEntity());
     		
     		return memberRepository.save(mem);
@@ -68,7 +68,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     		Member mem = memberRepository.findByEmails(attributes.getEmail())
                 	.map(entity -> entity.createMember2(attributes.getNickname(), attributes.getNameAttributeKey(),
-                			attributes.getEmail(),attributes.getPicture(), passwordEncoder))
+                			attributes.getEmail(), attributes.getPhone(), attributes.getPicture(), passwordEncoder))
                 	.orElse(attributes.toEntity());
 
     		return memberRepository.save(mem);

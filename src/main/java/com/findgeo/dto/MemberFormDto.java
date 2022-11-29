@@ -24,6 +24,10 @@ public class MemberFormDto {
 	@Email(message = "이메일 형식으로 입력해주세요.")
 	private String email;
 	
+	@NotEmpty(message = "휴대폰 번호를 입력해주세요.")
+	@Length(min = 10, max = 11, message="휴대폰 번호를 확인해주세요.")
+	private String phone;
+	
 	private String picture;
 	
 }
