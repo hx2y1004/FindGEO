@@ -75,6 +75,10 @@
 								        map
 								      });
 								    });		
+								    
+								    //$('#delMark').click(function(){
+									//	for(var i = 0; )
+									//})
 								 });
 							  }
 							}).catch(err => console.error(err));

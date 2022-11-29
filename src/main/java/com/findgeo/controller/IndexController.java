@@ -13,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.findgeo.config.dto.SessionMember;
+import com.findgeo.entity.Member;
+import com.findgeo.repository.MemberRepository;
 import com.nimbusds.openid.connect.sdk.claims.UserInfo;
 
 import lombok.RequiredArgsConstructor;
@@ -22,14 +24,16 @@ import lombok.RequiredArgsConstructor;
 public class IndexController {
 	
 	private final HttpSession httpSession;
+	private final MemberRepository memberRepository;
 
 	@GetMapping("/")
 	public String index(Model model,Principal principal) { 
 		SessionMember member =(SessionMember)httpSession.getAttribute("user");
-//	    Object principal2 = SecurityContextHolder.getContext().getAuthentication();
-//	    UserInfo userInfo = (UserInfo)principal2;
+		
 		if(principal!= null && member == null) {
-			model.addAttribute("name",principal.getName());
+			Member userName = memberRepository.findByEmail(principal.getName());
+			String name = userName.getNickname();
+			model.addAttribute("name",name);
 		}else if(principal != null && member != null ) {
 			model.addAttribute("name",member.getNickname());
 		}

@@ -23,15 +23,13 @@
             <label th:for="password">비밀번호 확인</label>
             <input type="password" placeholder="비밀번호를 입력해주세요" id="password_2">
             <div style="display: inline-block"><font id = "checkPw" size = "2"></font></div>
-<<<<<<< Updated upstream
+
         </div>
         <div class="form-group">
             <label th:for="phone">휴대폰번호</label>
             <input type="text" th:field="*{phone}" class="form-control" placeholder="휴대폰 번호를 입력해주세요(-제외)">
             <p th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="fieldError">Incorrect data</p>
-=======
 
->>>>>>> Stashed changes
         </div>
         <div class="form-group">
             <label th:for="email">이메일주소</label>
