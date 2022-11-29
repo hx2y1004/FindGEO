@@ -13,9 +13,15 @@
 	<th:block th:if="${name != null}">
 		<h4><span th:text="${name}"></span>님 환영합니다.</h4>
 	</th:block>
-게시판
+	
+    <form action="/board/boardlist" method="get">
+    <input type="submit" value="게시판">
+    </form>
+
 계획서
 마이페이지
+
+
 <a sec:authorize="isAuthenticated()" th:href="@{/members/logout}"> 로그아웃</a>
     
     </sec:authorize>

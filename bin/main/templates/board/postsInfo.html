@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+<meta charset="UTF-8">
+<title>게시물 상세보기</title>
+</head>
+<body>
+	<form>
+		<div>
+			<label for="num">글번호</label>
+			<input type="text" id="num" th:value="${posts.boardid}" readonly>
+		</div>
+		<div>
+			<label>작성일 </label>
+			<span th:text="${#temporals.format(posts.regdate,'yyyy-MM-dd')}"></span>
+		</div>
+		<div>
+			<label for="title">제목</label>
+			<input type="text" id="title" th:value="${posts.boardtitle}" readonly>
+		</div>
+		<div>
+			<label for="author">작성자</label>
+			<input type="text" id="author" th:value="${posts.nickname}" readonly>
+		</div>
+		<div>
+			<label for="content">내용</label>
+			<textarea th:text="${posts.boardcontent}" readonly> </textarea>
+		</div>
+	
+	</form>
+	<span sec:authorize="isAuthenticated()">
+		<a th:href="@{/posts/update/{boardid}(id = ${posts.boardid})}" >수정/삭제</a>
+	</span>
+	<a href="/board/boardlist">목록</a>
+
+</body>
+</html>
