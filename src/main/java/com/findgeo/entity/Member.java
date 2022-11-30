@@ -36,6 +36,7 @@ public class Member {
 	
 	private String password;
 	
+	@Column(columnDefinition = "varchar2(255) default '정보없음'")
 	private String phone;
 	
 	@Column(columnDefinition = "varchar2(255) default '기본프로필.jpg'")

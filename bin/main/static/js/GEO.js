@@ -27,6 +27,9 @@
 						  }
 						  console.log(selLoc);
 						  console.log(results);
+						  
+						  
+						  
 						  var xhr = new XMLHttpRequest(); 
 						  var url = 'http://openapi.seoul.go.kr:8088/6b797a4d7a677573373961756c5169/xml/citydata/1/5/'+selLoc; /*URL*/ 
 						  xhr.open('GET', url); 
@@ -39,7 +42,14 @@
 						      }
 						  }};xhr.send('');
 						  
-						  var category = '편의점';
+						  var category = '편의점;';
+						  // 목욕탕,숙박,쇼핑,관공서,주요시설물,은행,ATM,편의점,미용실,이발소,대형마트,화장실,공원,커피,음식,레저,호텔,마트,
+						  // 식음료, TV맛집, 카페, 한식, 중식, 일식, 패밀리레스토랑, 전문음식점, 
+						  // 피자,치킨, 디저트, 제과점, 베스킨라빈스, 하겐다즈, 나뚜루, 콜드스톤, 패스트푸드,
+						  // 교통, 버스, 버스정류장, 지하철, 주유소, 충전소, 주차장, 정비소, EV충전소, EV/가스충전소
+						  // 병원, 약국, 내과, 소아과, 외과, 치과, 안과, 의원, 보건소, 한의원
+						  // 놀거리, 영화관, 노래방, PC방, 공연장, 문화시설, 스크린골프장
+
 						  fetch('https://apis.openapi.sk.com/tmap/pois/search/around?version=1&centerLon='+latlng.lng
 						  		+'&centerLat='+latlng.lat
 						  		+'&categories='+category
@@ -48,8 +58,9 @@
 						    .then(locCate => {
 							  var poiInfo = locCate.searchPoiInfo.pois.poi;	
 								
+							  //console.log(locCate);
 							  for(var i=0; i < poiInfo.length; i++){
-								const searchMark = [
+								let searchMark = [
 							    { label: "O", name: poiInfo[i].name ,
 							     lat: Number(poiInfo[i].frontLat),
 							     lng: Number(poiInfo[i].frontLon) },
@@ -60,12 +71,18 @@
 								  const infowindow = new google.maps.InfoWindow(); //클릭시 정보 보여주기
 				
 								  searchMark.forEach(({ label, name, lat, lng }) => {
-								    const marker = new google.maps.Marker({
+								    let marker = new google.maps.Marker({
 								      position: { lat, lng },
 								      label,
-								      map: map
+								      map : map
 								    });
 								   
+								   
+								  // let Infomarker = new google.maps.MArker({
+									//   position : {  },
+									 //  label : "A",
+									 //  map: map 
+								   //})
 				
 								    marker.addListener("click", () => { //지도 정보 
 								      map.panTo(marker.position); //마커 위치로 중심 이동
@@ -75,11 +92,16 @@
 								        map
 								      });
 								    });		
+
 								    
-								    //$('#delMark').click(function(){
-									//	for(var i = 0; )
-									//})
+								    $('#delMark').click(function(){
+										console.log("삭제");
+									    searchMark.forEach(() =>{
+											marker.setMap(null);
+										})
+								    
 								 });
+							   })
 							  }
 							}).catch(err => console.error(err));
 
