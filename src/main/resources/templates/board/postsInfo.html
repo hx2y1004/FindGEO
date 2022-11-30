@@ -16,6 +16,8 @@
 		<div>
 			<label>작성일 </label>
 			<span th:text="${#temporals.format(posts.regdate,'yyyy-MM-dd')}"></span>
+			<label>조회수</label>
+			<span th:text="${posts.views}"></span>
 		</div>
 		<div>
 			<label for="title">제목</label>
@@ -32,7 +34,7 @@
 	
 	</form>
 	<span sec:authorize="isAuthenticated()">
-		<a th:href="@{/posts/update/{boardid}(id = ${posts.boardid})}" >수정/삭제</a>
+		<a th:href="@{/post/update/{boardid}(boardid = ${posts.boardid})}" >수정/삭제</a>
 	</span>
 	<a href="/board/boardlist">목록</a>
 

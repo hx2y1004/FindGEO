@@ -19,9 +19,9 @@ public class BoardController {
 	@GetMapping("/board/boardlist")
 	public String board(Model model) {
 		model.addAttribute("posts",postService.findAllDesc());
-		return "board/boardlist";
+		return "/board/boardlist";
 	}
-	
+	//저장
 	@GetMapping("/board/postssave")
 	public String postsSave(Model model, Principal principal) {
 		model.addAttribute("nickname",principal.getName());
@@ -32,8 +32,17 @@ public class BoardController {
 	@GetMapping("/post/info/{boardid}")
 	public String postsInfo(@PathVariable Long boardid, Model model) {
 		PostsResponseDto dto = postService.findById(boardid);
+		postService.updateView(boardid); // views ++
 		model.addAttribute("posts",dto);
-		return "board/postsInfo";
+		return "/board/postsInfo";
 	}
 	
+	//수정
+	@GetMapping("/post/update/{boardid}")	
+	public String postsUpdate(@PathVariable Long boardid, Model model) {
+		PostsResponseDto dto = postService.findById(boardid);
+		model.addAttribute("posts", dto);
+		return "/board/postsUpdate";
+	}
+
 }

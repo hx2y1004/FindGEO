@@ -1,6 +1,5 @@
 package com.findgeo.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,6 +13,7 @@ import com.findgeo.dto.PostsResponseDto;
 import com.findgeo.dto.PostsSaveRequestDto;
 import com.findgeo.entity.Posts;
 import com.findgeo.repository.PostsRepository;
+import com.findgeo.dto.PostsUpdateRequestDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -37,9 +37,29 @@ public class PostService {
 	
 	public PostsResponseDto findById(Long boardid) {
 		Posts posts = postsRepository.findById(boardid)
-				.orElseThrow(()->new IllegalArgumentException("해당 게시글이 업습니다. id="+ boardid));
+				.orElseThrow(()->new IllegalArgumentException("해당 게시글이 업습니다. boardid="+ boardid));
 		return new PostsResponseDto(posts);
 	}
-
+	
+	@Transactional
+	public Long update(Long boardid, PostsUpdateRequestDto requestDto) {
+		Posts posts = postsRepository.findById(boardid)
+					.orElseThrow(()->new IllegalArgumentException("해당 게시글이 없습니다. boardid=" + boardid));
+		posts.update(requestDto.getBoardtitle(), requestDto.getBoardcontent());
+		return boardid;
+	}
+	
+	@Transactional
+	public void delete(Long boardid) {
+		Posts posts = postsRepository.findById(boardid)
+				.orElseThrow(()->new IllegalArgumentException("해당 게시글이 없습니다. boardid=" + boardid));
+		postsRepository.delete(posts);
+	}
+	
+	/* Views Counting */
+	@Transactional
+	public int updateView(Long boardid) {
+		return this.postsRepository.updateView(boardid);
+	}
 
 }

@@ -1,15 +1,15 @@
 package com.findgeo.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.findgeo.dto.PostsSaveRequestDto;
 import com.findgeo.service.PostService;
-import com.findgeo.dto.PostsResponseDto;
-
+import com.findgeo.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -20,6 +20,17 @@ public class PostController {
 	@PostMapping("/post/boardsave")
 	public Long save(@RequestBody PostsSaveRequestDto requestDto) {
 		return postService.save(requestDto);
+	}
+	
+	@PutMapping("/post/boardupdate/{boardid}")
+	public Long update(@PathVariable Long boardid, @RequestBody PostsUpdateRequestDto requestDto) {
+		return postService.update(boardid, requestDto);
+	}
+	
+	@DeleteMapping("/post/boarddelete/{boardid}")
+	public Long delete(@PathVariable Long boardid) {
+		postService.delete(boardid);
+		return boardid;
 	}
 	
 	

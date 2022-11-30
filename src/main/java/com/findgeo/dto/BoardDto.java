@@ -3,6 +3,8 @@ package com.findgeo.dto;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import javax.transaction.Transactional;
+
 import groovy.transform.ToString;
 import groovy.transform.builder.Builder;
 import lombok.AllArgsConstructor;
@@ -19,5 +21,7 @@ public class BoardDto {
 	private String boardcontent;
 	private String nickname;
 	private LocalDateTime regdate;
+	private int view;
+
 
 }

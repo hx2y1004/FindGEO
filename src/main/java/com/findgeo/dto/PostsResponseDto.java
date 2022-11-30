@@ -13,6 +13,7 @@ public class PostsResponseDto {
 	private String boardcontent;
 	private String nickname;
 	private LocalDateTime regdate;
+	private int views;
 	
 	public PostsResponseDto(Posts entity) {
 		this.boardid = entity.getBoardid();
@@ -20,5 +21,6 @@ public class PostsResponseDto {
 		this.boardcontent = entity.getBoardcontent();
 		this.nickname = entity.getNickname();
 		this.regdate = entity.getRegdate();
+		this.views = entity.getViews();
 	}
 }

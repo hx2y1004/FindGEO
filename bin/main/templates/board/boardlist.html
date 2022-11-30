@@ -15,6 +15,7 @@
         <th>작성자명</th>      
         <th>제목</th>
         <th>작성일자</th>
+        <th>조회수</th>
       </tr>
       </thead>
       
@@ -28,9 +29,11 @@
 			</a> 
 		</td>
         <td th:text="${#temporals.format(p.regdate,'yyyy-MM-dd')}"></td>
+    	<td th:text="${p.views}"></td> 
       </tr>
-      </tbody></br></br>
+      </tbody>
   </table>
+  
   <button type="button" onclick="location.href='/'">메인</button>
   <span class="posting" sec:authorize="isAuthenticated()">
   <button type="button" class="post" onClick="location.href='/board/postssave'">글등록</button>
