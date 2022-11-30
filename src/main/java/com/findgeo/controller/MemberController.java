@@ -94,4 +94,19 @@ public class MemberController {
        String checkResult = memberService.emailCheck(email);
        return checkResult;
     }
+    
+    private final MemberRepository memberRepository;
+    @GetMapping("/mypage")
+    public String myPage(Model model, Principal principal) {
+    	SessionMember member =(SessionMember)httpSession.getAttribute("user");
+    	if(principal!= null && member == null) {
+			Member user = memberRepository.findByEmail(principal.getName());
+			model.addAttribute("member",user);
+		}else if(principal != null && member != null ) {
+			model.addAttribute("member",member);
+			model.addAttribute("loginInfo","social");
+		}
+    	
+    	return "mypage/mypage";
+    }
 }

@@ -52,7 +52,6 @@ public class MemberService implements UserDetailsService{
 				.build();
 	}
 	
-	
 	public String emailCheck(String email) {
 	      System.out.println(email+ "여기는 ajax실험중 멤버서비스파일");
 	      Optional<Member> optionalMemberEntity =memberRepository.findByEmails(email);

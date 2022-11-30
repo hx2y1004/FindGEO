@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>My Page</title> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script th:inline="javascript" th:src="@{/js/GEO.js}"></script>
+<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABlqSxHcQF3ZT1Uyc2cEcidYHAOLhHfNY&callback=initMap"></script>	
+</head>
+<body>
+	<table border="1px solid lightgray" border-radius="10px" width="70%">
+	<tr>
+		<td>
+			
+				<img class="profileImage" th:src="${member.picture}" alt="프로필 사진" width="100px" height="100px" onclick="location.href=''">	
+		</td>
+		<td>
+			<h4><span th:text="${member.nickname}"></span></h4>
+			<button type="button" onclick="location.href=''">정보수정</button>
+			<button type="button" onclick="delAccount();">탈퇴하기</button>    
+		</td>
+		<td rowspan="2">
+			내 사업 계획서
+			개수
+			<button type="button" onclick="location.href=''">전체보기</button>		
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			스크랩
+			개수
+			<button type="button" onclick="location.href=''">전체보기</button>
+		</td>
+	</tr>
+	</table>
+</body>
+</html>

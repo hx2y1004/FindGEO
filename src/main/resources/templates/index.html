@@ -14,23 +14,17 @@
 		<h4><span th:text="${name}"></span>님 환영합니다.</h4>
 	</th:block>
 	
-    <form action="/board/boardlist" method="get">
-    <input type="submit" value="게시판">
-    </form>
-
-계획서
-마이페이지
-
-
-<a sec:authorize="isAuthenticated()" th:href="@{/members/logout}"> 로그아웃</a>
-    
+	<a sec:authorize="isAuthenticated()" th:href="@{board/boardlist}">게시판</a>
+    </sec:authorize>
+	<a sec:authorize="isAuthenticated()">계획서</a>
+    </sec:authorize>
+    <a sec:authorize="isAuthenticated()" th:href="@{members/mypage}">마이페이지</a>
+    </sec:authorize>
+	<a sec:authorize="isAuthenticated()" th:href="@{/members/logout}"> 로그아웃</a>
     </sec:authorize>
     <a sec:authorize="isAnonymous()" th:href="@{members/login}">로그인</a>
-    
     </sec:authorize>
-    
   	<div id="map" style="height: 900px;"></div>
-  	
   	<input type="button" id="delMark"  value="마커 삭제"/>
 </body>
 </html>
