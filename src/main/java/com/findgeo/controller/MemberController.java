@@ -1,7 +1,10 @@
 package com.findgeo.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.security.Principal;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,12 +19,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.findgeo.config.dto.SessionMember;
 import com.findgeo.dto.MemberFormDto;
 import com.findgeo.entity.Member;
 import com.findgeo.repository.MemberRepository;
 import com.findgeo.service.MemberService;
+import com.findgeo.util.Script;
 
 import lombok.RequiredArgsConstructor;
 
@@ -40,10 +45,23 @@ public class MemberController {
 		return "member/memberForm";
 	}
 	
+	@GetMapping("/memberLoginForm")
+	public String newMember2(Model model) {
+		model.addAttribute("memberFormDto", new MemberFormDto());
+
+		return "member/memberLoginForm";
+	}
+	
+	@GetMapping("/memberForm")
+	public String failMember2() {
+
+		return "member/memberForm";
+	}
+	
 	@PostMapping("/new")
-	public String newMember(@Validated MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
+	public @ResponseBody String newMember(@Validated MemberFormDto memberFormDto, BindingResult bindingResult, Model model){
 		if(bindingResult.hasErrors()) {
-			return "member/memberForm";
+			return Script.href("member/memberForm", "회원가입에 실패하였습니다.");
 		}
 		try {
 			Member member = Member.createMember(memberFormDto, passwordEncoder);
@@ -52,9 +70,9 @@ public class MemberController {
 			memberService.saveMember(member);
 		}catch(IllegalStateException e){
 			model.addAttribute("errorMessage",e.getMessage());
-			return "member/memberForm";
+			return Script.href("member/memberForm", "회원가입에 실패하였습니다.");
 		}
-		return "redirect:/";
+		return Script.href("memberLoginForm","회원가입에 성공하였습니다.");
 	}
 	
 	@GetMapping("/login")
@@ -64,9 +82,16 @@ public class MemberController {
 	}
 	
 	@GetMapping("/login/error")
-	public String loginError(Model model) {
+	public String loginError(Model model) { 
 		model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해주세요");
 		return "member/memberLoginForm";
 	}
 	
+	//이메일 중복체크
+    @GetMapping("/emailCheck")
+    public @ResponseBody String emailCheck(@RequestParam("memberEmail") String email) {
+       System.out.println(email+"아이디 중복체크 ajax 실험중 여기는 멤버 컨트롤러");
+       String checkResult = memberService.emailCheck(email);
+       return checkResult;
+    }
 }

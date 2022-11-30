@@ -1,5 +1,7 @@
 package com.findgeo.service;
 
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -50,4 +52,16 @@ public class MemberService implements UserDetailsService{
 				.build();
 	}
 	
+	
+	public String emailCheck(String email) {
+	      System.out.println(email+ "여기는 ajax실험중 멤버서비스파일");
+	      Optional<Member> optionalMemberEntity =memberRepository.findByEmails(email);
+	      System.out.println(optionalMemberEntity+"ajax 실험중 여기는 멤버서비스");
+	      if(optionalMemberEntity.isEmpty()) {
+	         return "ok";
+	      }else {
+	         return "no";
+	      }
+	      
+	   }
 }
