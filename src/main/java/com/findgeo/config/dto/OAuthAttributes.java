@@ -8,7 +8,7 @@ import com.findgeo.constant.Role;
 
 import lombok.Builder;
 import lombok.Getter;
-import oracle.security.o3logon.a;
+//import oracle.security.o3logon.a;
 
 @Getter
 public class OAuthAttributes {

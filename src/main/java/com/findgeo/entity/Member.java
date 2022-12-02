@@ -36,10 +36,10 @@ public class Member {
 	
 	private String password;
 	
-	@Column(columnDefinition = "varchar2(255) default '정보없음'")
+	@Column(columnDefinition = "varchar(255) default '정보없음'")
 	private String phone;
 	
-	@Column(columnDefinition = "varchar2(255) default '/images/기본프로필.jpg'")
+	@Column(columnDefinition = "varchar(255) default '/images/기본프로필.jpg'")
 	private String picture;
 	
 	@Enumerated(EnumType.STRING)

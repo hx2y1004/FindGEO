@@ -1,4 +1,6 @@
- window.initMap = function () {
+
+window.initMap = function () {
+	 
 			  const map = new google.maps.Map(document.getElementById("map"), {
 			    center: { lat: 37.5400456, lng: 126.9921017 },
 			    zoom: 12,
@@ -9,6 +11,30 @@
 				  headers: {accept: 'application/json', appKey: 'l7xx2d78afef8d7647288413de25f6dc43e5'}
 			  };
 			 var selLoc = "";
+			  const RTloc = [
+			    { label: "A", name: "광화문/덕수궁", lat: 37.5701758269873949, lng: 126.9770290287743677 },
+			    
+			    
+			  ];
+			  
+			  RTloc.forEach(({ label, name, lat, lng }) => {
+				  let RTmarker = new google.maps.Marker({
+									  position: { lat, lng },
+								      label,
+								      map: map
+					});
+				  let infoRT = new google.maps.InfoWindow(); 			   
+			 	  RTmarker.addListener("click", () => { //지도 정보 
+								      map.panTo(RTmarker.position); //마커 위치로 중심 이동
+								      infoRT.setContent(name);
+								      infoRT.open({
+								        anchor: RTmarker,
+								        map
+								      });
+								    });	
+			  });
+			    
+		     
 			  map.addListener('dblclick',function(e){
 				 console.log(e); 
 				  var geocoder = new google.maps.Geocoder;
@@ -27,8 +53,6 @@
 						  }
 						  console.log(selLoc);
 						  console.log(results);
-						  
-						  
 						  
 						  var xhr = new XMLHttpRequest(); 
 						  var url = 'http://openapi.seoul.go.kr:8088/6b797a4d7a677573373961756c5169/xml/citydata/1/5/'+selLoc; /*URL*/ 
@@ -71,18 +95,12 @@
 								  const infowindow = new google.maps.InfoWindow(); //클릭시 정보 보여주기
 				
 								  searchMark.forEach(({ label, name, lat, lng }) => {
-								    let marker = new google.maps.Marker({
+								      let marker = new google.maps.Marker({
 								      position: { lat, lng },
 								      label,
 								      map : map
 								    });
 								   
-								   
-								  // let Infomarker = new google.maps.MArker({
-									//   position : {  },
-									 //  label : "A",
-									 //  map: map 
-								   //})
 				
 								    marker.addListener("click", () => { //지도 정보 
 								      map.panTo(marker.position); //마커 위치로 중심 이동
@@ -92,7 +110,7 @@
 								        map
 								      });
 								    });		
-
+								    
 								    
 								    $('#delMark').click(function(){
 										console.log("삭제");
@@ -104,11 +122,12 @@
 							   })
 							  }
 							}).catch(err => console.error(err));
-
+						
 					  }else{
 						  console.log('주소 없음')
 					  }
 				  })
-				  
+				  //const markerClusterer = new markerClusterer.MarkerClusterer;
+				  //markerClusterer({ map, marker });
 			  });
 };
