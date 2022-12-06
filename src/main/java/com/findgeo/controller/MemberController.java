@@ -65,7 +65,6 @@ public class MemberController {
 		}
 		try {
 			Member member = Member.createMember(memberFormDto, passwordEncoder);
-			httpSession.setAttribute("user", new SessionMember(member));
 			System.out.println("멤버 저장");
 			memberService.saveMember(member);
 		}catch(IllegalStateException e){
@@ -101,6 +100,7 @@ public class MemberController {
     	SessionMember member =(SessionMember)httpSession.getAttribute("user");
     	if(principal!= null && member == null) {
 			Member user = memberRepository.findByEmail(principal.getName());
+			System.out.println("사진체크  "+user.getPicture());
 			model.addAttribute("member",user);
 		}else if(principal != null && member != null ) {
 			model.addAttribute("member",member);
