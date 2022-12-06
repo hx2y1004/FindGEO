@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.findgeo.entity.Member;
@@ -53,17 +54,22 @@ public class MemberService implements UserDetailsService{
 	}
 	
 	public String emailCheck(String email) {
-	      System.out.println(email+ "여기는 ajax실험중 멤버서비스파일");
-	      Optional<Member> optionalMemberEntity =memberRepository.findByEmails(email);
-	      System.out.println(optionalMemberEntity+"ajax 실험중 여기는 멤버서비스");
-	      if(optionalMemberEntity.isEmpty()) {
-	         return "ok";
-	      }else {
-	         return "no";
-	      }
-	   }
+		System.out.println(email+ "여기는 ajax실험중 멤버서비스파일");
+		Optional<Member> optionalMemberEntity =memberRepository.findByEmails(email);
+		System.out.println(optionalMemberEntity+"ajax 실험중 여기는 멤버서비스");
+		if(optionalMemberEntity.isEmpty()) {
+		   return "ok";
+		}else {
+		   return "no";
+		}
+	}
 	
 	public void deletemember(Member member) {
 		memberRepository.delete(member);
+	}
+	
+	public void update(Member memberDto, PasswordEncoder passwordEncoder) {
+	      memberRepository.save(Member.update(memberDto, passwordEncoder));
+	      //save라는 메소드는 db에있는 아이디가 있으면 업데이트 쿼리가 써진다.
 	}
 }

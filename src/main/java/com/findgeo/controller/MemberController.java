@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -108,8 +109,33 @@ public class MemberController {
 			model.addAttribute("member",member);
 			model.addAttribute("loginInfo","social");
 		}
-    	
     	return "mypage/mypage";
+    }
+    
+    //수정화면 요청
+    //내가 로그인한 거에서 내가 수정하는 것이기 때문에 세션값을 사용하는 것이다.
+     @GetMapping("/update1")
+     public String myPage1(Model model, Principal principal) {
+        SessionMember member =(SessionMember)httpSession.getAttribute("user");
+        if(principal!= null && member == null) {
+          Member user = memberRepository.findByEmail(principal.getName());
+          model.addAttribute("name",user);
+          System.out.println(user.getPicture()+"12월2일 실험중ddd");
+       }else if(principal != null && member != null ) {
+          model.addAttribute("name",member);  
+       }
+        return "member/update";
+     }
+    
+  //수정처리
+    @PostMapping("/update3")
+    public String update(@ModelAttribute Member memberDto, Model model,Principal principal) {
+//       Member memberDto = memberRepository.findByEmail(principal.getName());
+       Member member = Member.update(memberDto, passwordEncoder);
+       memberRepository.save(member);
+       System.out.println(member+"12월33333일 여기는 멤버ㅓ컨트롤러");
+       model.addAttribute("name",member.getNickname());
+       return "redirect:/";
     }
     
 }

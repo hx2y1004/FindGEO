@@ -7,9 +7,11 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.findgeo.constant.Role;
@@ -33,7 +35,7 @@ public class Member {
 	@Id
 	@Column(unique = true)
 	private String email;
-	
+
 	private String password;
 	
 	@Column(columnDefinition = "varchar(255) default '정보없음'")
@@ -97,5 +99,18 @@ public class Member {
 	public Member delete(String email) {
 		this.email = email;
 		return this;
+	}
+	
+	public static Member update(Member memberDto1, PasswordEncoder passwordEncoder) {
+	      Member memberEntity = new Member();
+	      memberEntity.setEmail(memberDto1.getEmail());
+	      memberEntity.setNickname(memberDto1.getNickname());
+	      String pw = passwordEncoder.encode(memberDto1.getPassword());
+	      memberEntity.setPassword(pw);
+	      System.out.println(pw);
+	      memberEntity.setPhone(memberDto1.getPhone());
+	      memberEntity.setPicture(memberDto1.getPicture());
+	      memberEntity.setRole(memberDto1.getRole());
+	      return memberEntity;
 	}
 }

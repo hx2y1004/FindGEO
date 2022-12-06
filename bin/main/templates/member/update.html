@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+<script>
+	   function readImage(input) {
+	       if(input.files && input.files[0]) {
+	           // FileReader 인스턴스 생성
+	           const reader = new FileReader();
+	           // 이미지가 로드가 된 경우
+	           reader.onload = e => {
+	               const previewImage = document.getElementById("preview-image");
+	               previewImage.src = e.target.result;
+	           }
+	           // reader가 이미지 읽도록 하기
+	           reader.readAsDataURL(input.files[0])
+	       }
+	   }
+	   // input file에 change 이벤트 부여
+	   // const inputImage = document.getElementById("input-image");
+	   //inputImage.addEventListener("change", e => {
+	   //     readImage(e.target)
+	   //})
+	</script>
+<body>
+<h2>회원정보수정 여긴 update.html</h2>
+<form action="/members/update3" method="post" name="updateForm" >
+   
+	<img style="width: 100px;" id="preview-image" th:src="@{ ${name.picture} }" />
+	<input style="display: block;" type="file" id="input-image" name="proimg" onchange="readImage(this)">
+	이메일:<input type="email" th:value="${name.email}" name="email" id="email" readonly style="background: lightgray;"><br>
+	닉네임:<input type="text" id="nickname" th:value="${name.nickname}" name="nickname" ><br>
+	비밀번호:<input type="password" id="password" name="password"><br>
+	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+	전화번호:<input type="text" th:value="${name.phone}" name="phone" id="phone" ><br>
+	<input type="hidden" th:value="${name.role}" name="role" id="role" ><br>
+	<button type="submit">수정하기</button>
+  
+</form>
+</body>
+   <!-- <script th:inline="javascript">
+      const update = () => {
+         const pw = [[${name.password}]];
+         const confirmPw = document.getElementById("password").value;
+         if(pw == confirmPw){
+            updateForm.submit();
+         }else{
+            alert("비밀번호가 틀립니다.")
+         }
+      }
+   </script> -->
+</html>
