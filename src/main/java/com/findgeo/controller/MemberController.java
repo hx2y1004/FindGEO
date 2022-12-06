@@ -16,10 +16,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.findgeo.config.dto.SessionMember;
 import com.findgeo.dto.MemberFormDto;
@@ -37,6 +39,7 @@ public class MemberController {
 	private final PasswordEncoder passwordEncoder;
 	private final MemberService memberService;
 	private final HttpSession httpSession;
+    private final MemberRepository memberRepository;
 	
 	@GetMapping("/new")
 	public String memberForm(Model model) {
@@ -65,7 +68,6 @@ public class MemberController {
 		}
 		try {
 			Member member = Member.createMember(memberFormDto, passwordEncoder);
-			httpSession.setAttribute("user", new SessionMember(member));
 			System.out.println("멤버 저장");
 			memberService.saveMember(member);
 		}catch(IllegalStateException e){
@@ -95,7 +97,6 @@ public class MemberController {
        return checkResult;
     }
     
-    private final MemberRepository memberRepository;
     @GetMapping("/mypage")
     public String myPage(Model model, Principal principal) {
     	SessionMember member =(SessionMember)httpSession.getAttribute("user");
@@ -109,4 +110,5 @@ public class MemberController {
     	
     	return "mypage/mypage";
     }
+    
 }
