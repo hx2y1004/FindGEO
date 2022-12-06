@@ -39,7 +39,7 @@ public class Member {
 	@Column(columnDefinition = "varchar(255) default '정보없음'")
 	private String phone;
 	
-	@Column(columnDefinition = "varchar(255) default '/images/기본프로필.jpg'")
+	@Column(columnDefinition = "varchar(1000) default '/images/기본프로필.jpg'")
 	private String picture;
 	
 	@Enumerated(EnumType.STRING)
@@ -88,12 +88,14 @@ public class Member {
 		this.email = email;
 		this.picture = picture;
 		return this;
-		
 	}
 	
 	public String getRoleKey() {
 		return this.role.getKey();
 	}
 
-	
+	public Member delete(String email) {
+		this.email = email;
+		return this;
+	}
 }

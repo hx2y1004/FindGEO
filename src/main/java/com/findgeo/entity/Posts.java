@@ -1,6 +1,8 @@
 package com.findgeo.entity;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +15,7 @@ import org.springframework.data.annotation.CreatedDate;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 	@DynamicInsert
 	@Entity
 	@Getter
@@ -38,7 +41,6 @@ import lombok.NoArgsConstructor;
 	@Column(columnDefinition = "integer default 0", nullable = false)	// 조회수의 기본 값을 0으로 지정, null 불가 처리
 	private int views;
 	
-
 	@Builder
 	public Posts(String boardtitle, String boardcontent, String nickname, int views) {
 		this.boardtitle = boardtitle;
@@ -52,6 +54,4 @@ import lombok.NoArgsConstructor;
 	    this.boardtitle = boardtitle;
 	    this.boardcontent = boardcontent;
 	}
-
-
 }

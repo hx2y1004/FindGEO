@@ -14,28 +14,22 @@
 
 	<div>
 		<div>
-		<label for="title">제목</label>
-		<input type="text" id="boardtitle" placeholder="제목을 입력하세요">
+			<label for="title">제목</label>
+			<input type="text" id="boardtitle" placeholder="제목을 입력하세요">
 		</div>
 		
 		<div>
-		<label for="nickname">작성자</label>
-		<input type="text" id="nickname" th:value="${nickname}" readonly>
+			<label for="nickname">작성자</label>
+			<input type="text" id="nickname" th:value="${member.nickname}" readonly>
 		</div>
 		
 		<div>
-		<label for="content">내용</label>
-		<textarea id="boardcontent" placeholder="내용을 입력하세요"></textarea>
+			<label for="content">내용</label>
+			<textarea id="boardcontent" placeholder="내용을 입력하세요"></textarea>
 		</div>
 		
 		<input type="button" id="btn-cancel" onclick="location.href='/board/boardlist'" value="취소">
 		<input type="button" id="btn-save" onclick="SaveBoard()" value="등록">
 	</div>
-
-		
-	
-	</div>
-</form>
-
 </body>
 </html>
