@@ -19,8 +19,6 @@ $(document).ready(function(){
 	
 });
 
-
-
 window.initMap = function () {
 	 
 			  const map = new google.maps.Map(document.getElementById("map"), {
@@ -35,7 +33,7 @@ window.initMap = function () {
 			 var selLoc = "";
 			  const RTloc = [
 			    { label: "A", name: "광화문·덕수궁", lat: 37.5701758269873949, lng: 126.9770290287743677 },
-			    { label: "A", name: "가산디지털단지", lat: 37.481631531266494, lng: 126.8828464716437 },
+			    { label: "A", name: "가산디지털단지역", lat: 37.481631531266494, lng: 126.8828464716437 },
 			    { label: "A", name: "경복궁·서촌마을", lat: 37.57984291352679, lng: 126.97328946157951 },
 			    { label: "A", name: "창덕궁·종묘", lat: 37.577594922983714, lng: 126.99421904681404 },
 			    { label: "A", name: "강남 MICE 관광특구", lat: 37.51139584858334, lng: 127.0598901748247 },
@@ -96,40 +94,8 @@ window.initMap = function () {
 					});
 				  let infoRT = new google.maps.InfoWindow(); 	
 			 	  RTmarker.addListener("click", () => { //지도 정보 
-			 	  
-				  const modal = document.getElementById("modal");
-			 	  modal.style.display = "flex";
-			 	  const closeBtn = modal.querySelector('.close-area');
-			 	  var ctx = document.getElementById("bar-chart-horizontal");
-			 	  var config = {};
-				  var areaChart = new Chart(ctx,config);
-				  closeBtn.addEventListener("click", e => {
-					   var dataset = config.data.datasets;
-					   for(var i=0; i<dataset.length; i++){
-						   var data = dataset[i].data;
-						   for(var j=0; j<data.length; j++){
-							   data[j] = 0;
-						   }
-					   };
-					   
-						areaChart.update();
-						modal.style.display="none";
-				  });
-				  modal.addEventListener("click", e => {
-				  const evTarget = e.target
-			      if(evTarget.classList.contains("modal-overlay")) {
-						var dataset = config.data.datasets;
-					    for(var i=0; i<dataset.length; i++){
-					 	    var data = dataset[i].data;
-				 		    for(var j=0; j<data.length; j++){
-							    data[j] = 0;
-						    }
-					    };
-						areaChart.update();
-				  		modal.style.display = "none"
-					 }
-				  })
-			 	  			
+			 	  					  const modal = document.getElementById("modal");
+									  modal.style.display = "flex";
 			 	  					  selLoc = name;
 								      map.panTo(RTmarker.position); //마커 위치로 중심 이동
 								      infoRT.setContent(name);
@@ -146,33 +112,334 @@ window.initMap = function () {
 										  var RTxml = new DOMParser().parseFromString(this.responseText, 'text/xml');
 										  rtJson = xmlToJson(RTxml); 
 										  console.log(rtJson);
+										  //console.log(Object.keys(rtJson));
+										  var rtcitydata = rtJson["SeoulRtd.citydata"];
+										  var citydata = rtcitydata["CITYDATA"];
+										  var liveStts = citydata["LIVE_PPLTN_STTS"];
+										  var liveSt = liveStts["LIVE_PPLTN_STTS"];
+										  var busStts = citydata["BUS_STN_STTS"];
+										  var busSt = busStts["BUS_STN_STTS"];
+										  console.log(liveSt);
+										  console.log(busSt);
+										  var subStts = citydata["SUB_STTS"];
+										  var subSt = subStts["SUB_STTS"];
+										  console.log(subSt);
+										  var bikeStts = citydata["SBIKE_STTS"];
+										  var bikeSt = bikeStts["SBIKE_STTS"];
+										  console.log(bikeSt);
+										  var areaname = citydata["AREA_NM"];
+										  console.log(areaname);
+										  var rate0 = liveSt["PPLTN_RATE_0"];
+										  var rate10 = liveSt["PPLTN_RATE_10"];
+										  var rate20 = liveSt["PPLTN_RATE_20"];
+										  var rate30 = liveSt["PPLTN_RATE_30"];
+										  var rate40 = liveSt["PPLTN_RATE_40"];
+										  var rate50 = liveSt["PPLTN_RATE_50"];
+										  var rate60 = liveSt["PPLTN_RATE_60"];
+										  var rate70 = liveSt["PPLTN_RATE_70"];
 										  
-										  config = {
-													type: 'bar',
-													data: {
-													labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
-													datasets:[
-																{
-																	label: "Population (millions)",
-																	backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-																	data: [2478,5267,2734,3784,1433]
-																}
-															  ]
-															},
-													options: {
-													indexAxis: 'y',
-													legend: { display: false },
-													title: {
-															 display: true,
-															 text: 'Predicted world population (millions) in 2050'
-														   }
-														}
-										   };
+										  var male = liveSt["MALE_PPLTN_RATE"];
+										  var female = liveSt["FEMALE_PPLTN_RATE"];
 										  
-									    };
-									  areaChart.update();
-									  
-									    
+										  var resnt = liveSt["RESNT_PPLTN_RATE"];
+										  var nonResnt = liveSt["NON_RESNT_PPLTN_RATE"];
+										  
+										  var congest = liveSt["AREA_CONGEST_LVL"];
+										  var htmlCongest = document.getElementById("areaCongest");
+										  htmlCongest.innerText = congest;
+										  
+										  var areaName = document.getElementById("areaName");
+										  areaName.innerText = areaname;
+										  
+									  const map2 = new google.maps.Map(document.getElementById("map2"), {
+										center: { lat: lat , lng: lng  },
+										zoom: 14,
+										gestureHandling: "none",
+										zoomControl: false,
+									  });
+									  /*
+									  const map3 = new google.maps.Map(document.getElementById("map3"), {
+										center: { lat: lat , lng: lng  },
+										zoom: 14,
+										gestureHandling: "none",
+										zoomControl: false,
+									  });
+									  */
+									 
+								     if(typeof bikeSt == "undefined"){
+										 console.log("주변 대여소가 없습니다.")
+									 }else{
+										 if(typeof bikeSt.length == "undefined"){
+											 var bikelat = Number(bikeSt["SBIKE_X"]);
+											 console.log(bikelat);
+											 var bikelng = Number(bikeSt["SBIKE_Y"]);
+											 let bikeMark = [
+												 {
+													 label: "BI",
+													 name: bikeSt["SBIKE_SPOT_NM"],
+													 lat : bikelat,
+													 lng: bikelng
+												 }
+											 ];
+											 
+											 //console.log(bikeMark);
+											 bikeMark.forEach(({label, name, lat, lng}) => {
+												 let markerBike = new google.maps.Marker({
+													 position : { lat, lng },
+													 label,
+													 map: map2
+												 });
+												 //console.log(markerBike);
+												 
+												 const bikeinfo = new google.maps.InfoWindow();
+												 markerBike.addListener("click", () => {
+													 bikeinfo.setConent(name);
+													 bikeinfo.open({
+														 anchor: markerBike,
+														 map
+													 })
+												 })
+											 })
+										 }
+										 for(var i=0; i<bikeSt.length; i++){
+											 var bikelat = Number(bikeSt[i]["SBIKE_X"]);
+											 var bikelng = Number(bikeSt[i]["SBIKE_Y"]);
+											 let bikeMark = [
+												 {
+													 label: "BIKE",
+													 name: bikeSt[i]["SBIKE_SPOT_NM"],
+													 lat : bikelat,
+													 lng: bikelng
+												 }
+											 ];
+											 
+											 bikeMark.forEach(({label, name, lat, lng}) => {
+												 let markerBike = new google.maps.Marker({
+													 position : { lat, lng },
+													 label,
+													 map: map2
+												 });
+												 
+												 const bikeinfo = new google.maps.InfoWindow();
+												 markerBike.addListener("click", () => {
+													 bikeinfo.setConent(name);
+													 bikeinfo.open({
+														 anchor: markerBike,
+														 map
+													 })
+												 })
+											 })
+										 }
+									 }
+									 
+									 
+									 if(typeof busSt == "undefined"){
+										 console.log("주변 버스정류소가 없습니다.");
+									 }else{
+										 if(typeof busSt.length == "undefined"){
+											 var buslat = Number(busSt["BUS_STN_X"]);
+											 var buslng = Number(busSt["BUS_STN_Y"]);
+											 let busMark = [
+												 {
+													 label: "B",
+													 name: busSt["BUS_STN_NM"],
+													 lat: buslat,
+													 lng: buslng
+												 }
+											 ];
+											 
+											 busMark.forEach(({label, name, lat, lng}) => {
+												 let markerBus = new google.maps.Marker({
+													 position : {lat, lng},
+													 label,
+													 map: map2
+												 });
+												 
+												 const businfo = new google.maps.InfoWindow();
+												 markerBus.addListener("click", () =>{
+													 businfo.setConent(name);
+													 businfo.open({
+														 anchor: markerBus,
+														 map
+													 })
+												 })
+											 })
+										 }
+										 for(var i=0; i<busSt.length; i++){
+											 var buslat = Number(busSt[i]["BUS_STN_X"]);
+											 var buslng = Number(busSt[i]["BUS_STN_Y"]);
+											 let busMark = [
+												 {
+													 label: "B",
+													 name: busSt[i]["BUS_STN_NM"]+"",
+													 lat: buslat,
+													 lng: buslng
+												 }
+											 ];
+											//console.log(busMark);
+											busMark.forEach(({label, name, lat, lng}) => {
+												 let markerBus = new google.maps.Marker({
+													 position: { lat, lng },
+													 label,
+													 map: map2
+												 });
+												 //console.log(markerBus);
+												const businfo = new google.maps.InfoWindow();
+												markerBus.addListener("click", () =>{
+													businfo.setContent(name);
+													businfo.open({
+														anchor: markerBus,
+														map
+													})
+												}) 
+											 })
+										 }
+									 }
+									 
+									 
+									 if(typeof subSt == "undefined"){
+										 console.log("주변 역이 없습니다.");
+									 }else{
+										 if(typeof subSt.length == "undefined"){
+											 var sublat = Number(subSt["SUB_STN_X"]);
+											 console.log(sublat)
+											 var sublng = Number(subSt["SUB_STN_Y"]);
+											 let subMark = [
+												 {
+													 label: "S" , 
+													 name : subSt["SUB_STN_NM"]+"/"+subSt["SUB_STN_LINE"]+"(호선)",
+													 lat: sublat,
+													 lng: sublng
+												 }
+											 ];
+											 //console.log(subMark);
+											 subMark.forEach(({label, name, lat, lng}) => {
+												 let markerSub = new google.maps.Marker({
+													 position: { lat, lng },
+													 label,
+													 map: map2
+												 });
+												 //console.log(markerSub);
+												const subinfo = new google.maps.InfoWindow();
+												markerSub.addListener("click", () =>{
+													subinfo.setContent(name);
+													subinfo.open({
+														anchor: markerSub,
+														map
+													})
+												}) 
+											 })
+											 
+										 }
+										 for(var i = 0; i < subSt.length; i++){
+											 var sublat = Number(subSt[i]["SUB_STN_X"]);
+											 var sublng = Number(subSt[i]["SUB_STN_Y"]);
+											 let subMark = [
+												 {
+													 label: "S" , 
+													 name : subSt[i]["SUB_STN_NM"]+"/"+subSt[i]["SUB_STN_LINE"]+"(호선)",
+													 lat: sublat,
+													 lng: sublng
+												 }
+											 ];
+											 //console.log(subMark);
+											 subMark.forEach(({label, name, lat, lng}) => {
+												 let markerSub = new google.maps.Marker({
+													 position: { lat, lng },
+													 label,
+													 map: map2
+												 });
+												 
+												const subinfo = new google.maps.InfoWindow();
+												markerSub.addListener("click", () =>{
+													subinfo.setContent(name);
+													subinfo.open({
+														anchor: markerSub,
+														map
+													})
+												}) 
+											 })
+											 
+										 }
+									 }
+									 
+									 
+									 
+										  
+									ctx1 = document.getElementById("bar-chart-horizontal");
+									ctx2 = document.getElementById("pieChart");
+									ctx3 = document.getElementById("resntChart");
+									config1 = {
+										type: 'bar',
+										data: {
+										labels: ["0~10세", "10대", "20대", "30대", "40대", "50대", "60대", "70대"],
+										datasets:[
+													{
+														label: "나이별 인구 비율",
+														backgroundColor: ["red","orange","yellow","green","blue","purple","white","black"],
+														data: [rate0,rate10,rate20,rate30,rate40,rate50,rate60,rate70]
+													}
+												]
+										},
+										options: {
+										indexAxis: 'y',
+										legend: { display: false },
+										title: {
+												  display: true,
+												  text: '유동인구별 나이 비율'
+												}
+											}
+									};
+									config2 = {
+										type: 'pie',
+										data: {
+											labels: ['남성','여성'],
+											datasets: [{
+												data: [male,female],
+												backgroundColor: ["skyblue","pink"]
+											}]
+										},
+										options: {
+											responsive : false
+										}
+										
+									};
+									config3 = {
+										type: 'pie',
+										data: {
+											labels: ["거주","비거주"],
+											datasets: [{
+												data: [resnt, nonResnt],
+												backgroundColor: ['white','black']
+											}]
+										},
+										options:{
+											responsive: false
+										}
+									}
+									areaAgeChart = new Chart(ctx1,config1);
+									genderChart = new Chart(ctx2,config2);
+									resntChart = new Chart(ctx3,config3);
+									
+										const closeBtn = modal.querySelector('.close-area');
+										closeBtn.addEventListener("click", e => {
+											areaAgeChart.destroy();
+											genderChart.destroy();
+											resntChart.destroy();
+											modal.style.display="none";											
+											
+										});
+										modal.addEventListener("click", e => {
+										const evTarget = e.target
+										if(evTarget.classList.contains("modal-overlay")) {
+											areaAgeChart.destroy();
+											genderChart.destroy();
+											resntChart.destroy();
+											modal.style.display = "none"
+											}
+										})
+										  
+									  };
 							}};xhr.send('');
 					 });	
 			  });
@@ -214,8 +481,7 @@ window.initMap = function () {
 						    .then(locCate => locCate.json())
 						    .then(locCate => {
 							  var poiInfo = locCate.searchPoiInfo.pois.poi;	
-							 
-							  //console.log(locCate);
+							  console.log(locCate);
 							  for(var i=0; i < poiInfo.length; i++){
 								let searchMark = [
 							    { label: "O", name: poiInfo[i].name ,
@@ -269,10 +535,11 @@ window.initMap = function () {
 					  }
 					  
 				  })
-				  //const markerClusterer = new markerClusterer.MarkerClusterer;
-				  //markerClusterer({ map, marker });
+				  
 			  });
 };
+
+
 
 // xml을 json으로 변환해주는 xmlToJson함수 선언
 function xmlToJson(xml) {
