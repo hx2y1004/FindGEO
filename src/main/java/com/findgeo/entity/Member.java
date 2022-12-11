@@ -1,18 +1,17 @@
 package com.findgeo.entity;
 
+import java.io.File;
+import java.security.Principal;
+import java.util.UUID;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotEmpty;
-
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.validator.constraints.Length;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.findgeo.constant.Role;
 import com.findgeo.dto.MemberFormDto;
@@ -43,9 +42,10 @@ public class Member {
 	
 	@Column(columnDefinition = "varchar(1000) default '/images/기본프로필.jpg'")
 	private String picture;
+	private String filePath;
 	
 	@Enumerated(EnumType.STRING)
-	private Role role;
+	private Role role; 
 	
 	@Builder
 	public Member(String nickname, String email,String password, String phone, String picture, Role role){
@@ -101,16 +101,45 @@ public class Member {
 		return this;
 	}
 	
-	public static Member update(Member memberDto1, PasswordEncoder passwordEncoder) {
+	public static Member update(Member memberDto1, MultipartFile file, PasswordEncoder passwordEncoder) throws Exception{
 	      Member memberEntity = new Member();
 	      memberEntity.setEmail(memberDto1.getEmail());
 	      memberEntity.setNickname(memberDto1.getNickname());
 	      String pw = passwordEncoder.encode(memberDto1.getPassword());
 	      memberEntity.setPassword(pw);
-	      System.out.println(pw);
 	      memberEntity.setPhone(memberDto1.getPhone());
+	      
+	      String projectPath = System.getProperty("user.dir")+"\\src\\main\\resources\\static\\images";
+	      UUID uuid = UUID.randomUUID();
+	      String fileName = uuid + "_" + file.getOriginalFilename();
+	      File saveFile = new File(projectPath, fileName);
+	      file.transferTo(saveFile);
+	      memberDto1.setPicture("/images/"+fileName);
+	      memberDto1.setFilePath("/images"+fileName);
 	      memberEntity.setPicture(memberDto1.getPicture());
+	      
+	      System.out.println(memberDto1.getPicture()+"엔티티 사진");
+	      
+//	      if(memberDto1.getPicture() != null) {
+//	      }else {
+//	    	  memberEntity.setPicture("/images/"+"기본프로필.jpg");
+//	      }
+	      System.out.println("사진"+memberEntity.getPicture());
+	      
 	      memberEntity.setRole(memberDto1.getRole());
+	      return memberEntity;
+	}
+	
+	public static Member update2(String nickname, String password, String email, String phone, PasswordEncoder passwordEncoder) throws Exception{
+	      Member memberEntity = new Member();
+	      memberEntity.setEmail(email);
+	      memberEntity.setNickname(nickname);
+	      String pw = passwordEncoder.encode(password);
+	      memberEntity.setPassword(pw);
+	      memberEntity.setPhone(phone);
+	      
+	      System.out.println("사진"+memberEntity.getPicture());
+	      
 	      return memberEntity;
 	}
 }

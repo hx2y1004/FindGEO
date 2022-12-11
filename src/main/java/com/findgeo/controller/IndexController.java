@@ -58,7 +58,8 @@ public class IndexController {
 		}
 
 		model.addAttribute("areaData",areaDataList);
-		if(principal!= null && member == null) {
+		if(principal == null && member == null) {}
+		else if(principal!= null && member == null) {
 			Member userName = memberRepository.findByEmail(principal.getName());
 			String name = userName.getNickname();
 			model.addAttribute("name",name);

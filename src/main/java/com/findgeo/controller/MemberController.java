@@ -7,6 +7,7 @@ import java.security.Principal;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.findgeo.config.dto.SessionMember;
@@ -128,14 +130,14 @@ public class MemberController {
      }
     
   //수정처리
-    @PostMapping("/update3")
-    public String update(@ModelAttribute Member memberDto, Model model,Principal principal) {
+     @PostMapping("/update3")
+     public String update(@ModelAttribute Member memberDto, MultipartFile file, Model model,Principal principal) throws Exception{
 //       Member memberDto = memberRepository.findByEmail(principal.getName());
-       Member member = Member.update(memberDto, passwordEncoder);
-       memberRepository.save(member);
-       System.out.println(member+"12월33333일 여기는 멤버ㅓ컨트롤러");
-       model.addAttribute("name",member.getNickname());
-       return "redirect:/";
-    }
+    	 System.out.println(memberDto.getPicture());
+    	 Member member = Member.update(memberDto, file, passwordEncoder);
+    	 memberRepository.save(member);
+    	 model.addAttribute("name",member.getNickname());
+    	 return "redirect:/";
+     }
     
 }

@@ -1,6 +1,8 @@
 package com.findgeo.service;
 
+import java.io.File;
 import java.util.Optional;
+import java.util.UUID;
 
 import javax.transaction.Transactional;
 
@@ -11,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.findgeo.entity.Member;
 import com.findgeo.repository.MemberRepository;
@@ -68,8 +71,8 @@ public class MemberService implements UserDetailsService{
 		memberRepository.delete(member);
 	}
 	
-	public void update(Member memberDto, PasswordEncoder passwordEncoder) {
-	      memberRepository.save(Member.update(memberDto, passwordEncoder));
+	public void update(Member memberDto, MultipartFile file, PasswordEncoder passwordEncoder) throws Exception{
+		memberRepository.save(Member.update(memberDto, file, passwordEncoder));
 	      //save라는 메소드는 db에있는 아이디가 있으면 업데이트 쿼리가 써진다.
 	}
 }
