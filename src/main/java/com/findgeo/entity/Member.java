@@ -3,15 +3,15 @@ package com.findgeo.entity;
 import java.io.File;
 import java.security.Principal;
 import java.util.UUID;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import org.springframework.web.multipart.MultipartFile;
+
 import org.hibernate.annotations.DynamicInsert;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.findgeo.constant.Role;
 import com.findgeo.dto.MemberFormDto;
@@ -39,13 +39,13 @@ public class Member {
 	
 	@Column(columnDefinition = "varchar(255) default '정보없음'")
 	private String phone;
+	private String filePath;
 	
 	@Column(columnDefinition = "varchar(1000) default '/images/기본프로필.jpg'")
 	private String picture;
-	private String filePath;
 	
 	@Enumerated(EnumType.STRING)
-	private Role role; 
+	private Role role;
 	
 	@Builder
 	public Member(String nickname, String email,String password, String phone, String picture, Role role){
@@ -107,8 +107,8 @@ public class Member {
 	      memberEntity.setNickname(memberDto1.getNickname());
 	      String pw = passwordEncoder.encode(memberDto1.getPassword());
 	      memberEntity.setPassword(pw);
-	      memberEntity.setPhone(memberDto1.getPhone());
 	      
+	      memberEntity.setPhone(memberDto1.getPhone());
 	      String projectPath = System.getProperty("user.dir")+"\\src\\main\\resources\\static\\images";
 	      UUID uuid = UUID.randomUUID();
 	      String fileName = uuid + "_" + file.getOriginalFilename();
