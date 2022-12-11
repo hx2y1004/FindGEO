@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.findgeo.constant.Role;
 import com.findgeo.dto.MemberFormDto;
 import com.findgeo.entity.Member;
+import com.findgeo.repository.MemberRepository;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -101,13 +102,14 @@ public class Member {
 		return this;
 	}
 	
+	
 	public static Member update(Member memberDto1, MultipartFile file, PasswordEncoder passwordEncoder) throws Exception{
 	      Member memberEntity = new Member();
+	      
 	      memberEntity.setEmail(memberDto1.getEmail());
 	      memberEntity.setNickname(memberDto1.getNickname());
 	      String pw = passwordEncoder.encode(memberDto1.getPassword());
 	      memberEntity.setPassword(pw);
-	      
 	      memberEntity.setPhone(memberDto1.getPhone());
 	      String projectPath = System.getProperty("user.dir")+"\\src\\main\\resources\\static\\images";
 	      UUID uuid = UUID.randomUUID();
@@ -124,21 +126,18 @@ public class Member {
 //	      }else {
 //	    	  memberEntity.setPicture("/images/"+"기본프로필.jpg");
 //	      }
-	      System.out.println("사진"+memberEntity.getPicture());
 	      
 	      memberEntity.setRole(memberDto1.getRole());
 	      return memberEntity;
 	}
 	
-	public static Member update2(String nickname, String password, String email, String phone, PasswordEncoder passwordEncoder) throws Exception{
+	public static Member update(String nickname, String password, String email, String phone, PasswordEncoder passwordEncoder) throws Exception{
 	      Member memberEntity = new Member();
 	      memberEntity.setEmail(email);
 	      memberEntity.setNickname(nickname);
 	      String pw = passwordEncoder.encode(password);
 	      memberEntity.setPassword(pw);
 	      memberEntity.setPhone(phone);
-	      
-	      System.out.println("사진"+memberEntity.getPicture());
 	      
 	      return memberEntity;
 	}
