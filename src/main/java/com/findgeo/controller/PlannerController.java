@@ -40,8 +40,6 @@ public class PlannerController {
 		model.addAttribute("message", "플래너 작성이 완료되었습니다.");
 		SessionMember member =(SessionMember)httpSession.getAttribute("user");
 		String emailId="";
-		System.out.println("p.getname : "+principal.getName());
-		System.out.println("member.getemail : "+member.getEmail());
 		if(principal!= null && member == null) {
 			emailId = principal.getName();
 		}else if(principal != null && member != null ) {

@@ -238,6 +238,7 @@ input[readonly]{
 			break;
 		}
 	};
+	
 	function calc(){
 		let avgPrice = Number(document.getElementById('avgPrice').value);
 		let avgDayVisit = Number(document.getElementById('avgDayVisit').value);
@@ -308,7 +309,6 @@ input[readonly]{
 		$('#profitRatio').val(netProfit/totalSales);
 		inputNaN();
 	}
-	calc();
 	$('input').keyup(calc);
 	const patternInt = /^[0-9]*$/;
 	const patternFloat = /^[.0-9]*$/;
@@ -404,17 +404,18 @@ input[readonly]{
 			location.href="/planner/deletepro/"+plannerId;
 		}
 	};
+	var input = document.getElementsByTagName('input');
+	console.log(input);
+	console.log(input.length);
+	
 	function inputNaN(){
-		for(i=0;i<input.length;i++){
+		for(i=2;i<input.length;i++){
 			if(isNaN(input[i].value)==true){
-				b:
-				if(i==1){
-					break b;
-				}
 				input[i].value=null;
 			}
 		}
 	}
+	calc();
 </script>
 </body>
 </html>
