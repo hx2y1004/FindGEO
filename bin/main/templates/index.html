@@ -19,7 +19,7 @@
 	
 	<a sec:authorize="isAuthenticated()" th:href="@{board/boardlist}">게시판</a>
     </sec:authorize>
-	<a sec:authorize="isAuthenticated()">계획서</a>
+	<a sec:authorize="isAuthenticated()" th:href="@{planner/list}">계획서</a>
     </sec:authorize>
     <a sec:authorize="isAuthenticated()" th:href="@{members/mypage}">마이페이지</a>
     </sec:authorize>
