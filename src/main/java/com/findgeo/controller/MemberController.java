@@ -150,4 +150,13 @@ public class MemberController {
     	 return "redirect:/";
 	}
     
+	@GetMapping("/delete/{email}")
+	public String deleteById(@PathVariable String email,Model model,Principal principal) {
+		memberService.deleteByEmail(email);
+        Member userEmail = memberRepository.findByEmail(principal.getName());
+        System.out.println(email+"회원탈퇴 컨트롤러타는 중?");
+        model.addAttribute("name",userEmail);
+        System.out.println(userEmail+"ddzcvzcxvqwqqweqweqweqw");
+        return "redirect:/members/logout";
+     }
 }

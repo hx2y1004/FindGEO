@@ -81,4 +81,8 @@ public class MemberService implements UserDetailsService{
 								);
 	      //save라는 메소드는 db에있는 아이디가 있으면 업데이트 쿼리가 써진다.
 	}
+	
+	public void deleteByEmail(String email) {
+	      memberRepository.deleteByEmail(email);
+	   }
 }
