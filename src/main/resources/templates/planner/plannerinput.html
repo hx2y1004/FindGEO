@@ -401,13 +401,12 @@ $('input').keyup(calc);
 	}
 	
 	var input = document.getElementsByTagName('input');
-	console.log(input);
-	console.log(input[0].value);
-	console.log(input[2].value);
 	function inputNull(){
 		for(i=0;i<input.length;i++){
-			if(i=1){
-				break;
+			a:
+			if(i==1){
+				console.log(i);
+				break a;
 			}
 			input[i].value=null;
 		}
@@ -415,8 +414,9 @@ $('input').keyup(calc);
 	function inputNaN(){
 		for(i=0;i<input.length;i++){
 			if(isNaN(input[i].value)==true){
-				if(i=1){
-					break;
+				b:
+				if(i==1){
+					break b;
 				}
 				input[i].value=null;
 			}
