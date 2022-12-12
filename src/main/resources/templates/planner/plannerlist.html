@@ -13,11 +13,6 @@
 <script th:inline="javascript">
 
     $(document).ready(function(){
-    	var errorMessage = [[${message}]];
-        if(errorMessage != null){
-            alert(errorMessage);
-        }
-    	
         $("#searchBtn").on("click",function(e) {
             e.preventDefault();
             page(0);

@@ -74,10 +74,5 @@ public class PlannerService
 	public void plannerDelete(Long plannerId) {
 		plannerRepository.deleteById(plannerId);
 	}
-
-	public boolean isPlannerExists(Long plannerId) {
-		boolean result = plannerRepository.existsById(plannerId);
-		return result;
-	}
 	
 }
