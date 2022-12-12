@@ -19,7 +19,7 @@
 	
 	<a sec:authorize="isAuthenticated()" th:href="@{board/boardlist}">게시판</a>
     </sec:authorize>
-	<a sec:authorize="isAuthenticated()">계획서</a>
+	<a sec:authorize="isAuthenticated()" th:href="@{planner/list}">계획서</a>
     </sec:authorize>
     <a sec:authorize="isAuthenticated()" th:href="@{members/mypage}">마이페이지</a>
     </sec:authorize>
@@ -47,8 +47,26 @@
             </div>
             <div class="close-area">X</div>
             <div class="content">
+            	<h3 id="areaName">지역이름</h3>
+            	<h4 id="areaCongest">혼잡정도</h4>
+            
             	<p>나이</p>
-			  	<canvas id="bar-chart-horizontal" width="600" height="250"></canvas>  
+			  	<canvas id="bar-chart-horizontal" width="600" height="250"></canvas> 
+			  	<p>성비</p>
+			  	<canvas id="pieChart" width="300" height="300"></canvas> 
+			  	<p>거주/비거주</p>
+			  	<canvas id="resntChart" width="300" height="300"></canvas>
+			  	<p>근처 교통 정보</p>
+			  	<div id="map2" style="height: 400px;"></div>
+			  	
+			  	<select id="trafficData">
+			  		<option value="지하철" th:text="지하철역" selected></option>
+			  		<option value="버스정류장" th:text="버스정류장"></option>
+			  		<option value="주차장" th:text="주차장"></option>
+			  	</select>
+			  	<button type="button" name="trafficSelc" id="trafficSelc">교통정보 선택</button>
+			  	<button type="button" name="delMark2" id="delMark2" >마커 삭제</button>
+           		
             </div>
         </div>
     </div>

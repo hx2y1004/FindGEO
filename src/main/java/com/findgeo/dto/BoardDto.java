@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.transaction.Transactional;
+import javax.validation.constraints.NotBlank;
 
 import groovy.transform.ToString;
 import groovy.transform.builder.Builder;
@@ -22,6 +23,7 @@ public class BoardDto {
 	private String nickname;
 	private LocalDateTime regdate;
 	private int view;
+	private String files;
 
 
 }

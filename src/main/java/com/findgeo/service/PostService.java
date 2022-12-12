@@ -6,8 +6,6 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
-
-import com.findgeo.dto.BoardDto;
 import com.findgeo.dto.PostsListResponseDto;
 import com.findgeo.dto.PostsResponseDto;
 import com.findgeo.dto.PostsSaveRequestDto;

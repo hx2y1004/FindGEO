@@ -14,6 +14,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.findgeo.config.dto.SessionMember;
 import com.findgeo.dto.AreaDataDto;
@@ -57,7 +58,8 @@ public class IndexController {
 		}
 
 		model.addAttribute("areaData",areaDataList);
-		if(principal!= null && member == null) {
+		if(principal == null && member == null) {}
+		else if(principal!= null && member == null) {
 			Member userName = memberRepository.findByEmail(principal.getName());
 			String name = userName.getNickname();
 			model.addAttribute("name",name);
