@@ -73,11 +73,16 @@ public class MemberService implements UserDetailsService{
 	      //save라는 메소드는 db에있는 아이디가 있으면 업데이트 쿼리가 써진다.
 	}
 	
-	public void update(String nickname, String password, String email, String phone,  PasswordEncoder passwordEncoder) throws Exception{
+	public void update(String nickname, String password, String email, String phone, PasswordEncoder passwordEncoder) throws Exception{
 		memberRepository.update(Member.update(nickname, password, email, phone, passwordEncoder).getNickname(),
 								Member.update(nickname, password, email, phone, passwordEncoder).getPassword(),
 								Member.update(nickname, password, email, phone,passwordEncoder).getEmail(),
-								Member.update(nickname, password, email, phone, passwordEncoder).getPhone());
+								Member.update(nickname, password, email, phone, passwordEncoder).getPhone()
+								);
 	      //save라는 메소드는 db에있는 아이디가 있으면 업데이트 쿼리가 써진다.
 	}
+	
+	public void deleteByEmail(String email) {
+	      memberRepository.deleteByEmail(email);
+	   }
 }

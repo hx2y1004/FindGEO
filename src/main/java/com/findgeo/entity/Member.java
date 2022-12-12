@@ -30,16 +30,17 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Member {
 
-	private String nickname;
-	
-	@Id
-	@Column(unique = true)
-	private String email;
+   private String nickname;
+   
+   @Id
+   @Column(unique = true)
+   private String email;
 
 	private String password;
 	
 	@Column(columnDefinition = "varchar(255) default '정보없음'")
 	private String phone;
+	
 	private String filePath;
 	
 	@Column(columnDefinition = "varchar(1000) default '/images/기본프로필.jpg'")
@@ -121,11 +122,7 @@ public class Member {
 	      memberEntity.setPicture(memberDto1.getPicture());
 	      
 	      System.out.println(memberDto1.getPicture()+"엔티티 사진");
-	      
-//	      if(memberDto1.getPicture() != null) {
-//	      }else {
-//	    	  memberEntity.setPicture("/images/"+"기본프로필.jpg");
-//	      }
+
 	      
 	      memberEntity.setRole(memberDto1.getRole());
 	      return memberEntity;

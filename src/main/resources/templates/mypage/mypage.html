@@ -22,10 +22,10 @@
 		<td>
 			<h4><span th:text="${member.nickname}"></span></h4>
 			<button type="button" onclick="location.href='/members/update1'">정보수정</button>
-			<button type="button" onclick="">탈퇴하기</button>    
+			<a th:href="@{/members/delete/{email}(email=${member.email})}">탈퇴하기</a>   
 		</td>
 		<td rowspan="2">
-			내 사업 계획서  d
+			내 사업 계획서
 			개수
 			<button type="button" onclick="location.href=''">전체보기</button>		
 		</td>
