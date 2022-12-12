@@ -90,7 +90,7 @@ public class OAuthAttributes {
                 .email(email)
                 .password(nameAttributeKey)
                 .picture(picture)
-                .phone("정보없음")
+                .phone(phone)
                 .role(Role.USER)
                 .build();
     }

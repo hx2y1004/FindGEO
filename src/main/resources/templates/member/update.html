@@ -38,8 +38,8 @@
 	이메일:<input type="email" th:value="${name.email}" name="email" id="email" readonly style="background: lightgray;"><br>
 	닉네임:<input type="text" id="nickname" th:value="${name.nickname}" name="nickname" ><br>
 	비밀번호:<input type="password" id="password" name="password"><br>
-	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 	전화번호:<input type="text" th:value="${name.phone}" name="phone" id="phone" ><br>
+	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 	<input type="hidden" th:value="${name.role}" name="role" id="role" ><br>
 	<button type="submit">수정하기</button>
   

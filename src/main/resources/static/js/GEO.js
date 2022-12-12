@@ -2,6 +2,7 @@ let cate;
 let cates = '';
 let rtJson;
 var areaChart;
+var traffic;
 $(document).ready(function(){
 	$('#areaDataSet').click(function(){
 		cate = 'input[name="areaData"]:checked';
@@ -16,7 +17,10 @@ $(document).ready(function(){
 		console.log('체크삭제');
 		$('input:checkbox[name="areaData"]').prop("checked",false);
 	})
-	
+	$('#trafficDataSet').click(function(){
+		traffic = $('input[name="trafficdata"]:checked').val();
+		console.log(traffic);
+	})
 });
 
 window.initMap = function () {
@@ -154,218 +158,83 @@ window.initMap = function () {
 									  const map2 = new google.maps.Map(document.getElementById("map2"), {
 										center: { lat: lat , lng: lng  },
 										zoom: 14,
-										gestureHandling: "none",
-										zoomControl: false,
+										//gestureHandling: "none",
+										//zoomControl: false,
 									  });
-									  /*
-									  const map3 = new google.maps.Map(document.getElementById("map3"), {
-										center: { lat: lat , lng: lng  },
-										zoom: 14,
-										gestureHandling: "none",
-										zoomControl: false,
-									  });
-									  */
+									
+										
+
+									 $('#trafficSelc').click(function(){
+									    	
+										 var select = document.getElementById('trafficData');
+										 var selected = select.options[select.selectedIndex].value;
+									 	console.log(selected);
 									 
-								     if(typeof bikeSt == "undefined"){
-										 console.log("주변 대여소가 없습니다.")
-									 }else{
-										 if(typeof bikeSt.length == "undefined"){
-											 var bikelat = Number(bikeSt["SBIKE_X"]);
-											 console.log(bikelat);
-											 var bikelng = Number(bikeSt["SBIKE_Y"]);
-											 let bikeMark = [
-												 {
-													 label: "BI",
-													 name: bikeSt["SBIKE_SPOT_NM"],
-													 lat : bikelat,
-													 lng: bikelng
-												 }
-											 ];
-											 
-											 //console.log(bikeMark);
-											 bikeMark.forEach(({label, name, lat, lng}) => {
-												 let markerBike = new google.maps.Marker({
-													 position : { lat, lng },
-													 label,
-													 map: map2
-												 });
-												 //console.log(markerBike);
+											 fetch('https://apis.openapi.sk.com/tmap/pois/search/around?version=1&centerLon='+lng
+										  		+'&centerLat='+lat
+										  		+'&categories='+selected
+										  		+'&page=1&count=100&radius=1&reqCoordType=WGS84GEO&resCoordType=WGS84GEO&multiPoint=N', options)
+										    .then(locCate => locCate.json())
+										    .then(locCate => {
+											  var poiInfo = locCate.searchPoiInfo.pois.poi;	
+											  //console.log(locCate);
+											  var label = "";
+											  switch(selected){
+												  case "지하철":
+												   label = "S";
+												   break;
+												  case "버스정류장":
+												   label = "B"
+												   break;
+												  case "주차장":
+												   label = "P"
+												   break;
+											  }
+											  for(var i=0; i < poiInfo.length; i++){
+												let searchMark = [
+											    { label: label , name: poiInfo[i].name ,
+											     lat: Number(poiInfo[i].frontLat),
+											     lng: Number(poiInfo[i].frontLon) },
+											  ];
+											  //console.log(searchMark);
+											  
+												  
+												  const infowindow = new google.maps.InfoWindow(); //클릭시 정보 보여주기
 												 
-												 const bikeinfo = new google.maps.InfoWindow();
-												 markerBike.addListener("click", () => {
-													 bikeinfo.setConent(name);
-													 bikeinfo.open({
-														 anchor: markerBike,
-														 map
-													 })
-												 })
-											 })
-										 }
-										 for(var i=0; i<bikeSt.length; i++){
-											 var bikelat = Number(bikeSt[i]["SBIKE_X"]);
-											 var bikelng = Number(bikeSt[i]["SBIKE_Y"]);
-											 let bikeMark = [
-												 {
-													 label: "BIKE",
-													 name: bikeSt[i]["SBIKE_SPOT_NM"],
-													 lat : bikelat,
-													 lng: bikelng
-												 }
-											 ];
-											 
-											 bikeMark.forEach(({label, name, lat, lng}) => {
-												 let markerBike = new google.maps.Marker({
-													 position : { lat, lng },
-													 label,
-													 map: map2
-												 });
-												 
-												 const bikeinfo = new google.maps.InfoWindow();
-												 markerBike.addListener("click", () => {
-													 bikeinfo.setConent(name);
-													 bikeinfo.open({
-														 anchor: markerBike,
-														 map
-													 })
-												 })
-											 })
-										 }
-									 }
-									 
-									 
-									 if(typeof busSt == "undefined"){
-										 console.log("주변 버스정류소가 없습니다.");
-									 }else{
-										 if(typeof busSt.length == "undefined"){
-											 var buslat = Number(busSt["BUS_STN_X"]);
-											 var buslng = Number(busSt["BUS_STN_Y"]);
-											 let busMark = [
-												 {
-													 label: "B",
-													 name: busSt["BUS_STN_NM"],
-													 lat: buslat,
-													 lng: buslng
-												 }
-											 ];
-											 
-											 busMark.forEach(({label, name, lat, lng}) => {
-												 let markerBus = new google.maps.Marker({
-													 position : {lat, lng},
-													 label,
-													 map: map2
-												 });
-												 
-												 const businfo = new google.maps.InfoWindow();
-												 markerBus.addListener("click", () =>{
-													 businfo.setConent(name);
-													 businfo.open({
-														 anchor: markerBus,
-														 map
-													 })
-												 })
-											 })
-										 }
-										 for(var i=0; i<busSt.length; i++){
-											 var buslat = Number(busSt[i]["BUS_STN_X"]);
-											 var buslng = Number(busSt[i]["BUS_STN_Y"]);
-											 let busMark = [
-												 {
-													 label: "B",
-													 name: busSt[i]["BUS_STN_NM"]+"",
-													 lat: buslat,
-													 lng: buslng
-												 }
-											 ];
-											//console.log(busMark);
-											busMark.forEach(({label, name, lat, lng}) => {
-												 let markerBus = new google.maps.Marker({
-													 position: { lat, lng },
-													 label,
-													 map: map2
-												 });
-												 //console.log(markerBus);
-												const businfo = new google.maps.InfoWindow();
-												markerBus.addListener("click", () =>{
-													businfo.setContent(name);
-													businfo.open({
-														anchor: markerBus,
-														map
-													})
-												}) 
-											 })
-										 }
-									 }
-									 
-									 
-									 if(typeof subSt == "undefined"){
-										 console.log("주변 역이 없습니다.");
-									 }else{
-										 if(typeof subSt.length == "undefined"){
-											 var sublat = Number(subSt["SUB_STN_X"]);
-											 console.log(sublat)
-											 var sublng = Number(subSt["SUB_STN_Y"]);
-											 let subMark = [
-												 {
-													 label: "S" , 
-													 name : subSt["SUB_STN_NM"]+"/"+subSt["SUB_STN_LINE"]+"(호선)",
-													 lat: sublat,
-													 lng: sublng
-												 }
-											 ];
-											 //console.log(subMark);
-											 subMark.forEach(({label, name, lat, lng}) => {
-												 let markerSub = new google.maps.Marker({
-													 position: { lat, lng },
-													 label,
-													 map: map2
-												 });
-												 //console.log(markerSub);
-												const subinfo = new google.maps.InfoWindow();
-												markerSub.addListener("click", () =>{
-													subinfo.setContent(name);
-													subinfo.open({
-														anchor: markerSub,
-														map
-													})
-												}) 
-											 })
-											 
-										 }
-										 for(var i = 0; i < subSt.length; i++){
-											 var sublat = Number(subSt[i]["SUB_STN_X"]);
-											 var sublng = Number(subSt[i]["SUB_STN_Y"]);
-											 let subMark = [
-												 {
-													 label: "S" , 
-													 name : subSt[i]["SUB_STN_NM"]+"/"+subSt[i]["SUB_STN_LINE"]+"(호선)",
-													 lat: sublat,
-													 lng: sublng
-												 }
-											 ];
-											 //console.log(subMark);
-											 subMark.forEach(({label, name, lat, lng}) => {
-												 let markerSub = new google.maps.Marker({
-													 position: { lat, lng },
-													 label,
-													 map: map2
-												 });
-												 
-												const subinfo = new google.maps.InfoWindow();
-												markerSub.addListener("click", () =>{
-													subinfo.setContent(name);
-													subinfo.open({
-														anchor: markerSub,
-														map
-													})
-												}) 
-											 })
-											 
-										 }
-									 }
-									 
-									 
-									 
-										  
+												  searchMark.forEach(({ label, name, lat, lng }) => {
+												      let marker = new google.maps.Marker({
+												      position: { lat, lng },
+												      label,
+												      map : map2
+												    });
+												   
+								
+												    marker.addListener("click", () => { //지도 정보 
+												      map.panTo(marker.position); //마커 위치로 중심 이동
+												      infowindow.setContent(name);
+												      infowindow.open({
+												        anchor: marker,
+												        map
+												      });
+												    });	
+												     $('#delMark2').click(function(){
+														console.log("삭제");
+													    searchMark.forEach(() =>{
+															marker.setMap(null);
+														})
+												    
+												 	});
+												   })
+												  }
+												  
+												})
+												.catch(
+													err => console.error(err)
+												);	
+										
+									});
+										
+								
 									ctx1 = document.getElementById("bar-chart-horizontal");
 									ctx2 = document.getElementById("pieChart");
 									ctx3 = document.getElementById("resntChart");
