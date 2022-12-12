@@ -9,13 +9,11 @@
 <script th:inline="javascript" th:src="@{/js/board.js}"></script> 
 <title>글등록</title>
 </head>
-
 <body>
 
-	<div>
 		<div>
 			<label for="title">제목</label>
-			<input type="text" id="boardtitle" placeholder="제목을 입력하세요">
+			<input type="text" id="boardtitle" name="title" placeholder="제목을 입력하세요">
 		</div>
 		
 		<div>
@@ -25,11 +23,15 @@
 		
 		<div>
 			<label for="content">내용</label>
-			<textarea id="boardcontent" placeholder="내용을 입력하세요"></textarea>
+			<textarea id="boardcontent" name="content" placeholder="내용을 입력하세요"></textarea>
 		</div>
 		
+		<div>
+         	<label for="multipart">파일 업로드</label>
+            <input id="file" class="file" type="file" name="file" multiple>
+        </div>
+		
 		<input type="button" id="btn-cancel" onclick="location.href='/board/boardlist'" value="취소">
-		<input type="button" id="btn-save" onclick="SaveBoard()" value="등록">
-	</div>
+		<input type="submit" id="btn-save" onclick="SaveBoard()" value="등록">
 </body>
 </html>

@@ -27,7 +27,7 @@ import lombok.RequiredArgsConstructor;
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     private final MemberRepository memberRepository;
     private final HttpSession httpSession;
-    private final PasswordEncoder passwordEncoder; 	 
+    private final PasswordEncoder passwordEncoder;     
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -39,7 +39,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         // OAuth2 로그인 시 키 값이 된다. 구글은 키 값이 "sub"이고, 네이버는 "response"이고, 카카오는 "id"이다. 각각 다르므로 이렇게 따로 변수로 받아서 넣어줘야함.
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails()
-        			.getUserInfoEndpoint().getUserNameAttributeName();
+                 .getUserInfoEndpoint().getUserNameAttributeName();
         
         
         // OAuth2 로그인을 통해 가져온 OAuth2User의 attribute를 담아주는 of 메소드.
@@ -47,7 +47,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         System.out.println("어트리뷰트"+attributes.getAttributes());
         System.out.println("네임어트리뷰트키"+userNameAttributeName);
         System.out.println(userRequest.getClientRegistration().getProviderDetails()
-        		.getUserInfoEndpoint().getUserNameAttributeName());
+              .getUserInfoEndpoint().getUserNameAttributeName());
         
         Member mem = saveOrUpdate(attributes);
         httpSession.setAttribute("user", new SessionMember(mem));
@@ -56,25 +56,25 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 attributes.getAttributes(),
                 attributes.getNameAttributeKey());
     }
-
+    
     private Member saveOrUpdate(OAuthAttributes attributes) {
-    	Member member = memberRepository.findByEmail(attributes.getEmail());
-    	if(member != null) {
-    		Member mem = memberRepository.findByEmails(attributes.getEmail())
-    				.map(entity -> entity.update(attributes.getNickname(), attributes.getNameAttributeKey(),
-    						attributes.getEmail(),attributes.getPhone(), attributes.getPicture(), passwordEncoder))
-    				.orElse(attributes.toEntity());
-    		
-    		return memberRepository.save(mem);
-    	}else {
+       Member member = memberRepository.findByEmail(attributes.getEmail());
+       if(member != null) {
+          Member mem = memberRepository.findByEmails(attributes.getEmail())
+                .map(entity -> entity.update(attributes.getNickname(), attributes.getNameAttributeKey(),
+                      attributes.getEmail(),attributes.getPhone(), attributes.getPicture(), passwordEncoder))
+                .orElse(attributes.toEntity());
+          
+          return memberRepository.save(mem);
+       }else {
 
-    		Member mem = memberRepository.findByEmails(attributes.getEmail())
-                	.map(entity -> entity.createMember2(attributes.getNickname(), attributes.getNameAttributeKey(),
-                			attributes.getEmail(), attributes.getPhone(), attributes.getPicture(), passwordEncoder))
-                	.orElse(attributes.toEntity());
+          Member mem = memberRepository.findByEmails(attributes.getEmail())
+                   .map(entity -> entity.createMember2(attributes.getNickname(), attributes.getNameAttributeKey(),
+                         attributes.getEmail(), attributes.getPhone(), attributes.getPicture(), passwordEncoder))
+                   .orElse(attributes.toEntity());
 
-    		return memberRepository.save(mem);
-    	}
+          return memberRepository.save(mem);
+       }
     }
 
 

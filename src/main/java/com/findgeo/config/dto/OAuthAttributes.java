@@ -32,7 +32,7 @@ public class OAuthAttributes {
     public static OAuthAttributes of(String registrationId, String userNameAttributeName,
                                      Map<String, Object>  attributes)
     {
-    	if("naver".equals(registrationId)) {
+       if("naver".equals(registrationId)) {
             return ofNaver("id", attributes);
         }
 
@@ -43,17 +43,18 @@ public class OAuthAttributes {
         return  ofGoogle(userNameAttributeName, attributes);
     }
 
-	private static OAuthAttributes ofGoogle(String userNameAttributeName, Map<String, Object>  attributes) {
+   private static OAuthAttributes ofGoogle(String userNameAttributeName, Map<String, Object>  attributes) {
         return OAuthAttributes.builder()
                 .nickname((String) attributes.get("name"))
                 .email((String) attributes.get("email"))
                 .picture((String) attributes.get("picture"))
+                .phone("정보없음")
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
                 .build();
     }
-	
-	private static OAuthAttributes ofNaver(String userNameAttributeName, Map<String, Object> attributes)
+   
+   private static OAuthAttributes ofNaver(String userNameAttributeName, Map<String, Object> attributes)
     {
         Map<String, Object> response = (Map<String, Object>) attributes.get("response");
         System.out.println(OAuthAttributes.builder().attributes(response).nameAttributeKey(userNameAttributeName));
@@ -62,20 +63,22 @@ public class OAuthAttributes {
                 .nickname((String)response.get("name"))
                 .email((String)response.get("email"))
                 .picture((String)response.get("profile_image"))
+                .phone("정보없음")
                 .attributes(response)
                 .nameAttributeKey(userNameAttributeName)
                 .build();
     }
 
-	private static OAuthAttributes ofkakao(String userNameAttributeName, Map<String, Object> attributes)
+   private static OAuthAttributes ofkakao(String userNameAttributeName, Map<String, Object> attributes)
     {
-		Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
-	    Map<String, Object> profile = (Map<String, Object>)kakaoAccount.get("profile");
-	    System.out.println(OAuthAttributes.builder().attributes(kakaoAccount).nameAttributeKey(userNameAttributeName));
+      Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
+       Map<String, Object> profile = (Map<String, Object>)kakaoAccount.get("profile");
+       System.out.println(OAuthAttributes.builder().attributes(kakaoAccount).nameAttributeKey(userNameAttributeName));
         return OAuthAttributes.builder()
                 .nickname((String)profile.get("nickname"))
                 .email((String)kakaoAccount.get("email"))
                 .picture((String)profile.get("profile_image_url"))
+                .phone("정보없음")
                 .attributes(kakaoAccount)
                 .nameAttributeKey(userNameAttributeName)
                 .build();
@@ -87,6 +90,7 @@ public class OAuthAttributes {
                 .email(email)
                 .password(nameAttributeKey)
                 .picture(picture)
+                .phone("정보없음")
                 .role(Role.USER)
                 .build();
     }

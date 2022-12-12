@@ -43,15 +43,11 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	//https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui
-	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
-	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+	//implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+	//implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
 	implementation 'mysql:mysql-connector-java'
-	//implementation 'org.modelmapper:modelmapper:2.4.2'
-	
-	implementation 'com.querydsl:querydsl-jpa'
-	implementation 'com.querydsl:querydsl-apt'
-	
-	implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.0.0'
+
+	implementation 'org.modelmapper:modelmapper:3.1.0'
 }
 tasks.named('test') {
 	useJUnitPlatform()

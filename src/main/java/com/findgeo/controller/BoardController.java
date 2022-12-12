@@ -8,11 +8,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.findgeo.service.*;
 import com.findgeo.config.dto.SessionMember;
 import com.findgeo.dto.PostsResponseDto;
 import com.findgeo.entity.Member;
+import com.findgeo.entity.Posts;
 import com.findgeo.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -30,7 +33,7 @@ public class BoardController {
 	}
 	//저장
 	@GetMapping("/board/postssave")
-	public String postsSave(Model model, Principal principal) {
+	public String postsSave(Model model, Principal principal) throws Exception {
 		SessionMember member =(SessionMember)httpSession.getAttribute("user");
     	if(principal!= null && member == null) {
 			Member user = memberRepository.findByEmail(principal.getName());
