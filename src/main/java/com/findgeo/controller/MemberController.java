@@ -116,25 +116,22 @@ public class MemberController {
     
     //수정화면 요청
     //내가 로그인한 거에서 내가 수정하는 것이기 때문에 세션값을 사용하는 것이다.
-     @GetMapping("/update1")
+	@GetMapping("/update1")
 	public String myPage1(Model model, Principal principal) {
-    	 SessionMember member =(SessionMember)httpSession.getAttribute("user");
-    	 if(principal!= null && member == null) {
-			 Member user = memberRepository.findByEmail(principal.getName());
-			 model.addAttribute("name",user);
-			 System.out.println(user.getPicture()+"12월2일 실험중ddd");
-    	 }else if(principal != null && member != null ) {
-    		 model.addAttribute("name",member);  
-    	 }
-    	 return "member/update";
+		SessionMember member =(SessionMember)httpSession.getAttribute("user");
+		if(principal!= null && member == null) {
+			Member user = memberRepository.findByEmail(principal.getName());
+			model.addAttribute("name",user);
+		}else if(principal != null && member != null ) {
+			model.addAttribute("name",member);  
+		}
+		return "member/update";
 	}
     
   //수정처리
      @PostMapping("/update3")
      public String update(@ModelAttribute Member memberDto, MultipartFile file, Model model,Principal principal) throws Exception{
     	 //memberDto = memberRepository.findByEmail(memberDto.getEmail());
-    	 System.out.println(memberDto.getPicture()+"사진 --------------");
-    	 System.out.println(file.getOriginalFilename()+"사진2-------------");
     	 if(file.getOriginalFilename() != "") {
 	     Member member = Member.update(memberDto, file, passwordEncoder);
 	     memberRepository.save(member);
@@ -144,10 +141,10 @@ public class MemberController {
      									  memberDto.getPassword(),
      									  memberDto.getEmail(),
      									  memberDto.getPhone(), passwordEncoder);
-     		memberRepository.update(memberDto.getNickname(),
-     									  memberDto.getPassword(),
-     									  memberDto.getEmail(),
-     									  memberDto.getPhone());
+     		memberRepository.update(member.getNickname(),
+     									  member.getPassword(),
+     									  member.getEmail(),
+     									  member.getPhone());
      		model.addAttribute("name",member.getNickname());
     	 }
     	 return "redirect:/";

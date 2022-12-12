@@ -41,6 +41,7 @@
     
   </form>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 <script>
 	$(function() {
            fnInit();
@@ -96,7 +97,7 @@
             expdate.setTime(expdate.getTime() + 1000 * 3600 * 24 * 30);
             setCookie("saveid", $("#email").val(), expdate);
             }else{
-           expdate.setTime(expdate.getTime() - 1000 * 3600 * 24 * 30);
+			expdate.setTime(expdate.getTime() - 1000 * 3600 * 24 * 30);
             setCookie("saveid", $("#email").val(), expdate);
         }
     }
