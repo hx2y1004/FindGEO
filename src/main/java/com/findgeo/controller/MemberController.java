@@ -67,6 +67,7 @@ public class MemberController {
 	@PostMapping("/new")
 	public @ResponseBody String newMember(@Validated MemberFormDto memberFormDto, BindingResult bindingResult, Model model){
 		if(bindingResult.hasErrors()) {
+			System.out.println("바인딩리절트시발");
 			return Script.href("member/memberForm", "회원가입에 실패하였습니다.");
 		}
 		try {
