@@ -7,6 +7,28 @@
 <meta charset="UTF-8">
 <title>게시판목록</title>
 </head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js" integrity="sha512-6UofPqm0QupIL0kzS/UIzekR73/luZdC6i/kXDbWnLOJoqwklBK6519iUnShaYceJ0y4FaiPtX/hRnV/X/xlUQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script th:inline="javascript">
+
+    $(document).ready(function(){
+        $("#searchBtn").on("click",function(e) {
+            e.preventDefault();
+            page(0);
+        });
+    });
+
+    function page(page){
+        var searchDateType = $("#searchDateType").val();
+        var searchSellStatus = $("#searchSellStatus").val();
+        var searchBy = $("#searchBy").val();
+        var searchQuery = $("#searchQuery").val();
+
+        location.href="/board/list/" + page;
+    }
+
+</script>
 <body>
  <table border="1">
       <thead>
@@ -33,7 +55,29 @@
       </tr>
       </tbody>
   </table>
-  
+<!--   
+<div th:with="start=${(plannerFormDto.number/maxPage)*maxPage + 1}, end=(${(plannerFormDto.totalPages == 0) ? 1 : (start + (maxPage - 1) < plannerFormDto.totalPages ? start + (maxPage - 1) : plannerFormDto.totalPages)})" >
+     <ul class="pagination justify-content-center">
+
+         <li class="page-item" th:classappend="${plannerFormDto.first}?'disabled'">
+             <a th:onclick="'javascript:page(' + ${plannerFormDto.number - 1} + ')'" aria-label='Previous' class="page-link">
+                 <span aria-hidden='true'>Previous</span>
+             </a>
+         </li>
+
+         <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${plannerFormDto.number eq page-1}?'active':''">
+             <a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text" class="page-link">[[${page}]]</a>
+         </li>
+
+         <li class="page-item" th:classappend="${plannerFormDto.last}?'disabled'">
+             <a th:onclick="'javascript:page(' + ${plannerFormDto.number + 1} + ')'" aria-label='Next' class="page-link">
+                 <span aria-hidden='true'>Next</span>
+             </a>
+         </li>
+
+     </ul>
+</div>
+-->
   <button type="button" onclick="location.href='/'">메인</button>
   <span class="posting" sec:authorize="isAuthenticated()">
   	<button type="button" class="post" onClick="location.href='/board/postssave'">글등록</button>
