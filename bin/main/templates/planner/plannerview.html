@@ -23,7 +23,7 @@ input[readonly]{
 <body>
 <!-- <script th:inline="javascript" th:src="@{/js/plannerView.js}"></script>   -->
 	<form th:action="@{/planner/editpro/{plannerId}(plannerId = ${plannerView.plannerId})}" role="form" method="post" th:object="${planner}" onSubmit="return validateForm(this);">
-		<label>계획서 제목 : </label><input type="text" th:name="plannerTitle" th:value="${plannerView.plannerTitle}"><br>
+		<label>계획서 제목 : </label><input type="text" th:name="plannerTitle" th:value="${plannerView.plannerTitle}" onFocus="this.value='';return true;"><br>
 		<label>업종 : </label>
 		<select th:name="category"  onchange="changeSelect()">
 			<option value="restaurants" th:selected="${plannerView.category}=='restaurants'">음식점</option>
@@ -43,17 +43,17 @@ input[readonly]{
                 </thead>
                 <tbody>
                     <tr>
-                        <td>평균객단가</td><td><input type="text" id="avgPrice" th:name="avgPrice" th:value="${plannerView.avgPrice}">원</td>
+                        <td>평균객단가</td><td><input type="text" id="avgPrice" th:name="avgPrice" th:value="${plannerView.avgPrice}" onFocus="this.value='';return true;">원</td>
                     </tr>
                     <tr>
                         <td class="res-ser" >평일방문고객수</td>
                         <td class="retail" style="display:none">평일매장판매</td>
-                        <td><input type="text" id="avgDayVisit" th:name="avgDayVisit" th:value="${plannerView.avgDayVisit}">건</td>
+                        <td><input type="text" id="avgDayVisit" th:name="avgDayVisit" th:value="${plannerView.avgDayVisit}" onFocus="this.value='';return true;">건</td>
                     </tr>
                     <tr class="res-ret">
                         <td class="restaurants">평일배달건수</td>
                         <td class="retail" style="display:none">평일택배건수</td>
-                        <td><input type="text" id="avgDayDeli" th:name="avgDayDeli" th:value="${plannerView.avgDayDeli}">건</td>
+                        <td><input type="text" id="avgDayDeli" th:name="avgDayDeli" th:value="${plannerView.avgDayDeli}" onFocus="this.value='';return true;">건</td>
                     </tr>
                     <tr>
                         <td>평일일일매출</td><td><input type="text" id="avgDaySales" readonly>원</td>
@@ -61,21 +61,21 @@ input[readonly]{
                     <tr>
                         <td class="res-ser">주말방문고객수</td>
                         <td class="retail" style="display:none">주말매장판매</td>
-                        <td><input type="text" id="avgEndVisit" th:name="avgEndVisit" th:value="${plannerView.avgEndVisit}">건</td>
+                        <td><input type="text" id="avgEndVisit" th:name="avgEndVisit" th:value="${plannerView.avgEndVisit}" onFocus="this.value='';return true;">건</td>
                     </tr>
                     <tr class="res-ret">
                         <td class="restaurants">주말배달건수</td>
                         <td class="retail" style="display:none">주말택배건수</td>
-                        <td><input type="text" id="avgEndDeli" th:name="avgEndDeli" th:value="${plannerView.avgEndDeli}" class="res-ret">건</td>
+                        <td><input type="text" id="avgEndDeli" th:name="avgEndDeli" th:value="${plannerView.avgEndDeli}" class="res-ret" onFocus="this.value='';return true;">건</td>
                     </tr>
                     <tr>
                         <td>주말일일매출</td><td><input type="text" id="avgEndSales" readonly>건</td>
                     </tr>
                     <tr>
-                        <td>월평일매출(<input type="text" id='days' value='1' th:name="days" th:value="${plannerView.days}">일)</td><td><input type="text" id="avgMonDaySales" readonly>원</td>
+                        <td>월평일매출(<input type="text" id='days' value='1' th:name="days" th:value="${plannerView.days}" onFocus="this.value='';return true;">일)</td><td><input type="text" id="avgMonDaySales" readonly>원</td>
                     </tr>
                     <tr>
-                        <td>월주말매출(<input type="text" id='ends' value='1' th:name="ends" th:value="${plannerView.ends}">일)</td><td><input type="text" id="avgMonEndSales" readonly>원</td>
+                        <td>월주말매출(<input type="text" id='ends' value='1' th:name="ends" th:value="${plannerView.ends}" onFocus="this.value='';return true;">일)</td><td><input type="text" id="avgMonEndSales" readonly>원</td>
                     </tr>
                     <tr class="restaurants">
                         <td>배달비율(0.0~1.0)</td><td><input type="text" id="delRatio" readonly></td>
@@ -101,18 +101,18 @@ input[readonly]{
                 <tbody>
                     <tr>
                         <td>초기비용</td><td>시설비</td>
-                        <td><input type="text" id="initCost" th:name="initCost"  th:value="${plannerView.initCost}">원</td>
+                        <td><input type="text" id="initCost" th:name="initCost"  th:value="${plannerView.initCost}" onFocus="this.value='';return true;">원</td>
                     </tr>
                     <tr>
                         <td class="restaurants" rowspan="11">고정비</td>
                         <td class="retail" rowspan="10" style="display:none">고정비</td>
                         <td class="services" rowspan="9" style="display:none">고정비</td>
                         <td>임차관리비</td>
-                        <td><input type="text" id="rentCost" th:name="rentCost" th:value="${plannerView.rentCost}">원</td>
+                        <td><input type="text" id="rentCost" th:name="rentCost" th:value="${plannerView.rentCost}" onFocus="this.value='';return true;">원</td>
                     </tr>
                     <tr>
                         <td>인건비</td>
-                        <td><input type="text" id="totalSalary" th:name="totalSalary"  th:value="${plannerView.totalSalary}">원</td>
+                        <td><input type="text" id="totalSalary" th:name="totalSalary"  th:value="${plannerView.totalSalary}" onFocus="this.value='';return true;">원</td>
                     </tr>
                     <tr>
                         <td>4대보험</td>
@@ -124,7 +124,7 @@ input[readonly]{
                     </tr>
                     <tr>
                         <td>보험료(책임배상+화재)</td>
-                        <td><input type="text" id="insurance" th:name="totInsurance" th:value="${plannerView.totInsurance}">원</td>
+                        <td><input type="text" id="insurance" th:name="totInsurance" th:value="${plannerView.totInsurance}" onFocus="this.value='';return true;">원</td>
                     </tr>
                     <tr class="res-ret">
                         <td class="restaurants">배달앱사용료(15%)</td><td class="retail" style="display:none">배송비용(3000원)</td>
@@ -132,11 +132,11 @@ input[readonly]{
                     </tr>
                     <tr>
                         <td>렌탈비</td>
-                        <td><input type="text" id="etcRent" th:name="etcRent" th:value="${plannerView.etcRent}">원</td>
+                        <td><input type="text" id="etcRent" th:name="etcRent" th:value="${plannerView.etcRent}" onFocus="this.value='';return true;">원</td>
                     </tr>
                     <tr class="restaurants">
                         <td>요식중앙회</td>
-                        <td><input type="text" id="dues" th:name="dues"  th:value="${plannerView.dues}">원</td>
+                        <td><input type="text" id="dues" th:name="dues"  th:value="${plannerView.dues}" onFocus="this.value='';return true;">원</td>
                     </tr>
                     <tr>
                         <td>감가상각비</td>
@@ -144,7 +144,7 @@ input[readonly]{
                     </tr>
                     <tr>
                         <td>대출이자</td>
-                        <td><input type="text" id="interest" th:name="interest" th:value="${plannerView.interest}">원</td>
+                        <td><input type="text" id="interest" th:name="interest" th:value="${plannerView.interest}" onFocus="this.value='';return true;">원</td>
                     </tr>
                     <tr>
                         <td>고정비소계</td>
@@ -155,7 +155,7 @@ input[readonly]{
                         <td class="retail" rowspan="9" style="display:none">변동비</td>
                         <td class="services" rowspan="8" style="display:none">변동비</td>
                         <td class="res-ret">원가율(0.0~1.0)</td>
-                        <td class="res-ret"><input class="res-ret" type="text" id="costRate" th:name="costRate" th:value="${plannerView.costRate}"></td>
+                        <td class="res-ret"><input class="res-ret" type="text" id="costRate" th:name="costRate" th:value="${plannerView.costRate}" onFocus="this.value='';return true;"></td>
                     </tr>
                     <tr class="res-ret">
                         <td class="restaurants">식재료비</td><td class="retail" style="display:none">매입비</td>
@@ -163,19 +163,19 @@ input[readonly]{
                     </tr>
                     <tr>
                         <td>아르바이트</td>
-                        <td><input type="text" id="partTime" th:name="partTime" th:value="${plannerView.partTime}">원</td>
+                        <td><input type="text" id="partTime" th:name="partTime" th:value="${plannerView.partTime}" onFocus="this.value='';return true;">원</td>
                     </tr>
                     <tr>
                         <td>수도,전기,가스</td>
-                        <td><input type="text" id="w_e_g" th:name="w_e_g" th:value="${plannerView.w_e_g}">원</td>
+                        <td><input type="text" id="w_e_g" th:name="w_e_g" th:value="${plannerView.w_e_g}" onFocus="this.value='';return true;">원</td>
                     </tr>
                     <tr>
                         <td>소모품비</td>
-                        <td><input type="text" id="expand" th:name="expand" th:value="${plannerView.expand}">원</td>
+                        <td><input type="text" id="expand" th:name="expand" th:value="${plannerView.expand}" onFocus="this.value='';return true;">원</td>
                     </tr>
                     <tr>
                         <td>광고비</td>
-                        <td><input type="text" id="advertise" th:name="advertise" th:value="${plannerView.advertise}">원</td>
+                        <td><input type="text" id="advertise" th:name="advertise" th:value="${plannerView.advertise}" onFocus="this.value='';return true;">원</td>
                     </tr>
                     <tr>
                         <td>각종 세금(6개월)매달 충당</td>
@@ -183,7 +183,7 @@ input[readonly]{
                     </tr>
                     <tr>
                         <td>기타비용</td>
-                        <td><input type="text" id="etc" th:name="etc" th:value="${plannerView.etc}">원</td>
+                        <td><input type="text" id="etc" th:name="etc" th:value="${plannerView.etc}" onFocus="this.value='';return true;">원</td>
                     </tr>
                     <tr>
                         <td>변동비소계</td>
@@ -214,6 +214,7 @@ input[readonly]{
 			$('.res-ser').show();
 			$('.res-ret').show();
 			$('.ret-ser').hide();
+			calc();
 			break;
 		case 'retail':
 			console.log('ret');
@@ -223,6 +224,7 @@ input[readonly]{
 			$('.ret-ser').show();
 			$('.res-ret').show();
 			$('.res-ser').hide();
+			calc();
 			break;
 		case 'services':
 			console.log('ser');
@@ -232,9 +234,11 @@ input[readonly]{
 			$('.res-ser').show();
 			$('.ret-ser').show();
 			$('.res-ret').hide();
+			calc();
 			break;
 		}
 	};
+	
 	function calc(){
 		let avgPrice = Number(document.getElementById('avgPrice').value);
 		let avgDayVisit = Number(document.getElementById('avgDayVisit').value);
@@ -303,11 +307,11 @@ input[readonly]{
 		$('#netProfit').val(totalSales-fixedCost-flexCost);
 		let netProfit = Number(document.getElementById('netProfit').value);
 		$('#profitRatio').val(netProfit/totalSales);
+		inputNaN();
 	}
-	calc();
 	$('input').keyup(calc);
-	const patternInt = /[0-9999999999999]/;
-	const patternFloat = /[0.0-1.0]/;
+	const patternInt = /^[0-9]*$/;
+	const patternFloat = /^[.0-9]*$/;
 	function validateForm(form){
 		if(!form.plannerTitle.value){
 			alert("제목은 필수입력 사항입니다.");
@@ -321,7 +325,7 @@ input[readonly]{
 			alert("올바른 평일방문고객수를 입력해주세요.")
 			return false;
 		}
-		if(!patternInt.test(form.avgDayDeli.value)){
+		if(form.avgDayDeli.value=="" || !patternInt.test(form.avgDayDeli.value)){
 			alert("올바른 평일배달건수를 입력해주세요.")
 			return false;
 		}
@@ -341,55 +345,55 @@ input[readonly]{
 			alert("올바른 주말 영업일을 입력해주세요.")
 			return false;
 		}
-		if(!patternInt.test(form.initCost.value)){
+		if(form.initCost.value=="" || !patternInt.test(form.initCost.value)){
 			alert("올바른 시설비를 입력해주세요.")
 			return false;
 		}
-		if(!patternInt.test(form.rentCost.value)){
+		if(form.restCost.value=="" || !patternInt.test(form.rentCost.value)){
 			alert("올바른 임차관리비를 입력해주세요.")
 			return false;
 		}
-		if(!patternInt.test(form.totalSalary.value)){
+		if(form.totalSalary.value=="" || !patternInt.test(form.totalSalary.value)){
 			alert("올바른 인건비를 입력해주세요.")
 			return false;
 		}
-		if(!patternInt.test(form.insurance.value)){
+		if(form.insurance.value == "" || !patternInt.test(form.insurance.value)){
 			alert("올바른 보험료를 입력해주세요.")
 			return false;
 		}
-		if(!patternInt.test(form.etcRent.value)){
+		if(form.etcRent.value=="" || !patternInt.test(form.etcRent.value)){
 			alert("올바른 렌탈비를 입력해주세요.")
 			return false;
 		}
-		if(!patternInt.test(form.dues.value)){
+		if(form.dues.value=="" || !patternInt.test(form.dues.value)){
 			alert("올바른 요식중앙회비를 입력해주세요.")
 			return false;
 		}
-		if(!patternInt.test(form.interest.value)){
+		if(form.interest.value=="" || !patternInt.test(form.interest.value)){
 			alert("올바른 대출이자를 입력해주세요.")
 			return false;
 		}
-		if(!patternFloat.test(form.costRate.value) || form.costRate.value<0 || form.costRate.value>1){
+		if(form.costRate.value=="" || !patternFloat.test(form.costRate.value) || form.costRate.value<0 || form.costRate.value>1){
 			alert("올바른 원가율를 입력해주세요.")
 			return false;
 		}
-		if(!patternInt.test(form.partTime.value)){
+		if(form.partTime.value=="" || !patternInt.test(form.partTime.value)){
 			alert("올바른 아르바이트비를 입력해주세요.")
 			return false;
 		}
-		if(!patternInt.test(form.w_e_g.value)){
+		if(form.w_e_g.value=="" || !patternInt.test(form.w_e_g.value)){
 			alert("올바른 수도,전기,가스비를 입력해주세요.")
 			return false;
 		}
-		if(!patternInt.test(form.expand.value)){
+		if(form.expand.value=="" || !patternInt.test(form.expand.value)){
 			alert("올바른 소모품비를 입력해주세요.")
 			return false;
 		}
-		if(!patternInt.test(form.advertise.value)){
+		if(form.advertise.value=="" || !patternInt.test(form.advertise.value)){
 			alert("올바른 광고비를 입력해주세요.")
 			return false;
 		}
-		if(!patternInt.test(form.etc.value)){
+		if(form.etc.value=="" || !patternInt.test(form.etc.value)){
 			alert("올바른 기타비용을 입력해주세요.")
 			return false;
 		}
@@ -400,6 +404,18 @@ input[readonly]{
 			location.href="/planner/deletepro/"+plannerId;
 		}
 	};
+	var input = document.getElementsByTagName('input');
+	console.log(input);
+	console.log(input.length);
+	
+	function inputNaN(){
+		for(i=2;i<input.length;i++){
+			if(isNaN(input[i].value)==true){
+				input[i].value=null;
+			}
+		}
+	}
+	calc();
 </script>
 </body>
 </html>

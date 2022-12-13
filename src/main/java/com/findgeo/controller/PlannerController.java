@@ -40,8 +40,6 @@ public class PlannerController {
 		model.addAttribute("message", "플래너 작성이 완료되었습니다.");
 		SessionMember member =(SessionMember)httpSession.getAttribute("user");
 		String emailId="";
-		System.out.println("p.getname : "+principal.getName());
-		System.out.println("member.getemail : "+member.getEmail());
 		if(principal!= null && member == null) {
 			emailId = principal.getName();
 		}else if(principal != null && member != null ) {
@@ -59,8 +57,6 @@ public class PlannerController {
 	public String plannerList(Model model, Principal principal, @PathVariable("page") Optional<Integer> page) throws Exception {
 		SessionMember member =(SessionMember)httpSession.getAttribute("user");
 		String emailId="";
-		System.out.println("p.getname : "+principal.getName());
-		System.out.println("member.getemail : "+member.getEmail());
 		if(principal!= null && member == null) {
 			emailId = principal.getName();
 		}else if(principal != null && member != null ) {
@@ -80,7 +76,6 @@ public class PlannerController {
 	@GetMapping("/view/{plannerid}")
 	public String plannerView(Model model, @PathVariable("plannerid") Long plannerId) {
 		Planner plannerFormDto = plannerService.selectPlanner(plannerId);
-		System.out.println(")))))))))))))))))))))))))"+plannerFormDto.getPlannerId());
 		model.addAttribute("planner", new PlannerFormDto());
 		model.addAttribute("plannerView", plannerFormDto);
 		return "planner/plannerview";
@@ -88,8 +83,6 @@ public class PlannerController {
 	
 	@PostMapping("/editpro/{plannerid}")
 	public String plannerUpdate(PlannerFormDto planner) throws Exception{
-		System.out.println("}}}}}}}}}}}}}}}}}}}}}}}}}}"+planner.getPlannerId());
-		System.out.println("}}}}}}}}}}}}}}}}}}}}}}}}}}"+planner.getCategory());
 		Optional <Planner> plannerDto = plannerService.updatePlanner(planner);
 		return "redirect:/planner/list";
 	}

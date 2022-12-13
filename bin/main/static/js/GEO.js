@@ -161,7 +161,8 @@ window.initMap = function () {
 										//gestureHandling: "none",
 										//zoomControl: false,
 									  });
-									
+									  
+									  
 										
 
 									 $('#trafficSelc').click(function(){
