@@ -82,8 +82,16 @@
   <span class="posting" sec:authorize="isAuthenticated()">
   	<button type="button" class="post" onClick="location.href='/board/postssave'">글등록</button>
   </span>
-
   
+  <div class="paging">
+  	<ul>
+  		<li th:each="page : ${#numbers.sequence(0,totalPage-1)}">
+  			<a th:href="@{/board/boardlist(page=${pageStat.index})}" th:text="${pageStat.index+1}"></a>
+  		</li>
+  	</ul>
+  </div>
+
+
 
 
 </body>

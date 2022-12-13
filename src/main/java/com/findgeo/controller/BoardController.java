@@ -1,15 +1,13 @@
 package com.findgeo.controller;
-
 import java.security.Principal;
-
 import javax.servlet.http.HttpSession;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.findgeo.service.*;
 import com.findgeo.config.dto.SessionMember;
@@ -27,8 +25,12 @@ public class BoardController {
     private final MemberRepository memberRepository;
 	
 	@GetMapping("/board/boardlist")
-	public String board(Model model) {
-		model.addAttribute("posts",postService.findAllDesc());
+	public String board(Model model, @RequestParam(required=false, defaultValue = "0",value="page") int page) {
+		Page<Posts> listPage = postService.list(page);
+		int totalPage = listPage.getTotalPages();
+		
+		model.addAttribute("posts",listPage.getContent());
+		model.addAttribute("totalPage",totalPage);
 		return "/board/boardlist";
 	}
 	//저장

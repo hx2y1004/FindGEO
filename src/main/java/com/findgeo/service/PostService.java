@@ -5,6 +5,9 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import com.findgeo.dto.PostsListResponseDto;
 import com.findgeo.dto.PostsResponseDto;
@@ -26,11 +29,8 @@ public class PostService {
 	}
 	
 	@Transactional
-	public List<PostsListResponseDto> findAllDesc(){
-		return postsRepository.findAllDesc().stream()
-				.map(posts -> new PostsListResponseDto(posts))
-				.collect(Collectors.toList());
-		// postsRepository 결과로 넘어온 posts의 스트림을 map을 통해 postsListResponseDto 변환 > list로 반환하는 코드
+	public Page<Posts> list(int page){
+		return postsRepository.findAll(PageRequest.of(page, 10,Sort.by(Sort.Direction.DESC,"boardid")));
 	}
 	
 	public PostsResponseDto findById(Long boardid) {
