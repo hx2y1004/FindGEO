@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -159,4 +160,15 @@ public class MemberController {
         System.out.println(userEmail+"ddzcvzcxvqwqqweqweqweqw");
         return "redirect:/members/logout";
      }
+	
+	//비밀번호 체크
+    @GetMapping("/pwCheck")
+	public @ResponseBody boolean pwCheck(@RequestParam("password") String password, @RequestParam("email") String email, BCryptPasswordEncoder passwordEncoder) {
+    	System.out.println(password+"비번 체크 멤버 컨트롤러");
+    	boolean checkResult = memberService.result(password, email, passwordEncoder);
+    	System.out.println(email+"이멜 컨트롤러");
+    	System.out.println(password+"입력비번 컨트롤러");
+    	System.out.println(checkResult);
+    	return checkResult;
+	}
 }

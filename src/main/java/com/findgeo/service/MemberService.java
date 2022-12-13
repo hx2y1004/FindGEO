@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -83,6 +84,25 @@ public class MemberService implements UserDetailsService{
 	}
 	
 	public void deleteByEmail(String email) {
-	      memberRepository.deleteByEmail(email);
-	   }
+		memberRepository.deleteByEmail(email);
+	}
+	
+//	public String pwCheck(String password, String email, PasswordEncoder passwordEncoder) {
+//		System.out.println(password+ "비번 체크 멤버서비스파일");
+//		String dbpw = memberRepository.findpw(email);
+//		System.out.println(dbpw+"ajax 실험중 여기는 멤버서비스");
+//		boolean dbpw2 = passwordEncoder.matches(password, dbpw);
+//		
+//	}
+	
+	public boolean result(String password, String email, BCryptPasswordEncoder passwordEncoder) {
+		System.out.println(password+ "비번 체크 멤버서비스파일");
+		String dbpw = memberRepository.findpw(email);
+		System.out.println(dbpw+"ajax 실험중 여기는 멤버서비스");
+		boolean dbpw2 = passwordEncoder.matches(password, dbpw);
+		System.out.println(email+"이멜 서비스");
+    	System.out.println(password+"입력비번 서비스");
+    	System.out.println(dbpw2+"불리언");
+		return dbpw2;
+	}
 }
