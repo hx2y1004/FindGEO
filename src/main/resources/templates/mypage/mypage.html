@@ -6,12 +6,119 @@
 <meta charset="UTF-8">
 <title>My Page</title> 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<script th:inline="javascript" th:src="@{/js/GEO.js}"></script>
 <style>
 	td{
 		border:1px solid lightgray;
 	}
+	#modal.modal-overlay {
+	    width: 100%;
+	    height: 100%;
+	    position: absolute;
+	    left: 0;
+	    top: 0;
+	    display: none;
+	    flex-direction: column;
+	    align-items: center;
+	    justify-content: center;
+	    background: rgba(255, 255, 255, 0.25);
+	    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+	    backdrop-filter: blur(1.5px);
+	    -webkit-backdrop-filter: blur(1.5px);
+	    border-radius: 10px;
+	    border: 1px solid rgba(255, 255, 255, 0.18);
+	}
+	#modal .modal-window {
+	    background: rgba( 69, 139, 197, 0.70 );
+	    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+	    backdrop-filter: blur( 13.5px );
+	    -webkit-backdrop-filter: blur( 13.5px );
+	    border-radius: 10px;
+	    border: 1px solid rgba( 255, 255, 255, 0.18 );
+	    width: 500px;
+	    height: 300px;
+	    position: relative;
+	    top: 20px;
+	    padding: 5px;
+	    overflow-y: auto;
+	}
+	#modal .title {
+	    padding-left: 10px;
+	    display: inline;
+	    text-shadow: 1px 1px 2px gray;
+	    color: white;
+	    
+	}
+	#modal .title h2 {
+	    display: inline;
+	}
+	#modal .close-area {
+	    display: inline;
+	    float: right;
+	    padding-right: 10px;
+	    cursor: pointer;
+	    text-shadow: 1px 1px 2px gray;
+	    color: white;
+	}
+	
+	#modal .content {
+	    margin-top: 20px;
+	    padding: 0px 10px;
+	    text-shadow: 1px 1px 2px gray;
+	    color: white;
+	}
 </style>
+<script>
+	function passwordCheck(){
+		const modal = document.getElementById('modal');
+		modal.style.display = "flex";
+	
+		const closeBtn = modal.querySelector('.close-area');
+		closeBtn.addEventListener("click", e => {
+			modal.style.display="none";			
+		});
+		modal.addEventListener("click", e => {
+			const evTarget = e.target
+			if(evTarget.classList.contains("modal-overlay")) {
+				modal.style.display = "none"
+			}
+		})
+	}
+		
+	$(document).ready(function (){
+			$("#btnpwCheck").on("click", function(event){
+				const password = document.getElementById("password").value;
+				const email = document.getElementById("email").value;
+				const target1 = document.getElementById("change1");
+				const target2 = document.getElementById("change2");
+  
+				$.ajax({
+                	type: "get",
+                	url: "/members/pwCheck",
+                	dataType: "text",
+                	data:{
+						"password":password,
+						"email":email
+					},
+					success:function(result){
+						if(result == 'true'){
+							$("#checkPw").html('원하는 서비스를 선택해주세요.');
+							$("#checkPw").attr('color','green');
+							target1.disabled = false;
+							target2.disabled = false;
+						}else{
+							$("#checkPw").html('비밀번호를 다시 확인해주세요.');
+							$("#checkPw").attr('color','red');
+							target1.disabled = true;
+							target2.disabled = true;
+						}
+					},
+					error: function(){
+						alert("ajax 실패");
+ 					}
+				});
+			});
+		});
+</script>
 </head>
 <body>
 	<table style="border:1px solid lightgray; border-radius:10px; width:70%;">
@@ -21,8 +128,7 @@
 		</td>
 		<td>
 			<h4><span th:text="${member.nickname}"></span></h4>
-			<button type="button" onclick="location.href='/members/update1'">정보수정</button>
-			<a th:href="@{/members/delete/{email}(email=${member.email})}">탈퇴하기</a>   
+			<button type="button" onclick="passwordCheck()">수정/탈퇴하기</button>
 		</td>
 		<td rowspan="2">
 			내 사업 계획서
@@ -38,5 +144,25 @@
 		</td>
 	</tr>
 	</table>
+	
+	<div id="modal" class="modal-overlay">
+        <div class="modal-window"> 
+            <div class="title">
+                <h2>비밀번호 확인</h2>
+            </div>
+            <div class="close-area">X</div>
+            <div class="content">
+            	<div>
+					<label th:for="password">비밀번호</label>
+					<input type="password" id="password" name="password" placeholder="비밀번호를 입력해주세요"><br>
+					<input type="button" id="btnpwCheck" value="비밀번호 확인" name="passwordcheck" />
+	            	<div style="display: inline-block"><font id = "checkPw" size = "2"></font></div>
+	            	<input type="hidden" th:value="${member.email}" id = "email" />
+				</div>
+			  	<button type="button" onclick="location.href='/members/update1'" disabled="disabled" id="change1">수정하기</button>
+			  	<button type="button" th:onClick="|location.href='@{/members/delete/{email}(email=${member.email})}'|" disabled="disabled" id="change2" >탈퇴하기</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

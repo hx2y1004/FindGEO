@@ -53,6 +53,12 @@
 	   	 	alert("비밀번호는 8자 이상, 하나 이상의 문자, 숫자와 하나의 상의 특수문자를 입력해주세요.");
 	   	 	return false; 
 	   	}
+	   	var reg = /^[0-9]{10,11}/;
+		var phone = form.phone.value;
+	   	if( !reg.test(phone)){
+	   	 	alert("전화번호는 10~11자 숫자만 입력해주세요.");
+	   	 	return false; 
+	   	}
 	}
 </script>
 <body>

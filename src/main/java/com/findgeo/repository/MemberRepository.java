@@ -27,4 +27,8 @@ public interface MemberRepository extends JpaRepository<Member, Long>{
 	@Transactional
 	@Query("DELETE FROM Member m WHERE m.email = ?1")
 	Integer deleteByEmail(@Param("email") String email);
+	
+	@Transactional
+	@Query("SELECT M.password FROM Member M WHERE M.email = ?1")
+	String findpw(@Param("email") String email);
 }
