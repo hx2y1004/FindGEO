@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      layout:decorate="~{layouts/layout1}">
+
 <head>
 <meta charset="UTF-8">
 <title>Index</title> 
 <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
 <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
 <link rel="stylesheet" media="screen" th:href="@{/css/Modal.css}"/>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script th:inline="javascript" th:src="@{/js/GEO.js}"></script>
@@ -15,21 +18,12 @@
 <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
 </head>
 <body>
+<div layout:fragment="content">
 	<th:block th:if="${name != null}">
 		<h4><span th:text="${name}"></span>님 환영합니다.</h4>
 		<input type="hidden" id="email" th:value="${email}"/>
 	</th:block>
-	
-	<a sec:authorize="isAuthenticated()" th:href="@{board/boardlist}">게시판</a>
-    </sec:authorize>
-	<a sec:authorize="isAuthenticated()" th:href="@{planner/list}">계획서</a>
-    </sec:authorize>
-    <a sec:authorize="isAuthenticated()" th:href="@{members/mypage}">마이페이지</a>
-    </sec:authorize>
-	<a sec:authorize="isAuthenticated()" th:href="@{/members/logout}"> 로그아웃</a>
-    </sec:authorize>
-    <a sec:authorize="isAnonymous()" th:href="@{members/login}">로그인</a>
-    </sec:authorize>
+
     <div id="map" style="height: 850px;"></div> 
 
   	<div id="modal" class="modal-overlay">
@@ -88,7 +82,7 @@
             </div>
         </div>
     </div>
- 
+</div>
   	
   	
 </body>

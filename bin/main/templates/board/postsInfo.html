@@ -1,17 +1,43 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
 <head>
 <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
 <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
 <meta charset="UTF-8">
 <title>게시물 상세보기</title>
 </head>
+<th:block layout:fragment="css">
+	<style>
+	#posting{
+	position: absolute;
+    left: 50%;
+    transform:translate(-60%,3%);
+	}
+	#content{
+	width: 500px;
+	height: 150px;
+	}
+	#list,#edit{
+	border:2px solid #4caf50;
+	border-radius:5px; float:right;
+	color:black; background-color:#f0f0f0;
+	text-decoration: none; margin:5px;
+	font-size:17px; padding:5px;
+	width: 100px; height: 30px; text-align: center;
+	}
+	
+	</style>
+</th:block>
 <body>
+<div layout:fragment="content">
+ <div id="posting">
 	<form>
 		<div>
-			<label for="num">글번호</label>
-			<input type="text" id="num" th:value="${posts.boardid}" readonly>
+			<label>글번호</label>
+			<span th:text="${posts.boardid}"></span>
 		</div>
 		<div>
 			<label>작성일 </label>
@@ -20,30 +46,30 @@
 			<span th:text="${posts.views}"></span>
 		</div>
 		<div>
-			<label for="title">제목</label>
+			<label for="title" style="display:block;">제목</label>
 			<input type="text" id="title" th:value="${posts.boardtitle}" readonly>
 		</div>
 		<div>
-			<label for="author">작성자</label>
+			<label for="author" style="display:block;">작성자</label>
 			<input type="text" id="author" th:value="${posts.nickname}" readonly>
 		</div>
 		<div>
-			<label for="content">내용</label>
-			<textarea th:text="${posts.boardcontent}" readonly> </textarea>
+			<label for="content" style="display:block;">내용</label>
+			<textarea id="content" th:text="${posts.boardcontent}" readonly> </textarea>
 		</div>
 		<div>
-	         <label for="FILE">첨부파일</label>
-	         <p>
-	         <a th:if="${posts}" th:href="@{${posts.fileinput}}">[[${posts.fileinput}]]</a>
-	         </p>
+	        <label for="FILE" style="display:block;">첨부파일</label>
+	        <p>
+		        <img class="fileimg" th:src="${posts.fileinput}" alt="첨부파일" width="100px" height="100px">
+		        <a th:if="${posts}" th:href="@{${posts.fileinput}}">[[${posts.fileinput}]]</a>
+	        </p>
         </div>
-		
-	
 	</form>
 	<span sec:authorize="isAuthenticated()">
-		<a th:href="@{/post/update/{boardid}(boardid = ${posts.boardid})}" >수정/삭제</a>
+		<a id="edit" th:href="@{/post/update/{boardid}(boardid = ${posts.boardid})}" >수정/삭제</a>
 	</span>
-	<a href="/board/boardlist">목록</a>
-
+	<a id="list" href="/board/boardlist">목록</a>
+ </div>
+</div>
 </body>
 </html>
