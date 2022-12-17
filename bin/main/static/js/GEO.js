@@ -6,9 +6,7 @@ var traffic;
 let mymark;
 var selLats;
 var selLngs;
-
-let areaname;
-let Congestion;
+// -----------------------------------------
 var rate0;
 var rate10;
 var rate20;
@@ -16,6 +14,21 @@ var rate30;
 var rate40;
 var rate50;
 var rate60; 
+var rate70;
+var male;
+var female;
+var resnt;
+var nonResnt;
+var congest;
+var areaname;
+var selectlat;
+var selectlng;
+//-----------------------------------------
+var trafMark = [];
+var fdMark = [];
+var svMark = [];
+var retaMark = [];
+var arMark = [];
 
 
 window.initMap = function () {
@@ -144,7 +157,7 @@ window.initMap = function () {
 										  var bikeStts = citydata["SBIKE_STTS"];
 										  var bikeSt = bikeStts["SBIKE_STTS"];
 										  //console.log(bikeSt);
-										  var areaname = citydata["AREA_NM"];
+										  areaname = citydata["AREA_NM"];
 										  console.log(areaname);
 										  rate0 = liveSt["PPLTN_RATE_0"];
 										  rate10 = liveSt["PPLTN_RATE_10"];
@@ -155,13 +168,13 @@ window.initMap = function () {
 										  rate60 = liveSt["PPLTN_RATE_60"];
 										  rate70 = liveSt["PPLTN_RATE_70"];
 										  
-										  var male = liveSt["MALE_PPLTN_RATE"];
-										  var female = liveSt["FEMALE_PPLTN_RATE"];
+										  male = liveSt["MALE_PPLTN_RATE"];
+										  female = liveSt["FEMALE_PPLTN_RATE"];
 										  
-										  var resnt = liveSt["RESNT_PPLTN_RATE"];
-										  var nonResnt = liveSt["NON_RESNT_PPLTN_RATE"];
+										  resnt = liveSt["RESNT_PPLTN_RATE"];
+										  nonResnt = liveSt["NON_RESNT_PPLTN_RATE"];
 										  
-										  var congest = liveSt["AREA_CONGEST_LVL"];
+										  congest = liveSt["AREA_CONGEST_LVL"];
 										  var htmlCongest = document.getElementById("areaCongest");
 										  htmlCongest.innerText = congest;
 										  
@@ -201,6 +214,8 @@ window.initMap = function () {
 										 }
 										 selLats = latlng.lat;
 									     selLngs = latlng.lng;
+									     selectlat = selLats;
+									     selectlng = selLngs;
 										 clear();
 										 mymark = new google.maps.Marker({
 											position: { lat : latlng.lat, lng: latlng.lng },
@@ -300,8 +315,8 @@ window.initMap = function () {
 											     lng: Number(poiInfo[i].frontLon) },
 											  ];
 											  //console.log(searchMark);
-											  
-												  
+											  	  
+												  fdMark.push(searchMark);
 												  const infowindow = new google.maps.InfoWindow(); //클릭시 정보 보여주기
 												
 												  searchMark.forEach(({ icon, name, lat, lng }) => {
@@ -312,6 +327,7 @@ window.initMap = function () {
 												      map : map2
 												    });
 												   
+												  
 								
 												    marker.addListener("mouseover",()=>{
 														infowindow.setContent(name);
@@ -374,7 +390,7 @@ window.initMap = function () {
 											     lng: Number(poiInfo[i].frontLon) },
 											  ];
 											  //console.log(searchMark);
-											  
+											      svMark.push(searchMark);
 												  
 												  const infowindow = new google.maps.InfoWindow(); //클릭시 정보 보여주기
 												
@@ -446,7 +462,7 @@ window.initMap = function () {
 											     lng: Number(poiInfo[i].frontLon) },
 											  ];
 											  //console.log(searchMark);
-											  
+											     retaMark.push(searchMark);
 												  
 												  const infowindow = new google.maps.InfoWindow(); //클릭시 정보 보여주기
 												
@@ -495,7 +511,7 @@ window.initMap = function () {
 									
 									$('#areaSelc').click(function(){
 									    if(typeof selLats != "undefined" || typeof selLngs != "undefined"){
-										 var areasel = document.getElementById('serviceData');
+										 var areasel = document.getElementById('areaData');
 										 var selected = areasel.options[areasel.selectedIndex].value ;
 									 	console.log(selected);
 									 
@@ -519,7 +535,7 @@ window.initMap = function () {
 											     lng: Number(poiInfo[i].frontLon) },
 											  ];
 											  //console.log(searchMark);
-											  
+											   arMark.push(searchMark);
 												  
 												  const infowindow = new google.maps.InfoWindow(); //클릭시 정보 보여주기
 												
@@ -612,8 +628,8 @@ window.initMap = function () {
 											     lng: Number(poiInfo[i].frontLon) },
 											  ];
 											  //console.log(searchMark);
-											  
-												  
+											     
+												  trafMark.push(searchMark);
 												  const infowindow = new google.maps.InfoWindow(); //클릭시 정보 보여주기
 												 
 												  searchMark.forEach(({ icon, name, lat, lng }) => {
@@ -742,8 +758,33 @@ window.initMap = function () {
 
 function saveInfo(){
 	var data = {
+            email : $("#email").val(),
+			areaname : areaname,
+			rate0 : rate0,
+			rate10 : rate10,
+			rate20 : rate20,
+			rate30 : rate30,
+			rate40 : rate40,
+			rate50 : rate50,
+			rate60 : rate60,
+			rate70 : rate70,
+			male : male,
+			female : female,
+			nonResnt : nonResnt,
+			congest : congest,
+			selectlat : selectlat,
+			selectlng : selectlng,
+			areaData : {
+				trafMark : trafMark,
+				fdMark : fdMark,
+				svMark : svMark,
+				retaMark : retaMark,
+				arMark : arMark,
+			}
 			
         };
+    console.log(data);
+    console.log(data.areaData);
     var email = $("#email").val();
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
@@ -752,13 +793,13 @@ function saveInfo(){
         xhr.setRequestHeader(header,token);
    		},
         type : 'POST',
-        url : '/clipping/',
+        url : 'members/clipping/'+email,
         dataType : 'json',
         contentType : 'application/json; charset=utf-8',
         data : JSON.stringify(data)
     }).done(function(){
         alert('스크랩 완료');
-        window.location.href = '/post/info/'+boardid;
+        window.location.href = 'redirect:/'
     }).fail(function(error){
         alert(JSON.stringify(error));
     })

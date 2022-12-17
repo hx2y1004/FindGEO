@@ -29,6 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.findgeo.config.dto.SessionMember;
 import com.findgeo.dto.MemberFormDto;
+import com.findgeo.dto.SelectPingDto;
 import com.findgeo.entity.Member;
 import com.findgeo.repository.MemberRepository;
 import com.findgeo.service.MemberService;
@@ -171,4 +172,9 @@ public class MemberController {
     	System.out.println(checkResult);
     	return checkResult;
 	}
+    
+    @PostMapping("/clipping/{email}")
+    public @ResponseBody Long saveInfo(@PathVariable String email ,@RequestParam SelectPingDto selectPingDto) {
+    	return null;
+    }
 }

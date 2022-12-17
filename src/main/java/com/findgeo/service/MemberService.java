@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.findgeo.dto.SelectPingDto;
 import com.findgeo.entity.Member;
 import com.findgeo.repository.MemberRepository;
 
@@ -104,5 +105,9 @@ public class MemberService implements UserDetailsService{
     	System.out.println(password+"입력비번 서비스");
     	System.out.println(dbpw2+"불리언");
 		return dbpw2;
+	}
+	
+	public Long saveClip(String email, SelectPingDto selectPingDto) {
+		return null;
 	}
 }
