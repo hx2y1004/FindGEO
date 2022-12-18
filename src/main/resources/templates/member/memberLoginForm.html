@@ -37,8 +37,8 @@
     <button type="button" class="btn btn-primary" onClick="location.href='/oauth2/authorization/google'">구글 로그인</button><br/>
     <button type="button" class="btn btn-primary" onClick="location.href='/oauth2/authorization/kakao'">카카오 로그인</button><br/>
     <button type="button" class="btn btn-primary" onClick="location.href='/members/new'">회원가입</button>
-    <button type="button" onclick="location.href='/members/findIdPw'">아이디/비밀번호 찾기</button>
-    
+    <button type="button" onclick="location.href='/members/findId'">아이디 찾기</button>
+    <button type="button" onclick="location.href='/members/findPw'">비밀번호 찾기</button>
   </form>
 </div>
 <script>
@@ -99,6 +99,62 @@
 			expdate.setTime(expdate.getTime() - 1000 * 3600 * 24 * 30);
             setCookie("saveid", $("#email").val(), expdate);
         }
+    }
+    
+    const header = $("meta[name='_csrf_header']").attr('content');
+    const token = $("meta[name='_csrf']").attr('content');
+
+    $('#checkEmail').on('click', function(){
+        checkEmail();
+    });
+
+    function checkEmail(){
+        const memberEmail = $('#memberEmail').val();
+
+        if(!memberEmail || memberEmail.trim() === ""){
+            alert("이메일을 입력하세요.");
+        } else {
+            $.ajax({
+                type: 'GET',
+                url: '/members/emailCheck',
+                data: {
+                    'memberEmail': memberEmail
+                },
+                dataType: "text",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                }
+            }).done(function(result){
+                console.log("result :" + result);
+                if (result == "true") {
+                    sendEmail();
+                    alert('임시비밀번호를 전송 했습니다.');
+                    window.location.href="/memers/login";
+                } else if (result == "false") {
+                    alert('가입되지 않은 이메일입니다.');
+                }
+            }).fail(function(error){
+                alert(JSON.stringify(error));
+            })
+        }
+    };
+
+    function sendEmail(){
+        const memberEmail = $('#memberEmail').val();
+
+        $.ajax({
+            type: 'POST',
+            url: '/sendPwd',
+            data: {
+                'memberEmail' : memberEmail
+            },
+            beforeSend: function(xhr){
+                xhr.setRequestHeader(header, token);
+            },
+            error: function(error){
+                alert(JSON.stringify(error));
+            }
+        })
     }
 </script>
 </body>

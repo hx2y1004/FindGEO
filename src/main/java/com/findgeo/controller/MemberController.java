@@ -1,19 +1,13 @@
 package com.findgeo.controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.security.Principal;
+import java.util.Optional;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -21,17 +15,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.findgeo.config.dto.SessionMember;
 import com.findgeo.dto.MemberFormDto;
+import com.findgeo.dto.MessageDto;
+import com.findgeo.dto.SmsResponseDto;
 import com.findgeo.entity.Member;
 import com.findgeo.repository.MemberRepository;
 import com.findgeo.service.MemberService;
+import com.findgeo.service.SmsService;
 import com.findgeo.util.Script;
 
 import lombok.RequiredArgsConstructor;
@@ -40,7 +37,9 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/members")
 @RequiredArgsConstructor
 public class MemberController {
+	
 	private final PasswordEncoder passwordEncoder;
+	
 	private final MemberService memberService;
 	private final HttpSession httpSession;
     private final MemberRepository memberRepository;
@@ -96,7 +95,6 @@ public class MemberController {
 	//이메일 중복체크
     @GetMapping("/emailCheck")
     public @ResponseBody String emailCheck(@RequestParam("memberEmail") String email) {
-       System.out.println(email+"아이디 중복체크 ajax 실험중 여기는 멤버 컨트롤러");
        String checkResult = memberService.emailCheck(email);
        return checkResult;
     }
@@ -106,7 +104,6 @@ public class MemberController {
     	SessionMember member =(SessionMember)httpSession.getAttribute("user");
     	if(principal!= null && member == null) {
 			Member user = memberRepository.findByEmail(principal.getName());
-			System.out.println("사진체크  "+user.getPicture());
 			model.addAttribute("member",user);
 		}else if(principal != null && member != null ) {
 			model.addAttribute("member",member);
@@ -134,9 +131,9 @@ public class MemberController {
      public String update(@ModelAttribute Member memberDto, MultipartFile file, Model model,Principal principal) throws Exception{
     	 //memberDto = memberRepository.findByEmail(memberDto.getEmail());
     	 if(file.getOriginalFilename() != "") {
-	     Member member = Member.update(memberDto, file, passwordEncoder);
-	     memberRepository.save(member);
-	     model.addAttribute("name",member.getNickname());
+		     Member member = Member.update(memberDto, file, passwordEncoder);
+		     memberRepository.save(member);
+		     model.addAttribute("name",member.getNickname());
     	 }else {
 		 	Member member = Member.update(memberDto.getNickname(),
      									  memberDto.getPassword(),
@@ -155,20 +152,68 @@ public class MemberController {
 	public String deleteById(@PathVariable String email,Model model,Principal principal) {
 		memberService.deleteByEmail(email);
         Member userEmail = memberRepository.findByEmail(principal.getName());
-        System.out.println(email+"회원탈퇴 컨트롤러타는 중?");
         model.addAttribute("name",userEmail);
-        System.out.println(userEmail+"ddzcvzcxvqwqqweqweqweqw");
         return "redirect:/members/logout";
      }
 	
 	//비밀번호 체크
     @GetMapping("/pwCheck")
 	public @ResponseBody boolean pwCheck(@RequestParam("password") String password, @RequestParam("email") String email, BCryptPasswordEncoder passwordEncoder) {
-    	System.out.println(password+"비번 체크 멤버 컨트롤러");
     	boolean checkResult = memberService.result(password, email, passwordEncoder);
-    	System.out.println(email+"이멜 컨트롤러");
-    	System.out.println(password+"입력비번 컨트롤러");
-    	System.out.println(checkResult);
     	return checkResult;
 	}
+    
+    @GetMapping("/findId")
+    public String findId() {
+    	return "member/findId";
+    }
+	private final SmsService smsService;
+    @PostMapping("/sendsmsId")
+	public @ResponseBody String sendSmsId(@RequestBody MessageDto messageDto, Model model) throws Exception {
+		SmsResponseDto response = smsService.sendSms(messageDto);
+		int chkNum = smsService.chkNum();
+		model.addAttribute("checkNum", chkNum);
+		model.addAttribute("response", response);
+		return "member/findId";
+	}
+    
+    @GetMapping("/viewId/{phone}")
+    public String viewId(@PathVariable String phone, Model model) {
+    	String email = memberRepository.findIdByPhone(phone);
+    	model.addAttribute("email", email);
+    	return "member/foundId";
+    }
+    
+    @GetMapping("/findPw")
+    public String findPw() {
+    	return "member/findPw";
+    }
+    @PostMapping("/sendsmsPw")
+	public @ResponseBody String sendSmsPw(@RequestBody MessageDto messageDto, String email, Model model) throws Exception {
+		SmsResponseDto response = smsService.sendSms(messageDto);
+		int chkNum = smsService.chkNum();
+		Optional<Member> member = memberRepository.findByEmailPhone(messageDto.getTo(), email);
+		model.addAttribute("checkNum", chkNum);
+		model.addAttribute("response", response);
+		model.addAttribute("member", member);
+		return "member/findPw";
+	}
+    
+    @GetMapping("/changePw/{phone}")
+    public String changePw(@PathVariable String phone, Model model) {
+    	String email = memberRepository.findIdByPhone(phone);
+    	model.addAttribute("email", email);
+    	return "member/changePw";
+    }
+    
+    @PostMapping("/foundPw")
+    public String changePw(@ModelAttribute Member memberDto,  Model model) throws Exception{
+    	Member member = Member.update(memberDto.getPassword(),
+									memberDto.getEmail(),
+									memberDto.getPhone(), passwordEncoder);
+    	memberRepository.update(member.getPassword(),
+    								member.getEmail());
+    	model.addAttribute("email", member.getEmail());
+    	return "member/memberLoginForm";
+    }
 }

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+	<meta charset="UTF-8">
+    <!--<script type="text/javascript" src="/scripts/jquery-ui/jquery.min.js"></script>
+	<script type="text/javascript" src="/scripts/common/common-ui.js"></script>-->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<title>아이디 찾기</title>
+<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+<body>
+<div>
+    <h1>아이디 찾기</h1>
+ 	<input type="hidden" id="chkNum" th:value=${checkNum}/>
+<table>
+        <tr class="form-group">
+            <td>전화번호</td>
+            <td>
+                <input type="text" class="form-control" id="to" name="to" placeholder="전화번호를 입력하세요">
+        		<button id="sendSms" name="sendSms">인증번호 전송</button>
+            </td>
+        </tr>
+        <tr>
+        	<td>인증번호</td>
+			<td>
+				<input type="text" name="checknum"><span id="timer"></span>
+				<button id="checknum" name="checknum">인증번호 확인</button>            
+			</td>
+        </tr>
+    </table>
+ 
+</div>
+<script>
+$('#sendSms').click(function(){
+	const to = document.getElementById('to').value; 
+	const content = "";
+	const data = {
+		to : to,
+		content : content
+	}
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	console.log(to);
+	$.ajax({
+		beforeSend: function(xhr){
+		    xhr.setRequestHeader(header,token);
+		},
+		type: "post",
+		url: "/members/sendsmsId",
+		dateType: "json",
+		data: JSON.stringify(data),
+        contentType : 'application/json; charset=utf-8',
+		success: function(data) {
+	    	alert("문자가 발송되었습니다.");
+	    	// 타이머 구현_daldal
+			function $ComTimer(){
+			    //prototype extend
+			}
+			
+			$ComTimer.prototype = {
+			    comSecond : ""
+			    , fnCallback : function(){}
+			    , timer : ""
+			    , domId : ""
+			    , fnTimer : function(){
+			        var m = Math.floor(this.comSecond / 60) + "분 " + (this.comSecond % 60) + "초";	// 남은 시간 계산
+			        this.comSecond--;					// 1초씩 감소
+			        console.log(m);
+			        this.domId.innerText = m;
+			        if (this.comSecond < 0) {			// 시간이 종료 되었으면..
+			            clearInterval(this.timer);		// 타이머 해제
+			            alert("인증시간이 초과하였습니다. 다시 인증해주시기 바랍니다.");
+			            window.close();
+			            window.opener.location = "/index.do"
+			        }
+			    }
+			    ,fnStop : function(){
+			        clearInterval(this.timer);
+			    }
+			}
+			
+			var AuthTimer = new $ComTimer()
+			
+			AuthTimer.comSecond = 180; // 제한 시간
+			
+			AuthTimer.fnCallback = function(){alert("다시인증을 시도해주세요.")}; // 제한 시간 만료 메세지
+			
+			AuthTimer.timer =  setInterval(function(){AuthTimer.fnTimer()},1000); 
+			
+			AuthTimer.domId = document.getElementById("timer");
+		},
+		error: function(data){
+			alert("문자 발송에 실패했습니다.");
+		}
+	});
+});
+$('#checknum').click(function() {
+	const inputCode = document.getElementById('checknum').value;
+	const checkNum = document.getElementById('chkNum').value;
+	const to = document.getElementById('to').value; 
+	    if (inputCode == checkNum) {
+			alert("번호 인증 성공");
+			window.location.href = '/members/viewId/'+to;
+	    } else {
+			$("#checkPw").html('인증번호가 일치하지 않습니다.');
+			$("#checkPw").attr('color','#dc3545');
+	    }
+});
+
+</script>
+</body>
+</html>

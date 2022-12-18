@@ -138,4 +138,19 @@ public class Member {
 	      
 	      return memberEntity;
 	}
+	
+	// 비밀번호 변경 메서드
+    public void updatePassword(String password){
+        this.password = password;
+    }
+    
+    public static Member update(String password, String email, String phone, PasswordEncoder passwordEncoder) throws Exception{
+	      Member memberEntity = new Member();
+	      memberEntity.setEmail(email);
+	      String pw = passwordEncoder.encode(password);
+	      memberEntity.setPassword(pw);
+	      memberEntity.setPhone(phone);
+	      
+	      return memberEntity;
+	}
 }

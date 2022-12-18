@@ -1,6 +1,7 @@
 package com.findgeo.service;
 
 import java.util.Optional;
+import java.util.Random;
 
 import javax.transaction.Transactional;
 
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.findgeo.entity.Member;
 import com.findgeo.repository.MemberRepository;
+//import com.findgeo.util.Naver_Sens_V2;
 
 import lombok.AllArgsConstructor;
 
@@ -87,14 +89,7 @@ public class MemberService implements UserDetailsService{
 		memberRepository.deleteByEmail(email);
 	}
 	
-//	public String pwCheck(String password, String email, PasswordEncoder passwordEncoder) {
-//		System.out.println(password+ "비번 체크 멤버서비스파일");
-//		String dbpw = memberRepository.findpw(email);
-//		System.out.println(dbpw+"ajax 실험중 여기는 멤버서비스");
-//		boolean dbpw2 = passwordEncoder.matches(password, dbpw);
-//		
-//	}
-	
+	//비밀번호 체크
 	public boolean result(String password, String email, BCryptPasswordEncoder passwordEncoder) {
 		System.out.println(password+ "비번 체크 멤버서비스파일");
 		String dbpw = memberRepository.findpw(email);
@@ -105,4 +100,19 @@ public class MemberService implements UserDetailsService{
     	System.out.println(dbpw2+"불리언");
 		return dbpw2;
 	}
+	
+//	public String sendRandomMessage(String phone) {
+//	    Naver_Sens_V2 message = new Naver_Sens_V2();
+//	    Random rand = new Random();
+//	    String numStr = "";
+//	    for (int i = 0; i < 6; i++) {
+//	        String ran = Integer.toString(rand.nextInt(10));
+//	        numStr += ran;
+//	    }
+//	    System.out.println("회원가입 문자 인증 => " + numStr);
+//
+//	    message.send_msg(phone, numStr);
+//
+//	    return numStr;
+//	}
 }

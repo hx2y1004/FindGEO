@@ -42,6 +42,10 @@
 			alert("비밀번호 체크를 해주세요.");
 			return false;
 		}
+		if (form.password.value != form.password2.value){
+			alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+			return false;
+		}
 		if (form.phone.value == ""){
 			alert("전화번호를 입력하세요.");
 			return false;
@@ -67,7 +71,7 @@
 	<div>
 		<img style="width: 100px;" id="preview-image" th:src="@{ ${name.picture} }" />
 		<input type="hidden" name="picture" th:value=${name.picture}/>
-		<input style="display: block;" type="file" id="picture" name="file" onchange="readImage(this)" accept="images/png, images/jpg, images/jpeg">
+		<input style="display: block;" type="file" id="picture" name="file" onchange="readImage(this)" accept="image/png, image/jpg, image/jpeg">
 	</div>
 	<div>
 		<label th:for="email">이메일</label>
