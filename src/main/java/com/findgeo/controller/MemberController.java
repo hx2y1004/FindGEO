@@ -25,6 +25,7 @@ import com.findgeo.config.dto.SessionMember;
 import com.findgeo.dto.MemberFormDto;
 import com.findgeo.dto.MessageDto;
 import com.findgeo.dto.SmsResponseDto;
+import com.findgeo.dto.SelectPingDto;
 import com.findgeo.entity.Member;
 import com.findgeo.repository.MemberRepository;
 import com.findgeo.service.MemberService;

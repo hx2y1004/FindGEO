@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.findgeo.dto.SelectPingDto;
 import com.findgeo.entity.Member;
 import com.findgeo.repository.MemberRepository;
 //import com.findgeo.util.Naver_Sens_V2;
@@ -101,18 +102,4 @@ public class MemberService implements UserDetailsService{
 		return dbpw2;
 	}
 	
-//	public String sendRandomMessage(String phone) {
-//	    Naver_Sens_V2 message = new Naver_Sens_V2();
-//	    Random rand = new Random();
-//	    String numStr = "";
-//	    for (int i = 0; i < 6; i++) {
-//	        String ran = Integer.toString(rand.nextInt(10));
-//	        numStr += ran;
-//	    }
-//	    System.out.println("회원가입 문자 인증 => " + numStr);
-//
-//	    message.send_msg(phone, numStr);
-//
-//	    return numStr;
-//	}
 }

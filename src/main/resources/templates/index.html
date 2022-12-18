@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      layout:decorate="~{layouts/layout1}">
+
 <head>
 <meta charset="UTF-8">
 <title>Index</title> 
+<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
 <link rel="stylesheet" media="screen" th:href="@{/css/Modal.css}"/>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script th:inline="javascript" th:src="@{/js/GEO.js}"></script>
@@ -13,33 +18,14 @@
 <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
 </head>
 <body>
+<div layout:fragment="content">
 	<th:block th:if="${name != null}">
 		<h4><span th:text="${name}"></span>님 환영합니다.</h4>
+		<input type="hidden" id="email" th:value="${email}"/>
 	</th:block>
-	
-	<a sec:authorize="isAuthenticated()" th:href="@{board/boardlist}">게시판</a>
-    </sec:authorize>
-	<a sec:authorize="isAuthenticated()" th:href="@{planner/list}">계획서</a>
-    </sec:authorize>
-    <a sec:authorize="isAuthenticated()" th:href="@{members/mypage}">마이페이지</a>
-    </sec:authorize>
-	<a sec:authorize="isAuthenticated()" th:href="@{/members/logout}"> 로그아웃</a>
-    </sec:authorize>
-    <a sec:authorize="isAnonymous()" th:href="@{members/login}">로그인</a>
-    </sec:authorize>
-    <div id="map" style="height: 700px;"></div> 
 
-  	<input type="button" id="delMark"  value="마커 삭제"/>
-  	<input type="button" id="selDel"  value="선택 해제"/><br/>
-  	
-  	<form name="aData">
-  		주변 정보<br/>
-  		<th:block th:each="areaData : ${areaData}">
-  			<input type="checkbox" th:name="areaData" name="areaData" id="areaData" th:value="${areaData.category}"/><span th:text="${areaData.category}">areaData</span>
-		</th:block><br/>
-		
-		<button type="button" name="areaDataSet" id="areaDataSet">상권 찾기</button>
-  	</form> 
+    <div id="map" style="height: 850px;"></div> 
+
   	<div id="modal" class="modal-overlay">
         <div class="modal-window">
             <div class="title">
@@ -56,19 +42,47 @@
 			  	<canvas id="pieChart" width="300" height="300"></canvas> 
 			  	<p>거주/비거주</p>
 			  	<canvas id="resntChart" width="300" height="300"></canvas>
-			  	<p>근처 교통 정보</p>
-			  	<div id="map2" style="height: 400px;"></div>
+			  	<p>근처 상권 정보</p>
+			  	<div id="map2" style="height: 500px;"></div>
 			  	
-			  	<select id="trafficData" th:each="traffic : ${trafficDataList}">
-			  		<option value="${traffic.category}" th:text="${traffic.category}" ></option>
+			  	<select id="trafficData">
+			  		<th:block  th:each="traffic : ${trafficDataList}">
+			  			<option th:value="${traffic.category}" th:text="${traffic.category}" ></option>
+			  		</th:block>
 			  	</select>
-			  	<button type="button" name="trafficSelc" id="trafficSelc">교통정보 선택</button>
+			  	<button type="button" name="trafficSelc" id="trafficSelc">교통정보 추가</button><br/>
+			  	<select id="foodData">
+			  		<th:block  th:each="food : ${foodDataList}">
+			  			<option th:value="${food.category}" th:text="${food.category}" ></option>
+			  		</th:block>
+			  	</select>
+			  	<button type="button" name="foodSelc" id="foodSelc">음식점 정보 추가</button><br/>
+			  	<select id="serviceData">
+			  		<th:block  th:each="service : ${serviceDataList}">
+			  			<option th:value="${service.category}" th:text="${service.category}" ></option>
+			  		</th:block>
+			  	</select>
+			  	<button type="button" name="serviceSelc" id="serviceSelc">서비스업 정보 추가</button><br/>
+			  	<select id="retailData">
+			  		<th:block  th:each="retail : ${retailDataList}">
+			  			<option th:value="${retail.category}" th:text="${retail.category}" ></option>
+			  		</th:block>
+			  	</select>
+			  	<button type="button" name="retailSelc" id="retailSelc">도/소매업 정보 추가</button><br/>
+			  	<select id="areaData">
+			  		<th:block  th:each="areaData : ${areaDataList}">
+			  			<option th:value="${areaData.category}" th:text="${areaData.category}" ></option>
+			  		</th:block>
+			  	</select>
+			  	<button type="button" name="areaSelc" id="areaSelc">지역 정보</button><br/>
 			  	<button type="button" name="delMark2" id="delMark2" >마커 삭제</button>
+			  	<button type="button" name="savedata" id="savedata" sec:authorize="isAuthenticated()" onClick="saveInfo();">정보 저장</button>
+			  	
            		
             </div>
         </div>
     </div>
- 
+</div>
   	
   	
 </body>
