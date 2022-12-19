@@ -12,26 +12,72 @@
 <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
 <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
+<style>
+	@font-face {
+	 font-family: 'GmarketSansMedium';
+	 src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+	 font-weight: normal;
+	 font-style: normal;
+	}
+	*{font-family: 'GmarketSansMedium';}
+	#findid{
+	text-align: center;
+	margin-top: 15%;
+	}
+	table{
+	margin: auto;
+	margin-bottom: 15%;
+	width:700px;
+	height: 100px;
+	}
+	#sendSms{
+	width:120px;
+	}
+	#checknum{
+	border:2px solid #04479b;
+	width: 250px; border-radius: 5px;
+	background-color: #d3d3d38a;
+	height: 35px;
+	}
+	#to{
+	border:2px solid #04479b;
+	width: 400px; border-radius: 5px;
+	background-color: #d3d3d38a;
+	height: 35px;
+	margin-left: 60px;
+	}
+	#num{
+	font-size: 20px;
+	}
+	button{
+	border:2px solid #04479b;
+	width: 120px; border-radius: 5px;
+	}
+
+
+</style>
 <body>
-<div>
-    <h1>아이디 찾기</h1>
+<div id="findid">
+    <h1>아이디 찾기🔍</h1>
  	<input type="hidden" id="chkNum" th:value=${checkNum}/>
 <table>
         <tr class="form-group">
-            <td>전화번호</td>
+            <td id="num" colspan="2">전화번호</td>
             <td>
-                <input type="text" class="form-control" id="to" name="to" placeholder="전화번호를 입력하세요">
+            	<input type="text" class="form-control" id="to" name="to" placeholder="전화번호를 입력하세요.">
+            </td>
+            <td>
         		<button id="sendSms" name="sendSms">인증번호 전송</button>
             </td>
-        </tr>
+       </tr>
         <tr>
-        	<td>인증번호</td>
-			<td>
-				<input type="text" name="checknum"><span id="timer"></span>
-				<button id="checknum" name="checknum">인증번호 확인</button>            
+        	<td colspan="2" id="num">인증번호</td>
+        	<td>
+				<input type="text" id="checknum"><span id="timer"></span>
+				<button class="checknum" name="checknum">인증번호 확인</button>            
 			</td>
         </tr>
-    </table>
+</table>
  
 </div>
 <script>
