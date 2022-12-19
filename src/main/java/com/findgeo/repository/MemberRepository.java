@@ -31,6 +31,7 @@ public interface MemberRepository extends JpaRepository<Member, Long>{
 	@Transactional
 	@Query("SELECT M.password FROM Member M WHERE M.email = ?1")
 	String findpw(@Param("email") String email);
+
 	
 	@Transactional
 	@Query("SELECT M.email from Member M WHERE M.phone = ?1")
@@ -44,4 +45,5 @@ public interface MemberRepository extends JpaRepository<Member, Long>{
 	@Modifying 
 	@Query("UPDATE Member m SET m.password=:password WHERE m.email=:email")
 	void update(@Param("password") String password,@Param("email") String email);
+
 }

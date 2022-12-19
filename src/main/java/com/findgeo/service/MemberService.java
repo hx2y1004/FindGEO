@@ -102,4 +102,5 @@ public class MemberService implements UserDetailsService{
 		return dbpw2;
 	}
 	
+
 }

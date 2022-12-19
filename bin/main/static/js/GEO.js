@@ -18,7 +18,7 @@ var rate70;
 var male;
 var female;
 var resnt;
-var nonResnt;
+var nonresnt;
 var congest;
 var areaname;
 var selectlat;
@@ -172,7 +172,7 @@ window.initMap = function () {
 										  female = liveSt["FEMALE_PPLTN_RATE"];
 										  
 										  resnt = liveSt["RESNT_PPLTN_RATE"];
-										  nonResnt = liveSt["NON_RESNT_PPLTN_RATE"];
+										  nonresnt = liveSt["NON_RESNT_PPLTN_RATE"];
 										  
 										  congest = liveSt["AREA_CONGEST_LVL"];
 										  var htmlCongest = document.getElementById("areaCongest");
@@ -719,7 +719,7 @@ window.initMap = function () {
 										data: {
 											labels: ["거주","비거주"],
 											datasets: [{
-												data: [resnt, nonResnt],
+												data: [resnt, nonresnt],
 												backgroundColor: ['white','black']
 											}]
 										},
@@ -757,6 +757,7 @@ window.initMap = function () {
 };
 
 function saveInfo(){
+	console.log(trafMark);
 	var data = {
             email : $("#email").val(),
 			areaname : areaname,
@@ -770,21 +771,19 @@ function saveInfo(){
 			rate70 : rate70,
 			male : male,
 			female : female,
-			nonResnt : nonResnt,
+			resnt : resnt,
+			nonresnt : nonresnt,
 			congest : congest,
 			selectlat : selectlat,
 			selectlng : selectlng,
-			areaData : {
-				trafMark : trafMark,
-				fdMark : fdMark,
-				svMark : svMark,
-				retaMark : retaMark,
-				arMark : arMark,
-			}
+			//trafMark : trafMark,
+			//fdMark : fdMark,
+			//svMark : svMark,
+			//retaMark : retaMark,
+			//arMark : arMark,
 			
         };
     console.log(data);
-    console.log(data.areaData);
     var email = $("#email").val();
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
@@ -793,13 +792,33 @@ function saveInfo(){
         xhr.setRequestHeader(header,token);
    		},
         type : 'POST',
-        url : 'members/clipping/'+email,
+        url : 'clipping/'+email,
         dataType : 'json',
         contentType : 'application/json; charset=utf-8',
         data : JSON.stringify(data)
     }).done(function(){
+		var trafdata = {
+			traflat : traflat,
+			traflng : traflng
+		};
+		var fddata = {
+			fdlat : fdlat,
+			fdlng : fdlng
+		};
+		var svdata = {
+			svlat : svlat,
+			svlng : svlng
+		};
+		var retadata = {
+			retalat : retalat,
+			retalng : retalng
+		};
+		var ardata = {
+			arlat : arlat,
+			arlng : arlng
+		}
+		
         alert('스크랩 완료');
-        window.location.href = 'redirect:/'
     }).fail(function(error){
         alert(JSON.stringify(error));
     })
