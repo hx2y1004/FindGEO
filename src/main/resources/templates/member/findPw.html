@@ -12,27 +12,61 @@
 <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
 <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
+<style>
+	@font-face {
+	 font-family: 'GmarketSansMedium';
+	 src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+	 font-weight: normal;
+	 font-style: normal;
+	}
+	*{font-family: 'GmarketSansMedium';}
+	#findpw{
+	text-align: center;
+	margin-top: 15%;
+	}
+	table{
+	margin: auto;
+	margin-bottom: 15%;
+	width:700px;
+	height: 100px;
+	}
+	#num{
+	font-size: 20px;
+	}
+	#email,#to,#checknum{
+	border:2px solid #04479b;
+	border-radius: 5px;
+	background-color: #d3d3d38a;
+	}
+	
+
+
+</style>
 <body>
-<div>
-    <h1>비밀번호 찾기</h1>
+<div id="findpw">
+    <h1>비밀번호 찾기🔍</h1>
  	<input type="hidden" id="chkNum" th:value=${checkNum}/>
  	<input type="hidden" id="member" th:value=${member} />
-<table>
+<table border="1">
         <tr class="form-group">
-        	<td>이메일</td>
+        	<td id="num">이메일</td>
             <td>
                 <input type="text" class="form-control" id="email" name="email" placeholder="이메일을 입력하세요">
             </td>
-            <td>전화번호</td>
-            <td>
-                <input type="text" class="form-control" id="to" name="to" placeholder="전화번호를 입력하세요">
-        		<button id="sendSms" name="sendSms">인증번호 전송</button>
-            </td>
         </tr>
         <tr>
-        	<td>인증번호</td>
+            <td id="num">전화번호</td>
+            <td>
+                <input type="text" class="form-control" id="to" name="to" placeholder="전화번호를 입력하세요">
+            </td>
+            <td>
+        		<button id="sendSms" name="sendSms">인증번호 전송</button>
+        	</td>
+        </tr>
+        <tr>
+        	<td id="num">인증번호</td>
 			<td>
-				<input type="text" name="checknum"><span id="timer"></span>
+				<input type="text" id="checknum"><span id="timer"></span>
 				<button id="checknum" name="checknum">인증번호 확인</button>            
 			</td>
         </tr>

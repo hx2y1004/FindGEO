@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http//www.thymeleaf.org"
-				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+				xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+				layout:decorate="~{layouts/layout1}">
 <head>
+<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
 <meta charset="UTF-8">
 <title>사업계획서 작성하기</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>  
@@ -15,15 +19,36 @@
     });
     
 </script>
+<th:block layout:fragment="css">
 <style>
 input[readonly]{
-	background-color:lightgrey;
+	background-color:#8BD145;
+	
+	
 }
+#calc{
+border:2px solid #4caf50;
+width: 100px; 
+margin:auto;
+display:block;
+border-radius: 5px;
+}
+#post{
+text-align:center;
+}
+
+
 </style>
+</th:block>
 <body>
+<div layout:fragment="content">
+
 <!-- <script th:inline="javascript" th:src="@{/js/plannerInput.js}"></script>    -->
 	<form action="/planner/writepro" role="form" method="post" th:object="${plannerFormDto}" onSubmit="return validateForm(this);">
-		<label>계획서 제목 : </label><input type="text" th:field="*{plannerTitle}" onFocus="this.value='';return true;"><br>
+		<br/>
+		<div id="post">
+		<label>계획서 제목 : </label>  <input type="text" th:field="*{plannerTitle}" onFocus="this.value='';return true;"><br>
+		
 		<label>업종 : </label>
 		<select th:field="*{category}"  onchange="changeSelect()">
 			<option value="restaurants" selected>음식점</option>
@@ -31,8 +56,11 @@ input[readonly]{
 			<option value="services">서비스업</option>
 		</select>
 		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+		<br/>
+		<br/>
 		<fieldset>
 			<legend>월매출 계산</legend>
+			</div>
             <table align="center" width="70%" border="1">
                 <thead>
                 	<tr>
@@ -90,7 +118,10 @@ input[readonly]{
             </table>
 		</fieldset>
 		<fieldset>
-			<legend>손익계산서</legend>
+		<div id="post">
+		<br/>
+		<br/>
+			<legend>손익계산서</legend></div>
             <table align="center" width="70%" border="1">
                 <thead>
                 	<tr>
@@ -199,8 +230,12 @@ input[readonly]{
                     </tr>
                 </tbody>
             </table>
-			<button type="submit" name="calc" >저장하기</button>
+            <br/>
+            <br/>
+			<button type="submit" id="calc" >저장하기</button>
 		</fieldset>
+		<br/>
+        <br/>
 	</form>
 <script>
 
@@ -417,5 +452,6 @@ $('input').keyup(calc);
 	inputNull();
 	
 </script>
+</div>
 </body>
 </html>

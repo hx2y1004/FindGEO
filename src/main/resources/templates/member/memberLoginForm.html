@@ -21,8 +21,7 @@ border: none;
 }
 #loginform{
 margin:auto;
-border:1px solid #67dcff;
-width:50%; padding:10px;
+width:50%; padding:10%;
 }
 button{
 background-color: transparent;
@@ -33,10 +32,13 @@ button:hover{cursor: pointer;}
 .btn-btn-primary1{
 color:white; 
 font-weight:bold; font-size:15px;
-background-color: #67dcff;
-width:450px; height:40px;
+background-color: #04479b;
+width:460px; height:40px;
 border-radius:5px;
-margin-left: 20%;
+margin: 0 auto;
+position: relative;
+left: 50%;
+transform:translate(-50%,3%);
 }
 img{
 display: block;
@@ -54,11 +56,11 @@ justify-content: center;
 display: flex;
 justify-content: center;
 }
-.btn-btn-primary5,.btn-btn-primary6{
+.btn-btn-primary5{
 color: gray;
 font-size: 15px;
 }
-.btn-btn-primary5:hover,.btn-btn-primary6:hover{
+.btn-btn-primary5:hover{
 color:blue; cursor:pointer;
 }
 
@@ -106,8 +108,8 @@ color:blue; cursor:pointer;
     </div>
     <span id="new">
 	    <button type="button" class="btn-btn-primary5" onClick="location.href='/members/new'">회원가입</button>
-	    <button type="button" onclick="location.href='/members/findId'">아이디 찾기</button>
-        <button type="button" onclick="location.href='/members/findPw'">비밀번호 찾기</button>
+	    <button type="button" class="btn-btn-primary5" onclick="location.href='/members/findId'">아이디 찾기</button>
+        <button type="button" class="btn-btn-primary5" onclick="location.href='/members/findPw'">비밀번호 찾기</button>
    	</span>
    </div>
 
