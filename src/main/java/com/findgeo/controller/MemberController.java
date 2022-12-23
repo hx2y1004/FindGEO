@@ -27,8 +27,11 @@ import com.findgeo.dto.MemberFormDto;
 import com.findgeo.dto.MessageDto;
 import com.findgeo.dto.SmsResponseDto;
 import com.findgeo.dto.SelectPingDto;
+import com.findgeo.entity.Clipping;
 import com.findgeo.entity.Member;
+import com.findgeo.repository.ClippingRepository;
 import com.findgeo.repository.MemberRepository;
+import com.findgeo.service.ClippingService;
 import com.findgeo.service.MemberService;
 import com.findgeo.service.SmsService;
 import com.findgeo.util.Script;
@@ -46,6 +49,8 @@ public class MemberController {
 	private final HttpSession httpSession;
     private final MemberRepository memberRepository;
     int chkNum = 0;
+    private final ClippingService clippingService;
+    private final ClippingRepository clippingRepository;
 	
 	@GetMapping("/new")
 	public String memberForm(Model model) {
@@ -244,4 +249,4 @@ public class MemberController {
     		return "false";
     	}
     }
-}
+
