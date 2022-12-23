@@ -50,9 +50,10 @@
 			<input type="text" id="title" th:value="${posts.boardtitle}" readonly>
 		</div>
 		<div>
-			<label for="author" style="display:block;">작성자</label>
-			<input type="text" id="author" th:value="${posts.nickname}" readonly>
-		</div>
+         <label class="author">작성자</label>
+         <input type="text" id="author" th:text="|${posts.nickname} (${#strings.substring(posts.email, 0, 5)}***) |" readonly>
+         
+      </div>
 		<div>
 			<label for="content" style="display:block;">내용</label>
 			<textarea id="content" th:text="${posts.boardcontent}" readonly> </textarea>

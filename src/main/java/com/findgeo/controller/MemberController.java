@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.findgeo.config.dto.SessionMember;
+import com.findgeo.dto.CheckSmsIdDto;
 import com.findgeo.dto.MemberFormDto;
 import com.findgeo.dto.MessageDto;
 import com.findgeo.dto.SmsResponseDto;
@@ -44,6 +45,7 @@ public class MemberController {
 	private final MemberService memberService;
 	private final HttpSession httpSession;
     private final MemberRepository memberRepository;
+    int chkNum = 0;
 	
 	@GetMapping("/new")
 	public String memberForm(Model model) {
@@ -172,7 +174,7 @@ public class MemberController {
     @PostMapping("/sendsmsId")
 	public @ResponseBody String sendSmsId(@RequestBody MessageDto messageDto, Model model) throws Exception {
 		SmsResponseDto response = smsService.sendSms(messageDto);
-		int chkNum = smsService.chkNum();
+		chkNum = smsService.chkNum();
 		model.addAttribute("checkNum", chkNum);
 		model.addAttribute("response", response);
 		return "member/findId";
@@ -190,19 +192,21 @@ public class MemberController {
     	return "member/findPw";
     }
     @PostMapping("/sendsmsPw")
-	public @ResponseBody String sendSmsPw(@RequestBody MessageDto messageDto, String email, Model model) throws Exception {
+	public @ResponseBody String sendSmsPw(@RequestBody MessageDto messageDto, Model model) throws Exception {
 		SmsResponseDto response = smsService.sendSms(messageDto);
-		int chkNum = smsService.chkNum();
-		Optional<Member> member = memberRepository.findByEmailPhone(messageDto.getTo(), email);
+		chkNum = smsService.chkNum();
+		System.out.println(messageDto.getEmail());
+		System.out.println(messageDto.getTo());
 		model.addAttribute("checkNum", chkNum);
 		model.addAttribute("response", response);
-		model.addAttribute("member", member);
+		
 		return "member/findPw";
 	}
     
     @GetMapping("/changePw/{phone}")
     public String changePw(@PathVariable String phone, Model model) {
     	String email = memberRepository.findIdByPhone(phone);
+    	System.out.println("chagepw email" + email);
     	model.addAttribute("email", email);
     	return "member/changePw";
     }
@@ -210,11 +214,34 @@ public class MemberController {
     @PostMapping("/foundPw")
     public String changePw(@ModelAttribute Member memberDto,  Model model) throws Exception{
     	Member member = Member.update(memberDto.getPassword(),
-									memberDto.getEmail(),
-									memberDto.getPhone(), passwordEncoder);
-    	memberRepository.update(member.getPassword(),
-    								member.getEmail());
+									memberDto.getEmail(), passwordEncoder);
+    	System.out.println(member.getPassword()+"mem cont");
+    	System.out.println(member.getEmail()+"mem email123123123");
+    	memberRepository.update(member.getPassword(),member.getEmail());
     	model.addAttribute("email", member.getEmail());
+    	System.out.println(member.getPassword()+"mem cont2");
+    	System.out.println(memberDto.getPassword()+"입력 비밀번호");
+    	System.out.println(memberDto.getEmail()+"입력 이메일");
     	return "member/memberLoginForm";
+    }
+    
+    @PostMapping("/chksendid")
+    public @ResponseBody String chkSendId(@RequestBody CheckSmsIdDto checkSmsIdDto) {
+   
+    	String chkStnum  = Integer.toString(chkNum);    	
+    	return chkStnum;
+    }
+    
+    @PostMapping("/chkmember")
+    public @ResponseBody String chkmember(@RequestBody MessageDto messageDto ) {
+    	Member member = memberRepository.findByEmailPhone(messageDto.getEmail(), messageDto.getTo());
+    	System.out.println(messageDto.getEmail());
+    	System.out.println(messageDto.getTo());
+    	System.out.println(member+"컨트롤러");
+    	if(member != null) {
+    		return "true";
+    	}else {
+    		return "false";
+    	}
     }
 }

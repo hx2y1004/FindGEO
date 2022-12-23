@@ -12,14 +12,16 @@ public class PostsSaveRequestDto {
    private String boardtitle;
    private String boardcontent;
    private String nickname;
+   private String email;
    private String fileinput;
    
    
    @Builder
-   public PostsSaveRequestDto(String boardtitle, String boardcontent, String nickname, String fileinput ) {
+   public PostsSaveRequestDto(String boardtitle, String boardcontent, String nickname,String email, String fileinput ) {
          this.boardtitle = boardtitle;
          this.boardcontent = boardcontent;
          this.nickname = nickname;
+         this.email = email;
          this.fileinput = fileinput;
          System.out.println(PostsSaveRequestDto.builder().fileinput+"12월 8일 실험");
          
@@ -31,6 +33,7 @@ public class PostsSaveRequestDto {
             .boardtitle(boardtitle)
             .boardcontent(boardcontent)
             .nickname(nickname)
+            .email(email)
             .fileinput(fileinput)
             .build();
       // 빌더 패턴 각각 생성자로 객체 생성

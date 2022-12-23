@@ -144,12 +144,12 @@ public class Member {
         this.password = password;
     }
     
-    public static Member update(String password, String email, String phone, PasswordEncoder passwordEncoder) throws Exception{
+    public static Member update(String password, String email,PasswordEncoder passwordEncoder) throws Exception{
 	      Member memberEntity = new Member();
 	      memberEntity.setEmail(email);
 	      String pw = passwordEncoder.encode(password);
 	      memberEntity.setPassword(pw);
-	      memberEntity.setPhone(phone);
+	      System.out.println(pw +"member entity");
 	      
 	      return memberEntity;
 	}

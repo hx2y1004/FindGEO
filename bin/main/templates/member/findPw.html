@@ -66,8 +66,8 @@
         <tr>
         	<td id="num">인증번호</td>
 			<td>
-				<input type="text" id="checknum"><span id="timer"></span>
-				<button id="checknum" name="checknum">인증번호 확인</button>            
+				<input type="text" id="checknuminput"><span id="checknuminput"></span>
+				<button id="checknum" name="checknum"  disabled="disabled">인증번호 확인</button>            
 			</td>
         </tr>
     </table>
@@ -76,85 +76,114 @@
 <script>
 $('#sendSms').click(function(){
 	const email = document.getElementById('email').value;
-	const member = document.getElementById('member').value;
+	const phone = document.getElementById('to').value;
 	const to = document.getElementById('to').value; 
 	const content = "";
+	const target = document.getElementById("checknum");
 	const data = {
 		to : to,
-		content : content
+		content : content,
+		email : email
 	}
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
-	console.log(to);
-	if(member != null){
+	
 		$.ajax({
 			beforeSend: function(xhr){
 			    xhr.setRequestHeader(header,token);
 			},
 			type: "post",
-			url: "/members/sendsmsPw",
+			url: "/members/chkmember",
 			dateType: "json",
 			data: JSON.stringify(data),
-	        contentType : 'application/json; charset=utf-8',
-			success: function(data) {
-		    	alert("문자가 발송되었습니다.");
-		    	// 타이머 구현_daldal
-				function $ComTimer(){
-				    //prototype extend
+	        contentType : 'application/json; charset=utf-8'
+	        }).done(function(e){
+				if(e == "true"){
+					$.ajax({
+						beforeSend: function(xhr){
+						    xhr.setRequestHeader(header,token);
+						},
+						type: "post",
+						url: "/members/sendsmsPw",
+						dateType: "json",
+						data: JSON.stringify(data),
+				        contentType : 'application/json; charset=utf-8',
+						success: function(data) {
+					    	alert("문자가 발송되었습니다.");
+				    		target.disabled = false;
+					    	// 타이머 구현_daldal
+							function $ComTimer(){
+							    //prototype extend
+							}
+							
+							$ComTimer.prototype = {
+							    comSecond : ""
+							    , fnCallback : function(){}
+							    , timer : ""
+							    , domId : ""
+							    , fnTimer : function(){
+							        var m = Math.floor(this.comSecond / 60) + "분 " + (this.comSecond % 60) + "초";	// 남은 시간 계산
+							        this.comSecond--;					// 1초씩 감소
+							        console.log(m);
+							        this.domId.innerText = m;
+							        if (this.comSecond < 0) {			// 시간이 종료 되었으면..
+							            clearInterval(this.timer);		// 타이머 해제
+							            alert("인증시간이 초과하였습니다. 다시 인증해주시기 바랍니다.");
+							            window.close();
+							            window.opener.location = "/index.do"
+							        }
+							    }
+							    ,fnStop : function(){
+							        clearInterval(this.timer);
+							    }
+							}
+							
+							var AuthTimer = new $ComTimer()
+							AuthTimer.comSecond = 180; // 제한 시간
+							AuthTimer.fnCallback = function(){alert("다시인증을 시도해주세요.")}; // 제한 시간 만료 메세지
+							AuthTimer.timer =  setInterval(function(){AuthTimer.fnTimer()},1000); 
+							AuthTimer.domId = document.getElementById("timer");
+						},
+						error: function(data){
+							alert("문자 발송에 실패했습니다.");
+						}
+					});
+				}else{
+					console.log("인증 실패");
+					alert("등록된 이메일과 전화번호가 없습니다.")
 				}
-				
-				$ComTimer.prototype = {
-				    comSecond : ""
-				    , fnCallback : function(){}
-				    , timer : ""
-				    , domId : ""
-				    , fnTimer : function(){
-				        var m = Math.floor(this.comSecond / 60) + "분 " + (this.comSecond % 60) + "초";	// 남은 시간 계산
-				        this.comSecond--;					// 1초씩 감소
-				        console.log(m);
-				        this.domId.innerText = m;
-				        if (this.comSecond < 0) {			// 시간이 종료 되었으면..
-				            clearInterval(this.timer);		// 타이머 해제
-				            alert("인증시간이 초과하였습니다. 다시 인증해주시기 바랍니다.");
-				            window.close();
-				            window.opener.location = "/index.do"
-				        }
-				    }
-				    ,fnStop : function(){
-				        clearInterval(this.timer);
-				    }
-				}
-				
-				var AuthTimer = new $ComTimer()
-				
-				AuthTimer.comSecond = 180; // 제한 시간
-				
-				AuthTimer.fnCallback = function(){alert("다시인증을 시도해주세요.")}; // 제한 시간 만료 메세지
-				
-				AuthTimer.timer =  setInterval(function(){AuthTimer.fnTimer()},1000); 
-				
-				AuthTimer.domId = document.getElementById("timer");
-			},
-			error: function(data){
-				alert("문자 발송에 실패했습니다.");
-			}
-		});
-	}else{
-		alert("등록된 이메일과 전화번호가 없습니다.");
-	}
+			})
 });
 
 $('#checknum').click(function() {
-	const inputCode = document.getElementById('checknum').value;
-	const checkNum = document.getElementById('chkNum').value;
-	const email = document.getElementById('email').value;
-	    if (inputCode == checkNum) {
-			alert("번호 인증 성공");
-			window.location.href = '/members/changePw/'+email;
-	    } else {
-			$("#checkPw").html('인증번호가 일치하지 않습니다.');
-			$("#checkPw").attr('color','#dc3545');
-	    }
+	const inputCode = document.getElementById('checknuminput').value;	
+	//const checkNum = document.getElementById('chkNum').value;
+	console.log("checkclick ++ " + inputCode);
+	const to = document.getElementById('to').value; 
+	const data = {
+		inputCode : inputCode,
+		to : to
+	}
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajax({
+		beforeSend: function(xhr){
+		    xhr.setRequestHeader(header,token);
+		},
+		type: "post",
+		url: "/members/chksendid",
+		dateType: "json",
+		data: JSON.stringify(data),
+        contentType : 'application/json; charset=utf-8'
+        }).done(function(e){
+			if(e === inputCode){
+				alert("번호 인증 성공");
+				window.location.href = '/members/changePw/'+to;
+			}else{
+				console.log("인증 실패");
+				alert("인증번호가 일치하지 않습니다.")
+			}
+		})
 });
 
 </script>

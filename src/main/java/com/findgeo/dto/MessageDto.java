@@ -1,7 +1,5 @@
 package com.findgeo.dto;
 
-import java.time.LocalDateTime;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,4 +14,5 @@ import lombok.Setter;
 public class MessageDto {
 	String to;
 	String content;
+	String email;
 }

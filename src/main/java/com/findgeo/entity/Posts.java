@@ -36,6 +36,8 @@ import lombok.NoArgsConstructor;
    
    private String nickname;
    
+   private String email;
+   
    @CreatedDate
    @Column(updatable = false)
    private LocalDateTime regdate = LocalDateTime.now();
@@ -44,10 +46,11 @@ import lombok.NoArgsConstructor;
    private int views;
    
    @Builder
-   public Posts(String boardtitle, String boardcontent, String nickname, int views, String fileinput) {
+   public Posts(String boardtitle, String boardcontent, String nickname,String email, int views, String fileinput) {
       this.boardtitle = boardtitle;
       this.boardcontent = boardcontent;
       this.nickname = nickname;
+      this.email = email;
       this.views = views;
       this.fileinput = fileinput;
    

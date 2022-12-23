@@ -48,7 +48,12 @@
 			<label for="nickname" style="display:block;">작성자</label>
 			<input type="text" id="nickname" th:value="${member.nickname}" readonly>
 		</div>
-		
+		<!-- 수정한다수정한다 -->
+      <div class="email">
+         <label for="email" style="display:block;"></label>
+         <input type="hidden" id="email" th:value="${member.email}" readonly>
+      </div>
+      <!-- 수정한다수정한다 -->
 		<div class="content">
 			<label for="content" style="display:block;">내용</label>
 			<textarea id="boardcontent" name="content" placeholder="내용을 입력하세요"></textarea>

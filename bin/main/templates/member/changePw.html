@@ -34,7 +34,6 @@
 <body>
 <form action="/members/foundPw" method="post" name="updateForm" th:onsubmit="return validateForm(this);">
  	<input type="hidden" id="email" th:value=${email} />
- 	<input type="hidden" id="phone" th:value=${phone} />
 	<div>
 		<label th:for="password">비밀번호</label>
 		<input type="password" id="password_1" name="password" placeholder="비밀번호를 입력해주세요"><br>

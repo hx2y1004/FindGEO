@@ -9,7 +9,8 @@ function SaveBoard(){
 		         boardtitle: $('#boardtitle').val(),
 		         nickname: $('#nickname').val(),
 		         boardcontent: $('#boardcontent').val(),
-		         fileinput: file
+		         fileinput: file,
+		         email: $('#email').val()
 		        };
 		        console.log(data)
 	

@@ -33,7 +33,7 @@
 	#sendSms{
 	width:120px;
 	}
-	#checknum{
+	#checknuminput{
 	border:2px solid #04479b;
 	width: 250px; border-radius: 5px;
 	background-color: #d3d3d38a;
@@ -53,6 +53,7 @@
 	border:2px solid #04479b;
 	width: 120px; border-radius: 5px;
 	}
+	
 
 
 </style>
@@ -73,8 +74,11 @@
         <tr>
         	<td colspan="2" id="num">인증번호</td>
         	<td>
-				<input type="text" id="checknum"><span id="timer"></span>
-				<button class="checknum" name="checknum">인증번호 확인</button>            
+				<input type="text" id="checknuminput" name = "checknuminput"><span id="timer"></span>
+				
+        	</td>
+        	<td>
+				<button class="checknum" id="checknum" name="checknum" disabled="disabled">인증번호 확인</button>            
 			</td>
         </tr>
 </table>
@@ -84,6 +88,7 @@
 $('#sendSms').click(function(){
 	const to = document.getElementById('to').value; 
 	const content = "";
+	const target = document.getElementById("checknum");
 	const data = {
 		to : to,
 		content : content
@@ -102,6 +107,7 @@ $('#sendSms').click(function(){
         contentType : 'application/json; charset=utf-8',
 		success: function(data) {
 	    	alert("문자가 발송되었습니다.");
+	    	target.disabled = false;
 	    	// 타이머 구현_daldal
 			function $ComTimer(){
 			    //prototype extend
@@ -145,16 +151,36 @@ $('#sendSms').click(function(){
 	});
 });
 $('#checknum').click(function() {
-	const inputCode = document.getElementById('checknum').value;
-	const checkNum = document.getElementById('chkNum').value;
+	const inputCode = document.getElementById('checknuminput').value;	
+	//const checkNum = document.getElementById('chkNum').value;
+	console.log("checkclick ++ " + inputCode);
 	const to = document.getElementById('to').value; 
-	    if (inputCode == checkNum) {
-			alert("번호 인증 성공");
-			window.location.href = '/members/viewId/'+to;
-	    } else {
-			$("#checkPw").html('인증번호가 일치하지 않습니다.');
-			$("#checkPw").attr('color','#dc3545');
-	    }
+	const data = {
+		inputCode : inputCode,
+		to : to
+	}
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajax({
+		beforeSend: function(xhr){
+		    xhr.setRequestHeader(header,token);
+		},
+		type: "post",
+		url: "/members/chksendid",
+		dateType: "json",
+		data: JSON.stringify(data),
+        contentType : 'application/json; charset=utf-8'
+        }).done(function(e){
+			if(e === inputCode){
+				alert("번호 인증 성공");
+				window.location.href = '/members/viewId/'+to;
+			}else{
+				console.log("인증 실패");
+				alert("인증번호가 일치하지 않습니다.")
+			}
+		})
+		
+		
 });
 
 </script>
