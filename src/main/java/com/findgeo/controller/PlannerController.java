@@ -81,6 +81,14 @@ public class PlannerController {
 		return "planner/plannerview";
 	}
 	
+	@GetMapping("/pdfview/{plannerid}")
+	public String plannerpdfView(Model model, @PathVariable("plannerid") Long plannerId) {
+		Planner plannerFormDto = plannerService.selectPlanner(plannerId);
+		model.addAttribute("planner", new PlannerFormDto());
+		model.addAttribute("plannerView", plannerFormDto);
+		return "planner/plannerpdfview";
+	}
+	
 	@PostMapping("/editpro/{plannerid}")
 	public String plannerUpdate(PlannerFormDto planner) throws Exception{
 		Optional <Planner> plannerDto = plannerService.updatePlanner(planner);
