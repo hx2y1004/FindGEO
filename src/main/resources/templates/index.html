@@ -13,9 +13,9 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
 <script th:inline="javascript" th:src="@{/js/GEO.js}"></script>
 <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABlqSxHcQF3ZT1Uyc2cEcidYHAOLhHfNY&callback=initMap"></script>	
-<script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
 </head>
 <body>
 <div layout:fragment="content">
@@ -75,9 +75,12 @@
 			  		</th:block>
 			  	</select>
 			  	<button type="button" name="areaSelc" id="areaSelc">지역 정보</button><br/>
-			  	<button type="button" name="delMark2" id="delMark2" >마커 삭제</button>
 			  	<button type="button" name="savedata" id="savedata" sec:authorize="isAuthenticated()" onClick="saveInfo();">정보 저장</button>
-			  	
+			  	<button type="button" name="delMark2" id="delMark2" >마커 삭제</button>
+			  	<br/>
+			  	<button type="button" name="scorebutton" id="scorebutton" sec:authorize="isAuthenticated()">점수 계산</button>
+			  	<p sec:authorize="isAuthenticated()">적합도 점수</p>
+            	<h2 id="areaScore"  sec:authorize="isAuthenticated()">적합도 점수</h2>
            		
             </div>
         </div>

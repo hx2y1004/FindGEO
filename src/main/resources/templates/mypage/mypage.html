@@ -153,13 +153,14 @@
 		<td rowspan="2">
 			스크랩
 			개수
-			<button type="button" id="btn-all" onclick="location.href=''">전체보기</button>		
+			<button type="button" id="btn-all" th:onClick="|location.href='@{/members/clipping/myclip(email=${member.email})}'|">전체보기</button>	
 		</td>
 	</tr>
 	<tr>
 		<td colspan="2">
 			내가 쓴 게시물
 			<button type="button" id="btn-all" onclick="location.href=''">전체보기</button>
+
 		</td>
 	</tr>
 	</table>

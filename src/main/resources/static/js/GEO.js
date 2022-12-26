@@ -29,10 +29,28 @@ var fdMark = [];
 var svMark = [];
 var retaMark = [];
 var arMark = [];
+//----------------------------------------
+var traflat =[];
+var traflng =[];
+var fdlat =[];
+var fdlng =[];
+var svlat =[];
+var svlng =[];
+var retalat =[];
+var retalng =[];
+var arlat =[];
+var arlng =[];
+// ------------------------------------------
+var areascore;
+var fdlength;
+var svlength;
+var retalength;
+var traflength;
+var arlength;
+var areagrade;
 
 
 window.initMap = function () {
-	 
 			  const map = new google.maps.Map(document.getElementById("map"), {
 			    center: { lat: 37.5400456, lng: 126.9921017 },
 			    zoom: 11.8,
@@ -180,6 +198,7 @@ window.initMap = function () {
 										  
 										  var areaName = document.getElementById("areaName");
 										  areaName.innerText = areaname;
+										 
 										  
 									  const map2 = new google.maps.Map(document.getElementById("map2"), {
 										center: { lat: lat , lng: lng  },
@@ -224,6 +243,7 @@ window.initMap = function () {
 											map : map2
 										 });
 									 })
+									 
 									 const inputText = document.createElement("input");
 									 inputText.type="text";
 									 inputText.placeholder="위치를 검색하세요";
@@ -273,41 +293,42 @@ window.initMap = function () {
 											  var icon;
 											  switch(selected){
 												  case "한식":
-												   icon = new google.maps.MarkerImage("/images/korea_res_icon.png", null, null, null, new google.maps.Size(35,35));
+												   icon = new google.maps.MarkerImage("/images/한식.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 												  case "중식":
-												   icon = new google.maps.MarkerImage("/images/ch_res_icon.png", null, null, null, new google.maps.Size(35,35));
+												   icon = new google.maps.MarkerImage("/images/중식.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 												  case "일식":
-												   icon = new google.maps.MarkerImage("/images/jap_res_icon.png", null, null, null, new google.maps.Size(35,35));
+												   icon = new google.maps.MarkerImage("/images/일식.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 												  case "카페":
-												   icon = new google.maps.MarkerImage("/images/cafe_icon.png", null, null, null, new google.maps.Size(35,35));
+												   icon = new google.maps.MarkerImage("/images/카페.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 												  case "패밀리레스토랑":
-												   icon = new google.maps.MarkerImage("/images/family_res_icon.png", null, null, null, new google.maps.Size(35,35));
+												   icon = new google.maps.MarkerImage("/images/패밀리레스토랑.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 												  case "전문음식점":
-												   icon = new google.maps.MarkerImage("/images/restaurant_icon.png", null, null, null, new google.maps.Size(35,35));
+												   icon = new google.maps.MarkerImage("/images/전문음식점.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 												  case "피자":
-												   icon = new google.maps.MarkerImage("/images/pizza_icon.png", null, null, null, new google.maps.Size(35,35));
+												   icon = new google.maps.MarkerImage("/images/피자.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 												  case "치킨":
-												   icon = new google.maps.MarkerImage("/images/chicken_icon.png", null, null, null, new google.maps.Size(35,35));
+												   icon = new google.maps.MarkerImage("/images/치킨.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 												  case "디저트":
-												   icon = new google.maps.MarkerImage("/images/dessert_icon.png", null, null, null, new google.maps.Size(35,35));
+												   icon = new google.maps.MarkerImage("/images/디저트.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 												  case "제과점":
-												   icon = new google.maps.MarkerImage("/images/bakery_icon.png", null, null, null, new google.maps.Size(35,35));
+												   icon = new google.maps.MarkerImage("/images/제과점.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 												  case "패스트푸드":
-												   icon = new google.maps.MarkerImage("/images/fastfood_icon.png", null, null, null, new google.maps.Size(35,35));
+												   icon = new google.maps.MarkerImage("/images/패스트푸드.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 												   
 												   
 											  };
+											  //let marker = []
 											  for(var i=0; i < poiInfo.length; i++){
 												let searchMark = [
 											    { icon: icon , name: poiInfo[i].name ,
@@ -315,10 +336,14 @@ window.initMap = function () {
 											     lng: Number(poiInfo[i].frontLon) },
 											  ];
 											  //console.log(searchMark);
-											  	  
-												  fdMark.push(searchMark);
+												  fdlength = poiInfo.length;
+												  console.log(poiInfo.length);
+												  
+												  fdlat.push(Number(poiInfo[i].frontLat));
+												  fdlng.push(Number(poiInfo[i].frontLon));
+												  
 												  const infowindow = new google.maps.InfoWindow(); //클릭시 정보 보여주기
-												
+												  
 												  searchMark.forEach(({ icon, name, lat, lng }) => {
 												      let marker = new google.maps.Marker({
 												      position: { lat, lng },
@@ -327,8 +352,6 @@ window.initMap = function () {
 												      map : map2
 												    });
 												   
-												  
-								
 												    marker.addListener("mouseover",()=>{
 														infowindow.setContent(name);
 														infowindow.open({
@@ -346,7 +369,10 @@ window.initMap = function () {
 												    });	
 												     $('#delMark2').click(function(){
 														console.log("삭제");
+														fdlength = 0;
 													    searchMark.forEach(() =>{
+															fdlat.splice(0);
+															fdlng.splice(0);
 															marker.setMap(null);
 														})
 												    
@@ -363,11 +389,15 @@ window.initMap = function () {
 											}
 										
 									});
-								    
+								   console.log(fdlat);
 								    $('#serviceSelc').click(function(){
 										 if(typeof selLats != "undefined" || typeof selLngs != "undefined"){
 										 var servicesel = document.getElementById('serviceData');
+										 
 										 var selected = servicesel.options[servicesel.selectedIndex].value ;
+										 if(selected === "병원"){
+											 selected = "병원;내과;안과;외과;의원";
+										 }
 									 	console.log(selected);
 									 
 											 fetch('https://apis.openapi.sk.com/tmap/pois/search/around?version=1&centerLon='+selLngs
@@ -380,8 +410,48 @@ window.initMap = function () {
 											  //console.log(locCate);
 											  var icon;
 											  switch(selected){
-												 
-												   
+												 case "목욕탕":
+												   icon = new google.maps.MarkerImage("/images/목욕탕.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "미용실":
+												   icon = new google.maps.MarkerImage("/images/미용실.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "이발소":
+												   icon = new google.maps.MarkerImage("/images/이발소.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "호텔":
+												   icon = new google.maps.MarkerImage("/images/호텔.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "병원;내과;안과;외과;의원":
+												   icon = new google.maps.MarkerImage("/images/병원.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "치과":
+												   icon = new google.maps.MarkerImage("/images/치과.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "보건소":
+												   icon = new google.maps.MarkerImage("/images/보건소.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "한의원":
+												   icon = new google.maps.MarkerImage("/images/한의원.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "영화관":
+												   icon = new google.maps.MarkerImage("/images/영화관.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "노래방":
+												   icon = new google.maps.MarkerImage("/images/노래방.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "PC방":
+												   icon = new google.maps.MarkerImage("/images/PC방.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "스크린골프장":
+												   icon = new google.maps.MarkerImage("/images/스크린골프장.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "은행":
+												   icon = new google.maps.MarkerImage("/images/BANK.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "정비소":
+												   icon = new google.maps.MarkerImage("/images/정비소.png", null, null, null, new google.maps.Size(35,35));
+												   break;
 											  };
 											  for(var i=0; i < poiInfo.length; i++){
 												let searchMark = [
@@ -390,10 +460,12 @@ window.initMap = function () {
 											     lng: Number(poiInfo[i].frontLon) },
 											  ];
 											  //console.log(searchMark);
-											      svMark.push(searchMark);
+											      svlength = poiInfo.length;
+											      svlat.push(Number(poiInfo[i].frontLat));
+												  svlng.push(Number(poiInfo[i].frontLon));
 												  
 												  const infowindow = new google.maps.InfoWindow(); //클릭시 정보 보여주기
-												
+												  
 												  searchMark.forEach(({ icon, name, lat, lng }) => {
 												      let marker = new google.maps.Marker({
 												      position: { lat, lng },
@@ -419,6 +491,7 @@ window.initMap = function () {
 												      
 												    });	
 												     $('#delMark2').click(function(){
+														svlength = 0;
 														console.log("삭제");
 													    searchMark.forEach(() =>{
 															marker.setMap(null);
@@ -436,6 +509,7 @@ window.initMap = function () {
 											alert("장소를 선택(검색) 해주세요");
 										}
 									});
+									
 									$('#retailSelc').click(function(){
 									    if(typeof selLats != "undefined" || typeof selLngs != "undefined"){
 										 var retailsel = document.getElementById('retailData');
@@ -452,8 +526,18 @@ window.initMap = function () {
 											  //console.log(locCate);
 											  var icon;
 											  switch(selected){
-												 
-												   
+												 case "쇼핑":
+												   icon = new google.maps.MarkerImage("/images/쇼핑.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "편의점":
+												   icon = new google.maps.MarkerImage("/images/편의점.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "대형마트":
+												   icon = new google.maps.MarkerImage("/images/대형마트.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "마트":
+												   icon = new google.maps.MarkerImage("/images/마트.png", null, null, null, new google.maps.Size(35,35));
+												   break;
 											  };
 											  for(var i=0; i < poiInfo.length; i++){
 												let searchMark = [
@@ -462,10 +546,12 @@ window.initMap = function () {
 											     lng: Number(poiInfo[i].frontLon) },
 											  ];
 											  //console.log(searchMark);
-											     retaMark.push(searchMark);
+											      retalength = poiInfo.length;
+											      retalat.push(Number(poiInfo[i].frontLat));
+												  retalng.push(Number(poiInfo[i].frontLon));
 												  
 												  const infowindow = new google.maps.InfoWindow(); //클릭시 정보 보여주기
-												
+												  
 												  searchMark.forEach(({ icon, name, lat, lng }) => {
 												      let marker = new google.maps.Marker({
 												      position: { lat, lng },
@@ -491,6 +577,7 @@ window.initMap = function () {
 												      
 												    });	
 												     $('#delMark2').click(function(){
+														 retalength = 0;
 														console.log("삭제");
 													    searchMark.forEach(() =>{
 															marker.setMap(null);
@@ -499,7 +586,7 @@ window.initMap = function () {
 												 	});
 												   })
 												  }
-												  
+												 
 												})
 												.catch(
 													err => console.error(err)
@@ -525,8 +612,27 @@ window.initMap = function () {
 											  //console.log(locCate);
 											  var icon;
 											  switch(selected){
-												 
-												   
+												 case "관공서":
+												   icon = new google.maps.MarkerImage("/images/관공서.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "주요시설물":
+												   icon = new google.maps.MarkerImage("/images/주요시설물.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "ATM":
+												   icon = new google.maps.MarkerImage("/images/ATM.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "화장실":
+												   icon = new google.maps.MarkerImage("/images/화장실.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "공연장":
+												   icon = new google.maps.MarkerImage("/images/공연장.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "공원":
+												   icon = new google.maps.MarkerImage("/images/공원.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "문화시설":
+												   icon = new google.maps.MarkerImage("/images/지하철.png", null, null, null, new google.maps.Size(35,35));
+												   break;
 											  };
 											  for(var i=0; i < poiInfo.length; i++){
 												let searchMark = [
@@ -535,10 +641,12 @@ window.initMap = function () {
 											     lng: Number(poiInfo[i].frontLon) },
 											  ];
 											  //console.log(searchMark);
-											   arMark.push(searchMark);
+											      arlength = poiInfo.length;
+											      arlat.push(Number(poiInfo[i].frontLat));
+												  arlng.push(Number(poiInfo[i].frontLon));
 												  
 												  const infowindow = new google.maps.InfoWindow(); //클릭시 정보 보여주기
-												
+												 
 												  searchMark.forEach(({ icon, name, lat, lng }) => {
 												      let marker = new google.maps.Marker({
 												      position: { lat, lng },
@@ -600,25 +708,22 @@ window.initMap = function () {
 											  var icon;
 											  switch(selected){
 												  case "지하철":
-												   icon = new google.maps.MarkerImage("/images/subway_icon.png", null, null, null, new google.maps.Size(35,35));
+												   icon = new google.maps.MarkerImage("/images/지하철.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 												  case "버스정류장":
-												   icon = new google.maps.MarkerImage("/images/bus_icon.png", null, null, null, new google.maps.Size(35,35));
+												   icon = new google.maps.MarkerImage("/images/버스.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 												  case "주차장":
-												   icon = new google.maps.MarkerImage("/images/parking_icon.png", null, null, null, new google.maps.Size(35,35));
+												   icon = new google.maps.MarkerImage("/images/주차장.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 												  case "주유소":
-												   icon = new google.maps.MarkerImage("/images/gas_station_icon.png", null, null, null, new google.maps.Size(35,35));
-												   break;
-												  case "충전소":
-												   icon = new google.maps.MarkerImage("/images/charge_icon.png", null, null, null, new google.maps.Size(35,35));
+												   icon = new google.maps.MarkerImage("/images/주유소.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 												  case "EV충전소":
-												   icon = new google.maps.MarkerImage("/images/ev_charger_icon.png", null, null, null, new google.maps.Size(35,35));
+												   icon = new google.maps.MarkerImage("/images/EV 충전소.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 												  case "EV충전소/가스충전소":
-												  icon = new google.maps.MarkerImage("/images/ev_charger_icon.png", null, null, null, new google.maps.Size(35,35));
+												  icon = new google.maps.MarkerImage("/images/가스충전소.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 											  }
 											  for(var i=0; i < poiInfo.length; i++){
@@ -628,8 +733,10 @@ window.initMap = function () {
 											     lng: Number(poiInfo[i].frontLon) },
 											  ];
 											  //console.log(searchMark);
-											     
-												  trafMark.push(searchMark);
+												 traflat.push(Number(poiInfo[i].frontLat));
+												 traflng.push(Number(poiInfo[i].frontLon));
+												 traflength = poiInfo.length;
+												  console.log(poiInfo.length);
 												  const infowindow = new google.maps.InfoWindow(); //클릭시 정보 보여주기
 												 
 												  searchMark.forEach(({ icon, name, lat, lng }) => {
@@ -665,6 +772,7 @@ window.initMap = function () {
 												   })
 												  }
 												  
+										  		
 												})
 												.catch(
 													err => console.error(err)
@@ -672,10 +780,57 @@ window.initMap = function () {
 											}else{
 												alert("장소를 선택(검색) 해주세요");
 											}
-										});
-									
-							
-								
+										});		
+										$('#scorebutton').click(function(){
+											console.log("fd 갯수" + fdlength + "//" +"sv 갯수" + svlength + "//" +"reta 갯수" + retalength);
+											if((svlength === null || svlength === "" || typeof svlength === "undefined" || svlength === 0) &&
+											   (retalength === null || retalength === "" || typeof retalength === "undefined" || retalength === 0)){
+													var areaScore = document.getElementById("areaScore");
+													areascore = baseLog(((male*4+female*6)*
+												 		  			(rate0*5+rate10*6+rate20*8+rate30*10+rate40*12+rate50*10+rate60*9+rate70*8)*
+												 		  			(resnt*3+nonresnt*7)/(fdlength+1)),50000)*(100/baseLog(504000000,50000));
+
+											}else if((fdlength === null || fdlength === "" || typeof fdlength === "undefined" || fdlength === 0) &&
+											   (retalength === null || retalength === "" || typeof retalength === "undefined" || retalength === 0)){
+												    var areaScore = document.getElementById("areaScore");
+													areascore = baseLog(((male*4+female*6)*
+												 		  			(rate0*5+rate10*6+rate20*8+rate30*10+rate40*12+rate50*10+rate60*9+rate70*8)*
+												 		  			(resnt*3+nonresnt*7)/(svlength+1)),50000)*(100/baseLog(504000000,50000));
+											}else if((fdlength === null || fdlength === "" || typeof fdlength === "undefined" || fdlength === 0) &&
+											   (svlength === null || svlength === "" || typeof svlength === "undefined" || svlength === 0)){
+												    var areaScore = document.getElementById("areaScore");
+													areascore = baseLog(((male*4+female*6)*
+												 		  			(rate0*5+rate10*6+rate20*8+rate30*10+rate40*12+rate50*10+rate60*9+rate70*8)*
+												 		  			(resnt*3+nonresnt*7)/(retalength+1)),50000)*(100/baseLog(504000000,50000));
+											}else if((fdlength === null || fdlength === "" || typeof fdlength === "undefined" || fdlength === 0) &&
+												(svlength === null || svlength === "" || typeof svlength === "undefined" || svlength === 0) &&
+											   (retalength === null || retalength === "" || typeof retalength === "undefined" || retalength === 0)){
+												alert("업종 마커 한종류를 추가해주세요.")
+											}else{
+												alert("업종을 한개만 선택하여 계산해주세요");
+											}
+										
+											if( areascore > 60 && areascore < 70 ){
+												var scorechk = "주의";
+												areaScore.innerText = scorechk;
+												areagrade = scorechk;
+											}else if( areascore > 70 && areascore < 80 ){
+												var scorechk = "보통";
+												areaScore.innerText = scorechk;
+												areagrade = scorechk;
+											}else if( areascore > 80 && areascore < 90 ){
+												var scorechk = "양호";
+												areaScore.innerText = scorechk;
+												areagrade = scorechk;
+											}else if( areascore > 90 && areascore < 100 ){
+												var scorechk = "완벽"
+												areaScore.innerText = scorechk;
+												areagrade = scorechk;
+											}
+											
+											
+											console.log(areascore);
+										 });	
 									ctx1 = document.getElementById("bar-chart-horizontal");
 									ctx2 = document.getElementById("pieChart");
 									ctx3 = document.getElementById("resntChart");
@@ -736,6 +891,7 @@ window.initMap = function () {
 											areaAgeChart.destroy();
 											genderChart.destroy();
 											resntChart.destroy();
+											
 											modal.style.display="none";											
 											
 										});
@@ -745,6 +901,7 @@ window.initMap = function () {
 											areaAgeChart.destroy();
 											genderChart.destroy();
 											resntChart.destroy();
+											
 											modal.style.display = "none"
 											}
 										})
@@ -776,12 +933,7 @@ function saveInfo(){
 			congest : congest,
 			selectlat : selectlat,
 			selectlng : selectlng,
-			//trafMark : trafMark,
-			//fdMark : fdMark,
-			//svMark : svMark,
-			//retaMark : retaMark,
-			//arMark : arMark,
-			
+			score : areagrade
         };
     console.log(data);
     var email = $("#email").val();
@@ -797,32 +949,128 @@ function saveInfo(){
         contentType : 'application/json; charset=utf-8',
         data : JSON.stringify(data)
     }).done(function(){
-		var trafdata = {
-			traflat : traflat,
-			traflng : traflng
-		};
-		var fddata = {
-			fdlat : fdlat,
-			fdlng : fdlng
-		};
-		var svdata = {
-			svlat : svlat,
-			svlng : svlng
-		};
-		var retadata = {
-			retalat : retalat,
-			retalng : retalng
-		};
-		var ardata = {
-			arlat : arlat,
-			arlng : arlng
-		}
+	 if(traflat !== null || traflat != "" || typeof traflat != "undefined"){
+		for(var i =0 ; i < traflat.length ; i++){
+			var token = $("meta[name='_csrf']").attr("content");
+	    	var header = $("meta[name='_csrf_header']").attr("content");
+	    	
+			var trafdata = {
+				traflat : traflat[i],
+				traflng : traflng[i],
+			}
+		    console.log(trafdata);
+			$.ajax({
+			   beforeSend: function(xhr){
+			   xhr.setRequestHeader(header,token);
+			   },
+			   type : 'POST',
+			   url : 'clipping/traf',
+			   dataType : 'json',
+			   contentType : 'application/json; charset=utf-8',
+			   data : JSON.stringify(trafdata)
+			})
+        }
+        
+       }
+       if(fdlat !== null || fdlat != "" || typeof fdkat != "undefined"){
+        for(var i = 0; i < fdlat.length; i++){
+			var token = $("meta[name='_csrf']").attr("content");
+	    	var header = $("meta[name='_csrf_header']").attr("content");
+	    	
+			var fddata = {
+				fdlat : fdlat[i],
+				fdlng : fdlng[i]
+			};
+			
+				$.ajax({
+					beforeSend: function(xhr){
+			        xhr.setRequestHeader(header,token);
+			   		},
+					type : 'POST',
+			        url : 'clipping/fd',
+			        dataType : 'json',
+			        contentType : 'application/json; charset=utf-8',
+			        data : JSON.stringify(fddata)
+				})
+        	}
 		
-        alert('스크랩 완료');
+	    }
+	    if(svlat !== null || svlat != "" || typeof svkat != "undefined"){
+        for(var i = 0; i < svlat.length; i++){
+			var token = $("meta[name='_csrf']").attr("content");
+	    	var header = $("meta[name='_csrf_header']").attr("content");
+	    	
+			var svdata = {
+				svlat : svlat[i],
+				svlng : svlng[i]
+			};
+			
+				$.ajax({
+					beforeSend: function(xhr){
+			        xhr.setRequestHeader(header,token);
+			   		},
+					type : 'POST',
+			        url : 'clipping/sv',
+			        dataType : 'json',
+			        contentType : 'application/json; charset=utf-8',
+			        data : JSON.stringify(svdata)
+				})
+        	}
+		
+	    }
+	    if(retalat !== null || retalat != "" || typeof retakat != "undefined"){
+        for(var i = 0; i < retalat.length; i++){
+			var token = $("meta[name='_csrf']").attr("content");
+	    	var header = $("meta[name='_csrf_header']").attr("content");
+	    	
+			var retadata = {
+				retalat : retalat[i],
+				retalng : retalng[i]
+			};
+			
+				$.ajax({
+					beforeSend: function(xhr){
+			        xhr.setRequestHeader(header,token);
+			   		},
+					type : 'POST',
+			        url : 'clipping/reta',
+			        dataType : 'json',
+			        contentType : 'application/json; charset=utf-8',
+			        data : JSON.stringify(retadata)
+				})
+        	}
+		
+	    }
+	    if(arlat !== null || arlat != "" || typeof arkat != "undefined"){
+        for(var i = 0; i < arlat.length; i++){
+			var token = $("meta[name='_csrf']").attr("content");
+	    	var header = $("meta[name='_csrf_header']").attr("content");
+	    	
+			var ardata = {
+				arlat : arlat[i],
+				arlng : arlng[i]
+			};
+			
+				$.ajax({
+					beforeSend: function(xhr){
+			        xhr.setRequestHeader(header,token);
+			   		},
+					type : 'POST',
+			        url : 'clipping/ar',
+			        dataType : 'json',
+			        contentType : 'application/json; charset=utf-8',
+			        data : JSON.stringify(ardata)
+				})
+        	}
+		
+	    }
     }).fail(function(error){
         alert(JSON.stringify(error));
     })
 }
+
+//--------------------------------------------------
+
 
 // xml을 json으로 변환해주는 xmlToJson함수 선언
 function xmlToJson(xml) {
@@ -877,4 +1125,8 @@ function xmlToJson(xml) {
       addMarkerMethod();
     }, i * 200);
   }
+}
+
+function baseLog(x, base){
+	return Math.log(x)/Math.log(base);
 }
