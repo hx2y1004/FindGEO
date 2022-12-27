@@ -7,20 +7,31 @@
 <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
 <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
 <meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+<script th:inline="javascript" th:src="@{/js/board.js}"></script> 
 <title>게시물 상세보기</title>
 </head>
 <th:block layout:fragment="css">
 	<style>
+	#boardid{
+	border-style: none;
+	}
 	#posting{
 	position: absolute;
     left: 50%;
     transform:translate(-60%,3%);
 	}
 	#content{
-	width: 500px;
-	height: 150px;
+	border-style:none;
+	width: max-content;
+	height:30%;
+	border-radius:5px;
+	font-size: 20px;
+	max-width: 600px;
+   	white-space: pre-wrap;
+   	word-wrap:break-word;
 	}
-	#list,#edit{
+	#list,#edit,#btn-delete{
 	border:2px solid #4caf50;
 	border-radius:5px; float:right;
 	color:black; background-color:#f0f0f0;
@@ -28,36 +39,59 @@
 	font-size:17px; padding:2px; 
 	width: 100px; height: 30px; text-align: center;
 	}
+	label{
+	margin-bottom: -5px;
+	margin-top: 5px;
+	}
+	#author{
+	background-color: lightgray;
+	font-size: 13px;
+	font-weight: bold;
+	border: none;
+	}
+	.author{
+	font-size: 14px;
+	}
+	#title{
+	margin-bottom: 5px;
+	font-size: 25px;
+	}
+	.title{
+	font-size: 17px;
+	}
+	.num,#boardid{
+	color: gray;
+	font-size: 16px;
+	}
+
 	
 	</style>
 </th:block>
 <body>
 <div layout:fragment="content">
- <div id="posting">
-	<form>
-		<div>
+<div id="posting">
+<form>
+		<div class="num">
 			<label>글번호</label>
-			<span th:text="${posts.boardid}"></span>
-		</div>
-		<div>
+			<input type="text" id="boardid" th:value="${posts.boardid}" readonly>
 			<label>작성일 </label>
 			<span th:text="${#temporals.format(posts.regdate,'yyyy-MM-dd')}"></span>
 			<label>조회수</label>
 			<span th:text="${posts.views}"></span>
 		</div>
-		<div>
-			<label for="title" style="display:block;">제목</label>
-			<input type="text" id="title" th:value="${posts.boardtitle}" readonly>
-		</div>
+		<hr>
 		<div>
          <label class="author">작성자</label>
-         <input type="text" id="author" th:text="|${posts.nickname} (${#strings.substring(posts.email, 0, 5)}***) |" readonly>
-         
-      </div>
+         <input type="text" id="author" th:value="|${posts.nickname} (${#strings.substring(posts.email, 0, 5)}***) |" readonly>         
+      	</div>
+			<label class="title" for="title" style="display:block;">제목</label>
+			<p id="title">[[${posts.boardtitle}]]</p>
+		<hr>
 		<div>
-			<label for="content" style="display:block;">내용</label>
-			<textarea id="content" th:text="${posts.boardcontent}" readonly> </textarea>
+			<label for="content" style="display:block;"></label>
+			<p id="content">[[${posts.boardcontent}]]</p>
 		</div>
+		<hr>
 		<div>
 	        <label for="FILE" style="display:block;">첨부파일</label>
 	        <p>
@@ -65,12 +99,15 @@
 		        <a th:if="${posts}" th:href="@{${posts.fileinput}}">[[${posts.fileinput}]]</a>
 	        </p>
         </div>
-	</form>
+</form>
 	<span sec:authorize="isAuthenticated()">
-		<a id="edit" th:href="@{/post/update/{boardid}(boardid = ${posts.boardid})}" >수정/삭제</a>
+		<span th:if="${check}">
+			<a href="#" id="btn-delete" onclick="postDelete()">삭제</a>
+	        <a id="edit" th:href="@{/post/update/{boardid}(boardid = ${posts.boardid})}">수정</a> 
+		</span>
 	</span>
 	<a id="list" href="/board/boardlist">목록</a>
- </div>
+</div>
 </div>
 </body>
 </html>

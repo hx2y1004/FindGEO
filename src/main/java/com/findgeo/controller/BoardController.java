@@ -1,6 +1,7 @@
 package com.findgeo.controller;
 import java.security.Principal;
 import javax.servlet.http.HttpSession;
+import javax.validation.constraints.Email;
 
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -49,9 +50,17 @@ public class BoardController {
 	
 	//조회
 	@GetMapping("/post/info/{boardid}")
-	public String postsInfo(@PathVariable Long boardid, Model model) {
+	public String postsInfo(@PathVariable Long boardid, Model model, Principal principal) {
 		postService.updateView(boardid); // views ++
 		PostsResponseDto dto = postService.findById(boardid);
+		Member member = memberRepository.findByEmail(dto.getEmail());
+		String email = member.getEmail();
+		
+		if(principal.getName().equals(email)) {
+			model.addAttribute("check",true);
+		}
+		System.out.println(principal.getName()+"====");
+		System.out.println(email+"*****");
 		model.addAttribute("posts",dto);
 		return "/board/postsInfo";
 	}

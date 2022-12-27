@@ -17,7 +17,7 @@
 		}
 		td{ 
 		text-align:center;
-		border-bottom: 1px solid black;
+		border-bottom: 1px solid gray;
 		}
 		.post{
 		float: right;
@@ -39,7 +39,7 @@
 		text-align: center;
 		height: 40px;
 		}
-		a:visited {
+		.title:visited {
 		color:purple;
 		}
 	</style>
@@ -73,8 +73,8 @@
       <thead>
       <tr id="index">
         <th>글번호</th>
-        <th>작성자명</th>      
         <th>제목</th>
+        <th>작성자명</th>      
         <th>작성일자</th>
         <th>조회수</th>
       </tr>
@@ -83,12 +83,12 @@
       <tbody>
       <tr th:each="p : ${posts}">
         <td th:text="${p.boardid}"></td>
-        <td th:text="${p.nickname}"></td>
         <td>
-        	<a th:href="@{'/post/info/' + ${p.boardid}}">
-			<span th:text="${p.boardtitle}"></span>
+        	<a class="title" th:href="@{'/post/info/' + ${p.boardid}}">
+			<span class="title" th:text="${p.boardtitle}"></span>
 			</a> 
 		</td>
+        <td th:text="${p.nickname}"></td>
         <td th:text="${#temporals.format(p.regdate,'yyyy-MM-dd')}"></td>
     	<td th:text="${p.views}"></td> 
       </tr>
@@ -128,6 +128,7 @@
   			<a th:href="@{/board/boardlist(page=${pageStat.index})}" th:text="${pageStat.index+1}"></a>
   		</li>
   	</ul>
+
   </div>
  </div>
 

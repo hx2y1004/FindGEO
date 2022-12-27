@@ -21,7 +21,7 @@
 	      	  </sec:authorize>
 	      	  <a id="nav" class="nav-link" sec:authorize="isAuthenticated()" href="/members/logout"> 로그아웃</a>
 	      	  </sec:authorize>
-	      	  <a id="nav" class="nav-link" sec:authorize="isAnonymous()" th:href="@{members/login}">로그인</a>
+	      	  <a id="nav" class="nav-link" sec:authorize="isAnonymous()" href="/members/login">로그인</a>
     		  </sec:authorize>
         </div>
        </div>

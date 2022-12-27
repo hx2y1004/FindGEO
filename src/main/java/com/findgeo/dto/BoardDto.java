@@ -22,8 +22,9 @@ public class BoardDto {
 	private String boardcontent;
 	private String nickname;
 	private LocalDateTime regdate;
-	private int view;
+	private int views;
 	private String fileinput;
+	private String email;
 
 
 }

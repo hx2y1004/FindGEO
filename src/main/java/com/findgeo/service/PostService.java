@@ -35,7 +35,7 @@ public class PostService {
 	
 	public PostsResponseDto findById(Long boardid) {
 		Posts posts = postsRepository.findById(boardid)
-				.orElseThrow(()->new IllegalArgumentException("해당 게시글이 업습니다. boardid="+ boardid));
+				.orElseThrow(()->new IllegalArgumentException("해당 게시글이 없습니다. boardid="+ boardid));
 		return new PostsResponseDto(posts);
 	}
 	

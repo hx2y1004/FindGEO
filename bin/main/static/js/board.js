@@ -1,5 +1,5 @@
 function SaveBoard(){
-		   var fileinput = $('.file').val();
+		   var fileinput = $('#file').val();
         	console.log(fileinput+"dzcxvzxcvzxv");
            var file = fileinput.substr(12,17); // 파일명 출력
             console.log(file);

@@ -686,7 +686,7 @@ window.initMap = function () {
 										datasets:[
 													{
 														label: "나이별 인구 비율",
-														backgroundColor: ["red","orange","yellow","green","blue","purple","white","black"],
+														backgroundColor: ["#FFE45C","#FD7B49","#E8395C","#B137A3","#6957CB","#43ABAF","#6cd6ff","#3d474a"],
 														data: [rate0,rate10,rate20,rate30,rate40,rate50,rate60,rate70]
 													}
 												]
@@ -720,7 +720,7 @@ window.initMap = function () {
 											labels: ["거주","비거주"],
 											datasets: [{
 												data: [resnt, nonresnt],
-												backgroundColor: ['white','black']
+												backgroundColor: ['#bd8cff','lightgray']
 											}]
 										},
 										options:{
