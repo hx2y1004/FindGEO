@@ -23,6 +23,12 @@ var congest;
 var areaname;
 var selectlat;
 var selectlng;
+var category;
+var seloption;
+var areacate ="";
+var areaoption;
+var trafcate ="";
+var trafoption;
 //-----------------------------------------
 var trafMark = [];
 var fdMark = [];
@@ -281,7 +287,9 @@ window.initMap = function () {
 										 var foodsel = document.getElementById('foodData');
 										 var selected = foodsel.options[foodsel.selectedIndex].value ;
 									 	console.log(selected);
-									 
+									 	category = "food";
+									 	seloption = selected;
+									 	
 											 fetch('https://apis.openapi.sk.com/tmap/pois/search/around?version=1&centerLon='+selLngs
 										  		+'&centerLat='+selLats
 										  		+'&categories='+selected
@@ -399,7 +407,9 @@ window.initMap = function () {
 											 selected = "병원;내과;안과;외과;의원";
 										 }
 									 	console.log(selected);
-									 
+									 	category = "service";
+									 	seloption = selected;
+									 	
 											 fetch('https://apis.openapi.sk.com/tmap/pois/search/around?version=1&centerLon='+selLngs
 										  		+'&centerLat='+selLats
 										  		+'&categories='+selected
@@ -436,6 +446,9 @@ window.initMap = function () {
 												   break;
 												 case "영화관":
 												   icon = new google.maps.MarkerImage("/images/영화관.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "약국":
+												   icon = new google.maps.MarkerImage("/images/약국.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 												 case "노래방":
 												   icon = new google.maps.MarkerImage("/images/노래방.png", null, null, null, new google.maps.Size(35,35));
@@ -515,6 +528,8 @@ window.initMap = function () {
 										 var retailsel = document.getElementById('retailData');
 										 var selected = retailsel.options[retailsel.selectedIndex].value ;
 									 	console.log(selected);
+									 	category = "reta";
+									 	seloption = selected;
 									 
 											 fetch('https://apis.openapi.sk.com/tmap/pois/search/around?version=1&centerLon='+selLngs
 										  		+'&centerLat='+selLats
@@ -601,6 +616,9 @@ window.initMap = function () {
 										 var areasel = document.getElementById('areaData');
 										 var selected = areasel.options[areasel.selectedIndex].value ;
 									 	console.log(selected);
+									 	
+									 	areacate = "area";
+									 	areaoption = selected;
 									 
 											 fetch('https://apis.openapi.sk.com/tmap/pois/search/around?version=1&centerLon='+selLngs
 										  		+'&centerLat='+selLats
@@ -696,6 +714,9 @@ window.initMap = function () {
 										 var select = document.getElementById('trafficData');
 										 var selected = select.options[select.selectedIndex].value;
 									 	console.log(selected);
+									 	
+									 	trafcate = "traf";
+									 	trafoption = selected;
 									 
 											 fetch('https://apis.openapi.sk.com/tmap/pois/search/around?version=1&centerLon='+selLngs
 										  		+'&centerLat='+selLats
@@ -788,26 +809,28 @@ window.initMap = function () {
 													var areaScore = document.getElementById("areaScore");
 													areascore = baseLog(((male*4+female*6)*
 												 		  			(rate0*5+rate10*6+rate20*8+rate30*10+rate40*12+rate50*10+rate60*9+rate70*8)*
-												 		  			(resnt*3+nonresnt*7)/(fdlength+1)),50000)*(100/baseLog(504000000,50000));
+												 		  			(resnt*3+nonresnt*7)/(fdlength+1)),5000)*(100/baseLog(504000000,3000));
 
 											}else if((fdlength === null || fdlength === "" || typeof fdlength === "undefined" || fdlength === 0) &&
 											   (retalength === null || retalength === "" || typeof retalength === "undefined" || retalength === 0)){
 												    var areaScore = document.getElementById("areaScore");
 													areascore = baseLog(((male*4+female*6)*
 												 		  			(rate0*5+rate10*6+rate20*8+rate30*10+rate40*12+rate50*10+rate60*9+rate70*8)*
-												 		  			(resnt*3+nonresnt*7)/(svlength+1)),50000)*(100/baseLog(504000000,50000));
+												 		  			(resnt*3+nonresnt*7)/(svlength+1)),5000)*(100/baseLog(504000000,3000));
 											}else if((fdlength === null || fdlength === "" || typeof fdlength === "undefined" || fdlength === 0) &&
 											   (svlength === null || svlength === "" || typeof svlength === "undefined" || svlength === 0)){
 												    var areaScore = document.getElementById("areaScore");
 													areascore = baseLog(((male*4+female*6)*
 												 		  			(rate0*5+rate10*6+rate20*8+rate30*10+rate40*12+rate50*10+rate60*9+rate70*8)*
-												 		  			(resnt*3+nonresnt*7)/(retalength+1)),50000)*(100/baseLog(504000000,50000));
+												 		  			(resnt*3+nonresnt*7)/(retalength+1)),5000)*(100/baseLog(504000000,3000));
 											}else if((fdlength === null || fdlength === "" || typeof fdlength === "undefined" || fdlength === 0) &&
 												(svlength === null || svlength === "" || typeof svlength === "undefined" || svlength === 0) &&
 											   (retalength === null || retalength === "" || typeof retalength === "undefined" || retalength === 0)){
 												alert("업종 마커 한종류를 추가해주세요.")
 											}else{
 												alert("업종을 한개만 선택하여 계산해주세요");
+												alert("마커를 삭제후 다시 추가해주세요");
+												category = null;
 											}
 										
 											if( areascore > 60 && areascore < 70 ){
@@ -824,6 +847,10 @@ window.initMap = function () {
 												areagrade = scorechk;
 											}else if( areascore > 90 && areascore < 100 ){
 												var scorechk = "완벽"
+												areaScore.innerText = scorechk;
+												areagrade = scorechk;
+											}else{
+												var scorechk = "위험"
 												areaScore.innerText = scorechk;
 												areagrade = scorechk;
 											}
@@ -933,7 +960,13 @@ function saveInfo(){
 			congest : congest,
 			selectlat : selectlat,
 			selectlng : selectlng,
-			score : areagrade
+			areagrade : areagrade,
+			category : category,
+			seloption : seloption,
+			areacate : areacate,
+			areaoption : areaoption,
+			trafcate : trafcate,
+			trafoption : trafoption
         };
     console.log(data);
     var email = $("#email").val();
@@ -949,7 +982,14 @@ function saveInfo(){
         contentType : 'application/json; charset=utf-8',
         data : JSON.stringify(data)
     }).done(function(){
-	 if(traflat !== null || traflat != "" || typeof traflat != "undefined"){
+	 	alert("스크랩 완료");
+    }).fail(function(error){
+        alert(JSON.stringify(error));
+    })
+}
+
+/* 테이블 연결 저장 
+ if(traflat !== null || traflat != "" || typeof traflat != "undefined"){
 		for(var i =0 ; i < traflat.length ; i++){
 			var token = $("meta[name='_csrf']").attr("content");
 	    	var header = $("meta[name='_csrf_header']").attr("content");
@@ -1064,11 +1104,7 @@ function saveInfo(){
         	}
 		
 	    }
-    }).fail(function(error){
-        alert(JSON.stringify(error));
-    })
-}
-
+	    */
 //--------------------------------------------------
 
 

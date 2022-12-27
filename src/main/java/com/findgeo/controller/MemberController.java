@@ -114,8 +114,14 @@ public class MemberController {
     	SessionMember member =(SessionMember)httpSession.getAttribute("user");
     	if(principal!= null && member == null) {
 			Member user = memberRepository.findByEmail(principal.getName());
+			String email = user.getEmail();
+	    	List<Clipping> clipList = clippingService.selClipList(email);
+	    	model.addAttribute("clipList",clipList);
 			model.addAttribute("member",user);
 		}else if(principal != null && member != null ) {
+			String email = member.getEmail();
+			List<Clipping> clipList = clippingService.selClipList(email);
+			model.addAttribute("clipList",clipList);
 			model.addAttribute("member",member);
 			model.addAttribute("loginInfo","social");
 		}
@@ -250,14 +256,6 @@ public class MemberController {
     	}else {
     		return "false";
     	}
-    }
-
-    @GetMapping("/clipping/myclip")
-    public String myclips(Model model, @RequestParam String email) {
-    	List<Clipping> clipList = clippingService.selClipList(email);
-    	model.addAttribute("clipList",clipList);
-    	System.out.println(email);
-    	return "mypage/clipList";
     }
     
     @GetMapping("/clipping/myclip/{clipid}")
