@@ -100,6 +100,9 @@
                  <a th:text="${item.plannerTitle}" th:href="'/planner/view/'+${item.plannerId}"></a>
              </td>
              <td th:text="${#temporals.format(item.createDate,'yyyy-MM-dd')}"></td>
+             <td>
+             	<a th:href="'/planner/pdfview/'+${item.plannerId}">출력하기</a>
+             </td>
          </tr>
          </tbody>
      </table>

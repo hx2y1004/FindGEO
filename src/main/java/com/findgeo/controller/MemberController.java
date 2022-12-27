@@ -1,6 +1,7 @@
 package com.findgeo.controller;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
@@ -25,6 +26,7 @@ import com.findgeo.config.dto.SessionMember;
 import com.findgeo.dto.CheckSmsIdDto;
 import com.findgeo.dto.MemberFormDto;
 import com.findgeo.dto.MessageDto;
+import com.findgeo.dto.MyClipDto;
 import com.findgeo.dto.SmsResponseDto;
 import com.findgeo.dto.SelectPingDto;
 import com.findgeo.entity.Clipping;
@@ -37,6 +39,7 @@ import com.findgeo.service.SmsService;
 import com.findgeo.util.Script;
 
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.PackagePrivate;
 
 @Controller
 @RequestMapping("/members")
@@ -50,7 +53,6 @@ public class MemberController {
     private final MemberRepository memberRepository;
     int chkNum = 0;
     private final ClippingService clippingService;
-    private final ClippingRepository clippingRepository;
 	
 	@GetMapping("/new")
 	public String memberForm(Model model) {
@@ -229,7 +231,7 @@ public class MemberController {
     	System.out.println(memberDto.getEmail()+"입력 이메일");
     	return "member/memberLoginForm";
     }
-    
+
     @PostMapping("/chksendid")
     public @ResponseBody String chkSendId(@RequestBody CheckSmsIdDto checkSmsIdDto) {
    
@@ -250,4 +252,22 @@ public class MemberController {
     	}
     }
 
+    @GetMapping("/clipping/myclip")
+    public String myclips(Model model, @RequestParam String email) {
+    	List<Clipping> clipList = clippingService.selClipList(email);
+    	model.addAttribute("clipList",clipList);
+    	System.out.println(email);
+    	return "mypage/clipList";
+    }
+    
+    @GetMapping("/clipping/myclip/{clipid}")
+	public String myclip(Model model,@PathVariable Long clipid) {
+    	System.out.println(clipid);
+    	List<Clipping> myClipList = clippingService.selMyClip(clipid);
+    	model.addAttribute("mycliplist", myClipList);
+    	
+		return "mypage/clip";
+	}
 }
+
+

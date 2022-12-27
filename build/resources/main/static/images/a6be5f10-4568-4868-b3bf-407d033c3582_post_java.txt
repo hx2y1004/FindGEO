@@ -1,0 +1,31 @@
+
+@Entity
+@Getter
+@NoArgsConstructor
+public class Posts {
+	
+@Id
+@GeneratedValue(strategy = GenerationType.AUTO)
+private Long boardid;
+
+@Column (length=500, nullable=false)
+private String boardtitle;
+
+@Column (length=2000, nullable=false)
+private String boardcontent;
+
+private String nickname;
+
+@ManyToOne(cascade = CascadeType.REMOVE)
+private String email;
+
+@CreatedDate
+@Column(updatable = false)
+private LocalDateTime regdate = LocalDateTime.now();
+
+@Builder
+public Posts(String boardtitle, String boardcontent, String nickname) {
+	this.boardtitle = boardtitle;
+	this.boardcontent = boardcontent;
+	this.nickname = nickname;
+}

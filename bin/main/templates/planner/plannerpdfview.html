@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http//www.thymeleaf.org"
+				xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+				layout:decorate="~{layouts/layout1}">
+<head>
+<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+<meta charset="UTF-8">
+<title>사업계획서</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script>
+function savePDF(){
+    //저장 영역 div id
+    html2canvas($('#pdfArea')[0] ,{	
+      //logging : true,		// 디버그 목적 로그
+      //proxy: "html2canvasproxy.php",
+      allowTaint : true,	// cross-origin allow 
+      useCORS: true,		// CORS 사용한 서버로부터 이미지 로드할 것인지 여부
+      scale : 2			// 기본 96dpi에서 해상도를 두 배로 증가
+    }).then(function(canvas) {	
+      // 캔버스를 이미지로 변환
+      var imgData = canvas.toDataURL('image/png');
+
+      var imgWidth = 190; // 이미지 가로 길이(mm) / A4 기준 210mm
+      var pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
+      var imgHeight = canvas.height * imgWidth / canvas.width;
+      var heightLeft = imgHeight;
+      var margin = 10; // 출력 페이지 여백설정
+      var doc = new jsPDF('p', 'mm');
+      var position = 0;
+
+      // 첫 페이지 출력
+      doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      // 한 페이지 이상일 경우 루프 돌면서 출력
+      while (heightLeft >= 20) {			// 35
+	      position = heightLeft - imgHeight;
+	      position = position - 20 ;		// -25
+	
+	      doc.addPage();
+	      doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+	      heightLeft -= pageHeight;
+      }
+
+      // 파일 저장
+      doc.save('계획서.pdf');
+    });
+}
+</script>
+</head>
+<script th:inline="javascript">
+</script>
+<script>
+</script>
+<th:block layout:fragment="css">
+<style>
+input[readonly]{
+	background-color:#8BD145;
+}
+#post{
+text-align:center;
+}
+#Title{
+text-align:center;
+}
+#btn{
+width: 120px; 
+display:inline-block;
+border-radius: 5px;
+border:2px solid #4caf50;
+}
+
+</style>
+</th:block>
+<body>
+<div layout:fragment="content" id="pdfArea">
+<!-- <script th:inline="javascript" th:src="@{/js/plannerView.js}"></script>   -->
+	<form th:object="${planner}" >
+		<div id="post">
+		<br/>
+		<label>계획서 제목 : </label>  <span id="Title" th:name="plannerTitle" th:text="${plannerView.plannerTitle}" /><br>
+		<label>업종 : </label>
+			<th:block th:switch="${plannerView.category}">
+			    <span th:case="restaurants">음식점</span>
+			    <span th:case="retail">도/소매점</span>
+			    <span th:case="services">서비스업</span>
+			</th:block>
+		<input type="hidden" th:name="plannerId" id="plannerId" th:value="${plannerView.plannerId}">
+		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+		<br/>
+		<br/>
+		<fieldset>
+			<legend>월매출 계산</legend>
+            <table align="center" width="70%" border="1">
+                <thead>
+                	<tr>
+	                    <th>구분</th>
+	                    <th id="totalMonSales1">원</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>평균객단가</td><td><span id="avgPrice" th:name="avgPrice" th:text="${plannerView.avgPrice}+'원'" /></td>
+                    </tr>
+                    <tr>
+                        <td class="res-ser" >평일방문고객수</td>
+                        <td class="retail" style="display:none">평일매장판매</td>
+                        <td><span id="avgDayVisit" th:name="avgDayVisit" th:text="${plannerView.avgDayVisit}+'건'" /></td>
+                    </tr>
+                    <tr class="res-ret">
+                        <td class="restaurants">평일배달건수</td>
+                        <td class="retail" style="display:none">평일택배건수</td>
+                        <td><span id="avgDayDeli" th:name="avgDayDeli" th:text="${plannerView.avgDayDeli}+'건'" /></td>
+                    </tr>
+                    <tr>
+                        <td>평일일일매출</td><td><span id="avgDaySales" >원</span></td>
+                    </tr>
+                    <tr>
+                        <td class="res-ser">주말방문고객수</td>
+                        <td class="retail" style="display:none">주말매장판매</td>
+                        <td><span id="avgEndVisit" th:name="avgEndVisit" th:text="${plannerView.avgEndVisit}+'건'" /></td>
+                    </tr>
+                    <tr class="res-ret">
+                        <td class="restaurants">주말배달건수</td>
+                        <td class="retail" style="display:none">주말택배건수</td>
+                        <td><span type="text" id="avgEndDeli" th:name="avgEndDeli" th:value="${plannerView.avgEndDeli}" class="res-ret">건</td>
+                    </tr>
+                    <tr>
+                        <td>주말일일매출</td><td><span id="avgEndSales" readonly>건</span></td>
+                    </tr>
+                    <tr>
+                        <td>월평일매출(<span id='days' value='1' th:name="days" th:text="${plannerView.days}+'일'" />)</td><td><span id="avgMonDaySales" readonly />원</td>
+                    </tr>
+                    <tr>
+                        <td>월주말매출(<span id='ends' value='1' th:name="ends" th:text="${plannerView.ends}+'일'" />)</td><td><span id="avgMonEndSales" readonly />원</td>
+                    </tr>
+                    <tr class="restaurants">
+                        <td>배달비율(0.0~1.0)</td><td><span id="delRatio" readonly>%</td>
+                    </tr>
+                    <tr>
+                        <td>총매출</td><td><span id="totalSales" readonly />원</td>
+                    </tr>
+                    <tr>
+                        <td>일평균매출</td><td><span id="avgSalesPerDay" readonly />원</td>
+                    </tr>
+                </tbody>
+            </table>
+		</fieldset>
+		<br/>
+		<br/>
+		<fieldset>
+			<legend>손익계산서</legend>
+            <table align="center" width="70%" border="1">
+                <thead>
+                	<tr>
+	                    <th colspan="2">월매출</th>
+	                    <th id="totalMonSales2">원</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>초기비용</td><td>시설비</td>
+                        <td><span id="initCost" th:name="initCost"  th:text="${plannerView.initCost}+'원'" /></td>
+                    </tr>
+                    <tr>
+                        <td class="restaurants" rowspan="11">고정비</td>
+                        <td class="retail" rowspan="10" style="display:none">고정비</td>
+                        <td class="services" rowspan="9" style="display:none">고정비</td>
+                        <td>임차관리비</td>
+                        <td><span id="rentCost" th:name="rentCost" th:text="${plannerView.rentCost}+'원'" /></td>
+                    </tr>
+                    <tr>
+                        <td>인건비</td>
+                        <td><span id="totalSalary" th:name="totalSalary"  th:text="${plannerView.totalSalary}+'원'" /></td>
+                    </tr>
+                    <tr>
+                        <td>4대보험</td>
+                        <td><span input type="text" id="insurance4" readonly />원</td>
+                    </tr>
+                    <tr>
+                        <td>퇴직충당금</td>
+                        <td><span id="retire" readonly />원</td>
+                    </tr>
+                    <tr>
+                        <td>보험료(책임배상+화재)</td>
+                        <td><span id="insurance" th:name="totInsurance" th:text="${plannerView.totInsurance}+'원'" /></td>
+                    </tr>
+                    <tr class="res-ret">
+                        <td class="restaurants">배달앱사용료(15%)</td><td class="retail" style="display:none">배송비용(3000원)</td>
+                        <td><span id="deliCost" readonly />원</td>
+                    </tr>
+                    <tr>
+                        <td>렌탈비</td>
+                        <td><span id="etcRent" th:name="etcRent" th:text="${plannerView.etcRent}+'원'" /></td>
+                    </tr>
+                    <tr class="restaurants">
+                        <td>요식중앙회</td>
+                        <td><span id="dues" th:name="dues"  th:text="${plannerView.dues}+'원'" /></td>
+                    </tr>
+                    <tr>
+                        <td>감가상각비</td>
+                        <td><span id="depreciation" readonly />원</td>
+                    </tr>
+                    <tr>
+                        <td>대출이자</td>
+                        <td><span id="interest" th:name="interest" th:text="${plannerView.interest}+'원'" /></td>
+                    </tr>
+                    <tr>
+                        <td>고정비소계</td>
+                        <td><span id="fixedCost" readonly />원</td>
+                    </tr>
+                    <tr>
+                        <td class="restaurants" rowspan="9">변동비</td>
+                        <td class="retail" rowspan="9" style="display:none">변동비</td>
+                        <td class="services" rowspan="8" style="display:none">변동비</td>
+                        <tr class="res-ret1">
+                        <td>원가율(0.0~1.0)</td><td><span id="salesRatio" />%</td>
+                    	</tr>
+                        
+                    <tr class="res-ret">
+                        <td class="restaurants">식재료비</td><td class="retail" style="display:none">매입비</td>
+                        <td class="res-ret"><span id="foodCost" readonly />원</td>
+                    </tr>
+                    <tr>
+                        <td>아르바이트</td>
+                        <td><span id="partTime" th:name="partTime" th:text="${plannerView.partTime}+'원'" /></td>
+                    </tr>
+                    <tr>
+                        <td>수도,전기,가스</td>
+                        <td><span id="w_e_g" th:name="w_e_g" th:text="${plannerView.w_e_g}+'원'" /></td>
+                    </tr>
+                    <tr>
+                        <td>소모품비</td>
+                        <td><span id="expand" th:name="expand" th:text="${plannerView.expand}+'원'" /></td>
+                    </tr>
+                    <tr>
+                        <td>광고비</td>
+                        <td><span id="advertise" th:name="advertise" th:text="${plannerView.advertise}+'원'" /></td>
+                    </tr>
+                    <tr>
+                        <td>각종 세금(6개월)매달 충당</td>
+                        <td><span id="taxCost" readonly />원</td>
+                    </tr>
+                    <tr>
+                        <td>기타비용</td>
+                        <td><span id="etc" th:name="etc" th:text="${plannerView.etc}+'원'"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>변동비소계</td>
+                        <td><span id="flexCost" readonly />원</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">순이익</td>
+                        <td><span id="netProfit" readonly />원</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">영업이익률(0.0~1.0)</td>
+                        <td><span id="profitRatio" readonly />%</td>
+                    </tr>
+                </tbody>
+            </table>
+		</fieldset>
+	</form>
+	<button type="button" onclick="savePDF()">PDF로 다운받기</button>
+</div>
+	
+<script>
+	function changeSelect(){
+		switch($('select').val()){
+		case 'restaurants':
+			console.log('res');
+			$('.restaurants').show();
+			$('.retail').hide();
+			$('.services').hide();
+			$('.res-ser').show();
+			$('.res-ret').show();
+			$('.ret-ser').hide();
+			calc();
+			break;
+		case 'retail':
+			console.log('ret');
+			$('.restaurants').hide();
+			$('.retail').show();
+			$('.services').hide();
+			$('.ret-ser').show();
+			$('.res-ret').show();
+			$('.res-ser').hide();
+			calc();
+			break;
+		case 'services':
+			console.log('ser');
+			$('.restaurants').hide();
+			$('.retail').hide();
+			$('.services').show();
+			$('.res-ser').show();
+			$('.ret-ser').show();
+			$('.res-ret').hide();
+			calc();
+			break;
+		}
+	};
+	
+	function calc(){
+		let avgPrice = Number(document.getElementById('avgPrice').value);
+		let avgDayVisit = Number(document.getElementById('avgDayVisit').value);
+		let avgDayDeli = Number(document.getElementById('avgDayDeli').value);
+		$("#avgDaySales").val(avgPrice*(avgDayVisit+avgDayDeli));
+		let avgEndVisit = Number(document.getElementById('avgEndVisit').value);
+		let avgEndDeli = Number(document.getElementById('avgEndDeli').value);
+		$("#avgEndSales").val(avgPrice*(avgEndVisit+avgEndDeli));
+		let avgDaySales = Number(document.getElementById('avgDaySales').value);
+		let avgEndSales = Number(document.getElementById('avgEndSales').value);
+		let days = Number(document.getElementById('days').value);
+		let ends = Number(document.getElementById('ends').value);
+		$("#avgMonDaySales").val(avgDaySales*days);
+		$("#avgMonEndSales").val(avgEndSales*ends);
+		let delRatio = Number((avgDayDeli*days+avgEndDeli*ends)/((avgDayDeli+avgDayVisit)*days+(avgEndDeli+avgEndVisit)*ends));
+		$("#delRatio").val(delRatio);
+		$("#totalSales").val(avgDaySales*days+avgEndSales*ends);
+		let totalSales = Number(document.getElementById('totalSales').value);
+		$("#avgSalesPerDay").val((avgDaySales*days+avgEndSales*ends)/(days+ends));
+		$("#totalMonSales").html(avgDaySales*days+avgEndSales*ends+' 원');
+		
+		let initCost = Number(document.getElementById('initCost').value);
+		$('#depreciation').val(initCost/60);
+		let rentCost = Number(document.getElementById('rentCost').value);
+		let totalSalary = Number(document.getElementById('totalSalary').value);
+		let insurance4 = Number(document.getElementById('insurance4').value);
+		let insurance = Number(document.getElementById('insurance').value);
+		if($('select').val()=='restaurants'){
+			$('#deliCost').val((avgDaySales*days+avgEndSales*ends)*0.15*delRatio);
+		}else if($('select').val()=='retail'){
+			$('#deliCost').val(3000*(avgDayDeli*days+avgEndDeli*ends));
+		}else {
+			$('#deliCost').val('0');
+		}
+		let retire =  Number(document.getElementById('retire').value);
+		let deliCost = Number(document.getElementById('deliCost').value);
+		let etcRent = Number(document.getElementById('etcRent').value);
+		let dues = Number(document.getElementById('dues').value);
+		let depreciation = Number(document.getElementById('depreciation').value);
+		let interest = Number(document.getElementById('interest').value);
+		$('#insurance4').val(totalSalary/11);
+		$('#retire').val(totalSalary/12);
+		let fixedCost = rentCost+totalSalary+insurance4+retire+insurance+deliCost+etcRent+dues+depreciation+interest;
+		$('#fixedCost').val(fixedCost);
+		
+		if($('select').val()=='restaurants'){
+			let costRate = Number(document.getElementById('costRate').value);
+		}else if($('select').val()=='retail'){
+			let costRate = 0;
+		}else {
+			let costRate = 0;
+		}
+		let costRate = Number(document.getElementById('costRate').value);
+		let partTime = Number(document.getElementById('partTime').value);
+		let w_e_g = Number(document.getElementById('w_e_g').value);
+		let expand = Number(document.getElementById('expand').value);
+		let advertise = Number(document.getElementById('advertise').value);
+		let etc = Number(document.getElementById('etc').value);
+		
+		$('#foodCost').val(costRate*(avgDaySales*days+avgEndSales*ends));
+		let foodCost = Number(document.getElementById('foodCost').value);
+		$('#taxCost').val((avgDaySales*days+avgEndSales*ends)*0.08/6)
+		let taxCost = Number(document.getElementById('taxCost').value);
+		let flexCost = foodCost+partTime+w_e_g+expand+advertise+taxCost+etc;
+		$('#flexCost').val(flexCost);
+		$('#netProfit').val(totalSales-fixedCost-flexCost);
+		let netProfit = Number(document.getElementById('netProfit').value);
+		$('#profitRatio').val(netProfit/totalSales);
+		inputNaN();
+	}
+
+	var input = document.getElementsByTagName('input');
+	console.log(input);
+	console.log(input.length);
+	
+	function inputNaN(){
+		for(i=2;i<input.length;i++){
+			if(isNaN(input[i].value)==true){
+				input[i].value=null;
+			}
+		}
+	}
+	calc();
+	
+
+</script>
+</div>
+</body>
+</html>

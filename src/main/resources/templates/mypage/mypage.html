@@ -85,7 +85,14 @@
 	
 		const closeBtn = modal.querySelector('.close-area');
 		closeBtn.addEventListener("click", e => {
-			modal.style.display="none";			
+			const reset = document.getElementById('password');
+			const target1 = document.getElementById("change1");
+			const target2 = document.getElementById("change2");
+			reset.value = "";
+			$("#checkPw").html('');
+			target1.disabled = true;
+			target2.disabled = true;
+			modal.style.display="none";
 		});
 		modal.addEventListener("click", e => {
 			const evTarget = e.target
@@ -129,6 +136,7 @@
 				});
 			});
 		});
+		
 </script>
 </head>
 <body>
@@ -143,16 +151,16 @@
 			<button type="button" id="btn-edit" onclick="passwordCheck()">수정/탈퇴하기</button>
 		</td>
 		<td rowspan="2">
-			내 사업 계획서
+			스크랩
 			개수
-			<button type="button" id="btn-all" onclick="location.href=''">전체보기</button>		
+			<button type="button" id="btn-all" th:onClick="|location.href='@{/members/clipping/myclip(email=${member.email})}'|">전체보기</button>	
 		</td>
 	</tr>
 	<tr>
 		<td colspan="2">
-			스크랩
-			개수
+			내가 쓴 게시물
 			<button type="button" id="btn-all" onclick="location.href=''">전체보기</button>
+
 		</td>
 	</tr>
 	</table>
@@ -177,5 +185,6 @@
         </div>
     </div>
 </div>
+
 </body>
 </html>

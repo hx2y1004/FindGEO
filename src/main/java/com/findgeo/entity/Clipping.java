@@ -35,7 +35,6 @@ public class Clipping {
 	@Column( nullable = false)
 	private String areaname;
 	
-	@Column(unique = true)
 	private String email;
 	
 	private String congest;
@@ -53,28 +52,27 @@ public class Clipping {
 	private int nonresnt;
 	private String selectlat;
 	private String selectlng;
+	private String areagrade;
 	
-	@OneToMany(mappedBy="clipping", cascade = CascadeType.REMOVE)
-	private List<Trafmark> trafmark = new ArrayList<>();
-
-	@OneToMany(mappedBy="clipping", cascade = CascadeType.REMOVE)
-	private List<Fdmark> fdmark = new ArrayList<>();
-	
-	@OneToMany(mappedBy="clipping", cascade = CascadeType.REMOVE)
-	private List<Svmark> svmark = new ArrayList<>();
-
-	@OneToMany(mappedBy="clipping", cascade = CascadeType.REMOVE)
-	private List<Retamark> retamark = new ArrayList<>();
-	
-	@OneToMany(mappedBy="clipping", cascade = CascadeType.REMOVE)
-	private List<Armark> armark = new ArrayList<>();
+//	@OneToMany(mappedBy="clipping", cascade = CascadeType.ALL)
+//	private List<Trafmark> trafmark;
+//
+//	@OneToMany(mappedBy="clipping", cascade = CascadeType.ALL)
+//	private List<Fdmark> fdmark;
+//	
+//	@OneToMany(mappedBy="clipping", cascade = CascadeType.ALL)
+//	private List<Svmark> svmark;
+//
+//	@OneToMany(mappedBy="clipping", cascade = CascadeType.ALL)
+//	private List<Retamark> retamark;
+//	
+//	@OneToMany(mappedBy="clipping", cascade = CascadeType.ALL)
+//	private List<Armark> armark;
 
 	@Builder
 	public Clipping(String areaname,String email ,String congest, int rate0, int rate10, int rate20, 
 				int rate30, int rate40, int rate50, int rate60, int rate70, 
-				int female, int male, int resnt, int nonresnt, String selectlat, String selectlng,
-				List<Trafmark> trafmark, List<Fdmark> fdmark, List<Svmark> svmark ,
-				List<Retamark> retamark, List<Armark> armark
+				int female, int male, int resnt, int nonresnt, String selectlat, String selectlng, String areagrade
 			) {
 
 		this.email = email;
@@ -94,11 +92,7 @@ public class Clipping {
 		this.nonresnt = nonresnt;
 		this.selectlat = selectlat;
 		this.selectlng = selectlng;
-		this.trafmark = trafmark;
-		this.fdmark = fdmark;
-		this.svmark = svmark;
-		this.retamark = retamark;
-		this.armark = armark;
+		this.areagrade = areagrade;
 	}
 	
 	

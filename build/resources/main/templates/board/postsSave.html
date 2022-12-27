@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+<head>
+<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+<meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+<script th:inline="javascript" th:src="@{/js/board.js}"></script> 
+<title>글등록</title>
+<th:block layout:fragment="css">
+	<style>
+	#posting{
+	position: absolute;
+    left: 50%;
+    transform:translate(-60%,3%);
+    background-color: #d3d3d361;
+	}
+	#btn{
+	border:2px solid #4caf50;
+	width: 100px; border-radius: 5px;
+	float: right;
+	margin-left: 10px;
+	}
+	.title,.nickname,.content,.file{
+	margin-bottom: 10px;
+	}
+	#boardtitle,#nickname,#boardcontent{
+	width: 500px;
+	}
+	#boardcontent{
+	height: 300px;
+	}
+	</style>
+</th:block>
+</head>
+<body>
+<div layout:fragment="content">
+	<div id="posting">
+		<div class="title">
+			<label for="title" style="display:block;">제목</label>
+			<input type="text" id="boardtitle" name="title" placeholder="제목을 입력하세요">
+		</div>
+		
+		<div class="nickname">
+			<label for="nickname" style="display:block;">작성자</label>
+			<input type="text" id="nickname" th:value="${member.nickname}" readonly>
+		</div>
+		
+		<div class="content">
+			<label for="content" style="display:block;">내용</label>
+			<textarea id="boardcontent" name="content" placeholder="내용을 입력하세요"></textarea>
+		</div>
+		
+		<div class="file">
+         	<label for="multipart" style="display:block;">파일 업로드</label>
+            <input id="file" class="file" type="file" name="file" multiple accept="image/png, image/jpg, image/jpeg">
+        </div>
+		
+		<input type="submit" id="btn" onclick="SaveBoard()" value="등록">
+		<input type="button" id="btn" onclick="location.href='/board/boardlist'" value="취소">
+	</div>
+</div>
+</body>
+</html>

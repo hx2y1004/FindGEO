@@ -17,7 +17,6 @@
             alert(errorMessage);
         }
     });
-    
 </script>
 <th:block layout:fragment="css">
 <style>
@@ -231,12 +230,12 @@ border:2px solid #4caf50;
             <br/>
 			<button type="submit" id="btn" name="calc" >수정하기</button>
 			<button type="button"id="btn" th:onclick="deletePlanner()" >삭제하기</button>
-			
 			<br/>
 			<br/>
 		</fieldset>
 	</form>
 	</div>
+	
 <script>
 	function changeSelect(){
 		switch($('select').val()){
@@ -450,6 +449,7 @@ border:2px solid #4caf50;
 		}
 	}
 	calc();
+	
 </script>
 </div>
 </body>

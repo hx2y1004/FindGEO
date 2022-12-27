@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+<head>
+<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+<meta charset="UTF-8">
+<title>스크랩</title>
+</head>
+<th:block layout:fragment="css">
+
+
+</th:block>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js" integrity="sha512-6UofPqm0QupIL0kzS/UIzekR73/luZdC6i/kXDbWnLOJoqwklBK6519iUnShaYceJ0y4FaiPtX/hRnV/X/xlUQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
+<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABlqSxHcQF3ZT1Uyc2cEcidYHAOLhHfNY&callback=initMap"></script>	
+<body>
+<div layout:fragment="content">
+<div id="map" style="height: 500px; width: 400px"></div> 
+	<div class="title">
+    	<h2>실시간 데이터</h2>
+    </div>
+        <div class="close-area">X</div>
+        <div class="content">
+        <h3 id="areaName">지역이름</h3>
+        <h4 id="areaCongest">혼잡정도</h4>
+            
+        <p>나이</p>
+		<canvas id="bar-chart-horizontal" width="600" height="250"></canvas> 
+		<p>성비</p>
+		<canvas id="pieChart" width="300" height="300"></canvas> 
+		<p>거주/비거주</p>
+		<canvas id="resntChart" width="300" height="300"></canvas>
+		<p>근처 상권 정보</p>
+		<div id="map2" style="height: 500px;"></div>
+		</div>
+			  	
+</div>
+</body>
+</html>

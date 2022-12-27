@@ -1,8 +1,15 @@
 package com.findgeo.dto;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 
+import com.findgeo.entity.Armark;
 import com.findgeo.entity.Clipping;
+import com.findgeo.entity.Fdmark;
+import com.findgeo.entity.Retamark;
+import com.findgeo.entity.Svmark;
+import com.findgeo.entity.Trafmark;
 
 import groovy.util.logging.Slf4j;
 import lombok.Builder;
@@ -30,11 +37,7 @@ public class SelectPingDto {
 	private int nonresnt;
 	private String selectlat;
 	private String selectlng;
-	private String trafMark;
-	private String fdMark;
-	private String svMark;
-	private String retaMark;
-	private String arMark;
+	private String areagrade;
 	
 	public Clipping toClip() {
 		return Clipping.builder()
@@ -49,17 +52,13 @@ public class SelectPingDto {
 				.rate50(rate50)
 				.rate60(rate60)
 				.rate70(rate70)
-				.male(female)
+				.male(male)
 				.female(female)
 				.resnt(resnt)
 				.nonresnt(nonresnt)
 				.selectlat(selectlat)
 				.selectlng(selectlng)
-//				.trafMark(trafMark)
-//				.fdMark(fdMark)
-//				.svMark(svMark)
-//				.retaMark(retaMark)
-//				.arMark(arMark)
+				.areagrade(areagrade)
 				.build();
 	}
 	

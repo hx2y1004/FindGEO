@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+<head>
+<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+<meta charset="UTF-8">
+<title>게시판목록</title>
+</head>
+<th:block layout:fragment="css">
+	<style>
+		table{
+		margin: auto; margin-top:20px;
+		width:70%;
+		}
+		td{ 
+		text-align:center;
+		border-bottom: 1px solid black;
+		}
+		.post{
+		float: right;
+		border:2px solid #4caf50;
+		width: 100px; border-radius: 5px;
+		margin-right: 30px;
+		}
+		ul{
+		list-style: none; 
+		display: flex;
+    	justify-content: center;
+		}
+		li>a:focus{color:red;}
+		li{
+		float:left; margin:5px;
+		}
+		#index{
+		background-color: lightgray;
+		text-align: center;
+		height: 40px;
+		}
+		a:visited {
+		color:purple;
+		}
+	</style>
+</th:block>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js" integrity="sha512-6UofPqm0QupIL0kzS/UIzekR73/luZdC6i/kXDbWnLOJoqwklBK6519iUnShaYceJ0y4FaiPtX/hRnV/X/xlUQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script th:inline="javascript">
+
+    $(document).ready(function(){
+        $("#searchBtn").on("click",function(e) {
+            e.preventDefault();
+            page(0);
+        });
+    });
+
+    function page(page){
+        var searchDateType = $("#searchDateType").val();
+        var searchSellStatus = $("#searchSellStatus").val();
+        var searchBy = $("#searchBy").val();
+        var searchQuery = $("#searchQuery").val();
+
+        location.href="/board/list/" + page;
+    }
+
+</script>
+<body>
+<div layout:fragment="content">
+ <div id="table">
+ <table>
+      <thead>
+      <tr id="index">
+        <th>글번호</th>
+        <th>작성자명</th>      
+        <th>제목</th>
+        <th>작성일자</th>
+        <th>조회수</th>
+      </tr>
+      </thead>
+      
+      <tbody>
+      <tr th:each="p : ${posts}">
+        <td th:text="${p.boardid}"></td>
+        <td th:text="${p.nickname}"></td>
+        <td>
+        	<a th:href="@{'/post/info/' + ${p.boardid}}">
+			<span th:text="${p.boardtitle}"></span>
+			</a> 
+		</td>
+        <td th:text="${#temporals.format(p.regdate,'yyyy-MM-dd')}"></td>
+    	<td th:text="${p.views}"></td> 
+      </tr>
+      </tbody>
+  </table>
+<!--   
+<div th:with="start=${(plannerFormDto.number/maxPage)*maxPage + 1}, end=(${(plannerFormDto.totalPages == 0) ? 1 : (start + (maxPage - 1) < plannerFormDto.totalPages ? start + (maxPage - 1) : plannerFormDto.totalPages)})" >
+     <ul class="pagination justify-content-center">
+
+         <li class="page-item" th:classappend="${plannerFormDto.first}?'disabled'">
+             <a th:onclick="'javascript:page(' + ${plannerFormDto.number - 1} + ')'" aria-label='Previous' class="page-link">
+                 <span aria-hidden='true'>Previous</span>
+             </a>
+         </li>
+
+         <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${plannerFormDto.number eq page-1}?'active':''">
+             <a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text" class="page-link">[[${page}]]</a>
+         </li>
+
+         <li class="page-item" th:classappend="${plannerFormDto.last}?'disabled'">
+             <a th:onclick="'javascript:page(' + ${plannerFormDto.number + 1} + ')'" aria-label='Next' class="page-link">
+                 <span aria-hidden='true'>Next</span>
+             </a>
+         </li>
+
+     </ul>
+</div>
+-->
+
+  <span class="posting" sec:authorize="isAuthenticated()">
+  	<button type="button" class="post" onClick="location.href='/board/postssave'">글등록</button>
+  </span>
+  
+  <div class="paging">
+  	<ul>
+  		<li th:each="page : ${#numbers.sequence(0,totalPage-1)}">
+  			<a th:href="@{/board/boardlist(page=${pageStat.index})}" th:text="${pageStat.index+1}"></a>
+  		</li>
+  	</ul>
+  </div>
+ </div>
+
+</div>
+
+</body>
+</html>
