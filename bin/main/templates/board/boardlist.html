@@ -84,11 +84,16 @@
       <tr th:each="p : ${posts}">
         <td th:text="${p.boardid}"></td>
         <td>
-        	<a class="title" th:href="@{'/post/info/' + ${p.boardid}}">
+        	<a class="title" sec:authorize="isAnonymous()" href="javascript:alert('로그인 후 이용해주세요.')">
 			<span class="title" th:text="${p.boardtitle}"></span>
-			</a> 
+			</a>
+			</sec:authorize>
+			<a class="title" sec:authorize="isAuthenticated()" th:href="@{'/post/info/' + ${p.boardid}}">
+			<span class="title" th:text="${p.boardtitle}"></span>
+			</a>
+			</sec:authorize>
 		</td>
-        <td th:text="${p.nickname}"></td>
+        <td th:text="|${p.nickname}(${#strings.substring(p.email, 0, 5)}***)|"></td>
         <td th:text="${#temporals.format(p.regdate,'yyyy-MM-dd')}"></td>
     	<td th:text="${p.views}"></td> 
       </tr>

@@ -82,7 +82,7 @@
 		<hr>
 		<div>
          <label class="author">작성자</label>
-         <input type="text" id="author" th:value="|${posts.nickname} (${#strings.substring(posts.email, 0, 5)}***) |" readonly>         
+         <td th:text="|${posts.nickname} (${#strings.substring(posts.email, 0, 5)}***)|"></td>  
       	</div>
 			<label class="title" for="title" style="display:block;">제목</label>
 			<p id="title">[[${posts.boardtitle}]]</p>

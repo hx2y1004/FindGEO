@@ -40,12 +40,12 @@ public class PostService {
 	}
 	
 	@Transactional
-	public Long update(Long boardid, PostsUpdateRequestDto requestDto) {
-		Posts posts = postsRepository.findById(boardid)
-					.orElseThrow(()->new IllegalArgumentException("해당 게시글이 없습니다. boardid=" + boardid));
-		posts.update(requestDto.getBoardtitle(), requestDto.getBoardcontent());
-		return boardid;
-	}
+	   public Long update(Long boardid, PostsUpdateRequestDto requestDto) {
+	      Posts posts = postsRepository.findById(boardid)
+	               .orElseThrow(()->new IllegalArgumentException("해당 게시글이 없습니다. boardid=" + boardid));
+	      posts.update(requestDto.getBoardtitle(), requestDto.getBoardcontent(),requestDto.getFileinput());
+	      return boardid;
+	   }
 	
 	@Transactional
 	public void delete(Long boardid) {

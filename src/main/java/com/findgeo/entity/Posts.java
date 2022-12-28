@@ -60,10 +60,10 @@ import lombok.NoArgsConstructor;
    
    }
    
-   public void update(String boardtitle, String boardcontent) {
+   public void update(String boardtitle, String boardcontent, String fileinput) {
        this.boardtitle = boardtitle;
        this.boardcontent = boardcontent;
+       this.fileinput = fileinput;
    }
-
 
 }

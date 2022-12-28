@@ -225,16 +225,14 @@ public class MemberController {
     }
     
     @PostMapping("/foundPw")
-    public String changePw(@ModelAttribute Member memberDto,  Model model) throws Exception{
+    public String changePw(@ModelAttribute Member memberDto, Model model, Principal principal) throws Exception{
     	Member member = Member.update(memberDto.getPassword(),
 									memberDto.getEmail(), passwordEncoder);
-    	System.out.println(member.getPassword()+"mem cont");
-    	System.out.println(member.getEmail()+"mem email123123123");
-    	memberRepository.update(member.getPassword(),member.getEmail());
+    	System.out.println(member.getPassword()+"cont1");
+    	memberRepository.update(member.getPassword(), member.getEmail());
     	model.addAttribute("email", member.getEmail());
-    	System.out.println(member.getPassword()+"mem cont2");
-    	System.out.println(memberDto.getPassword()+"입력 비밀번호");
-    	System.out.println(memberDto.getEmail()+"입력 이메일");
+    	model.addAttribute("password", member.getPassword());
+    	System.out.println(model.getAttribute("password")+"cont2");
     	return "member/memberLoginForm";
     }
 

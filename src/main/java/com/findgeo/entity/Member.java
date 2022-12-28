@@ -145,12 +145,12 @@ public class Member {
     }
     
     public static Member update(String password, String email,PasswordEncoder passwordEncoder) throws Exception{
-	      Member memberEntity = new Member();
-	      memberEntity.setEmail(email);
+	      Member member = new Member();
+	      member.setEmail(email);
 	      String pw = passwordEncoder.encode(password);
-	      memberEntity.setPassword(pw);
+	      member.setPassword(pw);
 	      System.out.println(pw +"member entity");
 	      
-	      return memberEntity;
+	      return member;
 	}
 }
