@@ -109,4 +109,9 @@ public class ClippingService {
 		List<Clipping> clipList = clippingRepository.findByEmail(email);
 		return clipList;
 	}
+	
+	public int delMyClip(Long clipid) {
+		int delchk = clippingRepository.delMyClip(clipid);
+		return delchk;
+	}
 }

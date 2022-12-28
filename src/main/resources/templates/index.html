@@ -31,24 +31,8 @@
             <div class="title">
                 <h2>실시간 데이터</h2>
             </div>
-            <div class="close-area">X</div>
-            <div class="content">
-            	<h3 id="areaName">지역이름</h3>
-            	<h4 id="areaCongest">혼잡정도</h4>
-            
-            	<p>나이</p>
-			  	<canvas id="bar-chart-horizontal" width="700" height="250"></canvas>
-			  	<div class="piechart">
-			  	<p>성비</p>
-			  	<canvas id="pieChart" width="200" height="200"></canvas>
-			  	</div>
-			  	<div class="piechart">
-			  	<p>거주/비거주</p>
-			  	<canvas id="resntChart" width="200" height="200"></canvas>
-			  	</div>
-			  	<div>
-			  	<p>근처 상권 정보</p>
-			  	<div id="map2" style="height: 400px;"></div>
+            <div>
+            <div id="map2" style="height: 400px;"></div>
 			  	
 			  	<select id="trafficData">
 			  		<th:block  th:each="traffic : ${trafficDataList}">
@@ -86,6 +70,26 @@
 			  	<button type="button" name="scorebutton" id="scorebutton" sec:authorize="isAuthenticated()">점수 계산</button>
 			  	<p sec:authorize="isAuthenticated()">적합도 점수</p>
             	<h2 id="areaScore"  sec:authorize="isAuthenticated()">적합도 점수</h2>
+            </div>
+            
+            <div class="close-area">X</div>
+            <div class="content">
+            	<h3 id="areaName">지역이름</h3>
+            	<h4 id="areaCongest">혼잡정도</h4>
+            
+            	<p>나이</p>
+			  	<canvas id="bar-chart-horizontal" width="700" height="250"></canvas>
+			  	<div class="piechart">
+			  	<p>성비</p>
+			  	<canvas id="pieChart" width="200" height="200"></canvas>
+			  	</div>
+			  	<div class="piechart">
+			  	<p>거주/비거주</p>
+			  	<canvas id="resntChart" width="200" height="200"></canvas>
+			  	</div>
+			  	<div>
+			  	<p>근처 상권 정보</p>
+			  	
            		
             </div>
     </div>

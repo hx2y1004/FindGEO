@@ -31,7 +31,7 @@ window.initMap = function () {
 		    zoom: 15.5,
 		    disableDefaultUI: true,
 		    zoomControl: false,
-		    gestureHandling: "greedy",
+		    gestureHandling: "none",
 		  });
 	 
 	 let category = mycliplist[0].category;
@@ -45,6 +45,7 @@ window.initMap = function () {
      let selmarker = new google.maps.Marker({
 	      position: { lat : mycliplat, lng: mycliplng },
 	      map : map3,
+	      zIndex : 50
 	    });
      
 	 if(category === "food"){
@@ -133,7 +134,7 @@ window.initMap = function () {
 					  }
 					  
 					})
-	 	}else if(category === "sevice"){
+	 	}else if(category === "service"){
 	 		
 			 fetch('https://apis.openapi.sk.com/tmap/pois/search/around?version=1&centerLon='+mycliplng
 				  		+'&centerLat='+mycliplat
@@ -460,6 +461,10 @@ var male = Number(mycliplist[0].male);
 var female = Number(mycliplist[0].female);
 var resnt = Number(mycliplist[0].resnt);
 var nonresnt = Number(mycliplist[0].nonresnt);
+var congest = mycliplist[0].congest;
+var areaname = mycliplist[0].areaname;
+
+
 console.log(male);
 document.addEventListener("DOMContentLoaded", function () {
 ctx1 = document.getElementById("bar-chart-horizontal");
@@ -517,31 +522,43 @@ areaAgeChart = new Chart(ctx1,config1);
 genderChart = new Chart(ctx2,config2);
 resntChart = new Chart(ctx3,config3);
 })
-
-
+var clipid = mycliplist[0].clipid;
+$(document).ready(function (){
+	$("#delbtn").on("click", function(){
+		var del
+		del = confirm("삭제하시겠습니까?");
+		if(del){
+			location.href = "/members/clipping/myclip/delete/"+clipid
+			alert("삭제되었습니다.")
+		}else{
+			
+		}
+	})
+})
 </script>
 <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABlqSxHcQF3ZT1Uyc2cEcidYHAOLhHfNY&callback=initMap"></script>	
 </head>
 <body>
 <div layout:fragment="content">
+	<p>근처 상권 정보</p>
     <div id="map3" style="height: 600px; width: 75%"></div> 
 	<div class="title">
     	<h2>실시간 데이터</h2>
     </div>
         <div class="content">
-        <h3 id="areaName">지역이름</h3>
-        <h4 id="areaCongest">혼잡정도</h4>
-            
+        <h3 id="areaName" th:text = "${mycliplist[0].areaname}">지역이름</h3>
+        <h4 id="areaCongest" th:text="${mycliplist[0].congest}">혼잡정도</h4>
+        <h4>창업 적합도</h4>
+        <p th:text="${mycliplist[0].areagrade}"></p>
         <p>나이</p>
 		<canvas id="bar-chart-horizontal" width="600" height="250"></canvas> 
 		<p>성비</p>
 		<canvas id="pieChart" width="300" height="300"></canvas> 
 		<p>거주/비거주</p>
 		<canvas id="resntChart" width="300" height="300"></canvas>
-		<p>근처 상권 정보</p>
-		<div id="map2" style="height: 500px;"></div>
 		</div>
-			  	
+		<button type="button" onClick="history.back()">뒤로가기</button>
+		<input type="button" id="delbtn" value="삭제"></input>
 </div>
 
 </body>

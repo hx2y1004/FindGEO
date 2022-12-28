@@ -1,5 +1,7 @@
 package com.findgeo.controller;
 import java.security.Principal;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.Email;
 
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.findgeo.service.*;
 import com.findgeo.config.dto.SessionMember;
+import com.findgeo.dto.CommentDto;
 import com.findgeo.dto.PostsResponseDto;
 import com.findgeo.entity.Member;
 import com.findgeo.entity.Posts;
@@ -24,6 +27,7 @@ public class BoardController {
 	public final PostService postService;
 	private final HttpSession httpSession;
     private final MemberRepository memberRepository;
+	private final CommentService commentService;
 	
 	@GetMapping("/board/boardlist")
 	public String board(Model model, @RequestParam(required=false, defaultValue = "0",value="page") int page) {
@@ -50,11 +54,15 @@ public class BoardController {
 	
 	//조회
 	@GetMapping("/post/info/{boardid}")
-	public String postsInfo(@PathVariable Long boardid, Model model, Principal principal) {
+	public String postsInfo(@PathVariable Long boardid, Model model, Principal principal) throws Exception {
 		postService.updateView(boardid); // views ++
 		PostsResponseDto dto = postService.findById(boardid);
 		Member member = memberRepository.findByEmail(dto.getEmail());
 		String email = member.getEmail();
+		
+//		List<CommentDto> commentdto = commentService.readAll(boardid);
+//		model.addAttribute("comment",commentdto);
+//		System.out.println(commentdto.get(0));
 		
 		if(principal.getName().equals(email)) {
 			model.addAttribute("check",true);

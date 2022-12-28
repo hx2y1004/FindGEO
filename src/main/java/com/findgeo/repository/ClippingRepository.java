@@ -31,4 +31,9 @@ public interface ClippingRepository extends JpaRepository<Clipping,String>{
 	@Query("SELECT c from Clipping c where c.clipid = ?1")
 	List<Clipping> findByClipidList(@Param("clipid") Long clipid);
 	
+	@Modifying
+	@Transactional
+	@Query("DELETE FROM Clipping c WHERE c.clipid = ?1")
+	Integer delMyClip(@Param("clipid") Long clipid);
+	
 }
