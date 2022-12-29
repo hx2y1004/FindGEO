@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="com.findgeo.dao.ArticleDao">
+ 	<select id="articleDao" resultType="com.findgeo.dto.ArticleDto">
+ 		select * from findGEO.changup where crawl_idx=#{0}
+ 	</select>
+ 	<select id="articleAllDao" parameterType="java.util.HashMap" resultType="com.findgeo.dto.ArticleDto">
+ 		select * from
+ 		(select * from findGEO.changup a where a.changup_article_title like CONCAT('%', #{keyword}, '%')
+		union distinct
+		select * from findGEO.sosanggongin a where a.changup_article_title like CONCAT('%', #{keyword}, '%')
+		union distinct 
+		select * from findGEO.jayeongup a where a.changup_article_title like CONCAT('%', #{keyword}, '%')
+		union distinct 
+		select * from findGEO.franchise a where a.changup_article_title like CONCAT('%', #{keyword}, '%')
+		union distinct 
+		select * from findGEO.sojabon a where a.changup_article_title like CONCAT('%', #{keyword}, '%')
+		) as b
+		limit #{pageSize} offset #{offset}
+ 	</select>
+ 	<select id="articleListDao" parameterType="java.util.HashMap" resultType="com.findgeo.dto.ArticleDto">
+ 		select * from (
+ 		<if test='key1 != null and(key1 eq "창업".toString)'>
+ 			select * from findGEO.changup a
+ 			<if test='keyword != null'>
+ 				where a.changup_article_title like CONCAT('%', #{keyword}, '%')
+			</if>
+			union distinct
+ 		</if>
+ 		<if test='key2 != null and(key2 eq "소상공인".toString)'>
+			select * from findGEO.sosanggongin a
+			<if test='keyword != null'>
+ 				where a.changup_article_title like CONCAT('%', #{keyword}, '%')
+			</if>
+			union distinct 
+ 		</if>
+ 		<if test='key3 != null and(key3 eq "자영업".toString)'>
+			select * from findGEO.jayeongup a
+			<if test='keyword != null'>
+ 				where a.changup_article_title like CONCAT('%', #{keyword}, '%')
+			</if>
+			union distinct 
+ 		</if>
+ 		<if test='key4 != null and(key4 eq "프렌차이즈".toString)'>
+			select * from findGEO.franchise a
+			<if test='keyword != null'>
+ 				where a.changup_article_title like CONCAT('%', #{keyword}, '%')
+			</if>
+			union distinct 
+ 		</if>
+ 		<if test='key5 != null and(key5 eq "소자본".toString)'>
+			select * from findGEO.sojabon a
+			<if test='keyword != null'>
+ 				where a.changup_article_title like CONCAT('%', #{keyword}, '%')
+			</if>
+			union distinct
+		</if>
+			select * from findGEO.blank
+			) as a
+			limit #{pageSize} offset #{offset}
+ 	</select>
+ </mapper>

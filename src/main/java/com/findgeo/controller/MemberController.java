@@ -249,4 +249,4 @@ public class MemberController {
     		return "false";
     	}
     }
-
+}
