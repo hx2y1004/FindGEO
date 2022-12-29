@@ -1,11 +1,17 @@
 package com.findgeo.dto;
 
+import java.time.LocalDateTime;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.findgeo.entity.Member;import com.mysql.cj.xdevapi.Schema.CreateCollectionOptions;
+
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,5 +35,35 @@ public class MemberFormDto {
 	private String phone;
 	
 	private String picture;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
+    private static LocalDateTime createDate;
+	
+	
+	
+	@Builder
+	public MemberFormDto(String nickname, String password, String email, String phone, String picture, LocalDateTime createDate) {
+		this.email = email;
+		this.nickname = nickname;
+		this.password = password;
+		this.phone = phone;
+		this.picture = picture;
+		this.createDate = createDate;
+	}
+
+	public MemberFormDto() {
+	}
+
+	public static MemberFormDto toDto(Member member) {
+		return MemberFormDto.builder()
+				.email(member.getEmail())
+				.nickname(member.getNickname())
+				.password(member.getPassword())
+				.phone(member.getPhone())
+				.picture(member.getPicture())
+				.createDate(createDate)
+				.build();
+	}
+	
 	
 }
