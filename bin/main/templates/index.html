@@ -17,6 +17,11 @@
 <script th:inline="javascript" th:src="@{/js/GEO.js}"></script>
 <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABlqSxHcQF3ZT1Uyc2cEcidYHAOLhHfNY&callback=initMap"></script>	
 </head>
+<th:block layout:fragment="css">
+	<style>
+		#back{display:none;}
+	</style>
+</th:block>
 <body>
 <div layout:fragment="content">
 	<th:block th:if="${name != null}">
@@ -89,14 +94,10 @@
 			  	</div>
 			  	<div>
 			  	<p>근처 상권 정보</p>
-			  	
-           		
             </div>
     </div>
 </div>
 </div>
 </div>
-  	
-  	
 </body>
 </html>

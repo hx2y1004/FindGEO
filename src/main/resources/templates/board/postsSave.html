@@ -39,6 +39,7 @@
 <body>
 <div layout:fragment="content">
 	<div id="posting">
+		<form>
 		<div class="title">
 			<label for="title" style="display:block;">제목</label>
 			<input type="text" id="boardtitle" name="title" placeholder="제목을 입력하세요">
@@ -67,6 +68,10 @@
 		
 		<input type="submit" id="btn" onclick="SaveBoard()" value="등록">
 		<input type="button" id="btn" onclick="location.href='/board/boardlist'" value="취소">
+		</form>
+		<br/>
+		<br/>
+
 	</div>
 </div>
 </body>
