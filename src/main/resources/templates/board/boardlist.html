@@ -93,7 +93,7 @@
 			</a>
 			</sec:authorize>
 		</td>
-        <td th:text="|${p.nickname}(${#strings.substring(p.email, 0, 5)}***)|"></td>
+        <td th:text="|${p.nickname}(${boardlist_hiddenEmail})|"></td>
         <td th:text="${#temporals.format(p.regdate,'yyyy-MM-dd')}"></td>
     	<td th:text="${p.views}"></td> 
       </tr>

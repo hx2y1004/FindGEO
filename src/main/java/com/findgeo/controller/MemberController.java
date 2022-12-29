@@ -219,16 +219,19 @@ public class MemberController {
     @GetMapping("/changePw/{phone}")
     public String changePw(@PathVariable String phone, Model model) {
     	String email = memberRepository.findIdByPhone(phone);
-    	System.out.println("chagepw email" + email);
+    	System.out.println(email+"멤버 컨트롤러 이멜 확인");
     	model.addAttribute("email", email);
+    	System.out.println(model.getAttribute("email")+"멤버 컨트롤러 모델 이멜");
     	return "member/changePw";
     }
     
     @PostMapping("/foundPw")
     public String changePw(@ModelAttribute Member memberDto, Model model, Principal principal) throws Exception{
+    	System.out.println(memberDto.getEmail()+"foundPw 이멜");
     	Member member = Member.update(memberDto.getPassword(),
 									memberDto.getEmail(), passwordEncoder);
     	System.out.println(member.getPassword()+"cont1");
+    	System.out.println(member.getEmail());
     	memberRepository.update(member.getPassword(), member.getEmail());
     	model.addAttribute("email", member.getEmail());
     	model.addAttribute("password", member.getPassword());

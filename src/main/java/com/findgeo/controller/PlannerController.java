@@ -81,12 +81,14 @@ public class PlannerController {
 		return "planner/plannerview";
 	}
 	
-	@GetMapping("/pdfview/{plannerid}")
-	public String plannerpdfView(Model model, @PathVariable("plannerid") Long plannerId) {
+	@GetMapping("/pdf/{plannerid}")
+	public String plannerpdf(Model model, @PathVariable("plannerid") Long plannerId) {
 		Planner plannerFormDto = plannerService.selectPlanner(plannerId);
 		model.addAttribute("planner", new PlannerFormDto());
 		model.addAttribute("plannerView", plannerFormDto);
-		return "planner/plannerpdfview";
+		System.out.println(plannerFormDto.getCostRate()+"cont costrate");
+		System.out.println(model.getAttribute("plannerView"));
+		return "planner/plannerPdf";
 	}
 	
 	@PostMapping("/editpro/{plannerid}")
