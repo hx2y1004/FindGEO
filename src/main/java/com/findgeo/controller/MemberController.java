@@ -1,6 +1,7 @@
 package com.findgeo.controller;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
@@ -25,6 +26,7 @@ import com.findgeo.config.dto.SessionMember;
 import com.findgeo.dto.CheckSmsIdDto;
 import com.findgeo.dto.MemberFormDto;
 import com.findgeo.dto.MessageDto;
+import com.findgeo.dto.MyClipDto;
 import com.findgeo.dto.SmsResponseDto;
 import com.findgeo.dto.SelectPingDto;
 import com.findgeo.entity.Clipping;
@@ -37,6 +39,7 @@ import com.findgeo.service.SmsService;
 import com.findgeo.util.Script;
 
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.PackagePrivate;
 
 @Controller
 @RequestMapping("/members")
@@ -50,7 +53,6 @@ public class MemberController {
     private final MemberRepository memberRepository;
     int chkNum = 0;
     private final ClippingService clippingService;
-    private final ClippingRepository clippingRepository;
 	
 	@GetMapping("/new")
 	public String memberForm(Model model) {
@@ -112,8 +114,14 @@ public class MemberController {
     	SessionMember member =(SessionMember)httpSession.getAttribute("user");
     	if(principal!= null && member == null) {
 			Member user = memberRepository.findByEmail(principal.getName());
+			String email = user.getEmail();
+	    	List<Clipping> clipList = clippingService.selClipList(email);
+	    	model.addAttribute("clipList",clipList);
 			model.addAttribute("member",user);
 		}else if(principal != null && member != null ) {
+			String email = member.getEmail();
+			List<Clipping> clipList = clippingService.selClipList(email);
+			model.addAttribute("clipList",clipList);
 			model.addAttribute("member",member);
 			model.addAttribute("loginInfo","social");
 		}
@@ -211,25 +219,26 @@ public class MemberController {
     @GetMapping("/changePw/{phone}")
     public String changePw(@PathVariable String phone, Model model) {
     	String email = memberRepository.findIdByPhone(phone);
-    	System.out.println("chagepw email" + email);
+    	System.out.println(email+"멤버 컨트롤러 이멜 확인");
     	model.addAttribute("email", email);
+    	System.out.println(model.getAttribute("email")+"멤버 컨트롤러 모델 이멜");
     	return "member/changePw";
     }
     
     @PostMapping("/foundPw")
-    public String changePw(@ModelAttribute Member memberDto,  Model model) throws Exception{
+    public String changePw(@ModelAttribute Member memberDto, Model model, Principal principal) throws Exception{
+    	System.out.println(memberDto.getEmail()+"foundPw 이멜");
     	Member member = Member.update(memberDto.getPassword(),
 									memberDto.getEmail(), passwordEncoder);
-    	System.out.println(member.getPassword()+"mem cont");
-    	System.out.println(member.getEmail()+"mem email123123123");
-    	memberRepository.update(member.getPassword(),member.getEmail());
+    	System.out.println(member.getPassword()+"cont1");
+    	System.out.println(member.getEmail());
+    	memberRepository.update(member.getPassword(), member.getEmail());
     	model.addAttribute("email", member.getEmail());
-    	System.out.println(member.getPassword()+"mem cont2");
-    	System.out.println(memberDto.getPassword()+"입력 비밀번호");
-    	System.out.println(memberDto.getEmail()+"입력 이메일");
+    	model.addAttribute("password", member.getPassword());
+    	System.out.println(model.getAttribute("password")+"cont2");
     	return "member/memberLoginForm";
     }
-    
+
     @PostMapping("/chksendid")
     public @ResponseBody String chkSendId(@RequestBody CheckSmsIdDto checkSmsIdDto) {
    
@@ -249,4 +258,37 @@ public class MemberController {
     		return "false";
     	}
     }
+    
+    @GetMapping("/clipping/myclip/{clipid}")
+	public String myclip(Model model,@PathVariable Long clipid) {
+    	System.out.println(clipid);
+    	List<Clipping> myClipList = clippingService.selMyClip(clipid);
+    	model.addAttribute("mycliplist", myClipList);
+    	
+		return "mypage/clip";
+	}
+    
+    @GetMapping("/clipping/myclip/delete/{clipid}")
+	public String delmyclip(Model model,@PathVariable Long clipid, Principal principal) {
+    	System.out.println(clipid);
+    	int delchk = clippingService.delMyClip(clipid);
+    	model.addAttribute("delchk",delchk);
+    	SessionMember member =(SessionMember)httpSession.getAttribute("user");
+    	if(principal!= null && member == null) {
+			Member user = memberRepository.findByEmail(principal.getName());
+			String email = user.getEmail();
+	    	List<Clipping> clipList = clippingService.selClipList(email);
+	    	model.addAttribute("clipList",clipList);
+			model.addAttribute("member",user);
+		}else if(principal != null && member != null ) {
+			String email = member.getEmail();
+			List<Clipping> clipList = clippingService.selClipList(email);
+			model.addAttribute("clipList",clipList);
+			model.addAttribute("member",member);
+			model.addAttribute("loginInfo","social");
+		}
+		return "mypage/mypage";
+	}
 }
+
+

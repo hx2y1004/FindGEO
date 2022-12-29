@@ -16,7 +16,7 @@
     border: 1px solid rgba(255, 255, 255, 0.18);
 }
 #modal .modal-window {
-    background: rgba( 69, 139, 197, 0.70 );
+    background: #ffee76b8;
     box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
     backdrop-filter: blur( 13.5px );
     -webkit-backdrop-filter: blur( 13.5px );
@@ -45,13 +45,30 @@
     padding-right: 10px;
     cursor: pointer;
     text-shadow: 1px 1px 2px gray;
-    color: white;
+    color: pink;
+    
 }
 
 #modal .content {
     margin-top: 20px;
     padding: 0px 10px;
     text-shadow: 1px 1px 2px gray;
-    color: white;
+    color: black;
+}
+#areaCongest{
+	color:red;
+}
+#areaName{
+	color:black;
+}
+#modal button{
+	border-radius: 5px;
+	border: 1px solid;
+	height:23px;
+	background-color: #ffc3d8;	
+}
+#modal .piechart{
+	display: inline-block;
+	margin: 5%;
 }
 

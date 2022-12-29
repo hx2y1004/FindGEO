@@ -13,10 +13,15 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
 <script th:inline="javascript" th:src="@{/js/GEO.js}"></script>
 <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABlqSxHcQF3ZT1Uyc2cEcidYHAOLhHfNY&callback=initMap"></script>	
-<script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
 </head>
+<th:block layout:fragment="css">
+	<style>
+		#back{display:none;}
+	</style>
+</th:block>
 <body>
 <div layout:fragment="content">
 	<th:block th:if="${name != null}">
@@ -31,19 +36,8 @@
             <div class="title">
                 <h2>실시간 데이터</h2>
             </div>
-            <div class="close-area">X</div>
-            <div class="content">
-            	<h3 id="areaName">지역이름</h3>
-            	<h4 id="areaCongest">혼잡정도</h4>
-            
-            	<p>나이</p>
-			  	<canvas id="bar-chart-horizontal" width="600" height="250"></canvas> 
-			  	<p>성비</p>
-			  	<canvas id="pieChart" width="300" height="300"></canvas> 
-			  	<p>거주/비거주</p>
-			  	<canvas id="resntChart" width="300" height="300"></canvas>
-			  	<p>근처 상권 정보</p>
-			  	<div id="map2" style="height: 500px;"></div>
+            <div>
+            <div id="map2" style="height: 400px;"></div>
 			  	
 			  	<select id="trafficData">
 			  		<th:block  th:each="traffic : ${trafficDataList}">
@@ -56,34 +50,54 @@
 			  			<option th:value="${food.category}" th:text="${food.category}" ></option>
 			  		</th:block>
 			  	</select>
-			  	<button type="button" name="foodSelc" id="foodSelc">음식점 정보 추가</button><br/>
+			  	<button type="button" name="foodSelc" id="foodSelc">음식점 추가</button><br/>
 			  	<select id="serviceData">
 			  		<th:block  th:each="service : ${serviceDataList}">
 			  			<option th:value="${service.category}" th:text="${service.category}" ></option>
 			  		</th:block>
 			  	</select>
-			  	<button type="button" name="serviceSelc" id="serviceSelc">서비스업 정보 추가</button><br/>
+			  	<button type="button" name="serviceSelc" id="serviceSelc">서비스업 추가</button><br/>
 			  	<select id="retailData">
 			  		<th:block  th:each="retail : ${retailDataList}">
 			  			<option th:value="${retail.category}" th:text="${retail.category}" ></option>
 			  		</th:block>
 			  	</select>
-			  	<button type="button" name="retailSelc" id="retailSelc">도/소매업 정보 추가</button><br/>
+			  	<button type="button" name="retailSelc" id="retailSelc">도/소매업 추가</button><br/>
 			  	<select id="areaData">
 			  		<th:block  th:each="areaData : ${areaDataList}">
 			  			<option th:value="${areaData.category}" th:text="${areaData.category}" ></option>
 			  		</th:block>
 			  	</select>
 			  	<button type="button" name="areaSelc" id="areaSelc">지역 정보</button><br/>
-			  	<button type="button" name="delMark2" id="delMark2" >마커 삭제</button>
 			  	<button type="button" name="savedata" id="savedata" sec:authorize="isAuthenticated()" onClick="saveInfo();">정보 저장</button>
-			  	
-           		
+			  	<button type="button" name="delMark2" id="delMark2" >마커 삭제</button>
+			  	<br/>
+			  	<button type="button" name="scorebutton" id="scorebutton" sec:authorize="isAuthenticated()">점수 계산</button>
+			  	<p sec:authorize="isAuthenticated()">적합도 점수</p>
+            	<h2 id="areaScore"  sec:authorize="isAuthenticated()">적합도 점수</h2>
             </div>
-        </div>
+            
+            <div class="close-area">X</div>
+            <div class="content">
+            	<h3 id="areaName">지역이름</h3>
+            	<h4 id="areaCongest">혼잡정도</h4>
+            
+            	<p>나이</p>
+			  	<canvas id="bar-chart-horizontal" width="700" height="250"></canvas>
+			  	<div class="piechart">
+			  	<p>성비</p>
+			  	<canvas id="pieChart" width="200" height="200"></canvas>
+			  	</div>
+			  	<div class="piechart">
+			  	<p>거주/비거주</p>
+			  	<canvas id="resntChart" width="200" height="200"></canvas>
+			  	</div>
+			  	<div>
+			  	<p>근처 상권 정보</p>
+            </div>
     </div>
 </div>
-  	
-  	
+</div>
+</div>
 </body>
 </html>

@@ -15,6 +15,7 @@ public class PostsListResponseDto {
 	private String nickname;
 	private LocalDateTime regdate;
 	private int views;
+	private String email;
 	
 	public PostsListResponseDto(Posts posts) {
 		this.boardid = posts.getBoardid();
@@ -23,5 +24,6 @@ public class PostsListResponseDto {
 		this.nickname = posts.getNickname();
 		this.regdate = posts.getRegdate();
 		this.views = posts.getViews();
+		this.email = posts.getEmail();
 	}
 }

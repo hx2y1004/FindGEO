@@ -81,6 +81,16 @@ public class PlannerController {
 		return "planner/plannerview";
 	}
 	
+	@GetMapping("/pdf/{plannerid}")
+	public String plannerpdf(Model model, @PathVariable("plannerid") Long plannerId) {
+		Planner plannerFormDto = plannerService.selectPlanner(plannerId);
+		model.addAttribute("planner", new PlannerFormDto());
+		model.addAttribute("plannerView", plannerFormDto);
+		System.out.println(plannerFormDto.getCostRate()+"cont costrate");
+		System.out.println(model.getAttribute("plannerView"));
+		return "planner/plannerPdf";
+	}
+	
 	@PostMapping("/editpro/{plannerid}")
 	public String plannerUpdate(PlannerFormDto planner) throws Exception{
 		Optional <Planner> plannerDto = plannerService.updatePlanner(planner);

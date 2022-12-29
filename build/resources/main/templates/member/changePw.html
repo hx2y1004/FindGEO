@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+	<meta charset="UTF-8">
+<title>아이디 비밀번호</title>
+<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>   
+<script>
+	function validateForm(form){
+		if (form.password.value == ""){
+			alert("비밀번호를 입력하세요.");
+			return false;
+		}
+		if (form.password2.value == ""){
+			alert("비밀번호 체크를 해주세요.");
+			return false;
+		}
+		if (form.password.value != form.password2.value){
+			alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+			return false;
+		}
+		var reg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+		var password = form.password.value;
+		console.log(password);
+	   	if( !reg.test(password)){
+	   	 	alert("비밀번호는 8자 이상, 하나 이상의 문자, 숫자와 하나의 상의 특수문자를 입력해주세요.");
+	   	 	return false; 
+	   	}
+	}
+</script>
+<body>
+<form action="/members/foundPw" method="post" name="updateForm" th:onsubmit="return validateForm(this);">
+ 	<input type="hidden" id="email" th:value=${email} />
+ 	<input type="hidden" id="phone" th:value=${phone} />
+	<div>
+		<label th:for="password">비밀번호</label>
+		<input type="password" id="password_1" name="password" placeholder="비밀번호를 입력해주세요"><br>
+	</div>
+	<div>
+		<label th:for="password2">비밀번호 확인</label>
+		<input type="password" placeholder="비밀번호를 다시 입력해주세요" id="password_2" name="password2">
+    	<div style="display: inline-block"><font id = "checkPw" size = "2" /></div><br/>
+		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+	</div>
+	<button type="submit">수정하기</button>
+</form>
+<script>
+	$('#password_2').keyup(function(){
+		let pass1 = document.getElementById('password_1').value;
+		let pass2 = document.getElementById('password_2').value;
+            
+		if (pass1 != "" && pass2 != ""){
+			if (pass1 == pass2){
+				$("#checkPw").html('비밀번호가 일치합니다');
+				$("#checkPw").attr('color','#2fb380');
+				$("#password_2").addClass("is-valid");
+				$("#password_2").removeClass("is-invalid");
+				$("#btnConfirm").prop("disabled",false);
+			} else {
+				$("#checkPw").html('비밀번호가 일치하지 않습니다');
+				$("#checkPw").attr('color','#dc3545');
+				$("#password_2").removeClass("is-valid");                  
+				$("#password_2").addClass("is-invalid");
+				$("#btnConfirm").prop("disabled",true);
+			}
+		}else if (pass1 != "" && pass2 == ""){
+			$("#checkPw").html('');
+			$("#checkPw").attr('color','whie');
+			$("#password_2").addClass("is-valid");
+			$("#password_2").removeClass("is-invalid");
+			$("#btnConfirm").prop("disabled",false);
+		}
+	});      
+	$('#password_1').keyup(function(){
+		let pass1 = document.getElementById('password_1').value;
+		let pass2 = document.getElementById('password_2').value;
+        
+		if (pass1 != "" && pass2 != ""){
+			if (pass1 == pass2){
+				$("#checkPw").html('비밀번호가 일치합니다');
+				$("#checkPw").attr('color','#2fb380');
+				$("#password_2").addClass("is-valid");
+				$("#password_2").removeClass("is-invalid");
+				$("#btnConfirm").prop("disabled",false);
+			} else {
+				$("#checkPw").html('비밀번호가 일치하지 않습니다');
+				$("#checkPw").attr('color','#dc3545');
+				$("#password_2").removeClass("is-valid");                  
+				$("#password_2").addClass("is-invalid");
+				$("#btnConfirm").prop("disabled",true);
+			}
+		}
+	});
+</script>
+</body>
+</html>

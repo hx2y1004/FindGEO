@@ -1,8 +1,15 @@
 package com.findgeo.dto;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 
+import com.findgeo.entity.Armark;
 import com.findgeo.entity.Clipping;
+import com.findgeo.entity.Fdmark;
+import com.findgeo.entity.Retamark;
+import com.findgeo.entity.Svmark;
+import com.findgeo.entity.Trafmark;
 
 import groovy.util.logging.Slf4j;
 import lombok.Builder;
@@ -16,25 +23,27 @@ public class SelectPingDto {
 	private String email;
 	private String areaname;
 	private String congest;
-	private int rate0;
-	private int rate10;
-	private int rate20;
-	private int rate30;
-	private int rate40;
-	private int rate50;
-	private int rate60;
-	private int rate70;
-	private int female;
-	private int male;
-	private int resnt;
-	private int nonresnt;
+	private float rate0;
+	private float rate10;
+	private float rate20;
+	private float rate30;
+	private float rate40;
+	private float rate50;
+	private float rate60;
+	private float rate70;
+	private float female;
+	private float male;
+	private float resnt;
+	private float nonresnt;
 	private String selectlat;
 	private String selectlng;
-	private String trafMark;
-	private String fdMark;
-	private String svMark;
-	private String retaMark;
-	private String arMark;
+	private String areagrade;
+	private String category;
+	private String seloption;
+	private String areacate;
+	private String areaoption;
+	private String trafcate;
+	private String trafoption;
 	
 	public Clipping toClip() {
 		return Clipping.builder()
@@ -49,17 +58,19 @@ public class SelectPingDto {
 				.rate50(rate50)
 				.rate60(rate60)
 				.rate70(rate70)
-				.male(female)
+				.male(male)
 				.female(female)
 				.resnt(resnt)
 				.nonresnt(nonresnt)
 				.selectlat(selectlat)
 				.selectlng(selectlng)
-//				.trafMark(trafMark)
-//				.fdMark(fdMark)
-//				.svMark(svMark)
-//				.retaMark(retaMark)
-//				.arMark(arMark)
+				.areagrade(areagrade)
+				.category(category)
+				.seloption(seloption)
+				.areacate(areacate)
+				.areaoption(areaoption)
+				.trafcate(trafcate)
+				.trafoption(trafoption)
 				.build();
 	}
 	

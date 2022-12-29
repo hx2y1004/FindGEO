@@ -35,46 +35,53 @@ public class Clipping {
 	@Column( nullable = false)
 	private String areaname;
 	
-	@Column(unique = true)
 	private String email;
 	
 	private String congest;
-	private int rate0;
-	private int rate10;
-	private int rate20;
-	private int rate30;
-	private int rate40;
-	private int rate50;
-	private int rate60;
-	private int rate70;
-	private int female;
-	private int male;
-	private int resnt;
-	private int nonresnt;
+	private float rate0;
+	private float rate10;
+	private float rate20;
+	private float rate30;
+	private float rate40;
+	private float rate50;
+	private float rate60;
+	private float rate70;
+	private float female;
+	private float male;
+	private float resnt;
+	private float nonresnt;
 	private String selectlat;
 	private String selectlng;
+	private String areagrade;
+	private String category;
+	private String seloption;
+	private String areacate;
+	private String areaoption;
+	private String trafcate;
+	private String trafoption;
 	
-	@OneToMany(mappedBy="clipping", cascade = CascadeType.REMOVE)
-	private List<Trafmark> trafmark = new ArrayList<>();
-
-	@OneToMany(mappedBy="clipping", cascade = CascadeType.REMOVE)
-	private List<Fdmark> fdmark = new ArrayList<>();
 	
-	@OneToMany(mappedBy="clipping", cascade = CascadeType.REMOVE)
-	private List<Svmark> svmark = new ArrayList<>();
-
-	@OneToMany(mappedBy="clipping", cascade = CascadeType.REMOVE)
-	private List<Retamark> retamark = new ArrayList<>();
-	
-	@OneToMany(mappedBy="clipping", cascade = CascadeType.REMOVE)
-	private List<Armark> armark = new ArrayList<>();
+//	@OneToMany(mappedBy="clipping", cascade = CascadeType.ALL)
+//	private List<Trafmark> trafmark;
+//
+//	@OneToMany(mappedBy="clipping", cascade = CascadeType.ALL)
+//	private List<Fdmark> fdmark;
+//	
+//	@OneToMany(mappedBy="clipping", cascade = CascadeType.ALL)
+//	private List<Svmark> svmark;
+//
+//	@OneToMany(mappedBy="clipping", cascade = CascadeType.ALL)
+//	private List<Retamark> retamark;
+//	
+//	@OneToMany(mappedBy="clipping", cascade = CascadeType.ALL)
+//	private List<Armark> armark;
 
 	@Builder
-	public Clipping(String areaname,String email ,String congest, int rate0, int rate10, int rate20, 
-				int rate30, int rate40, int rate50, int rate60, int rate70, 
-				int female, int male, int resnt, int nonresnt, String selectlat, String selectlng,
-				List<Trafmark> trafmark, List<Fdmark> fdmark, List<Svmark> svmark ,
-				List<Retamark> retamark, List<Armark> armark
+	public Clipping(String areaname,String email ,String congest, float rate0, float rate10, float rate20, 
+			float rate30, float rate40, float rate50, float rate60, float rate70, 
+			float female, float male, float resnt, float nonresnt, 
+			String selectlat, String selectlng, String areagrade, String category, 
+			String seloption, String areacate,String areaoption, String trafcate, String trafoption
 			) {
 
 		this.email = email;
@@ -94,11 +101,13 @@ public class Clipping {
 		this.nonresnt = nonresnt;
 		this.selectlat = selectlat;
 		this.selectlng = selectlng;
-		this.trafmark = trafmark;
-		this.fdmark = fdmark;
-		this.svmark = svmark;
-		this.retamark = retamark;
-		this.armark = armark;
+		this.areagrade = areagrade;
+		this.category = category;
+		this.seloption= seloption;
+		this.areacate = areacate;
+		this.areaoption = areaoption;
+		this.trafcate = trafcate;
+		this.trafoption = trafoption;
 	}
 	
 	

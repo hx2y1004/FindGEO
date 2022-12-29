@@ -13,15 +13,19 @@
     	<!--<a class="navbar-brand" href="/" style="color:white">Home</a> -->
     	<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       	<div class="navbar-nav">
+		      <a id="nav" class="nav-link" sec:authorize="isAnonymous()" href="/board/boardlist">게시판</a>
+		      </sec:authorize>
 		      <a id="nav" class="nav-link" sec:authorize="isAuthenticated()" href="/board/boardlist">게시판</a>
 		      </sec:authorize>
+		      <a id="nav" class="nav-link" sec:authorize="isAnonymous()" href="javascript:alert('로그인 후 이용해주세요.')">계획서</a>
+	      	  </sec:authorize>
 		      <a id="nav" class="nav-link" sec:authorize="isAuthenticated()" href="/planner/list">계획서</a>
 	      	  </sec:authorize>
 	    	  <a id="nav" class="nav-link" sec:authorize="isAuthenticated()" href="/members/mypage">마이페이지</a>
 	      	  </sec:authorize>
 	      	  <a id="nav" class="nav-link" sec:authorize="isAuthenticated()" href="/members/logout"> 로그아웃</a>
 	      	  </sec:authorize>
-	      	  <a id="nav" class="nav-link" sec:authorize="isAnonymous()" th:href="@{members/login}">로그인</a>
+	      	  <a id="nav" class="nav-link" sec:authorize="isAnonymous()" href="/members/login">로그인</a>
     		  </sec:authorize>
         </div>
        </div>

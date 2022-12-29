@@ -37,6 +37,15 @@
 	border:2px solid #04479b;
 	border-radius: 5px;
 	background-color: #d3d3d38a;
+	height: 35px;
+	margin-bottom: 5px;
+	}
+	.to,.checknum{
+	border:2px solid #04479b;
+	border-radius: 5px;
+	}
+	#checknum{
+	margin-left: -85px;
 	}
 	
 
@@ -47,7 +56,7 @@
     <h1>비밀번호 찾기🔍</h1>
  	<input type="hidden" id="chkNum" th:value=${checkNum}/>
  	<input type="hidden" id="member" th:value=${member} />
-<table border="1">
+<table>
         <tr class="form-group">
         	<td id="num">이메일</td>
             <td>
@@ -66,13 +75,16 @@
         <tr>
         	<td id="num">인증번호</td>
 			<td>
-				<input type="text" id="checknuminput"><span id="checknuminput"></span>
+				<input type="text" id="checknuminput" name = "checknuminput"><span id="timer"></span>
+			</td>
+			<td>
 				<button id="checknum" name="checknum"  disabled="disabled">인증번호 확인</button>            
 			</td>
         </tr>
     </table>
  
 </div>
+<img src="/images/b1.png" width="50px" height="50px" onclick="window.history.back();" style="position: fixed; bottom:20px; right:20px;" id="back">
 <script>
 $('#sendSms').click(function(){
 	const email = document.getElementById('email').value;

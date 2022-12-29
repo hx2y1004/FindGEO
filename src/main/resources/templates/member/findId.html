@@ -35,16 +35,17 @@
 	}
 	#checknuminput{
 	border:2px solid #04479b;
-	width: 250px; border-radius: 5px;
+	border-radius: 5px;
 	background-color: #d3d3d38a;
 	height: 35px;
+	margin-left: -70px;
 	}
 	#to{
 	border:2px solid #04479b;
-	width: 400px; border-radius: 5px;
+	border-radius: 5px;
 	background-color: #d3d3d38a;
 	height: 35px;
-	margin-left: 60px;
+	
 	}
 	#num{
 	font-size: 20px;
@@ -82,8 +83,8 @@
 			</td>
         </tr>
 </table>
- 
 </div>
+<img src="/images/b1.png" width="50px" height="50px" onclick="window.history.back();" style="position: fixed; bottom:20px; right:20px;" id="back">
 <script>
 $('#sendSms').click(function(){
 	const to = document.getElementById('to').value; 

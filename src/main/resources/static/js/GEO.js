@@ -23,16 +23,40 @@ var congest;
 var areaname;
 var selectlat;
 var selectlng;
+var category;
+var seloption;
+var areacate ="";
+var areaoption;
+var trafcate ="";
+var trafoption;
 //-----------------------------------------
 var trafMark = [];
 var fdMark = [];
 var svMark = [];
 var retaMark = [];
 var arMark = [];
+//----------------------------------------
+var traflat =[];
+var traflng =[];
+var fdlat =[];
+var fdlng =[];
+var svlat =[];
+var svlng =[];
+var retalat =[];
+var retalng =[];
+var arlat =[];
+var arlng =[];
+// ------------------------------------------
+var areascore;
+var fdlength;
+var svlength;
+var retalength;
+var traflength;
+var arlength;
+var areagrade;
 
 
 window.initMap = function () {
-	 
 			  const map = new google.maps.Map(document.getElementById("map"), {
 			    center: { lat: 37.5400456, lng: 126.9921017 },
 			    zoom: 11.8,
@@ -45,56 +69,56 @@ window.initMap = function () {
 			  };
 			 var selLoc = "";
 			  const RTloc = [
-			    { label: "A", name: "광화문·덕수궁", lat: 37.5701758269873949, lng: 126.9770290287743677,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/광화문·덕수궁.jpg' },
-			    { label: "A", name: "가산디지털단지역", lat: 37.481631531266494, lng: 126.8828464716437,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/가산디지털단지역.jpg' },
-			    { label: "A", name: "경복궁·서촌마을", lat: 37.57984291352679, lng: 126.97328946157951,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/경복궁·서촌마을.jpg' },
-			    { label: "A", name: "창덕궁·종묘", lat: 37.577594922983714, lng: 126.99421904681404,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/창덕궁·종묘.jpg'},
-			    { label: "A", name: "강남 MICE 관광특구", lat: 37.51139584858334, lng: 127.0598901748247 ,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/강남 MICE 관광특구.jpg'},
-			    { label: "A", name: "동대문 관광특구", lat: 37.56553339479549, lng: 127.01335269486151,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/동대문 관광특구.jpg'},
-			    { label: "A", name: "명동 관광특구", lat: 37.56430824310635, lng: 126.98213839226364,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/명동 관광특구.jpg' },
-			    { label: "A", name: "이태원 관광특구", lat: 37.534182850940134, lng: 126.99585715035037,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/이태원 관광특구.jpg' },
-			    { label: "A", name: "잠실 관광특구", lat: 37.51572998546949, lng: 127.1106208455404,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/잠실 관광특구.jpg' },
-			    { label: "A", name: "종로·청계 관광특구", lat: 37.56860711844535, lng: 126.99699476920193,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/종로·청계 관광특구.jpg' },
-			    { label: "A", name: "홍대 관광특구", lat: 37.554186763087046, lng: 126.92167853659397,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/홍대 관광특구.jpg' },
-			    { label: "A", name: "국립중앙박물관·용산가족공원", lat: 37.52307335452393, lng: 126.98017529033454,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/국립중앙박물관·용산가족공원.jpg' },
-			    { label: "A", name: "남산공원", lat: 37.55086687995742, lng: 126.99364284291867,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/남산공원.jpg' },
-			    { label: "A", name: "뚝섬한강공원", lat: 37.52980299850679, lng: 127.06848459110635,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/뚝섬한강공원.jpg' },
-			    { label: "A", name: "망원한강공원", lat: 37.55191301250163, lng: 126.90009993326127,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/망원한강공원.jpg' },
-			    { label: "A", name: "반포한강공원", lat: 37.509495233313906, lng: 126.99492420715372,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/반포한강공원.jpg' },
-			    { label: "A", name: "북서울꿈의숲", lat: 37.620952809775886, lng: 127.03985178773338,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/북서울꿈의숲.jpg' },
-			    { label: "A", name: "서울대공원", lat: 37.430417970238516, lng: 127.01439126516586,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/서울대공원.jpg' },
-			    { label: "A", name: "서울숲공원", lat: 37.54423023812191, lng: 127.03748645613268,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/서울숲공원.jpg' },
-			    { label: "A", name: "월드컵공원", lat: 37.56982369211536, lng: 126.88183162321674,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/월드컵공원.jpg' },
-			    { label: "A", name: "이촌한강공원", lat: 37.5194868738881, lng: 126.96585010921682,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/이촌한강공원.jpg' },
-			    { label: "A", name: "잠실종합운동장", lat: 37.515275045462595, lng: 127.07281175382138,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/잠실종합운동장.jpg' },
-			    { label: "A", name: "잠실한강공원", lat: 37.51748123459748, lng: 127.0866465879202,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/잠실한강공원.jpg'},
-			    { label: "A", name: "가로수길", lat: 37.521124302486854, lng: 127.02285723293289,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/가로수길.jpg' },
-			    { label: "A", name: "낙산공원·이화마을", lat: 37.58078608289144, lng: 127.00655121224148,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/낙산공원·이화마을.jpg' },
-			    { label: "A", name: "노량진", lat: 37.51383133465401, lng: 126.94295359838094,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/노량진.jpg' },
-			    { label: "A", name: "북촌한옥마을", lat: 37.58142391139889, lng: 126.98491147830116,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/북촌한옥마을.jpg' },
-			    { label: "A", name: "성수카페거리", lat: 37.54582965180822, lng: 127.05025675818062,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/성수카페거리.jpg' },
-			    { label: "A", name: "수유리 먹자골목", lat: 37.64127855656912, lng: 127.0256567437706,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/수유리 먹자골목.jpg' },
-			    { label: "A", name: "쌍문동 맛집거리", lat: 37.64753484172107, lng: 127.03390452341957,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/쌍문동 맛집거리.jpg' },
-			    { label: "A", name: "압구정로데오거리", lat: 37.52544097597958, lng: 127.0377796867246,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/압구정로데오거리.jpg' },
-			    { label: "A", name: "여의도", lat: 37.52520148760658, lng: 126.9244489204027,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/여의도.jpg' },
-			    { label: "A", name: "영등포 타임스퀘어", lat: 37.51626472241912, lng: 126.90618385009164 ,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/영등포 타임스퀘어.jpg'},
-			    { label: "A", name: "인사동·익선동", lat: 37.57332252132529, lng: 126.98714846139971,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/인사동·익선동.jpg' },
-			    { label: "A", name: "창동 신경제 중심지", lat: 37.65496321017065, lng: 127.05488994001286,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/창동 신경제 중심지.jpg' },
-			    { label: "A", name: "DMC(디지털미디어시티)", lat: 37.579641164297875, lng: 126.89208165788469,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/DMC(디지털미디어시티).jpg' },
-			    { label: "A", name: "구로디지털단지역", lat: 37.484258374128444, lng: 126.89580387984323,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/구로디지털단지역.jpg' },
-			    { label: "A", name: "강남역", lat: 37.49798861990043, lng: 127.02808697044497,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/강남역.jpg' },
-			    { label: "A", name: "건대입구역", lat: 37.54031233151287, lng: 127.0683448155881,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/건대입구역.jpg' },
-			    { label: "A", name: "고속터미널역", lat: 37.506094699822086, lng: 127.00535540254258,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/고속터미널역.jpg' },
-			    { label: "A", name: "교대역", lat: 37.49278069302649, lng: 127.02144987992703,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/교대역.jpg' },
-			    { label: "A", name: "서울역", lat: 37.55565506357903, lng: 126.97247604835474,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/서울역.jpg' },
-			    { label: "A", name: "선릉역", lat: 37.5059635136923, lng: 127.04966460076305,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/선릉역.jpg' },
-			    { label: "A", name: "신도림역", lat: 37.50926798061878, lng: 126.88868912534052,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/신도림역.jpg' },
-			    { label: "A", name: "신림역", lat: 37.48381783560379, lng: 126.92978416890433,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/신림역.jpg' },
-			    { label: "A", name: "신촌·이대역", lat: 37.55753940807936, lng: 126.93836099710354,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/신촌·이대역.jpg' },
-			    { label: "A", name: "왕십리역", lat: 37.56084354547574, lng: 127.03574095121763,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/왕십리역.jpg' },
-			    { label: "A", name: "역삼역", lat: 37.50081036749941, lng: 127.03607031279644,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/역삼역.jpg' },
-			    { label: "A", name: "연신내역", lat: 37.619133355197896, lng: 126.92073783266778,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/연신내역.jpg' },
-			    { label: "A", name: "용산역", lat: 37.52953539910786, lng: 126.9636943682725,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/용산역.jpg' },
+			    { label: "광", name: "광화문·덕수궁", lat: 37.5701758269873949, lng: 126.9770290287743677,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/광화문·덕수궁.jpg' },
+			    { label: "가", name: "가산디지털단지역", lat: 37.481631531266494, lng: 126.8828464716437,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/가산디지털단지역.jpg' },
+			    { label: "경", name: "경복궁·서촌마을", lat: 37.57984291352679, lng: 126.97328946157951,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/경복궁·서촌마을.jpg' },
+			    { label: "창", name: "창덕궁·종묘", lat: 37.577594922983714, lng: 126.99421904681404,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/창덕궁·종묘.jpg'},
+			    { label: "M", name: "강남 MICE 관광특구", lat: 37.51139584858334, lng: 127.0598901748247 ,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/강남 MICE 관광특구.jpg'},
+			    { label: "동", name: "동대문 관광특구", lat: 37.56553339479549, lng: 127.01335269486151,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/동대문 관광특구.jpg'},
+			    { label: "명", name: "명동 관광특구", lat: 37.56430824310635, lng: 126.98213839226364,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/명동 관광특구.jpg' },
+			    { label: "이", name: "이태원 관광특구", lat: 37.534182850940134, lng: 126.99585715035037,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/이태원 관광특구.jpg' },
+			    { label: "잠", name: "잠실 관광특구", lat: 37.51572998546949, lng: 127.1106208455404,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/잠실 관광특구.jpg' },
+			    { label: "종", name: "종로·청계 관광특구", lat: 37.56860711844535, lng: 126.99699476920193,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/종로·청계 관광특구.jpg' },
+			    { label: "홍", name: "홍대 관광특구", lat: 37.554186763087046, lng: 126.92167853659397,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/홍대 관광특구.jpg' },
+			    { label: "국", name: "국립중앙박물관·용산가족공원", lat: 37.52307335452393, lng: 126.98017529033454,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/국립중앙박물관·용산가족공원.jpg' },
+			    { label: "남", name: "남산공원", lat: 37.55086687995742, lng: 126.99364284291867,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/남산공원.jpg' },
+			    { label: "뚝", name: "뚝섬한강공원", lat: 37.52980299850679, lng: 127.06848459110635,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/뚝섬한강공원.jpg' },
+			    { label: "망", name: "망원한강공원", lat: 37.55191301250163, lng: 126.90009993326127,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/망원한강공원.jpg' },
+			    { label: "반", name: "반포한강공원", lat: 37.509495233313906, lng: 126.99492420715372,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/반포한강공원.jpg' },
+			    { label: "북", name: "북서울꿈의숲", lat: 37.620952809775886, lng: 127.03985178773338,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/북서울꿈의숲.jpg' },
+			    { label: "서", name: "서울대공원", lat: 37.430417970238516, lng: 127.01439126516586,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/서울대공원.jpg' },
+			    { label: "서", name: "서울숲공원", lat: 37.54423023812191, lng: 127.03748645613268,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/서울숲공원.jpg' },
+			    { label: "월", name: "월드컵공원", lat: 37.56982369211536, lng: 126.88183162321674,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/월드컵공원.jpg' },
+			    { label: "이", name: "이촌한강공원", lat: 37.5194868738881, lng: 126.96585010921682,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/이촌한강공원.jpg' },
+			    { label: "잠", name: "잠실종합운동장", lat: 37.515275045462595, lng: 127.07281175382138,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/잠실종합운동장.jpg' },
+			    { label: "잠", name: "잠실한강공원", lat: 37.51748123459748, lng: 127.0866465879202,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/잠실한강공원.jpg'},
+			    { label: "가", name: "가로수길", lat: 37.521124302486854, lng: 127.02285723293289,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/가로수길.jpg' },
+			    { label: "낙", name: "낙산공원·이화마을", lat: 37.58078608289144, lng: 127.00655121224148,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/낙산공원·이화마을.jpg' },
+			    { label: "노", name: "노량진", lat: 37.51383133465401, lng: 126.94295359838094,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/노량진.jpg' },
+			    { label: "북", name: "북촌한옥마을", lat: 37.58142391139889, lng: 126.98491147830116,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/북촌한옥마을.jpg' },
+			    { label: "성", name: "성수카페거리", lat: 37.54582965180822, lng: 127.05025675818062,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/성수카페거리.jpg' },
+			    { label: "수", name: "수유리 먹자골목", lat: 37.64127855656912, lng: 127.0256567437706,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/수유리 먹자골목.jpg' },
+			    { label: "쌍", name: "쌍문동 맛집거리", lat: 37.64753484172107, lng: 127.03390452341957,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/쌍문동 맛집거리.jpg' },
+			    { label: "압", name: "압구정로데오거리", lat: 37.52544097597958, lng: 127.0377796867246,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/압구정로데오거리.jpg' },
+			    { label: "여", name: "여의도", lat: 37.52520148760658, lng: 126.9244489204027,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/여의도.jpg' },
+			    { label: "영", name: "영등포 타임스퀘어", lat: 37.51626472241912, lng: 126.90618385009164 ,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/영등포 타임스퀘어.jpg'},
+			    { label: "인", name: "인사동·익선동", lat: 37.57332252132529, lng: 126.98714846139971,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/인사동·익선동.jpg' },
+			    { label: "창", name: "창동 신경제 중심지", lat: 37.65496321017065, lng: 127.05488994001286,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/창동 신경제 중심지.jpg' },
+			    { label: "D", name: "DMC(디지털미디어시티)", lat: 37.579641164297875, lng: 126.89208165788469,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/DMC(디지털미디어시티).jpg' },
+			    { label: "구", name: "구로디지털단지역", lat: 37.484258374128444, lng: 126.89580387984323,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/구로디지털단지역.jpg' },
+			    { label: "강", name: "강남역", lat: 37.49798861990043, lng: 127.02808697044497,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/강남역.jpg' },
+			    { label: "건", name: "건대입구역", lat: 37.54031233151287, lng: 127.0683448155881,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/건대입구역.jpg' },
+			    { label: "고", name: "고속터미널역", lat: 37.506094699822086, lng: 127.00535540254258,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/고속터미널역.jpg' },
+			    { label: "교", name: "교대역", lat: 37.49278069302649, lng: 127.02144987992703,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/교대역.jpg' },
+			    { label: "서", name: "서울역", lat: 37.55565506357903, lng: 126.97247604835474,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/서울역.jpg' },
+			    { label: "선", name: "선릉역", lat: 37.5059635136923, lng: 127.04966460076305,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/선릉역.jpg' },
+			    { label: "신", name: "신도림역", lat: 37.50926798061878, lng: 126.88868912534052,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/신도림역.jpg' },
+			    { label: "신", name: "신림역", lat: 37.48381783560379, lng: 126.92978416890433,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/신림역.jpg' },
+			    { label: "신", name: "신촌·이대역", lat: 37.55753940807936, lng: 126.93836099710354,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/신촌·이대역.jpg' },
+			    { label: "왕", name: "왕십리역", lat: 37.56084354547574, lng: 127.03574095121763,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/왕십리역.jpg' },
+			    { label: "역", name: "역삼역", lat: 37.50081036749941, lng: 127.03607031279644,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/역삼역.jpg' },
+			    { label: "연", name: "연신내역", lat: 37.619133355197896, lng: 126.92073783266778,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/연신내역.jpg' },
+			    { label: "용", name: "용산역", lat: 37.52953539910786, lng: 126.9636943682725,img:'https://data.seoul.go.kr/SeoulRtd/images/hotspot/용산역.jpg' },
 			  ];
 
 
@@ -180,6 +204,7 @@ window.initMap = function () {
 										  
 										  var areaName = document.getElementById("areaName");
 										  areaName.innerText = areaname;
+										 
 										  
 									  const map2 = new google.maps.Map(document.getElementById("map2"), {
 										center: { lat: lat , lng: lng  },
@@ -224,6 +249,7 @@ window.initMap = function () {
 											map : map2
 										 });
 									 })
+									 
 									 const inputText = document.createElement("input");
 									 inputText.type="text";
 									 inputText.placeholder="위치를 검색하세요";
@@ -261,7 +287,9 @@ window.initMap = function () {
 										 var foodsel = document.getElementById('foodData');
 										 var selected = foodsel.options[foodsel.selectedIndex].value ;
 									 	console.log(selected);
-									 
+									 	category = "food";
+									 	seloption = selected;
+									 	
 											 fetch('https://apis.openapi.sk.com/tmap/pois/search/around?version=1&centerLon='+selLngs
 										  		+'&centerLat='+selLats
 										  		+'&categories='+selected
@@ -273,41 +301,42 @@ window.initMap = function () {
 											  var icon;
 											  switch(selected){
 												  case "한식":
-												   icon = new google.maps.MarkerImage("/images/korea_res_icon.png", null, null, null, new google.maps.Size(35,35));
+												   icon = new google.maps.MarkerImage("/images/한식.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 												  case "중식":
-												   icon = new google.maps.MarkerImage("/images/ch_res_icon.png", null, null, null, new google.maps.Size(35,35));
+												   icon = new google.maps.MarkerImage("/images/중식.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 												  case "일식":
-												   icon = new google.maps.MarkerImage("/images/jap_res_icon.png", null, null, null, new google.maps.Size(35,35));
+												   icon = new google.maps.MarkerImage("/images/일식.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 												  case "카페":
-												   icon = new google.maps.MarkerImage("/images/cafe_icon.png", null, null, null, new google.maps.Size(35,35));
+												   icon = new google.maps.MarkerImage("/images/카페.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 												  case "패밀리레스토랑":
-												   icon = new google.maps.MarkerImage("/images/family_res_icon.png", null, null, null, new google.maps.Size(35,35));
+												   icon = new google.maps.MarkerImage("/images/패밀리레스토랑.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 												  case "전문음식점":
-												   icon = new google.maps.MarkerImage("/images/restaurant_icon.png", null, null, null, new google.maps.Size(35,35));
+												   icon = new google.maps.MarkerImage("/images/전문음식점.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 												  case "피자":
-												   icon = new google.maps.MarkerImage("/images/pizza_icon.png", null, null, null, new google.maps.Size(35,35));
+												   icon = new google.maps.MarkerImage("/images/피자.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 												  case "치킨":
-												   icon = new google.maps.MarkerImage("/images/chicken_icon.png", null, null, null, new google.maps.Size(35,35));
+												   icon = new google.maps.MarkerImage("/images/치킨.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 												  case "디저트":
-												   icon = new google.maps.MarkerImage("/images/dessert_icon.png", null, null, null, new google.maps.Size(35,35));
+												   icon = new google.maps.MarkerImage("/images/디저트.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 												  case "제과점":
-												   icon = new google.maps.MarkerImage("/images/bakery_icon.png", null, null, null, new google.maps.Size(35,35));
+												   icon = new google.maps.MarkerImage("/images/제과점.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 												  case "패스트푸드":
-												   icon = new google.maps.MarkerImage("/images/fastfood_icon.png", null, null, null, new google.maps.Size(35,35));
+												   icon = new google.maps.MarkerImage("/images/패스트푸드.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 												   
 												   
 											  };
+											  //let marker = []
 											  for(var i=0; i < poiInfo.length; i++){
 												let searchMark = [
 											    { icon: icon , name: poiInfo[i].name ,
@@ -315,10 +344,14 @@ window.initMap = function () {
 											     lng: Number(poiInfo[i].frontLon) },
 											  ];
 											  //console.log(searchMark);
-											  	  
-												  fdMark.push(searchMark);
+												  fdlength = poiInfo.length;
+												  console.log(poiInfo.length);
+												  
+												  fdlat.push(Number(poiInfo[i].frontLat));
+												  fdlng.push(Number(poiInfo[i].frontLon));
+												  
 												  const infowindow = new google.maps.InfoWindow(); //클릭시 정보 보여주기
-												
+												  
 												  searchMark.forEach(({ icon, name, lat, lng }) => {
 												      let marker = new google.maps.Marker({
 												      position: { lat, lng },
@@ -327,8 +360,6 @@ window.initMap = function () {
 												      map : map2
 												    });
 												   
-												  
-								
 												    marker.addListener("mouseover",()=>{
 														infowindow.setContent(name);
 														infowindow.open({
@@ -346,7 +377,10 @@ window.initMap = function () {
 												    });	
 												     $('#delMark2').click(function(){
 														console.log("삭제");
+														fdlength = 0;
 													    searchMark.forEach(() =>{
+															fdlat.splice(0);
+															fdlng.splice(0);
 															marker.setMap(null);
 														})
 												    
@@ -363,13 +397,19 @@ window.initMap = function () {
 											}
 										
 									});
-								    
+								   console.log(fdlat);
 								    $('#serviceSelc').click(function(){
 										 if(typeof selLats != "undefined" || typeof selLngs != "undefined"){
 										 var servicesel = document.getElementById('serviceData');
+										 
 										 var selected = servicesel.options[servicesel.selectedIndex].value ;
+										 if(selected === "병원"){
+											 selected = "병원;내과;안과;외과;의원";
+										 }
 									 	console.log(selected);
-									 
+									 	category = "service";
+									 	seloption = selected;
+									 	
 											 fetch('https://apis.openapi.sk.com/tmap/pois/search/around?version=1&centerLon='+selLngs
 										  		+'&centerLat='+selLats
 										  		+'&categories='+selected
@@ -380,8 +420,51 @@ window.initMap = function () {
 											  //console.log(locCate);
 											  var icon;
 											  switch(selected){
-												 
-												   
+												 case "목욕탕":
+												   icon = new google.maps.MarkerImage("/images/목욕탕.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "미용실":
+												   icon = new google.maps.MarkerImage("/images/미용실.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "이발소":
+												   icon = new google.maps.MarkerImage("/images/이발소.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "호텔":
+												   icon = new google.maps.MarkerImage("/images/호텔.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "병원;내과;안과;외과;의원":
+												   icon = new google.maps.MarkerImage("/images/병원.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "치과":
+												   icon = new google.maps.MarkerImage("/images/치과.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "보건소":
+												   icon = new google.maps.MarkerImage("/images/보건소.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "한의원":
+												   icon = new google.maps.MarkerImage("/images/한의원.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "영화관":
+												   icon = new google.maps.MarkerImage("/images/영화관.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "약국":
+												   icon = new google.maps.MarkerImage("/images/약국.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "노래방":
+												   icon = new google.maps.MarkerImage("/images/노래방.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "PC방":
+												   icon = new google.maps.MarkerImage("/images/PC방.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "스크린골프장":
+												   icon = new google.maps.MarkerImage("/images/스크린골프장.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "은행":
+												   icon = new google.maps.MarkerImage("/images/BANK.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "정비소":
+												   icon = new google.maps.MarkerImage("/images/정비소.png", null, null, null, new google.maps.Size(35,35));
+												   break;
 											  };
 											  for(var i=0; i < poiInfo.length; i++){
 												let searchMark = [
@@ -390,10 +473,12 @@ window.initMap = function () {
 											     lng: Number(poiInfo[i].frontLon) },
 											  ];
 											  //console.log(searchMark);
-											      svMark.push(searchMark);
+											      svlength = poiInfo.length;
+											      svlat.push(Number(poiInfo[i].frontLat));
+												  svlng.push(Number(poiInfo[i].frontLon));
 												  
 												  const infowindow = new google.maps.InfoWindow(); //클릭시 정보 보여주기
-												
+												  
 												  searchMark.forEach(({ icon, name, lat, lng }) => {
 												      let marker = new google.maps.Marker({
 												      position: { lat, lng },
@@ -419,78 +504,7 @@ window.initMap = function () {
 												      
 												    });	
 												     $('#delMark2').click(function(){
-														console.log("삭제");
-													    searchMark.forEach(() =>{
-															marker.setMap(null);
-														})
-												    
-												 	});
-												   })
-												  }
-												  
-												})
-												.catch(
-													err => console.error(err)
-												);	
-										}else{
-											alert("장소를 선택(검색) 해주세요");
-										}
-									});
-									$('#retailSelc').click(function(){
-									    if(typeof selLats != "undefined" || typeof selLngs != "undefined"){
-										 var retailsel = document.getElementById('retailData');
-										 var selected = retailsel.options[retailsel.selectedIndex].value ;
-									 	console.log(selected);
-									 
-											 fetch('https://apis.openapi.sk.com/tmap/pois/search/around?version=1&centerLon='+selLngs
-										  		+'&centerLat='+selLats
-										  		+'&categories='+selected
-										  		+'&page=1&count=100&radius=1&reqCoordType=WGS84GEO&resCoordType=WGS84GEO&multiPoint=N', options)
-										    .then(locCate => locCate.json())
-										    .then(locCate => {
-											  var poiInfo = locCate.searchPoiInfo.pois.poi;	
-											  //console.log(locCate);
-											  var icon;
-											  switch(selected){
-												 
-												   
-											  };
-											  for(var i=0; i < poiInfo.length; i++){
-												let searchMark = [
-											    { icon: icon , name: poiInfo[i].name ,
-											     lat: Number(poiInfo[i].frontLat),
-											     lng: Number(poiInfo[i].frontLon) },
-											  ];
-											  //console.log(searchMark);
-											     retaMark.push(searchMark);
-												  
-												  const infowindow = new google.maps.InfoWindow(); //클릭시 정보 보여주기
-												
-												  searchMark.forEach(({ icon, name, lat, lng }) => {
-												      let marker = new google.maps.Marker({
-												      position: { lat, lng },
-												      icon,
-   													  animation: google.maps.Animation.DROP,
-												      map : map2
-												    });
-												   
-								
-												    marker.addListener("mouseover",()=>{
-														infowindow.setContent(name);
-														infowindow.open({
-															anchor: marker,
-															map2
-														});
-													});
-													marker.addListener("mouseout",()=>{
-														infowindow.close();
-													})
-												    marker.addListener("click", () => { //지도 정보 
-												      map2.panTo(marker.position); //마커 위치로 중심 이동
-												      infowindow.setContent(name);
-												      
-												    });	
-												     $('#delMark2').click(function(){
+														svlength = 0;
 														console.log("삭제");
 													    searchMark.forEach(() =>{
 															marker.setMap(null);
@@ -509,11 +523,13 @@ window.initMap = function () {
 										}
 									});
 									
-									$('#areaSelc').click(function(){
+									$('#retailSelc').click(function(){
 									    if(typeof selLats != "undefined" || typeof selLngs != "undefined"){
-										 var areasel = document.getElementById('areaData');
-										 var selected = areasel.options[areasel.selectedIndex].value ;
+										 var retailsel = document.getElementById('retailData');
+										 var selected = retailsel.options[retailsel.selectedIndex].value ;
 									 	console.log(selected);
+									 	category = "reta";
+									 	seloption = selected;
 									 
 											 fetch('https://apis.openapi.sk.com/tmap/pois/search/around?version=1&centerLon='+selLngs
 										  		+'&centerLat='+selLats
@@ -525,8 +541,18 @@ window.initMap = function () {
 											  //console.log(locCate);
 											  var icon;
 											  switch(selected){
-												 
-												   
+												 case "쇼핑":
+												   icon = new google.maps.MarkerImage("/images/쇼핑.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "편의점":
+												   icon = new google.maps.MarkerImage("/images/편의점.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "대형마트":
+												   icon = new google.maps.MarkerImage("/images/대형마트.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "마트":
+												   icon = new google.maps.MarkerImage("/images/마트.png", null, null, null, new google.maps.Size(35,35));
+												   break;
 											  };
 											  for(var i=0; i < poiInfo.length; i++){
 												let searchMark = [
@@ -535,10 +561,110 @@ window.initMap = function () {
 											     lng: Number(poiInfo[i].frontLon) },
 											  ];
 											  //console.log(searchMark);
-											   arMark.push(searchMark);
+											      retalength = poiInfo.length;
+											      retalat.push(Number(poiInfo[i].frontLat));
+												  retalng.push(Number(poiInfo[i].frontLon));
 												  
 												  const infowindow = new google.maps.InfoWindow(); //클릭시 정보 보여주기
-												
+												  
+												  searchMark.forEach(({ icon, name, lat, lng }) => {
+												      let marker = new google.maps.Marker({
+												      position: { lat, lng },
+												      icon,
+   													  animation: google.maps.Animation.DROP,
+												      map : map2
+												    });
+												   
+								
+												    marker.addListener("mouseover",()=>{
+														infowindow.setContent(name);
+														infowindow.open({
+															anchor: marker,
+															map2
+														});
+													});
+													marker.addListener("mouseout",()=>{
+														infowindow.close();
+													})
+												    marker.addListener("click", () => { //지도 정보 
+												      map2.panTo(marker.position); //마커 위치로 중심 이동
+												      infowindow.setContent(name);
+												      
+												    });	
+												     $('#delMark2').click(function(){
+														 retalength = 0;
+														console.log("삭제");
+													    searchMark.forEach(() =>{
+															marker.setMap(null);
+														})
+												    
+												 	});
+												   })
+												  }
+												 
+												})
+												.catch(
+													err => console.error(err)
+												);	
+										}else{
+											alert("장소를 선택(검색) 해주세요");
+										}
+									});
+									
+									$('#areaSelc').click(function(){
+									    if(typeof selLats != "undefined" || typeof selLngs != "undefined"){
+										 var areasel = document.getElementById('areaData');
+										 var selected = areasel.options[areasel.selectedIndex].value ;
+									 	console.log(selected);
+									 	
+									 	areacate = "area";
+									 	areaoption = selected;
+									 
+											 fetch('https://apis.openapi.sk.com/tmap/pois/search/around?version=1&centerLon='+selLngs
+										  		+'&centerLat='+selLats
+										  		+'&categories='+selected
+										  		+'&page=1&count=100&radius=1&reqCoordType=WGS84GEO&resCoordType=WGS84GEO&multiPoint=N', options)
+										    .then(locCate => locCate.json())
+										    .then(locCate => {
+											  var poiInfo = locCate.searchPoiInfo.pois.poi;	
+											  //console.log(locCate);
+											  var icon;
+											  switch(selected){
+												 case "관공서":
+												   icon = new google.maps.MarkerImage("/images/관공서.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "주요시설물":
+												   icon = new google.maps.MarkerImage("/images/주요시설물.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "ATM":
+												   icon = new google.maps.MarkerImage("/images/ATM.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "화장실":
+												   icon = new google.maps.MarkerImage("/images/화장실.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "공연장":
+												   icon = new google.maps.MarkerImage("/images/공연장.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "공원":
+												   icon = new google.maps.MarkerImage("/images/공원.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+												 case "문화시설":
+												   icon = new google.maps.MarkerImage("/images/지하철.png", null, null, null, new google.maps.Size(35,35));
+												   break;
+											  };
+											  for(var i=0; i < poiInfo.length; i++){
+												let searchMark = [
+											    { icon: icon , name: poiInfo[i].name ,
+											     lat: Number(poiInfo[i].frontLat),
+											     lng: Number(poiInfo[i].frontLon) },
+											  ];
+											  //console.log(searchMark);
+											      arlength = poiInfo.length;
+											      arlat.push(Number(poiInfo[i].frontLat));
+												  arlng.push(Number(poiInfo[i].frontLon));
+												  
+												  const infowindow = new google.maps.InfoWindow(); //클릭시 정보 보여주기
+												 
 												  searchMark.forEach(({ icon, name, lat, lng }) => {
 												      let marker = new google.maps.Marker({
 												      position: { lat, lng },
@@ -588,6 +714,9 @@ window.initMap = function () {
 										 var select = document.getElementById('trafficData');
 										 var selected = select.options[select.selectedIndex].value;
 									 	console.log(selected);
+									 	
+									 	trafcate = "traf";
+									 	trafoption = selected;
 									 
 											 fetch('https://apis.openapi.sk.com/tmap/pois/search/around?version=1&centerLon='+selLngs
 										  		+'&centerLat='+selLats
@@ -600,25 +729,22 @@ window.initMap = function () {
 											  var icon;
 											  switch(selected){
 												  case "지하철":
-												   icon = new google.maps.MarkerImage("/images/subway_icon.png", null, null, null, new google.maps.Size(35,35));
+												   icon = new google.maps.MarkerImage("/images/지하철.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 												  case "버스정류장":
-												   icon = new google.maps.MarkerImage("/images/bus_icon.png", null, null, null, new google.maps.Size(35,35));
+												   icon = new google.maps.MarkerImage("/images/버스.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 												  case "주차장":
-												   icon = new google.maps.MarkerImage("/images/parking_icon.png", null, null, null, new google.maps.Size(35,35));
+												   icon = new google.maps.MarkerImage("/images/주차장.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 												  case "주유소":
-												   icon = new google.maps.MarkerImage("/images/gas_station_icon.png", null, null, null, new google.maps.Size(35,35));
-												   break;
-												  case "충전소":
-												   icon = new google.maps.MarkerImage("/images/charge_icon.png", null, null, null, new google.maps.Size(35,35));
+												   icon = new google.maps.MarkerImage("/images/주유소.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 												  case "EV충전소":
-												   icon = new google.maps.MarkerImage("/images/ev_charger_icon.png", null, null, null, new google.maps.Size(35,35));
+												   icon = new google.maps.MarkerImage("/images/EV 충전소.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 												  case "EV충전소/가스충전소":
-												  icon = new google.maps.MarkerImage("/images/ev_charger_icon.png", null, null, null, new google.maps.Size(35,35));
+												  icon = new google.maps.MarkerImage("/images/가스충전소.png", null, null, null, new google.maps.Size(35,35));
 												   break;
 											  }
 											  for(var i=0; i < poiInfo.length; i++){
@@ -628,8 +754,10 @@ window.initMap = function () {
 											     lng: Number(poiInfo[i].frontLon) },
 											  ];
 											  //console.log(searchMark);
-											     
-												  trafMark.push(searchMark);
+												 traflat.push(Number(poiInfo[i].frontLat));
+												 traflng.push(Number(poiInfo[i].frontLon));
+												 traflength = poiInfo.length;
+												  console.log(poiInfo.length);
 												  const infowindow = new google.maps.InfoWindow(); //클릭시 정보 보여주기
 												 
 												  searchMark.forEach(({ icon, name, lat, lng }) => {
@@ -665,6 +793,7 @@ window.initMap = function () {
 												   })
 												  }
 												  
+										  		
 												})
 												.catch(
 													err => console.error(err)
@@ -672,10 +801,63 @@ window.initMap = function () {
 											}else{
 												alert("장소를 선택(검색) 해주세요");
 											}
-										});
-									
-							
-								
+										});		
+										$('#scorebutton').click(function(){
+											console.log("fd 갯수" + fdlength + "//" +"sv 갯수" + svlength + "//" +"reta 갯수" + retalength);
+											if((svlength === null || svlength === "" || typeof svlength === "undefined" || svlength === 0) &&
+											   (retalength === null || retalength === "" || typeof retalength === "undefined" || retalength === 0)){
+													var areaScore = document.getElementById("areaScore");
+													areascore = baseLog(((male*4+female*6)*
+												 		  			(rate0*5+rate10*6+rate20*8+rate30*10+rate40*12+rate50*10+rate60*9+rate70*8)*
+												 		  			(resnt*3+nonresnt*7)/(fdlength+1)),5000)*(100/baseLog(504000000,3000));
+
+											}else if((fdlength === null || fdlength === "" || typeof fdlength === "undefined" || fdlength === 0) &&
+											   (retalength === null || retalength === "" || typeof retalength === "undefined" || retalength === 0)){
+												    var areaScore = document.getElementById("areaScore");
+													areascore = baseLog(((male*4+female*6)*
+												 		  			(rate0*5+rate10*6+rate20*8+rate30*10+rate40*12+rate50*10+rate60*9+rate70*8)*
+												 		  			(resnt*3+nonresnt*7)/(svlength+1)),5000)*(100/baseLog(504000000,3000));
+											}else if((fdlength === null || fdlength === "" || typeof fdlength === "undefined" || fdlength === 0) &&
+											   (svlength === null || svlength === "" || typeof svlength === "undefined" || svlength === 0)){
+												    var areaScore = document.getElementById("areaScore");
+													areascore = baseLog(((male*4+female*6)*
+												 		  			(rate0*5+rate10*6+rate20*8+rate30*10+rate40*12+rate50*10+rate60*9+rate70*8)*
+												 		  			(resnt*3+nonresnt*7)/(retalength+1)),5000)*(100/baseLog(504000000,3000));
+											}else if((fdlength === null || fdlength === "" || typeof fdlength === "undefined" || fdlength === 0) &&
+												(svlength === null || svlength === "" || typeof svlength === "undefined" || svlength === 0) &&
+											   (retalength === null || retalength === "" || typeof retalength === "undefined" || retalength === 0)){
+												alert("업종 마커 한종류를 추가해주세요.")
+											}else{
+												alert("업종을 한개만 선택하여 계산해주세요");
+												alert("마커를 삭제후 다시 추가해주세요");
+												category = null;
+											}
+										
+											if( areascore > 60 && areascore < 70 ){
+												var scorechk = "주의";
+												areaScore.innerText = scorechk;
+												areagrade = scorechk;
+											}else if( areascore > 70 && areascore < 80 ){
+												var scorechk = "보통";
+												areaScore.innerText = scorechk;
+												areagrade = scorechk;
+											}else if( areascore > 80 && areascore < 90 ){
+												var scorechk = "양호";
+												areaScore.innerText = scorechk;
+												areagrade = scorechk;
+											}else if( areascore > 90 && areascore < 100 ){
+												var scorechk = "완벽"
+												areaScore.innerText = scorechk;
+												areagrade = scorechk;
+											}else{
+												var scorechk = "위험"
+												areaScore.innerText = scorechk;
+												areagrade = scorechk;
+											}
+											
+											
+											console.log(areascore);
+										 });	
 									ctx1 = document.getElementById("bar-chart-horizontal");
 									ctx2 = document.getElementById("pieChart");
 									ctx3 = document.getElementById("resntChart");
@@ -686,7 +868,7 @@ window.initMap = function () {
 										datasets:[
 													{
 														label: "나이별 인구 비율",
-														backgroundColor: ["red","orange","yellow","green","blue","purple","white","black"],
+														backgroundColor: ["#FFE45C","#FD7B49","#E8395C","#B137A3","#6957CB","#43ABAF","#6cd6ff","#3d474a"],
 														data: [rate0,rate10,rate20,rate30,rate40,rate50,rate60,rate70]
 													}
 												]
@@ -720,7 +902,7 @@ window.initMap = function () {
 											labels: ["거주","비거주"],
 											datasets: [{
 												data: [resnt, nonresnt],
-												backgroundColor: ['white','black']
+												backgroundColor: ['#bd8cff','lightgray']
 											}]
 										},
 										options:{
@@ -736,6 +918,7 @@ window.initMap = function () {
 											areaAgeChart.destroy();
 											genderChart.destroy();
 											resntChart.destroy();
+											
 											modal.style.display="none";											
 											
 										});
@@ -745,6 +928,7 @@ window.initMap = function () {
 											areaAgeChart.destroy();
 											genderChart.destroy();
 											resntChart.destroy();
+											
 											modal.style.display = "none"
 											}
 										})
@@ -776,12 +960,13 @@ function saveInfo(){
 			congest : congest,
 			selectlat : selectlat,
 			selectlng : selectlng,
-			//trafMark : trafMark,
-			//fdMark : fdMark,
-			//svMark : svMark,
-			//retaMark : retaMark,
-			//arMark : arMark,
-			
+			areagrade : areagrade,
+			category : category,
+			seloption : seloption,
+			areacate : areacate,
+			areaoption : areaoption,
+			trafcate : trafcate,
+			trafoption : trafoption
         };
     console.log(data);
     var email = $("#email").val();
@@ -797,32 +982,131 @@ function saveInfo(){
         contentType : 'application/json; charset=utf-8',
         data : JSON.stringify(data)
     }).done(function(){
-		var trafdata = {
-			traflat : traflat,
-			traflng : traflng
-		};
-		var fddata = {
-			fdlat : fdlat,
-			fdlng : fdlng
-		};
-		var svdata = {
-			svlat : svlat,
-			svlng : svlng
-		};
-		var retadata = {
-			retalat : retalat,
-			retalng : retalng
-		};
-		var ardata = {
-			arlat : arlat,
-			arlng : arlng
-		}
-		
-        alert('스크랩 완료');
+	 	alert("스크랩 완료");
     }).fail(function(error){
         alert(JSON.stringify(error));
     })
 }
+
+/* 테이블 연결 저장 
+ if(traflat !== null || traflat != "" || typeof traflat != "undefined"){
+		for(var i =0 ; i < traflat.length ; i++){
+			var token = $("meta[name='_csrf']").attr("content");
+	    	var header = $("meta[name='_csrf_header']").attr("content");
+	    	
+			var trafdata = {
+				traflat : traflat[i],
+				traflng : traflng[i],
+			}
+		    console.log(trafdata);
+			$.ajax({
+			   beforeSend: function(xhr){
+			   xhr.setRequestHeader(header,token);
+			   },
+			   type : 'POST',
+			   url : 'clipping/traf',
+			   dataType : 'json',
+			   contentType : 'application/json; charset=utf-8',
+			   data : JSON.stringify(trafdata)
+			})
+        }
+        
+       }
+       if(fdlat !== null || fdlat != "" || typeof fdkat != "undefined"){
+        for(var i = 0; i < fdlat.length; i++){
+			var token = $("meta[name='_csrf']").attr("content");
+	    	var header = $("meta[name='_csrf_header']").attr("content");
+	    	
+			var fddata = {
+				fdlat : fdlat[i],
+				fdlng : fdlng[i]
+			};
+			
+				$.ajax({
+					beforeSend: function(xhr){
+			        xhr.setRequestHeader(header,token);
+			   		},
+					type : 'POST',
+			        url : 'clipping/fd',
+			        dataType : 'json',
+			        contentType : 'application/json; charset=utf-8',
+			        data : JSON.stringify(fddata)
+				})
+        	}
+		
+	    }
+	    if(svlat !== null || svlat != "" || typeof svkat != "undefined"){
+        for(var i = 0; i < svlat.length; i++){
+			var token = $("meta[name='_csrf']").attr("content");
+	    	var header = $("meta[name='_csrf_header']").attr("content");
+	    	
+			var svdata = {
+				svlat : svlat[i],
+				svlng : svlng[i]
+			};
+			
+				$.ajax({
+					beforeSend: function(xhr){
+			        xhr.setRequestHeader(header,token);
+			   		},
+					type : 'POST',
+			        url : 'clipping/sv',
+			        dataType : 'json',
+			        contentType : 'application/json; charset=utf-8',
+			        data : JSON.stringify(svdata)
+				})
+        	}
+		
+	    }
+	    if(retalat !== null || retalat != "" || typeof retakat != "undefined"){
+        for(var i = 0; i < retalat.length; i++){
+			var token = $("meta[name='_csrf']").attr("content");
+	    	var header = $("meta[name='_csrf_header']").attr("content");
+	    	
+			var retadata = {
+				retalat : retalat[i],
+				retalng : retalng[i]
+			};
+			
+				$.ajax({
+					beforeSend: function(xhr){
+			        xhr.setRequestHeader(header,token);
+			   		},
+					type : 'POST',
+			        url : 'clipping/reta',
+			        dataType : 'json',
+			        contentType : 'application/json; charset=utf-8',
+			        data : JSON.stringify(retadata)
+				})
+        	}
+		
+	    }
+	    if(arlat !== null || arlat != "" || typeof arkat != "undefined"){
+        for(var i = 0; i < arlat.length; i++){
+			var token = $("meta[name='_csrf']").attr("content");
+	    	var header = $("meta[name='_csrf_header']").attr("content");
+	    	
+			var ardata = {
+				arlat : arlat[i],
+				arlng : arlng[i]
+			};
+			
+				$.ajax({
+					beforeSend: function(xhr){
+			        xhr.setRequestHeader(header,token);
+			   		},
+					type : 'POST',
+			        url : 'clipping/ar',
+			        dataType : 'json',
+			        contentType : 'application/json; charset=utf-8',
+			        data : JSON.stringify(ardata)
+				})
+        	}
+		
+	    }
+	    */
+//--------------------------------------------------
+
 
 // xml을 json으로 변환해주는 xmlToJson함수 선언
 function xmlToJson(xml) {
@@ -877,4 +1161,8 @@ function xmlToJson(xml) {
       addMarkerMethod();
     }, i * 200);
   }
+}
+
+function baseLog(x, base){
+	return Math.log(x)/Math.log(base);
 }

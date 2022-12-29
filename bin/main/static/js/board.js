@@ -1,5 +1,5 @@
 function SaveBoard(){
-		   var fileinput = $('.file').val();
+		   var fileinput = $('#file').val();
         	console.log(fileinput+"dzcxvzxcvzxv");
            var file = fileinput.substr(12,17); // 파일명 출력
             console.log(file);
@@ -49,32 +49,38 @@ function SaveBoard(){
 	 }
 
 function postUpdate(){
+      var fileinput = $('#file').val();
+           console.log(fileinput+"dzcxvzxcvzxv");
+           var file = "/images/"+fileinput.substr(12,17); // 파일명 출력
+            console.log(file);
         var data = {
-        	boardtitle: $('#boardtitle').val(),
-        	boardcontent: $('#boardcontent').val()
-        			 };
+           boardtitle: $('#boardtitle').val(),
+           boardcontent: $('#boardcontent').val(),
+           fileinput: file
+                  };
         var boardid = $("#boardid").val();
         var token = $("meta[name='_csrf']").attr("content");
         var header = $("meta[name='_csrf_header']").attr("content")
-        		$.ajax({
-        			beforeSend: function(xhr){
-        			     xhr.setRequestHeader(header,token);
-        			   },
-        			type : 'PUT',
-        			url : '/post/boardupdate/'+boardid,
-        			dataType : 'json',
-        			contentType : 'application/json; charset=utf-8',
-        			data : JSON.stringify(data)
-        		}).done(function(){
-        			alert('글이 수정되었습니다.');
-        			window.location.href = '/post/info/'+boardid;
-        		}).fail(function(error){
-        			alert(JSON.stringify(error));
-        		})
-        		console.log(token);
-        		console.log(header);
-        		console.log(data.boardcontent)
+              $.ajax({
+                 beforeSend: function(xhr){
+                      xhr.setRequestHeader(header,token);
+                    },
+                 type : 'PUT',
+                 url : '/post/boardupdate/'+boardid,
+                 dataType : 'json',
+                 contentType : 'application/json; charset=utf-8',
+                 data : JSON.stringify(data)
+              }).done(function(){
+                 alert('글이 수정되었습니다.');
+                 window.location.href = '/post/info/'+boardid;
+              }).fail(function(error){
+                 alert(JSON.stringify(error));
+              })
+              console.log(token);
+              console.log(header);
+              console.log(data.boardcontent)
        };
+       
 function postDelete(){
         var boardid = $("#boardid").val();
         var token = $("meta[name='_csrf']").attr("content");

@@ -42,7 +42,7 @@ public interface MemberRepository extends JpaRepository<Member, Long>{
 	Member findByEmailPhone(@Param("email") String email, @Param("phone") String phone);
 	
 	@Transactional
-	@Modifying(clearAutomatically = true) 
+	@Modifying
 	@Query("UPDATE Member m SET m.password=:password WHERE m.email=:email")
 	void update(@Param("password") String password,@Param("email") String email);
 
