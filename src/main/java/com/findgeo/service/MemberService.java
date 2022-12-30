@@ -1,5 +1,6 @@
 package com.findgeo.service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -16,8 +17,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.findgeo.dto.SelectPingDto;
 import com.findgeo.entity.Member;
+import com.findgeo.entity.Posts;
 import com.findgeo.repository.MemberRepository;
 //import com.findgeo.util.Naver_Sens_V2;
+import com.findgeo.repository.PostsRepository;
 
 import lombok.AllArgsConstructor;
 
@@ -27,6 +30,7 @@ import lombok.AllArgsConstructor;
 public class MemberService implements UserDetailsService{
 
 	private final MemberRepository memberRepository;
+	private final PostsRepository postRepository;
 	
 	public Member saveMember(Member member) {
 		validateDuplicateMember(member);
@@ -101,6 +105,12 @@ public class MemberService implements UserDetailsService{
     	System.out.println(dbpw2+"불리언");
 		return dbpw2;
 	}
+	
+	//마이페이지 내가 쓴 게시글 불러오기
+	   public List<Posts> selpostList(String email){
+	      List<Posts> mypostList = postRepository.findBymypageSelfemail(email);
+	      return mypostList;
+	   }
 	
 
 }

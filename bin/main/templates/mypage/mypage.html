@@ -147,13 +147,13 @@
 			<img class="profileImage" th:src="${member.picture}" alt="프로필 사진" width="100px" height="100px">	
 		</td>
 		<td>
+
 			<h4><span th:text="${member.nickname}"></span></h4>
 			<button type="button" id="btn-edit" onclick="passwordCheck()">수정/탈퇴하기</button>
 		</td>
 		<td rowspan="2">
 			스크랩
 			개수
-			<button type="button" id="btn-all" th:onClick="">스크랩/ 게시물 전환 버튼으로 할예정</button>	
 			<div id="table">
 				 <table>
 				      <thead>
@@ -183,12 +183,7 @@
 	<tr>
 		<td colspan="2">
 			내가 쓴 게시물
-			<button type="button" id="btn-all" onclick="location.href=''">전체보기</button>
-
-		</td>
-	</tr>
-	</table>
-	
+			 <button type="button" id="btn-all" th:onclick="|location.href='@{/members/mypage/detail/{email}(email=${member.email})}'|">전체보기</button>
 	<div id="modal" class="modal-overlay">
         <div class="modal-window"> 
             <div class="title">

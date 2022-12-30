@@ -1,12 +1,42 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout2}">
 <head>
 	<meta charset="UTF-8">
-<title>아이디 비밀번호</title>
+<title>비밀번호 재설정</title>
 <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
 <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
+<th:block layout:fragment="css">
+<style>
+	#password_1,#password_2{
+	border:2px solid #04479b;
+	border-radius: 5px;
+	background-color: #d3d3d38a;
+	height: 27px; 
+	width: 430px;
+	}
+	button,#btn{
+	border:2px solid #04479b;
+	width: 100px; border-radius: 5px;
+	float: right; margin: 1px;
+	}
+	button:hover {
+	cursor: pointer;
+	}
+	form{
+	margin: auto; margin-top:10%;
+	width:35%;
+	padding: 50px;
+	}
+	label{
+	font-size: 20px;
+	}
+	
+</style>
+</th:block>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>   
 <script>
 	function validateForm(form){
@@ -32,19 +62,22 @@
 	}
 </script>
 <body>
-<form action="/members/foundPw" method="post" name="updateForm" enctype="multipart/form-data" >
+<div layout:fragment="content2">
+<form action="/members/foundPw" method="post" name="updateForm" th:onsubmit="return validateForm(this);" enctype="multipart/form-data">
+	<h1>비밀번호 재설정🔒</h1>
 	<div>
 		<label th:for="password">비밀번호</label>
-		<input type="password" id="password_1" name="password" placeholder="비밀번호를 입력해주세요"><br>
-	 	<input type="hidden" id="email" name="email" th:value="${email}"/>
+		<input type="password" id="password_1" name="password" placeholder="비밀번호는 영문+숫자+특수문자를 혼합하여 8자 이상으로 입력해주세요."><br>
+ 		<input type="hidden" id="email" name="email" th:value=${email} />
 	</div>
 	<div>
 		<label th:for="password2">비밀번호 확인</label>
-		<input type="password" placeholder="비밀번호를 다시 입력해주세요" id="password_2" name="password2">
-    	<div style="display: inline-block"><font id = "checkPw" size = "2" /></div><br/>
+		<input type="password" placeholder="비밀번호를 다시 입력해주세요." id="password_2" name="password2">
+    	<div style="display: inline-block"><font id = "checkPw" size = "2" /></font></div><br/>
 		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 	</div>
 	<button type="submit">수정하기</button>
+	<input type="button" id="btn" onclick="location.href='/members/login'" value="취소">
 </form>
 <script>
 	$('#password_2').keyup(function(){
@@ -94,5 +127,6 @@
 		}
 	});
 </script>
+</div>
 </body>
 </html>
