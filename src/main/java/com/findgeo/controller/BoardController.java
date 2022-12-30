@@ -25,6 +25,7 @@ public class BoardController {
 	private final HttpSession httpSession;
     private final MemberRepository memberRepository;
 	
+
 	@GetMapping("/board/boardlist")
 	public String board(Model model, @RequestParam(required=false, defaultValue = "0",value="page") int page) {
 		Page<Posts> listPage = postService.list(page);
@@ -34,6 +35,27 @@ public class BoardController {
 		model.addAttribute("totalPage",totalPage);
 		return "/board/boardlist";
 	}
+
+    // @GetMapping("/board/boardlist")
+    // public String board(Model model, @RequestParam(required=false, defaultValue = "0", value="page") int page ) {
+    //    Page<Posts> listPage = postService.list(page);
+       
+    //    int totalPage = listPage.getTotalPages();
+       
+    //    //@를 기준으로 문자열을 추출할 것.
+    //    String sub_email = listPage.getContent().get(totalPage).getEmail();
+    //    //먼저 @의 인덱스를 찾는다.
+    //    int idx = sub_email.indexOf("@");      
+    //    //@ 앞 부분을 추출
+    //    String sub_Email = sub_email.substring(0,idx)+"@******";
+    //    System.out.println(sub_Email+"@*****이거 해도되냐 썅ㅁㄴㅇㄻㄴㅇㅎㄷㅎ!!!!!!!??????????");
+    //    model.addAttribute("posts",listPage.getContent());
+    //    model.addAttribute("totalPage",totalPage);
+    //    model.addAttribute("boardlist_hiddenEmail",sub_Email);
+    //    System.out.println(listPage.getContent().get(totalPage).getEmail()+"여기는 이메일 자르고 뒤에 * 찍기위함 여기는 보드컨트롤러 ");
+       
+    //    return "/board/boardlist";
+    // }
 	//저장
 	@GetMapping("/board/postssave")
 	public String postsSave(Model model, Principal principal) throws Exception {

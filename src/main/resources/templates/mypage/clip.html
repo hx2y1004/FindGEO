@@ -18,7 +18,49 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script th:inline="javascript" >
+
+function savePDF(){
+    //저장 영역 div id
+    html2canvas($('#pdfArea')[0] ,{	
+      //logging : true,		// 디버그 목적 로그
+      //proxy: "html2canvasproxy.php",
+      allowTaint : true,	// cross-origin allow 
+      useCORS: true,		// CORS 사용한 서버로부터 이미지 로드할 것인지 여부
+      scale : 2			// 기본 96dpi에서 해상도를 두 배로 증가
+    }).then(function(canvas) {	
+      // 캔버스를 이미지로 변환
+      var imgData = canvas.toDataURL('image/png');
+
+      var imgWidth = 190; // 이미지 가로 길이(mm) / A4 기준 210mm
+      var pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
+      var imgHeight = canvas.height * imgWidth / canvas.width;
+      var heightLeft = imgHeight;
+      var margin = 10; // 출력 페이지 여백설정
+      var doc = new jsPDF('p', 'mm');
+      var position = 0;
+
+      // 첫 페이지 출력
+      doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      // 한 페이지 이상일 경우 루프 돌면서 출력
+      while (heightLeft >= 20) {			// 35
+	      position = heightLeft - imgHeight;
+	      position = position - 20 ;		// -25
+	
+	      doc.addPage();
+	      doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+	      heightLeft -= pageHeight;
+      }
+
+      // 파일 저장
+      doc.save('계획서.pdf');
+    });
+}
+
 /*<![CDATA[*/
 	const mycliplist = /*[[${mycliplist}]]*/
 	console.log(/*[[${mycliplist}]]*/);
@@ -539,7 +581,7 @@ $(document).ready(function (){
 <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABlqSxHcQF3ZT1Uyc2cEcidYHAOLhHfNY&callback=initMap"></script>	
 </head>
 <body>
-<div layout:fragment="content">
+<div layout:fragment="content" id="pdfArea">
 	<p>근처 상권 정보</p>
     <div id="map3" style="height: 600px; width: 75%"></div> 
 	<div class="title">
@@ -557,12 +599,11 @@ $(document).ready(function (){
 		<p>거주/비거주</p>
 		<canvas id="resntChart" width="300" height="300"></canvas>
 		</div>
-		<button type="button" onClick="history.back()">뒤로가기</button>
 		<input type="button" id="delbtn" value="삭제"></input>
+		<button type="button" onclick="savePDF()">PDF로 다운받기</button>
 		</br>
 		</br>
 		
-<img src="/images/b1.png" width="50px" height="50px" onclick="window.history.back();" style="position: fixed; bottom:20px; right:20px;" id="back">
 </div>
 
 </body>
