@@ -20,7 +20,6 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 
 @Repository
 public interface ClippingRepository extends JpaRepository<Clipping,String>{
-
 	List<Clipping> findByEmail(String email);
 
 	Clipping findByClipid(Long id);
