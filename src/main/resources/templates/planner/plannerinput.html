@@ -72,7 +72,7 @@ input[readonly]{
                         <td>
                         	평균객단가
                         	<img src="/images/q1.png" width="30px" height="30px" id="com">
-                        	<div id="comment">평균객단가 설명</div>
+                        	<div id="comment">고객 1인당 평균매입</div>
                         </td>
                         <td>
                         	<input type="text" id="avgPrice" th:name="avgPrice" onkeyup="inputComma(this)"/>원
@@ -82,25 +82,25 @@ input[readonly]{
                         <td class="res-ser" >
                         	평일방문고객수
                         	<img src="/images/q1.png" width="30px" height="30px" id="com">
-                        	<div id="comment">평일방문고객수 설명</div>
+                        	<div id="comment">평일에 방문하는 고객의 추정치</div>
                         </td>
                         <td class="retail" style="display:none">
                         	평일매장판매
                         	<img src="/images/q1.png" width="30px" height="30px" id="com">
-                        	<div id="comment">평일매장판매 설명</div>
-                        </td>
-                        <td><input type="text" id="avgDayVisit" th:name="avgDayVisit" onkeyup="inputComma(this)"/>건</td>
+                        	<div id="comment">평일에 판매하는 상품개수의 추정치</div>
+                    	</td>
+                        <td><input type="text" id="avgDayVisit" th:field="*{avgDayVisit}" onFocus="this.value='';return true;">건</td>
                     </tr>
                     <tr class="res-ret">
                         <td class="restaurants">
                        		평일배달건수
                         	<img src="/images/q1.png" width="30px" height="30px" id="com">
-                        	<div id="comment">평일배달건수 설명</div>
-                        </td>
+                        	<div id="comment">평일 배달건수의 추정치</div>	
+                    	</td>
                         <td class="retail" style="display:none">
                         	평일택배건수
                         	<img src="/images/q1.png" width="30px" height="30px" id="com">
-                        	<div id="comment">평일택배건수 설명</div>
+                        	<div id="comment">평일 택배건수의 추정치</div>
                         </td>
                         <td><input type="text" id="avgDayDeli" th:name="avgDayDeli" onkeyup="inputComma(this)"/>건</td>
                     </tr>
@@ -108,7 +108,7 @@ input[readonly]{
                         <td>
                         	평일일일매출
                         	<img src="/images/q1.png" width="30px" height="30px" id="com">
-                        	<div id="comment">평일일일매출 설명</div>
+                        	<div id="comment">판매단가x판매수</div>
                         </td>
                         <td><input type="text" id="avgDaySales" onchange="inputComma(this)" readonly/>원</td>
                     </tr>
@@ -116,12 +116,12 @@ input[readonly]{
                         <td class="res-ser">
                         	주말방문고객수
                         	<img src="/images/q1.png" width="30px" height="30px" id="com">
-                        	<div id="comment">주말방문고객수 설명</div>
+                        	<div id="comment">주말에 방문하는 고객의 추정치</div>
                         </td>
                         <td class="retail" style="display:none">
                         	주말매장판매
                         	<img src="/images/q1.png" width="30px" height="30px" id="com">
-                        	<div id="comment">주말매장판매 설명</div>
+                        	<div id="comment">주말에 판매하는 상품개수의 추정치</div>
                         </td>
                         <td><input type="text" id="avgEndVisit" th:name="avgEndVisit" onkeyup="inputComma(this)"/>건</td>
                     </tr>
@@ -129,12 +129,12 @@ input[readonly]{
                         <td class="restaurants">
                         	주말배달건수
                         	<img src="/images/q1.png" width="30px" height="30px" id="com">
-                        	<div id="comment">주말배달건수 설명</div>
+                        	<div id="comment">주말 배달건수의 추정치</div>
                         </td>
                         <td class="retail" style="display:none">
                         	주말택배건수
                         	<img src="/images/q1.png" width="30px" height="30px" id="com">
-                        	<div id="comment">주말택배건수 설명</div>
+                        	<div id="comment">주말 택배건수의 추정치</div>
                         </td>
                         <td><input type="text" id="avgEndDeli" th:name="avgEndDeli" class="res-ret" onkeyup="inputComma(this)"/>건</td>
                     </tr>
@@ -142,7 +142,7 @@ input[readonly]{
                         <td>
                         	주말일일매출
                         	<img src="/images/q1.png" width="30px" height="30px" id="com">
-                        	<div id="comment">주말일일매출 설명</div>
+                        	<div id="comment">판매단가x판매수</div>
                         </td>
                         <td id="won"><input type="text" id="avgEndSales" readonly />원</td>
                     </tr>
@@ -150,7 +150,7 @@ input[readonly]{
                         <td>
                         	월평일매출(<input type="text" id='days' value='1' th:name="days" onkeyup="inputComma(this)" />일)
                         	<img src="/images/q1.png" width="30px" height="30px" id="com">
-                        	<div id="comment">월평일매출 설명</div>
+                        	<div id="comment">평일매출x한달평일영업일</div>
                         </td>
                         <td id="won"><input type="text" id="avgMonDaySales" readonly>원</td>
                     </tr>
@@ -158,7 +158,7 @@ input[readonly]{
                         <td>
                         	월주말매출(<input type="text" id='ends' value='1' th:name="ends" onkeyup="inputComma(this)" />일)
                         	<img src="/images/q1.png" width="30px" height="30px" id="com">
-                        	<div id="comment">월주말매출 설명</div>
+                        	<div id="comment">주말매출x한달주영업일</div>
                         </td>
                         <td id="won"><input type="text" id="avgMonEndSales" readonly>원</td>
                     </tr>
@@ -166,7 +166,7 @@ input[readonly]{
                         <td>
                         	배달비율(0.0~1.0)
                         	<img src="/images/q1.png" width="30px" height="30px" id="com">
-                        	<div id="comment">배달비율 설명</div>
+                        	<div id="comment">총 판매건수 대비 배달 비율</div>
                         </td>
                         <td><input type="text" id="delRatio" readonly> </td>
                     </tr>
@@ -174,15 +174,15 @@ input[readonly]{
                         <td>
                         	총매출
                         	<img src="/images/q1.png" width="30px" height="30px" id="com">
-                        	<div id="comment">총매출 설명</div>
+                        	<div id="comment">한달 총 매출</div>
                         </td>
-                        <td id="won"><input type="text" id="totalSales" readonly>원</td>
+                        <td><input type="text" id="totalSales" readonly>원</td>
                     </tr>
                     <tr>
                         <td>
                         	일평균매출
                         	<img src="/images/q1.png" width="30px" height="30px" id="com">
-                        	<div id="comment">일평균매출 설명</div>
+                        	<div id="comment">총매출/총영업일</div>
                         </td>
                         <td id="won"><input type="text" id="avgSalesPerDay" readonly>원</td>
                     </tr>
@@ -206,7 +206,7 @@ input[readonly]{
                         <td>
                         	시설비
                         	<img src="/images/q1.png" width="30px" height="30px" id="com">
-                        	<div id="comment">시설비 설명</div>
+                        	<div id="comment">장비, 집기, 인테리어 등</div>
                         </td>
                         <td><input type="text" id="initCost" th:name="initCost" onkeyup="inputComma(this)" />원</td>
                     </tr>
@@ -217,7 +217,7 @@ input[readonly]{
                         <td>
                         	임차관리비
                         	<img src="/images/q1.png" width="30px" height="30px" id="com">
-                        	<div id="comment">임차관리비 설명</div>
+                        	<div id="comment">임차비+관리비</div>
                         </td>
                         <td><input type="text" id="rentCost" th:name="rentCost" onkeyup="inputComma(this)" />원</td>
                     </tr>
@@ -225,7 +225,7 @@ input[readonly]{
                         <td>
                         	인건비
                         	<img src="/images/q1.png" width="30px" height="30px" id="com">
-                        	<div id="comment">인건비 설명</div>
+                        	<div id="comment">총 인건비</div>
                         </td>
                         <td><input type="text" id="totalSalary" th:name="totalSalary" onkeyup="inputComma(this)" />원</td>
                     </tr>
@@ -233,15 +233,15 @@ input[readonly]{
                         <td>
                         	4대보험
                         	<img src="/images/q1.png" width="30px" height="30px" id="com">
-                        	<div id="comment">4대보험 설명</div>
-                        </td>
+                        	<div id="comment">인건비의 9%</div>
+                    	</td>
                         <td><input type="text" id="insurance4" readonly>원</td>
                     </tr>
                     <tr>
                         <td>
                         	퇴직충당금
                         	<img src="/images/q1.png" width="30px" height="30px" id="com">
-                        	<div id="comment">퇴직충당금 설명</div>
+                        	<div id="comment">인건비의 8.3%</div>
                         </td>
                         <td><input type="text" id="retire" readonly>원</td>
                     </tr>
@@ -249,7 +249,7 @@ input[readonly]{
                         <td>
                         	보험료(책임배상+화재)
                         	<img src="/images/q1.png" width="30px" height="30px" id="com">
-                        	<div id="comment">보험료 설명</div>
+                        	<div id="comment">책임배상, 화제 등 각종 보험료</div>
                         </td>
                         <td><input type="text" id="insurance" th:name="totInsurance" onkeyup="inputComma(this)" />원</td>
                     </tr>
@@ -257,12 +257,12 @@ input[readonly]{
                         <td class="restaurants">
                         	배달앱사용료(15%)
                         	<img src="/images/q1.png" width="30px" height="30px" id="com">
-                        	<div id="comment">배달앱사용료 설명</div>
+                        	<div id="comment">총 배달비의 15%</div>
                         </td>
                         <td class="retail" style="display:none">
                         	배송비용(3000원)
                         	<img src="/images/q1.png" width="30px" height="30px" id="com">
-                        	<div id="comment">배송비용 설명</div>
+                        	<div id="comment">택배비 3000원 산정</div>
                         </td>
                         <td id="won"><input type="text" id="deliCost" readonly>원</td>
                     </tr>
@@ -270,7 +270,7 @@ input[readonly]{
                         <td>
                         	렌탈비
                         	<img src="/images/q1.png" width="30px" height="30px" id="com">
-                        	<div id="comment">렌탈비 설명</div>
+                        	<div id="comment">각종 장비 렌탈비</div>
                         </td>
                         <td><input type="text" id="etcRent" th:name="etcRent" onkeyup="inputComma(this)" />원</td>
                     </tr>
@@ -278,7 +278,7 @@ input[readonly]{
                         <td>
                         	요식중앙회
                         	<img src="/images/q1.png" width="30px" height="30px" id="com">
-                        	<div id="comment">요식중앙회 설명</div>
+                        	<div id="comment">요식중앙회 회비</div>
                         </td>
                         <td><input type="text" id="dues" th:name="dues" onkeyup="inputComma(this)" />원</td>
                     </tr>
@@ -286,7 +286,7 @@ input[readonly]{
                         <td>
                         	감가상각비
                         	<img src="/images/q1.png" width="30px" height="30px" id="com">
-                        	<div id="comment">감가상각비 설명</div>
+                        	<div id="comment">60개월 기준 감가상각비</div>
                         </td>
                         <td><input type="text" id="depreciation" readonly>원</td>
                     </tr>
@@ -294,15 +294,13 @@ input[readonly]{
                         <td>
                         	대출이자
                         	<img src="/images/q1.png" width="30px" height="30px" id="com">
-                        	<div id="comment">대출이자 설명</div>
+                        	<div id="comment">월 납입 대출이자</div>
                         </td>
                         <td><input type="text" id="interest" th:name="interest" onkeyup="inputComma(this)" />원</td>
                     </tr>
                     <tr>
                         <td>
                         	고정비소계
-                        	<img src="/images/q1.png" width="30px" height="30px" id="com">
-                        	<div id="comment">고정비소계 설명</div>
                         </td>
                         <td><input type="text" id="fixedCost" readonly>원</td>
                     </tr>
