@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.findgeo.dto.CommentCreateRequest;
+
 import com.findgeo.dto.CommentDto;
-import com.findgeo.dto.CommentReadCondition;
+
+import com.findgeo.entity.Comment;
 import com.findgeo.service.CommentService;
 
 
@@ -26,14 +27,14 @@ import lombok.RequiredArgsConstructor;
 public class CommentController {
 	private final CommentService commentService;
 	
-    @GetMapping("/comments")
-    public List<CommentDto> readAll(Long boardid) throws Exception {
-        return commentService.readAll(boardid);
+    @GetMapping("/comments/{boardid}")
+    public List<Comment> readComment(@PathVariable Long boardid) throws Exception {
+        return commentService.readComment(boardid);
     }
 
-    @PostMapping("/comments")
-    public void create(@Valid @RequestBody CommentCreateRequest req) {
-        commentService.create(req);
+    @PostMapping("/comments/save")
+    public Long create(@RequestBody Comment comment) {
+        return commentService.create(comment);
     }
 
     @DeleteMapping("/comments/{id}")

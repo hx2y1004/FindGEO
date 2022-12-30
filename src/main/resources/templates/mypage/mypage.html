@@ -166,7 +166,7 @@
 				      
 				      <tbody>
 				      <tr th:each="c : ${clipList}">
-				        <td th:text="${c.areaname}">
+				        <td th:text="${c.clipid}">
 				        <td>
 				        	<a th:href="@{'/members/clipping/myclip/' + ${c.clipid}}">
 				        		<span th:text="${c.areaname}"></span>

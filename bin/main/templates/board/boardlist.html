@@ -6,6 +6,8 @@
 <head>
 <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
 <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+<script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+
 <meta charset="UTF-8">
 <title>게시판목록</title>
 </head>
@@ -59,6 +61,8 @@
             page(0);
         });
     });
+        
+     
 
     function page(page){
         var searchDateType = $("#searchDateType").val();
@@ -68,6 +72,8 @@
 
         location.href="/board/list/" + page;
     }
+    
+    
 
 </script>
 <body>
@@ -93,8 +99,8 @@
 			<span class="title" th:text="${p.boardtitle}"></span>
 			</a>
 			</sec:authorize>
-			<a class="title" sec:authorize="isAuthenticated()" th:href="@{'/post/info/' + ${p.boardid}}">
-			<span class="title" th:text="${p.boardtitle}"></span>
+			<a class="title"  id="title"  sec:authorize="isAuthenticated()" th:href="@{'/post/info/' + ${p.boardid}}" th:onClick="comment()">
+			<span class="title" id="title" th:text="${p.boardtitle}"></span>
 			</a>
 			</sec:authorize>
 		</td>
