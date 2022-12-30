@@ -13,34 +13,26 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
+
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class CommentDto {
 	private Long commentid;
 	private String content;
-	private MemberFormDto member;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
-    private LocalDateTime createDate;
-    private List<CommentDto> children;
+	private Long boardid;
+	private Long parentid;
+	private String email;
 
-    public CommentDto(Long commentid, String content, MemberFormDto member, List<CommentDto> children) {
+    public CommentDto(Long commentid, String content, Long boardid, Long parentid, String email) {
     	this.commentid = commentid;
     	this.content = content;
-    	this.member = member;
-    	this.children = children;
+    	this.email = email;
+    	this.boardid = boardid;
+    	this.parentid = parentid;
+
     }
     
-    public static List<CommentDto> toDtoList(List<Comment> comments) throws Exception {
-        NestedConvertHelper helper = NestedConvertHelper.newInstance(
-                comments,
-                c -> new CommentDto(c.getCommentid(), c.isDeleted() ? null : c.getContent(), c.isDeleted() ? null : MemberFormDto.toDto(c.getMember()), c.getCreateDate(), new ArrayList<>()),
-                c -> c.getParent(),
-                c -> c.getCommentid(),
-                d -> d.getChildren());
-        return helper.convert();
-    }
+ 
 
     
 

@@ -12,6 +12,8 @@
 		<img src="/images/logo.png" onclick="location.href='/'" width="100px;">
     	<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       	<div class="navbar-nav">
+      		  <a id="nav" class="nav-link" sec:authorize="isAuthenticated()" href="http://localhost:8080/">뉴스게시판</a>
+		      </sec:authorize>
 		      <a id="nav" class="nav-link" sec:authorize="isAnonymous()" href="/board/boardlist">게시판</a>
 		      </sec:authorize>
 		      <a id="nav" class="nav-link" sec:authorize="isAuthenticated()" href="/board/boardlist">게시판</a>

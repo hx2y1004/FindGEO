@@ -200,7 +200,13 @@ public class MemberController {
     @GetMapping("/viewId/{phone}")
     public String viewId(@PathVariable String phone, Model model) {
     	String email = memberRepository.findIdByPhone(phone);
-    	model.addAttribute("email", email);
+    	//@를 기준으로 문자열을 추출할 것.
+        String sub_email = email;
+        //먼저 @의 인덱스를 찾는다.
+        int idx = sub_email.indexOf("@");      
+        //@ 앞 부분을 추출
+        String sub_Email = sub_email.substring(0,idx)+"@******";
+        model.addAttribute("email", sub_Email);
     	return "member/foundId";
     }
     

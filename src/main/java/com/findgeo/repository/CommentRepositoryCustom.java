@@ -8,6 +8,6 @@ import com.findgeo.dto.CommentDto;
 import com.findgeo.entity.Comment;
 
 public interface CommentRepositoryCustom {
-	List<CommentDto> findAllWithMemberAndParentByPostIdORderByParenIdAscNullsFirstCommentIdAsc(Long boardid);
+	List<CommentDto> findAllCommentFromParentid(Long boardid);
 	
 }

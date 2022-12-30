@@ -54,9 +54,7 @@ import lombok.NoArgsConstructor;
    @Column (length=500)
    private String email;
    
-   @OneToMany(fetch = FetchType.LAZY, mappedBy = "posts", cascade = CascadeType.ALL,  orphanRemoval = true)
-   @OrderBy("boradid asc")
-   private List<Comment> commets;
+   
    
    @Builder
    public Posts(String boardtitle, String boardcontent, String nickname, int views, String fileinput, String email) {
