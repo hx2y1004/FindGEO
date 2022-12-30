@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout2}">
 <head>
 	<meta charset="UTF-8">
     <!--<script type="text/javascript" src="/scripts/jquery-ui/jquery.min.js"></script>
@@ -12,14 +14,8 @@
 <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
 <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
+<th:block layout:fragment="css">
 <style>
-	@font-face {
-	 font-family: 'GmarketSansMedium';
-	 src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
-	 font-weight: normal;
-	 font-style: normal;
-	}
-	*{font-family: 'GmarketSansMedium';}
 	#findpw{
 	text-align: center;
 	margin-top: 15%;
@@ -33,25 +29,41 @@
 	#num{
 	font-size: 20px;
 	}
-	#email,#to,#checknum{
+	#email,#to{
 	border:2px solid #04479b;
 	border-radius: 5px;
 	background-color: #d3d3d38a;
-	height: 35px;
+	height: 33px;
 	margin-bottom: 5px;
+	width: 400px;
 	}
-	.to,.checknum{
+	#checknum,#sendSms{
 	border:2px solid #04479b;
 	border-radius: 5px;
+	background-color: #f0f0f0
 	}
-	#checknum{
-	margin-left: -85px;
+	#num1{
+	font-size: 20px;
+	margin-right: 200px;
 	}
-	
-
+	#email1{
+	width: 300px;
+	}
+	.checknuminput{
+	border:2px solid #04479b;
+	border-radius: 5px;
+	background-color: #d3d3d38a;
+	height: 33px;
+	margin-bottom: 5px;
+	width: 350px;
+	margin-left: -50px;
+	}
 
 </style>
+</th:block>
+
 <body>
+<div layout:fragment="content2">
 <div id="findpw">
     <h1>비밀번호 찾기🔍</h1>
  	<input type="hidden" id="chkNum" th:value=${checkNum}/>
@@ -59,14 +71,14 @@
 <table>
         <tr class="form-group">
         	<td id="num">이메일</td>
-            <td>
-                <input type="text" class="form-control" id="email" name="email" placeholder="이메일을 입력하세요">
+            <td id="email1">
+                <input type="text" class="form-control" id="email" name="email" placeholder="이메일을 입력하세요.">
             </td>
         </tr>
         <tr>
             <td id="num">전화번호</td>
             <td>
-                <input type="text" class="form-control" id="to" name="to" placeholder="전화번호를 입력하세요">
+                <input type="text" class="form-control" id="to" style="display: inline-block;" name="to" placeholder="전화번호를 입력하세요.">
             </td>
             <td>
         		<button id="sendSms" name="sendSms">인증번호 전송</button>
@@ -199,5 +211,6 @@ $('#checknum').click(function() {
 });
 
 </script>
+</div>
 </body>
 </html>

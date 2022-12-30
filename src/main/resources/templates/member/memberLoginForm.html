@@ -1,19 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      >
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout2}">
 <meta charset="UTF-8">
 <head>
 <title>로그인</title>
 </head>
+<th:block layout:fragment="css">
 <style>
-@font-face {
-    font-family: 'GmarketSansMedium';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-*{font-family: 'GmarketSansMedium';}
 #email,#password{
 background-color:lightgray; width:300px;
 height: 40px; margin-bottom: 5px;
@@ -40,11 +35,11 @@ position: relative;
 left: 50%;
 transform:translate(-50%,3%);
 }
-img{
+#logoimg{
 display: block;
 margin: auto;
 }
-img:hover{cursor: pointer;}
+#logoimg:hover{cursor: pointer;}
 #loginid{
 text-align: center;
 }
@@ -64,22 +59,18 @@ font-size: 15px;
 color:blue; cursor:pointer;
 }
 
-
-  
+.error {color: #bd2130;}
 </style>
-<body>
-<!-- 사용자 CSS 추가 -->
-<th:block layout:fragment="css">
-	<style>
-		.error {color: #bd2130;}
-	</style>
 </th:block>
-<div layout:fragment="content">
+
+
+<body>
+<div layout:fragment="content2">
 	<script src="//code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 	<div id="loginform">
 	<form role="form" action="/members/login" method="post" onsubmit="saveid();" >
 		<div>
-			<img src="/images/logo.png" onclick="location.href='/'" width="250px;" style="float:center">
+			<img id="logoimg" src="/images/logo.png" onclick="location.href='/'" width="250px;" style="float:center">
 			<br/>
 			<div id="loginid">
 			    <label th:for="email"></label>

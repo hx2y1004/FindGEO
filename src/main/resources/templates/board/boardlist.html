@@ -42,6 +42,10 @@
 		.title:visited {
 		color:purple;
 		}
+		h1{
+		text-align: center;
+		margin-top:20px;
+		}
 	</style>
 </th:block>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -69,6 +73,7 @@
 <body>
 <div layout:fragment="content">
  <div id="table">
+ <h1>질문게시판🌠</h1>
  <table>
       <thead>
       <tr id="index">
@@ -93,7 +98,7 @@
 			</a>
 			</sec:authorize>
 		</td>
-        <td th:text="|${p.nickname}(${boardlist_hiddenEmail})|"></td>
+        <td th:text="|${p.nickname}(${sub_Email})|"></td>
         <td th:text="${#temporals.format(p.regdate,'yyyy-MM-dd')}"></td>
     	<td th:text="${p.views}"></td> 
       </tr>
@@ -133,8 +138,10 @@
   			<a th:href="@{/board/boardlist(page=${pageStat.index})}" th:text="${pageStat.index+1}"></a>
   		</li>
   	</ul>
+  	
 
   </div>
+  
  </div>
 </div>
 

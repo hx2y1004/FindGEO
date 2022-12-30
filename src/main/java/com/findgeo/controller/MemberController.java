@@ -27,14 +27,17 @@ import com.findgeo.dto.CheckSmsIdDto;
 import com.findgeo.dto.MemberFormDto;
 import com.findgeo.dto.MessageDto;
 import com.findgeo.dto.MyClipDto;
+import com.findgeo.dto.PostsResponseDto;
 import com.findgeo.dto.SmsResponseDto;
 import com.findgeo.dto.SelectPingDto;
 import com.findgeo.entity.Clipping;
 import com.findgeo.entity.Member;
+import com.findgeo.entity.Posts;
 import com.findgeo.repository.ClippingRepository;
 import com.findgeo.repository.MemberRepository;
 import com.findgeo.service.ClippingService;
 import com.findgeo.service.MemberService;
+import com.findgeo.service.PostService;
 import com.findgeo.service.SmsService;
 import com.findgeo.util.Script;
 
@@ -53,6 +56,7 @@ public class MemberController {
     private final MemberRepository memberRepository;
     int chkNum = 0;
     private final ClippingService clippingService;
+    private final PostService postService;
 	
 	@GetMapping("/new")
 	public String memberForm(Model model) {
@@ -289,6 +293,35 @@ public class MemberController {
 		}
 		return "mypage/mypage";
 	}
+    //마이페이지 내가 쓴 게시글 리스트로 불러오기
+    @GetMapping("/mypage/detail/{email}")
+    public String myContents(Model model, @PathVariable String email) {
+       System.out.println(email+"여기는 마이페이지 내가 쓴 글 게시글 불러오기 위함.");
+       List<Posts> mypostList = memberService.selpostList(email);
+       model.addAttribute("mypostList",mypostList);
+       System.out.println(mypostList+"여기는 멤버컨틍롤러 지금 실헝중");
+       return "mypage/mypagedetail";
+    }
+    
+    //마이페이지에서 내가 쓴 게시글 상세 조회
+    @GetMapping("/mypage/info/{boardid}")
+    public String mypageInfo(@PathVariable Long boardid, Model model,Principal principal) {
+       
+       PostsResponseDto dto = postService.findById(boardid);
+       Member member = memberRepository.findByEmail(dto.getEmail());
+    
+       String email = member.getEmail();
+       
+       if(principal.getName().equals(email)) {
+         model.addAttribute("check",true);
+      }
+       System.out.println(principal.getName()+"====");
+      System.out.println(email+"*****");
+      model.addAttribute("mypageinfo",dto);
+      
+      
+      return "mypage/mypageInfo";
+    }
 }
 
 

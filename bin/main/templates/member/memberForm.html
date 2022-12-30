@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout2}">
 <meta charset="UTF-8">
 <head>
 <title>회원가입</title>
@@ -41,18 +44,12 @@
 	}
 </script>
 </head>
+<th:block layout:fragment="css">
 <style>
-	@font-face {
-	  font-family: 'GmarketSansMedium';
-	  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
-	  font-weight: normal;
-	  font-style: normal;
-	}
-	*{font-family: 'GmarketSansMedium';}
 	#submit{
 	border:2px solid #04479b;
 	width: 100px; border-radius: 5px;
-	margin-left: 200px;
+	float:right;
 	}
 	#btnemailCheck{
 	border:2px solid #04479b;
@@ -62,11 +59,11 @@
 	form{
 	border-radius:5px;
 	position: relative;
-	left: 25%;
-	width:45%; padding:10%;
+	left: 30%;
+	width:40%; margin-top: 5%;
 	}
 	.form-control{
-	width:450px; height: 30px;
+	width:600px; height: 30px;
 	margin-bottom: 10px;
 	border-radius: 5px;
 	border:2px solid #04479b;
@@ -83,8 +80,10 @@
 	font-size: 20px;
 	}
 </style>
+</th:block>
 
 <body>
+<div layout:fragment="content2">
     <form action="/members/new" role="form"  method="post"  th:object="${memberFormDto}" th:onsubmit="return validateForm(this);">
 	<h1>🌟회원가입🌟</h1>
         <div class="form-group">
@@ -101,7 +100,7 @@
         </div>
         <div class="form-group">
             <label th:for="password">비밀번호</label>
-            <input type="password" th:field="*{password}" class="form-control" style="display:block;" placeholder="8자 이상, 하나 이상의 문자, 숫자와 하나의 상의 특수문자를 입력해주세요." id="password_1" name="password">
+            <input type="password" th:field="*{password}" class="form-control" style="display:block;" placeholder="비밀번호는 영문+숫자+특수문자를 혼합하여 8자 이상으로 입력해주세요." id="password_1" name="password">
             <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError">Incorrect data</p>
         </div>
         <div class="form-group">
@@ -200,5 +199,6 @@
 			});
 		});
 	</script>
+</div>
 </body>
 </html>
