@@ -24,15 +24,12 @@
 </th:block>
 <body>
 <div layout:fragment="content">
-	<th:block th:if="${name != null}">
-		<h4><span th:text="${name}"></span>님 환영합니다.</h4>
-		<input type="hidden" id="email" th:value="${email}"/>
-	</th:block>
-
     <div id="map" style="height: 850px;"></div> 
 
   	<div id="modal" class="modal-overlay">
         <div class="modal-window">
+			<div><img src="/images/loading.gif" display="none" id="checkpp"></div>
+			<div id="checkp">
             <div class="title">
                 <h2>실시간 데이터</h2>
             </div>
@@ -94,8 +91,12 @@
 			  	</div>
 			  	<div>
 			  	<p>근처 상권 정보</p>
+			  	
+			  
+	
             </div>
     </div>
+</div>
 </div>
 </div>
 </div>

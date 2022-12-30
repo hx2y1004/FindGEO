@@ -37,11 +37,11 @@ public class BoardController {
        
        //@를 기준으로 문자열을 추출할 것.
        String sub_email = listPage.getContent().get(totalPage).getEmail();
+       System.out.println(sub_email);
        //먼저 @의 인덱스를 찾는다.
        int idx = sub_email.indexOf("@");      
        //@ 앞 부분을 추출
        String sub_Email = sub_email.substring(0,idx)+"@******";
-       System.out.println(sub_Email+"@*****이거 해도되냐 썅ㅁㄴㅇㄻㄴㅇㅎㄷㅎ!!!!!!!??????????");
        model.addAttribute("posts",listPage.getContent());
        model.addAttribute("totalPage",totalPage);
        model.addAttribute("boardlist_hiddenEmail",sub_Email);

@@ -150,7 +150,10 @@ window.initMap = function () {
 			 	  RTmarker.addListener("click", () => { //지도 정보 
 			 	  					  const modal = document.getElementById("modal");
 									  modal.style.display = "flex";
+									document.getElementById("checkp").style.display="none";
+									document.getElementById("checkpp").style.display="block";
 			 	  					  selLoc = name;
+			 	  					  console.log(selLoc);
 								      //map.panTo(RTmarker.position); //마커 위치로 중심 이동
 								      infoRT.setContent(name);
 								      infoRT.open({
@@ -161,10 +164,16 @@ window.initMap = function () {
 									  var url = 'http://openapi.seoul.go.kr:8088/6b797a4d7a677573373961756c5169/xml/citydata/1/5/'+selLoc; /*URL*/ 
 									  xhr.open('GET', url);
 									  xhr.onreadystatechange = function () { 
+										document.getElementById("checkpp").style.display="none";
+										document.getElementById("checkp").style.display="block";
 										  if (this.readyState == xhr.DONE) {  // <== 정상적으로 준비되었을때 
 										  if(xhr.status == 200||xhr.status == 201){ // <== 호출 상태가 정상적일때 
+										  
+								
 										  var RTxml = new DOMParser().parseFromString(this.responseText, 'text/xml');
+
 										  rtJson = xmlToJson(RTxml); 
+				
 										  console.log(rtJson);
 										  //console.log(Object.keys(rtJson));
 										  var rtcitydata = rtJson["SeoulRtd.citydata"];
@@ -173,7 +182,9 @@ window.initMap = function () {
 										  var liveSt = liveStts["LIVE_PPLTN_STTS"];
 										  var busStts = citydata["BUS_STN_STTS"];
 										  var busSt = busStts["BUS_STN_STTS"];
+										  
 										  console.log(liveSt);
+
 										  //console.log(busSt);
 										  var subStts = citydata["SUB_STTS"];
 										  var subSt = subStts["SUB_STTS"];
@@ -933,12 +944,21 @@ window.initMap = function () {
 											}
 										})
 										  
-									  };
-							}};xhr.send('');
+									  }
+							}else{
+								document.getElementById("checkp").style.display="none";
+								document.getElementById("checkpp").style.display="block";
+								console.log("null chek");
+								
+							}
+							
+							}
+							
+							xhr.send('');
 					 });	
 			  });
 			  
-};
+}
 
 function saveInfo(){
 	console.log(trafMark);
