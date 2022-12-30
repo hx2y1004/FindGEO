@@ -23,6 +23,7 @@
 <script th:inline="javascript" >
 
 function savePDF(){
+		document.getElementById("checkpp").style.display="inline-block";
     //저장 영역 div id
     html2canvas($('#pdfArea')[0] ,{	
       //logging : true,		// 디버그 목적 로그
@@ -56,6 +57,7 @@ function savePDF(){
 	      heightLeft -= pageHeight;
       }
 
+		document.getElementById("checkpp").style.display="none";
       // 파일 저장
       doc.save('계획서.pdf');
     });
@@ -601,6 +603,9 @@ $(document).ready(function (){
 		</div>
 		<input type="button" id="delbtn" value="삭제"></input>
 		<button type="button" onclick="savePDF()">PDF로 다운받기</button>
+		<div style="display:none;" id="checkpp">
+				<img src="/images/loading.gif" width="15px" height="15px">
+			</div>
 		</br>
 		</br>
 		

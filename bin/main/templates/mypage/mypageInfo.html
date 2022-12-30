@@ -85,6 +85,9 @@
          <p id="title">[[${mypageinfo.boardtitle}]]</p>
       <hr>
       <div>
+      	<input type="hidden" id="email" th:value="${mypageinfo.email}">
+      </div>
+      <div>
          <label for="content" style="display:block;"></label>
          <p id="content">[[${mypageinfo.boardcontent}]]</p>
       </div>
@@ -98,7 +101,7 @@
 </form>
     <span sec:authorize="isAuthenticated()">
       <span th:if="${check}">
-         <a href="#" id="btn-delete" onclick="postDelete()">삭제</a>
+         <a href="#" id="btn-delete" onclick="myPage_postDelete()">삭제</a>
            <a id="edit" th:href="@{/post/update/{boardid}(boardid = ${mypageinfo.boardid})}">수정</a> 
       </span>
    </span> 

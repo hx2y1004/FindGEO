@@ -39,13 +39,14 @@ public class PostService {
 		return new PostsResponseDto(posts);
 	}
 	
-	@Transactional
-	   public Long update(Long boardid, PostsUpdateRequestDto requestDto) {
-	      Posts posts = postsRepository.findById(boardid)
-	               .orElseThrow(()->new IllegalArgumentException("해당 게시글이 없습니다. boardid=" + boardid));
-	      posts.update(requestDto.getBoardtitle(), requestDto.getBoardcontent(),requestDto.getFileinput());
-	      return boardid;
-	   }
+	//게시글 수정
+   @Transactional
+   public Long update(Long boardid, PostsUpdateRequestDto requestDto) {
+      Posts posts = postsRepository.findById(boardid)
+               .orElseThrow(()->new IllegalArgumentException("해당 게시글이 없습니다. boardid=" + boardid));
+      posts.update(requestDto.getBoardtitle(), requestDto.getBoardcontent(),requestDto.getFileinput());
+      return boardid;
+   }
 	
 	@Transactional
 	public void delete(Long boardid) {

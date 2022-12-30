@@ -799,86 +799,87 @@ function validateForm(form){
 		alert("제목은 필수입력 사항입니다.");
 		return false;
 	}
-	if(form.avgPrice.value=="" || !patternInt.test(form.avgPrice.value)){
+	if(form.havgPrice.value=="" || !patternInt.test(form.havgPrice.value)){
 		alert("올바른 평균객단가를 입력해주세요.")
 		return false;
 	}
-	if(form.avgDayVisit.value=="" || !patternInt.test(form.avgDayVisit.value)){
+	if(form.havgDayVisit.value=="" || !patternInt.test(form.havgDayVisit.value)){
 		alert("올바른 평일방문고객수를 입력해주세요.")
 		return false;
 	}
-	if(form.avgDayDeli.value=="" || !patternInt.test(form.avgDayDeli.value)){
+	if(form.havgDayDeli.value=="" || !patternInt.test(form.havgDayDeli.value)){
 		alert("올바른 평일배달건수를 입력해주세요.")
 		return false;
 	}
-	if(form.avgEndVisit.value=="" || !patternInt.test(form.avgEndVisit.value)){
+	if(form.havgEndVisit.value=="" || !patternInt.test(form.havgEndVisit.value)){
 		alert("올바른 주말방문고객수를 입력해주세요.")
 		return false;
 	}
-	if(form.avgEndDeli.value=="" || !patternInt.test(form.avgEndDeli.value)){
+	if(form.havgEndDeli.value=="" || !patternInt.test(form.havgEndDeli.value)){
 		alert("올바른 주말배달건수를 입력해주세요.")
 		return false;
 	}
-	if(form.days.value=="" || !patternInt.test(form.days.value)){
+	if(form.hdays.value=="" || !patternInt.test(form.hdays.value)){
 		alert("올바른 평일 영업일을 입력해주세요.")
 		return false;
 	}
-	if(form.ends.value=="" || !patternInt.test(form.ends.value)){
+	if(form.hends.value=="" || !patternInt.test(form.hends.value)){
 		alert("올바른 주말 영업일을 입력해주세요.")
 		return false;
 	}
-	if(form.initCost.value=="" || !patternInt.test(form.initCost.value)){
+	if(form.hinitCost.value=="" || !patternInt.test(form.hinitCost.value)){
 		alert("올바른 시설비를 입력해주세요.")
 		return false;
 	}
-	if(form.restCost.value=="" || !patternInt.test(form.rentCost.value)){
+	if(form.hrentCost.value=="" || !patternInt.test(form.hrentCost.value)){
 		alert("올바른 임차관리비를 입력해주세요.")
 		return false;
 	}
-	if(form.totalSalary.value=="" || !patternInt.test(form.totalSalary.value)){
+	if(form.htotalSalary.value=="" || !patternInt.test(form.htotalSalary.value)){
 		alert("올바른 인건비를 입력해주세요.")
 		return false;
 	}
-	if(form.insurance.value == "" || !patternInt.test(form.insurance.value)){
+	if(form.hinsurance.value == "" || !patternInt.test(form.hinsurance.value)){
 		alert("올바른 보험료를 입력해주세요.")
 		return false;
 	}
-	if(form.etcRent.value=="" || !patternInt.test(form.etcRent.value)){
+	if(form.hetcRent.value=="" || !patternInt.test(form.hetcRent.value)){
 		alert("올바른 렌탈비를 입력해주세요.")
 		return false;
 	}
-	if(form.dues.value=="" || !patternInt.test(form.dues.value)){
+	if(form.hdues.value=="" || !patternInt.test(form.hdues.value)){
 		alert("올바른 요식중앙회비를 입력해주세요.")
 		return false;
 	}
-	if(form.interest.value=="" || !patternInt.test(form.interest.value)){
+	if(form.hinterest.value=="" || !patternInt.test(form.hinterest.value)){
 		alert("올바른 대출이자를 입력해주세요.")
 		return false;
 	}
-	if(form.costRate.value=="" || !patternFloat.test(form.costRate.value) || form.costRate.value<0 || form.costRate.value>1){
+	if(form.hcostRate.value=="" || !patternFloat.test(form.hcostRate.value) || form.hcostRate.value<0 || form.hcostRate.value>1){
 		alert("올바른 원가율를 입력해주세요.")
 		return false;
 	}
-	if(form.partTime.value=="" || !patternInt.test(form.partTime.value)){
+	if(form.hpartTime.value=="" || !patternInt.test(form.hpartTime.value)){
 		alert("올바른 아르바이트비를 입력해주세요.")
 		return false;
 	}
-	if(form.w_e_g.value=="" || !patternInt.test(form.w_e_g.value)){
+	if(form.hw_e_g.value=="" || !patternInt.test(form.hw_e_g.value)){
 		alert("올바른 수도,전기,가스비를 입력해주세요.")
 		return false;
 	}
-	if(form.expand.value=="" || !patternInt.test(form.expand.value)){
+	if(form.hexpand.value=="" || !patternInt.test(form.hexpand.value)){
 		alert("올바른 소모품비를 입력해주세요.")
 		return false;
 	}
-	if(form.advertise.value=="" || !patternInt.test(form.advertise.value)){
+	if(form.hadvertise.value=="" || !patternInt.test(form.hadvertise.value)){
 		alert("올바른 광고비를 입력해주세요.")
 		return false;
 	}
-	if(form.etc.value=="" || !patternInt.test(form.etc.value)){
+	if(form.hetc.value=="" || !patternInt.test(form.hetc.value)){
 		alert("올바른 기타비용을 입력해주세요.")
 		return false;
 	}
+	return true;
 }
 function deletePlanner(){
 	if(confirm("계획표를 삭제하시겠습니까?")==true){

@@ -3,7 +3,7 @@
 function SaveBoard(){
          var fileinput = $('#file').val();
            console.log(fileinput+"dzcxvzxcvzxv");
-           var file = "/images/"+fileinput.substr(12,17); // 파일명 출력
+           var file = "/images/"+fileinput.substr(12,100); // 파일명 출력
             console.log(file);
 
 
@@ -53,7 +53,7 @@ function SaveBoard(){
 function postUpdate(){
       var fileinput = $('#file').val();
            console.log(fileinput+"dzcxvzxcvzxv");
-           var file = "/images/"+fileinput.substr(12,17); // 파일명 출력
+           var file = "/images/"+fileinput.substr(12,100); // 파일명 출력
             console.log(file);
         var data = {
            boardtitle: $('#boardtitle').val(),
@@ -216,4 +216,30 @@ function commentchildsave(){
 	})
 	
 }
+
+function myPage_postDelete(){
+        var boardid = $("#boardid").val();
+        var mypageinfo_email=$("#email").val();
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content")
+              $.ajax({
+                 beforeSend: function(xhr){
+                      xhr.setRequestHeader(header,token);
+                    },
+                 type : 'DELETE',
+                 url : '/post/boarddelete/'+boardid,
+                 dataType : 'json',
+                 contentType : 'application/json; charset=utf-8'
+              }).done(function(){
+                 alert('글이 삭제되었습니다.');
+                 console.log(mypageinfo_email)
+                 window.location.href = '/members/mypage/detail/'+mypageinfo_email;
+              }).fail(function(error){
+                 alert(JSON.stringify(error));
+              })
+              console.log(token);
+              console.log(header);
+              console.log(data.boardcontent)
+              
+           }; 
  

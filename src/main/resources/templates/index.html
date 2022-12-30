@@ -18,9 +18,29 @@
 <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABlqSxHcQF3ZT1Uyc2cEcidYHAOLhHfNY&callback=initMap"></script>	
 </head>
 <th:block layout:fragment="css">
-	<style>
-		#back{display:none;}
-	</style>
+<style>
+	#back{display:none;}
+	html, body {
+	    width: 100%;
+	    height: 100%;
+	}
+	div#map {
+	    width: 100%;
+	    height: 100%;
+	}
+	#checkpp {
+		width: 100px;
+		height: 100px;
+	    margin: 200px auto auto auto;
+	    display: block;
+	}
+	#checkppn{
+		width: 60px;
+		height: 50px;
+	    margin: auto;
+		display: block;
+	}
+</style>
 </th:block>
 <body>
 <div layout:fragment="content">
@@ -28,7 +48,8 @@
 
   	<div id="modal" class="modal-overlay">
         <div class="modal-window">
-			<div><img src="/images/loading.gif" display="none" id="checkpp"></div>
+			<div><img src="/images/loading.gif" display="none" id="checkpp"><div style="display:none;" id="checkppn">로딩중...</div></div>
+			
 			<div id="checkp">
             <div class="title">
                 <h2>실시간 데이터</h2>

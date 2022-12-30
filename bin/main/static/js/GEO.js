@@ -136,7 +136,7 @@ window.initMap = function () {
 						  	'<div class="text-box">'+
 						  		'<h4>'+selLoc+'</h4>'+
 						  		'<div class="img-box">'+
-						  			'<img src="'+img+'" style="width:250px; height:150px;">'+
+						  		'<img src="'+img+'" style="width:250px; height:150px;">'+
 						  		'</div>'
 					  );
 					  infoRT.open({
@@ -152,6 +152,7 @@ window.initMap = function () {
 									  modal.style.display = "flex";
 									document.getElementById("checkp").style.display="none";
 									document.getElementById("checkpp").style.display="block";
+									document.getElementById("checkppn").style.display="block";
 			 	  					  selLoc = name;
 			 	  					  console.log(selLoc);
 								      //map.panTo(RTmarker.position); //마커 위치로 중심 이동
@@ -165,6 +166,7 @@ window.initMap = function () {
 									  xhr.open('GET', url);
 									  xhr.onreadystatechange = function () { 
 										document.getElementById("checkpp").style.display="none";
+										document.getElementById("checkppn").style.display="none";
 										document.getElementById("checkp").style.display="block";
 										  if (this.readyState == xhr.DONE) {  // <== 정상적으로 준비되었을때 
 										  if(xhr.status == 200||xhr.status == 201){ // <== 호출 상태가 정상적일때 
@@ -948,6 +950,7 @@ window.initMap = function () {
 							}else{
 								document.getElementById("checkp").style.display="none";
 								document.getElementById("checkpp").style.display="block";
+								document.getElementById("checkppn").style.display="block";
 								console.log("null chek");
 								
 							}
