@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.findgeo.entity.Armark;
 
-public interface ArRepository extends JpaRepository<Armark, String>{
+public interface ArRepository extends JpaRepository<Armark, String> {
 
 }

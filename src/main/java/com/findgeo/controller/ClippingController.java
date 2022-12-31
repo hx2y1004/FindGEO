@@ -28,37 +28,35 @@ public class ClippingController {
 
 	private final ClippingService clippingService;
 	Long clipid;
-	
+
 	@PostMapping("/clipping/{email}")
 	public Long clipsave(@RequestBody SelectPingDto pingdto) {
 		clipid = clippingService.savePingInfo(pingdto);
 		return clipid;
 	}
-	
+
 	@PostMapping("/clipping/traf")
 	public Long clipsavetraf(@RequestBody TrafDto trafdto) {
-		return clippingService.saveTraf(trafdto,clipid);
+		return clippingService.saveTraf(trafdto, clipid);
 	}
-	
+
 	@PostMapping("/clipping/fd")
 	public Long clipsavefd(@RequestBody FdDto fddto) {
-		return clippingService.savefd(fddto,clipid);
+		return clippingService.savefd(fddto, clipid);
 	}
-	
+
 	@PostMapping("/clipping/sv")
 	public Long clipsavesv(@RequestBody SvDto svdto) {
 		return clippingService.savesv(svdto, clipid);
 	}
-	
+
 	@PostMapping("/clipping/reta")
 	public Long clipsavereta(@RequestBody RetaDto retadto) {
 		return clippingService.savereta(retadto, clipid);
 	}
-	
+
 	@PostMapping("/clipping/ar")
 	public Long clipsavear(@RequestBody ArDto ardto) {
 		return clippingService.savear(ardto, clipid);
 	}
-	
-	
 }

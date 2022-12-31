@@ -7,9 +7,8 @@ import javax.validation.Valid;
 
 import org.springframework.stereotype.Service;
 
-import com.findgeo.dto.CommentCreateRequest;
 import com.findgeo.dto.CommentDto;
-import com.findgeo.dto.CommentReadCondition;
+
 import com.findgeo.entity.Comment;
 import com.findgeo.entity.Member;
 import com.findgeo.entity.Posts;
@@ -23,29 +22,28 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Service
 public class CommentService {
-	
-	private final MemberRepository memberRepository;
-	private final PostsRepository postsRepository;
+
+//	private final MemberRepository memberRepository;
+//	private final PostsRepository postsRepository;
 	private final CommentRepository commentRepository;
 	private final CommentRepositoryImpl commentRepositoryImpl;
-	
-	
-	
-    public List<CommentDto> readAll(Long boardid) throws Exception { 
-        return commentRepositoryImpl.findAllWithMemberAndParentByPostIdORderByParenIdAscNullsFirstCommentIdAsc(boardid);
-        
-    }
 
-    @Transactional
-    public void create(CommentCreateRequest req) { 
-        commentRepository.save(CommentCreateRequest.toEntity(req, memberRepository, postsRepository, commentRepository));
-    }
+	@Transactional
+	public List<CommentDto> readCommentFromParentid(Long boardid) throws Exception {
+		return commentRepositoryImpl.findAllCommentFromParentid(boardid);
+	}
 
-    @Transactional
-    public void delete(Long id) { 
-        Comment comment = commentRepository.findById(id).orElseThrow();
-        comment.findDeletableComment().ifPresentOrElse(commentRepository::delete, comment::delete);
-    }
-    
-   
+	@Transactional
+	public List<Comment> readComment(Long boardid) {
+		return commentRepository.findByBoardid(boardid);
+	}
+
+	@Transactional
+	public Long create(Comment comment) {
+		return commentRepository.save(comment).getCommentid();
+	}
+
+	@Transactional
+	public void delete(Long id) {}
+
 }

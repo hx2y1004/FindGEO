@@ -19,20 +19,19 @@ import com.findgeo.entity.Trafmark;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 @Repository
-public interface ClippingRepository extends JpaRepository<Clipping,String>{
+public interface ClippingRepository extends JpaRepository<Clipping, String> {
 	List<Clipping> findByEmail(String email);
 
 	Clipping findByClipid(Long id);
-	
-	
+
 	@Modifying
 	@Transactional
 	@Query("SELECT c from Clipping c where c.clipid = ?1")
 	List<Clipping> findByClipidList(@Param("clipid") Long clipid);
-	
+
 	@Modifying
 	@Transactional
 	@Query("DELETE FROM Clipping c WHERE c.clipid = ?1")
 	Integer delMyClip(@Param("clipid") Long clipid);
-	
+
 }

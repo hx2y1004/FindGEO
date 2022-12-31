@@ -11,11 +11,11 @@ import com.findgeo.dto.PlannerFormDto;
 import com.findgeo.entity.Planner;
 
 @Repository
-public interface PlannerRepository extends JpaRepository<Planner, Long>{
-	
-	Page <Planner> findByEmailId(String emailId, Pageable pageable);
-	
-	Optional <Planner> findById(Long idx);
-	
+public interface PlannerRepository extends JpaRepository<Planner, Long> {
+
+	Page<Planner> findByEmailId(String emailId, Pageable pageable);
+
+	Optional<Planner> findById(Long idx);
+
 	void save(PlannerFormDto plannerFormDto);
 }

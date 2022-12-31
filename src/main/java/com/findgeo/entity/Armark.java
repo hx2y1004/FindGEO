@@ -25,14 +25,14 @@ public class Armark {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long armarkid;
-	
+
 	private String arlat;
 	private String arlng;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "clipid")
 	private Clipping clipping;
-	
+
 	@Builder
 	public Armark(String arlat, String arlng, Clipping clipping) {
 		this.arlat = arlat;

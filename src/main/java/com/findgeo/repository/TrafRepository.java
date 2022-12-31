@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.findgeo.entity.Trafmark;
 
 @Repository
-public interface TrafRepository extends JpaRepository<Trafmark, String>{
-	
+public interface TrafRepository extends JpaRepository<Trafmark, String> {
+
 }

@@ -21,18 +21,18 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class Fdmark {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long fdmarkid;
-	
+
 	private String fdlat;
 	private String fdlng;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="clipid")
+	@JoinColumn(name = "clipid")
 	private Clipping clipping;
-	
+
 	@Builder
 	public Fdmark(String fdlat, String fdlng, Clipping clipping) {
 		this.fdlat = fdlat;

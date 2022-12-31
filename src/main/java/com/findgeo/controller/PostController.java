@@ -16,22 +16,21 @@ import lombok.RequiredArgsConstructor;
 @RestController
 public class PostController {
 	private final PostService postService;
-	
+
 	@PostMapping("/post/boardsave")
 	public Long save(@RequestBody PostsSaveRequestDto requestDto) {
 		return postService.save(requestDto);
 	}
-	
+
 	@PutMapping("/post/boardupdate/{boardid}")
 	public Long update(@PathVariable Long boardid, @RequestBody PostsUpdateRequestDto requestDto) {
 		return postService.update(boardid, requestDto);
 	}
-	
+
 	@DeleteMapping("/post/boarddelete/{boardid}")
 	public Long delete(@PathVariable Long boardid) {
 		postService.delete(boardid);
 		return boardid;
 	}
-	
-	
+
 }

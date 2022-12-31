@@ -7,16 +7,16 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PlannerDto { 
-	private long plannerId; 
-	private String emailId; 
-	private String plannerTitle; 
-	private int avgPrice; 
-	private int avgDayVisit; 
-	private int avgDayDeli; 
-	private int avgEndVisit; 
+public class PlannerDto {
+	private long plannerId;
+	private String emailId;
+	private String plannerTitle;
+	private int avgPrice;
+	private int avgDayVisit;
+	private int avgDayDeli;
+	private int avgEndVisit;
 	private int avgEndDeli;
-	private int initCost=0;
+	private int initCost = 0;
 	private int rentCost;
 	private int totalSalary;
 	private int totInsurance = 0;

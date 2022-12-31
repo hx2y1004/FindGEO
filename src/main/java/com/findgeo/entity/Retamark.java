@@ -25,14 +25,14 @@ public class Retamark {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long retamarkid;
-	
+
 	private String retalat;
 	private String retalng;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "clipid")
 	private Clipping clipping;
-	
+
 	@Builder
 	public Retamark(String retalat, String retalng, Clipping clipping) {
 		this.retalat = retalat;

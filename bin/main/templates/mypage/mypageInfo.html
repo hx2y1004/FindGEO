@@ -1,110 +1,134 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-     xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout1}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout1}">
+
 <head>
-<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
-<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
-<meta charset="UTF-8">
-<script src="https://code.jquery.com/jquery-3.6.1.js"></script>
-<script th:inline="javascript" th:src="@{/js/board.js}"></script> 
-<title>내가 쓴 게시글 상세보기</title>
+	<meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
+	<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
+	<meta charset="UTF-8">
+	<script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+	<script th:inline="javascript" th:src="@{/js/board.js}"></script>
+	<title>내가 쓴 게시글 상세보기</title>
 </head>
 <th:block layout:fragment="css">
-   <style>
-   #boardid{
-   border-style: none;
-   }
-   #posting{
-   position: absolute;
-   left: 50%;
-   transform:translate(-60%,3%);
-   }
-   #content{
-   border-style:none;
-   width: max-content;
-   height:30%;
-   border-radius:5px;
-   font-size: 20px;
-   max-width: 600px;
-   white-space: pre-wrap;
-   word-wrap:break-word;
-   }
-   #mypage_postList,#edit,#btn-delete{
-   border:2px solid #4caf50;
-   border-radius:5px; float:right;
-   color:black; background-color:#f0f0f0;
-   text-decoration: none; margin:3px;
-   font-size:17px; padding:2px; 
-   width: 100px; height: 30px; text-align: center;
-   }
-   label{
-   margin-bottom: -5px;
-   margin-top: 5px;
-   }
-   #author{
-   background-color: lightgray;
-   font-size: 13px;
-   font-weight: bold;
-   border: none;
-   }
-    .author{
-   font-size: 15px;
-   }
-   #title{
-   margin-bottom: 5px;
-   font-size: 25px;
-   }
-   .title{
-   font-size: 18px;
-   }
-   .num,#boardid{
-   color: gray;
-   font-size: 17px;
-   }
-   </style>
-</th:block>
-<body>
-<div layout:fragment="content">
-<div id="posting">
-<form>
-      <div class="num">
-         <label>글번호</label>
-         <input type="text" id="boardid" th:value="${mypageinfo.boardid}" readonly>
-         <label>작성일</label>
-         <span th:text="${#temporals.format(mypageinfo.regdate,'yyyy-MM-dd')}"></span>
-         
-      </div>
-      <hr>
-      <div>
-         <label class="author">작성자</label>
-         <input type="text" id="author" th:value="|${mypageinfo.nickname} (${#strings.substring(mypageinfo.email, 0, 5)}***) |" readonly>         
-         </div>
-         <label class="title" for="title" style="display:block;">제목</label>
-         <p id="title">[[${mypageinfo.boardtitle}]]</p>
-      <hr>
-      <div>
-         <label for="content" style="display:block;"></label>
-         <p id="content">[[${mypageinfo.boardcontent}]]</p>
-      </div>
-      <div>
-           <label for="FILE" style="display:block;"></label>
-           <p>
-              <img class="mypagefileimg" th:src="${mypageinfo.fileinput}" alt="첨부파일" width="200px" height="200px">
-           </p>
-        </div>
-      <hr>
-</form>
-    <span sec:authorize="isAuthenticated()">
-      <span th:if="${check}">
-         <a href="#" id="btn-delete" onclick="postDelete()">삭제</a>
-           <a id="edit" th:href="@{/post/update/{boardid}(boardid = ${mypageinfo.boardid})}">수정</a> 
-      </span>
-   </span> 
-   <a id="mypage_postList" href="javascript:history.back(-1)">돌아가기</a>
+	<style>
+		#boardid {
+			border-style: none;
+		}
 
-</div>
-</div>
+		#posting {
+			position: absolute;
+			left: 50%;
+			transform: translate(-60%, 3%);
+		}
+
+		#content {
+			border-style: none;
+			width: max-content;
+			height: 30%;
+			border-radius: 5px;
+			font-size: 20px;
+			max-width: 600px;
+			white-space: pre-wrap;
+			word-wrap: break-word;
+		}
+
+		#mypage_postList,
+		#edit,
+		#btn-delete {
+			border: 2px solid #4caf50;
+			border-radius: 5px;
+			float: right;
+			color: black;
+			background-color: #f0f0f0;
+			text-decoration: none;
+			margin: 3px;
+			font-size: 17px;
+			padding: 2px;
+			width: 100px;
+			height: 30px;
+			text-align: center;
+		}
+
+		label {
+			margin-bottom: -5px;
+			margin-top: 5px;
+		}
+
+		#author {
+			background-color: lightgray;
+			font-size: 13px;
+			font-weight: bold;
+			border: none;
+		}
+
+		.author {
+			font-size: 15px;
+		}
+
+		#title {
+			margin-bottom: 5px;
+			font-size: 25px;
+		}
+
+		.title {
+			font-size: 18px;
+		}
+
+		.num,
+		#boardid {
+			color: gray;
+			font-size: 17px;
+		}
+	</style>
+</th:block>
+
+<body>
+	<div layout:fragment="content">
+		<div id="posting">
+			<form>
+				<div class="num">
+					<label>글번호</label>
+					<input type="text" id="boardid" th:value="${mypageinfo.boardid}" readonly>
+					<label>작성일</label>
+					<span th:text="${#temporals.format(mypageinfo.regdate,'yyyy-MM-dd')}"></span>
+
+				</div>
+				<hr>
+				<div>
+					<label class="author">작성자</label>
+					<input type="text" id="author"
+						th:value="|${mypageinfo.nickname} (${#strings.substring(mypageinfo.email, 0, 5)}***) |"
+						readonly>
+				</div>
+				<label class="title" for="title" style="display:block;">제목</label>
+				<p id="title">[[${mypageinfo.boardtitle}]]</p>
+				<hr>
+				<div>
+					<input type="hidden" id="email" th:value="${mypageinfo.email}">
+				</div>
+				<div>
+					<label for="content" style="display:block;"></label>
+					<p id="content">[[${mypageinfo.boardcontent}]]</p>
+				</div>
+				<div>
+					<label for="FILE" style="display:block;"></label>
+					<p>
+						<img class="mypagefileimg" th:src="${mypageinfo.fileinput}" alt="첨부파일" width="200px"
+							height="200px">
+					</p>
+				</div>
+				<hr>
+			</form>
+			<span sec:authorize="isAuthenticated()">
+				<span th:if="${check}">
+					<a href="#" id="btn-delete" onclick="myPage_postDelete()">삭제</a>
+					<a id="edit" th:href="@{/post/update/{boardid}(boardid = ${mypageinfo.boardid})}">수정</a>
+				</span>
+			</span>
+			<a id="mypage_postList" href="javascript:history.back(-1)">돌아가기</a>
+		</div>
+	</div>
 </body>
+
 </html>

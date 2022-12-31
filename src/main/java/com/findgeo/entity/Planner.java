@@ -1,4 +1,5 @@
 package com.findgeo.entity;
+
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -15,8 +16,9 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "planner")
-@Getter @Setter
-public class Planner extends BaseTimeEntity{
+@Getter
+@Setter
+public class Planner extends BaseTimeEntity {
 	@Id
 	@Column(name = "plannerid")
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,7 +31,7 @@ public class Planner extends BaseTimeEntity{
 	private int avgDayDeli = 0;
 	private int avgEndVisit = 0;
 	private int avgEndDeli = 0;
-	private int initCost=0;
+	private int initCost = 0;
 	private int rentCost;
 	private int totalSalary;
 	private int totInsurance = 0;
@@ -45,7 +47,7 @@ public class Planner extends BaseTimeEntity{
 	private int days = 1;
 	private int ends = 1;
 	private String category;
-	
+
 //	public void updatePlanner(PlannerFormDto plannerFormDto) {
 //		this.avgPrice = plannerFormDto.getAvgPrice();
 //		this.plannerTitle = plannerFormDto.getPlannerTitle();

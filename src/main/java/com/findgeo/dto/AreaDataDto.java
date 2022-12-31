@@ -8,5 +8,5 @@ import lombok.Setter;
 public class AreaDataDto {
 	private int index;
 	private String category;
-	
+
 }

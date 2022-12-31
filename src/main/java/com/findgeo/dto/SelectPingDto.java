@@ -44,36 +44,13 @@ public class SelectPingDto {
 	private String areaoption;
 	private String trafcate;
 	private String trafoption;
-	
+
 	public Clipping toClip() {
-		return Clipping.builder()
-				.email(email)
-				.areaname(areaname)
-				.congest(congest)
-				.rate0(rate0)
-				.rate10(rate10)
-				.rate20(rate20)
-				.rate30(rate30)
-				.rate40(rate40)
-				.rate50(rate50)
-				.rate60(rate60)
-				.rate70(rate70)
-				.male(male)
-				.female(female)
-				.resnt(resnt)
-				.nonresnt(nonresnt)
-				.selectlat(selectlat)
-				.selectlng(selectlng)
-				.areagrade(areagrade)
-				.category(category)
-				.seloption(seloption)
-				.areacate(areacate)
-				.areaoption(areaoption)
-				.trafcate(trafcate)
-				.trafoption(trafoption)
-				.build();
+		return Clipping.builder().email(email).areaname(areaname).congest(congest).rate0(rate0).rate10(rate10)
+				.rate20(rate20).rate30(rate30).rate40(rate40).rate50(rate50).rate60(rate60).rate70(rate70).male(male)
+				.female(female).resnt(resnt).nonresnt(nonresnt).selectlat(selectlat).selectlng(selectlng)
+				.areagrade(areagrade).category(category).seloption(seloption).areacate(areacate).areaoption(areaoption)
+				.trafcate(trafcate).trafoption(trafoption).build();
 	}
-	
-	
-	
+
 }

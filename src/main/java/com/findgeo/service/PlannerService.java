@@ -16,23 +16,20 @@ import com.findgeo.repository.PlannerRepository;
 
 import lombok.RequiredArgsConstructor;
 
-
-
 @Service
 @RequiredArgsConstructor
-public class PlannerService
-{
-	
+public class PlannerService {
+
 	private final PlannerRepository plannerRepository;
 
-	//계획서 입력
+	// 계획서 입력
 	public void plannerWrite(@Valid PlannerFormDto plannerFormDto) {
 		Planner planner = plannerFormDto.createPlanner();
 		plannerRepository.save(planner);
 	}
-	
-	//계획서 리스트
-	public Page<Planner> selectPlannerListPage(String emailId, Pageable pageable){
+
+	// 계획서 리스트
+	public Page<Planner> selectPlannerListPage(String emailId, Pageable pageable) {
 		return plannerRepository.findByEmailId(emailId, pageable);
 	}
 
@@ -41,9 +38,9 @@ public class PlannerService
 	}
 
 	public Optional<Planner> updatePlanner(PlannerFormDto plannerFormDto) {
-		Long plannerId=plannerFormDto.getPlannerId();
-		Optional <Planner> planner = this.plannerRepository.findById(plannerId);
-		planner.ifPresent(t ->{
+		Long plannerId = plannerFormDto.getPlannerId();
+		Optional<Planner> planner = this.plannerRepository.findById(plannerId);
+		planner.ifPresent(t -> {
 			t.setAdvertise(plannerFormDto.getAdvertise());
 			t.setAvgDayDeli(plannerFormDto.getAvgDayDeli());
 			t.setAvgDayVisit(plannerFormDto.getAvgDayVisit());
@@ -74,5 +71,5 @@ public class PlannerService
 	public void plannerDelete(Long plannerId) {
 		plannerRepository.deleteById(plannerId);
 	}
-	
+
 }

@@ -17,10 +17,10 @@ public class PostsResponseDto {
 	private int views;
 	private String fileinput;
 	private String email;
-	
+
 	public PostsResponseDto(Posts entity) {
 		this.boardid = entity.getBoardid();
-		this.boardtitle =entity.getBoardtitle();
+		this.boardtitle = entity.getBoardtitle();
 		this.boardcontent = entity.getBoardcontent();
 		this.nickname = entity.getNickname();
 		this.regdate = entity.getRegdate();
@@ -29,4 +29,3 @@ public class PostsResponseDto {
 		this.email = entity.getEmail();
 	}
 }
-
