@@ -17,33 +17,6 @@
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABlqSxHcQF3ZT1Uyc2cEcidYHAOLhHfNY&callback=initMap"></script>
 </head>
 <th:block layout:fragment="css">
-	<style>
-		#back {
-			display: none;
-		}
-
-		#checkpp {
-			width: 100px;
-			height: 100px;
-			margin: 200px auto auto auto;
-			display: block;
-		}
-
-		#checkppn {
-			width: 60px;
-			height: 50px;
-			margin: auto;
-			display: block;
-		}
-
-		select {
-			width: 200px;
-		}
-
-		button {
-			width: 90px;
-		}
-	</style>
 </th:block>
 
 <body>
@@ -55,7 +28,7 @@
 				<div>
 					<img src="/images/loading.gif" display="none" id="checkpp">
 					<div style="display:none; color:rgb(14, 14, 14)" id="checkppn">로딩중...</div>
-					<input type="hidden" id="email" name="email" th:value="${email}"/>
+					<input type="hidden" id="email" name="email" th:value="${email}" />
 				</div>
 				<div id="checkp">
 					<div class="close-area">X</div>
@@ -66,7 +39,7 @@
 						</div>
 						<div>
 							<div id="map2" style="height: 600px; width: 70%; float:left; margin: 15px;"></div>
-							<div id="selec" style="margin: 15px; padding: 15px;">
+							<div id="selec" style="margin: 15px; padding: 15px; display: block;">
 								<select id="foodData">
 									<th:block th:each="food : ${foodDataList}">
 										<option th:value="${food.category}" th:text="${food.category}"></option>
@@ -123,7 +96,7 @@
 						<div class="title">
 							<h2>실시간 데이터</h2>
 						</div>
-						<div class="content">
+						<div class="content" style="display: block;">
 							<h3 style="display: inline-block;">지역명: </h3>
 							<h3 id="areaName" style="display: inline-block;">지역이름</h3>
 							<br />

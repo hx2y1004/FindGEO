@@ -24,7 +24,7 @@
     border-radius: 10px;
     border: 1px solid rgba( 255, 255, 255, 0.18 );
     width: 70%;
-    height: 75%;
+    height: 70%;
     position: relative;
     top: 10px;
     padding: 10px;
@@ -33,18 +33,17 @@
 
 #modal .title {
     padding-left: 10px;
-    display: inline;
+    display: inline-block;
     text-shadow: 1px 1px 2px gray;
     color: white;
-    
 }
 
 #modal .title h2 {
-    display: inline;
+    display: inline-block;
 }
 
 #modal .close-area {
-    display: inline;
+    display: inline-block;
     float: right;
     padding-right: 10px;
     cursor: pointer;
@@ -83,4 +82,31 @@
 
 #modal #modaldata {
 	display: block;
+}
+
+#back {
+	display: none;
+}
+
+#checkpp {
+	width: 100px;
+	height: 100px;
+	margin: 200px auto auto auto;
+	display: block;
+}
+
+#checkppn {
+	width: 60px;
+	height: 50px;
+	margin: auto;
+	display: block;
+}
+
+select {
+	width: 200px;
+	display: block;
+}
+
+button {
+	width: 90px;
 }
