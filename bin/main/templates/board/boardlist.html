@@ -60,6 +60,11 @@
 			text-align: center;
 			margin-top: 20px;
 		}
+		#search{
+		display: flex;
+		justify-content: center;
+		margin-left: 55%;
+		}
 	</style>
 </th:block>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -81,7 +86,6 @@
 		var searchSellStatus = $("#searchSellStatus").val();
 		var searchBy = $("#searchBy").val();
 		var searchQuery = $("#searchQuery").val();
-
 		location.href = "/board/list/" + page;
 	}
 </script>
@@ -90,6 +94,13 @@
 	<div layout:fragment="content">
 		<div id="table">
 			<h1>질문게시판🌠</h1>
+			<div>
+				<form id="search" class="form-inline my-2 my-lg-0" th:action="@{/post/search}"
+					method="get">
+					<input name="searchQuery" class="form-control mr-sm-2" type="search" aria-label="Search">
+					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
+				</form>
+			</div>
 			<table>
 				<thead>
 					<tr id="index">
@@ -122,6 +133,7 @@
 				</tbody>
 			</table>
 			<!--   
+<<<<<<< Updated upstream
 	<div th:with="start=${(plannerFormDto.number/maxPage)*maxPage + 1}, end=(${(plannerFormDto.totalPages == 0) ? 1 : (start + (maxPage - 1) < plannerFormDto.totalPages ? start + (maxPage - 1) : plannerFormDto.totalPages)})" >
 	     <ul class="pagination justify-content-center">
 	
@@ -148,15 +160,15 @@
 				<button type="button" class="post" onClick="location.href='/board/postssave'">글등록</button>
 			</span>
 
-			<div class="paging">
-				<ul>
-					<li th:each="page : ${#numbers.sequence(0,totalPage-1)}">
-						<a th:href="@{/board/boardlist(page=${pageStat.index})}" th:text="${pageStat.index+1}"></a>
-					</li>
-				</ul>
-			</div>
 
+			<!--   <div class="paging">
+  	<ul>
+  		<li th:each="page : ${#numbers.sequence(0,totalPage-1)}">
+  			<a th:href="@{/board/boardlist(page=${pageStat.index})}" th:text="${pageStat.index+1}"></a>
+  		</li>
+  	</ul>-->
 		</div>
+
 	</div>
 
 </body>

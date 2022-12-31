@@ -4,8 +4,6 @@ import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.constraints.Email;
-
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.findgeo.service.*;
 import com.findgeo.config.dto.SessionMember;
-import com.findgeo.dto.CommentDto;
 import com.findgeo.dto.PostsResponseDto;
 import com.findgeo.entity.Member;
 import com.findgeo.entity.Posts;
@@ -64,6 +61,7 @@ public class BoardController {
 		}
 		return "/board/postsSave";
 	}
+
 
 	// 조회
 	@GetMapping("/post/info/{boardid}")
@@ -118,4 +116,13 @@ public class BoardController {
 		model.addAttribute("posts", dto);
 		return "/board/postsUpdate";
 	}
+	   //검색
+		@GetMapping("/post/search")
+		public String search(@RequestParam("searchQuery") String keyword, Model model) {
+	        List<Posts> searchList = postService.search(keyword);
+	        System.out.println(searchList.get(0).getEmail());
+	        model.addAttribute("posts", searchList);
+
+		    return "board/boardlist";
+		}
 }

@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import com.findgeo.dto.PostsListResponseDto;
@@ -60,5 +61,12 @@ public class PostService {
 	public int updateView(Long boardid) {
 		return this.postsRepository.updateView(boardid);
 	}
+	
+	//사용자가 검색창에 입력한 값 제목 검색
+    @Transactional
+    public List<Posts> search(String keyword) {
+        List<Posts> postsList = postsRepository.findByBoardtitleContaining(keyword);
+        return postsList;
+    }
 
 }
