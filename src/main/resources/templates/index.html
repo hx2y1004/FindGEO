@@ -1,21 +1,20 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout1}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout1}">
 
 <head>
-<meta charset="UTF-8">
-<title>Index</title> 
-<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
-<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
-<link rel="stylesheet" media="screen" th:href="@{/css/Modal.css}"/>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
-<script th:inline="javascript" th:src="@{/js/GEO.js}"></script>
-<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABlqSxHcQF3ZT1Uyc2cEcidYHAOLhHfNY&callback=initMap"></script>	
+	<meta charset="UTF-8">
+	<title>찾아 가게</title>
+	<meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
+	<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
+	<link rel="stylesheet" media="screen" th:href="@{/css/Modal.css}" />
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
+	<script th:inline="javascript" th:src="@{/js/GEO.js}"></script>
+	<script defer
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABlqSxHcQF3ZT1Uyc2cEcidYHAOLhHfNY&callback=initMap"></script>
 </head>
 <th:block layout:fragment="css">
 	<style>
@@ -46,14 +45,17 @@
 		}
 	</style>
 </th:block>
-<body>
-<div layout:fragment="content">
-	<th:block th:if="${name != null}">
-		<h4><span th:text="${name}"></span>님 환영합니다.</h4>
-		<input type="hidden" id="email" th:value="${email}"/>
-	</th:block>
 
-    <div id="map" style="height: 850px;"></div> 
+<body>
+	<div layout:fragment="content">
+		<div id="map" style="height: 850px;"></div>
+
+		<div id="modal" class="modal-overlay">
+			<div class="modal-window">
+				<div>
+					<img src="/images/loading.gif" display="none" id="checkpp">
+					<div style="display:none;" id="checkppn">로딩중...</div>
+				</div>
 
 				<div id="checkp">
 					<div class="title">
@@ -144,4 +146,5 @@
 		</div>
 	</div>
 </body>
+
 </html>
