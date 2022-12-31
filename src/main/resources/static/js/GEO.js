@@ -13,7 +13,7 @@ var rate20;
 var rate30;
 var rate40;
 var rate50;
-var rate60;
+var rate60; 
 var rate70;
 var male;
 var female;
@@ -25,9 +25,9 @@ var selectlat;
 var selectlng;
 var category;
 var seloption;
-var areacate = "";
+var areacate ="";
 var areaoption;
-var trafcate = "";
+var trafcate ="";
 var trafoption;
 //-----------------------------------------
 var trafMark = [];
@@ -36,16 +36,16 @@ var svMark = [];
 var retaMark = [];
 var arMark = [];
 //----------------------------------------
-var traflat = [];
-var traflng = [];
-var fdlat = [];
-var fdlng = [];
-var svlat = [];
-var svlng = [];
-var retalat = [];
-var retalng = [];
-var arlat = [];
-var arlng = [];
+var traflat =[];
+var traflng =[];
+var fdlat =[];
+var fdlng =[];
+var svlat =[];
+var svlng =[];
+var retalat =[];
+var retalng =[];
+var arlat =[];
+var arlng =[];
 // ------------------------------------------
 var areascore;
 var fdlength;
@@ -941,120 +941,109 @@ window.initMap = function() {
 								responsive: false
 							}
 
-						};
-						config3 = {
-							type: 'pie',
-							data: {
-								labels: ["거주", "비거주"],
-								datasets: [{
-									data: [resnt, nonresnt],
-									backgroundColor: ['#bd8cff', 'lightgray']
-								}]
-							},
-							options: {
-								responsive: false
-							}
-						}
-						areaAgeChart = new Chart(ctx1, config1);
-						genderChart = new Chart(ctx2, config2);
-						resntChart = new Chart(ctx3, config3);
+									config3 = {
+										type: 'pie',
+										data: {
+											labels: ["거주","비거주"],
+											datasets: [{
+												data: [resnt, nonresnt],
+												backgroundColor: ['#bd8cff','lightgray']
+											}]
+										},
+										options:{
+											responsive: false
+										}
+									}
+									areaAgeChart = new Chart(ctx1,config1);
+									genderChart = new Chart(ctx2,config2);
+									resntChart = new Chart(ctx3,config3);
+									
+										const closeBtn = modal.querySelector('.close-area');
+										closeBtn.addEventListener("click", e => {
+											areaAgeChart.destroy();
+											genderChart.destroy();
+											resntChart.destroy();
+											
+											modal.style.display="none";											
+											
+										});
+										modal.addEventListener("click", e => {
+										const evTarget = e.target
+										if(evTarget.classList.contains("modal-overlay")) {
+											areaAgeChart.destroy();
+											genderChart.destroy();
+											resntChart.destroy();
+											
+											modal.style.display = "none"
+											}
+										})
+										  
+									  };
+							}};xhr.send('');
+					 });	
+			  });
+			  
+};
 
-						const closeBtn = modal.querySelector('.close-area');
-						closeBtn.addEventListener("click", e => {
-							areaAgeChart.destroy();
-							genderChart.destroy();
-							resntChart.destroy();
-
-							modal.style.display = "none";
-
-						});
-						modal.addEventListener("click", e => {
-							const evTarget = e.target
-							if (evTarget.classList.contains("modal-overlay")) {
-								areaAgeChart.destroy();
-								genderChart.destroy();
-								resntChart.destroy();
-
-								modal.style.display = "none"
-							}
-						})
-
-					}
-				} else {
-					document.getElementById("checkp").style.display = "none";
-					document.getElementById("checkpp").style.display = "block";
-					document.getElementById("checkppn").style.display = "block";
-					console.log("null chek");
-
-				}
-
-			}
-
-			xhr.send('');
-		});
-	});
-
-}
-
-function saveInfo() {
+function saveInfo(){
 	console.log(trafMark);
 	var data = {
-		email: $("#email").val(),
-		areaname: areaname,
-		rate0: rate0,
-		rate10: rate10,
-		rate20: rate20,
-		rate30: rate30,
-		rate40: rate40,
-		rate50: rate50,
-		rate60: rate60,
-		rate70: rate70,
-		male: male,
-		female: female,
-		resnt: resnt,
-		nonresnt: nonresnt,
-		congest: congest,
-		selectlat: selectlat,
-		selectlng: selectlng,
-		areagrade: areagrade,
-		category: category,
-		seloption: seloption,
-		areacate: areacate,
-		areaoption: areaoption,
-		trafcate: trafcate,
-		trafoption: trafoption
-	};
-	console.log(data);
-	var email = $("#email").val();
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
-	$.ajax({
-		beforeSend: function(xhr) {
-			xhr.setRequestHeader(header, token);
-		},
-		type: 'POST',
-		url: 'clipping/' + email,
-		dataType: 'json',
-		contentType: 'application/json; charset=utf-8',
-		data: JSON.stringify(data)
-	}).done(function() {
-		alert("스크랩 완료");
-	}).fail(function(error) {
-		alert(JSON.stringify(error));
-	})
+            email : $("#email").val(),
+			areaname : areaname,
+			rate0 : rate0,
+			rate10 : rate10,
+			rate20 : rate20,
+			rate30 : rate30,
+			rate40 : rate40,
+			rate50 : rate50,
+			rate60 : rate60,
+			rate70 : rate70,
+			male : male,
+			female : female,
+			resnt : resnt,
+			nonresnt : nonresnt,
+			congest : congest,
+			selectlat : selectlat,
+			selectlng : selectlng,
+			areagrade : areagrade,
+			category : category,
+			seloption : seloption,
+			areacate : areacate,
+			areaoption : areaoption,
+			trafcate : trafcate,
+			trafoption : trafoption
+        };
+    console.log(data);
+    var email = $("#email").val();
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    $.ajax({
+        beforeSend: function(xhr){
+        xhr.setRequestHeader(header,token);
+   		},
+        type : 'POST',
+        url : 'clipping/'+email,
+        dataType : 'json',
+        contentType : 'application/json; charset=utf-8',
+        data : JSON.stringify(data)
+    }).done(function(){
+	 	alert("스크랩 완료");
+    }).fail(function(error){
+        alert(JSON.stringify(error));
+    })
 }
 
 /* 테이블 연결 저장 
  if(traflat !== null || traflat != "" || typeof traflat != "undefined"){
 		for(var i =0 ; i < traflat.length ; i++){
 			var token = $("meta[name='_csrf']").attr("content");
-			var header = $("meta[name='_csrf_header']").attr("content");
-			
+	    	var header = $("meta[name='_csrf_header']").attr("content");
+	    	
 			var trafdata = {
 				traflat : traflat[i],
 				traflng : traflng[i],
 			}
-			console.log(trafdata);
+		    console.log(trafdata);
 			$.ajax({
 			   beforeSend: function(xhr){
 			   xhr.setRequestHeader(header,token);
@@ -1065,14 +1054,14 @@ function saveInfo() {
 			   contentType : 'application/json; charset=utf-8',
 			   data : JSON.stringify(trafdata)
 			})
-		}
-	    
-	   }
-	   if(fdlat !== null || fdlat != "" || typeof fdkat != "undefined"){
-		for(var i = 0; i < fdlat.length; i++){
+        }
+        
+       }
+       if(fdlat !== null || fdlat != "" || typeof fdkat != "undefined"){
+        for(var i = 0; i < fdlat.length; i++){
 			var token = $("meta[name='_csrf']").attr("content");
-			var header = $("meta[name='_csrf_header']").attr("content");
-			
+	    	var header = $("meta[name='_csrf_header']").attr("content");
+	    	
 			var fddata = {
 				fdlat : fdlat[i],
 				fdlng : fdlng[i]
@@ -1080,22 +1069,22 @@ function saveInfo() {
 			
 				$.ajax({
 					beforeSend: function(xhr){
-					xhr.setRequestHeader(header,token);
-							},
+			        xhr.setRequestHeader(header,token);
+			   		},
 					type : 'POST',
-					url : 'clipping/fd',
-					dataType : 'json',
-					contentType : 'application/json; charset=utf-8',
-					data : JSON.stringify(fddata)
+			        url : 'clipping/fd',
+			        dataType : 'json',
+			        contentType : 'application/json; charset=utf-8',
+			        data : JSON.stringify(fddata)
 				})
-			}
+        	}
 		
-		}
-		if(svlat !== null || svlat != "" || typeof svkat != "undefined"){
-		for(var i = 0; i < svlat.length; i++){
+	    }
+	    if(svlat !== null || svlat != "" || typeof svkat != "undefined"){
+        for(var i = 0; i < svlat.length; i++){
 			var token = $("meta[name='_csrf']").attr("content");
-			var header = $("meta[name='_csrf_header']").attr("content");
-			
+	    	var header = $("meta[name='_csrf_header']").attr("content");
+	    	
 			var svdata = {
 				svlat : svlat[i],
 				svlng : svlng[i]
@@ -1103,22 +1092,22 @@ function saveInfo() {
 			
 				$.ajax({
 					beforeSend: function(xhr){
-					xhr.setRequestHeader(header,token);
-							},
+			        xhr.setRequestHeader(header,token);
+			   		},
 					type : 'POST',
-					url : 'clipping/sv',
-					dataType : 'json',
-					contentType : 'application/json; charset=utf-8',
-					data : JSON.stringify(svdata)
+			        url : 'clipping/sv',
+			        dataType : 'json',
+			        contentType : 'application/json; charset=utf-8',
+			        data : JSON.stringify(svdata)
 				})
-			}
+        	}
 		
-		}
-		if(retalat !== null || retalat != "" || typeof retakat != "undefined"){
-		for(var i = 0; i < retalat.length; i++){
+	    }
+	    if(retalat !== null || retalat != "" || typeof retakat != "undefined"){
+        for(var i = 0; i < retalat.length; i++){
 			var token = $("meta[name='_csrf']").attr("content");
-			var header = $("meta[name='_csrf_header']").attr("content");
-			
+	    	var header = $("meta[name='_csrf_header']").attr("content");
+	    	
 			var retadata = {
 				retalat : retalat[i],
 				retalng : retalng[i]
@@ -1126,22 +1115,22 @@ function saveInfo() {
 			
 				$.ajax({
 					beforeSend: function(xhr){
-					xhr.setRequestHeader(header,token);
-							},
+			        xhr.setRequestHeader(header,token);
+			   		},
 					type : 'POST',
-					url : 'clipping/reta',
-					dataType : 'json',
-					contentType : 'application/json; charset=utf-8',
-					data : JSON.stringify(retadata)
+			        url : 'clipping/reta',
+			        dataType : 'json',
+			        contentType : 'application/json; charset=utf-8',
+			        data : JSON.stringify(retadata)
 				})
-			}
+        	}
 		
-		}
-		if(arlat !== null || arlat != "" || typeof arkat != "undefined"){
-		for(var i = 0; i < arlat.length; i++){
+	    }
+	    if(arlat !== null || arlat != "" || typeof arkat != "undefined"){
+        for(var i = 0; i < arlat.length; i++){
 			var token = $("meta[name='_csrf']").attr("content");
-			var header = $("meta[name='_csrf_header']").attr("content");
-			
+	    	var header = $("meta[name='_csrf_header']").attr("content");
+	    	
 			var ardata = {
 				arlat : arlat[i],
 				arlng : arlng[i]
@@ -1149,76 +1138,76 @@ function saveInfo() {
 			
 				$.ajax({
 					beforeSend: function(xhr){
-					xhr.setRequestHeader(header,token);
-							},
+			        xhr.setRequestHeader(header,token);
+			   		},
 					type : 'POST',
-					url : 'clipping/ar',
-					dataType : 'json',
-					contentType : 'application/json; charset=utf-8',
-					data : JSON.stringify(ardata)
+			        url : 'clipping/ar',
+			        dataType : 'json',
+			        contentType : 'application/json; charset=utf-8',
+			        data : JSON.stringify(ardata)
 				})
-			}
+        	}
 		
-		}
-		*/
+	    }
+	    */
 //--------------------------------------------------
 
 
 // xml을 json으로 변환해주는 xmlToJson함수 선언
 function xmlToJson(xml) {
-	// Create the return object
-	var obj = {};
-
-	if (xml.nodeType == 1) {
-		// element
-		// do attributes
-		if (xml.attributes.length > 0) {
-			obj["@attributes"] = {};
-			for (var j = 0; j < xml.attributes.length; j++) {
-				var attribute = xml.attributes.item(j);
-				obj["@attributes"][attribute.nodeName] = attribute.nodeValue;
-			}
-		}
-	} else if (xml.nodeType == 3) {
-		// text
-		obj = xml.nodeValue;
-	}
-
-	// do children
-	// If all text nodes inside, get concatenated text from them.
-	var textNodes = [].slice.call(xml.childNodes).filter(function(node) {
-		return node.nodeType === 3;
-	});
-	if (xml.hasChildNodes() && xml.childNodes.length === textNodes.length) {
-		obj = [].slice.call(xml.childNodes).reduce(function(text, node) {
-			return text + node.nodeValue;
-		}, "");
-	} else if (xml.hasChildNodes()) {
-		for (var i = 0; i < xml.childNodes.length; i++) {
-			var item = xml.childNodes.item(i);
-			var nodeName = item.nodeName;
-			if (typeof obj[nodeName] == "undefined") {
-				obj[nodeName] = xmlToJson(item);
-			} else {
-				if (typeof obj[nodeName].push == "undefined") {
-					var old = obj[nodeName];
-					obj[nodeName] = [];
-					obj[nodeName].push(old);
-				}
-				obj[nodeName].push(xmlToJson(item));
-			}
-		}
-	}
-	return obj;
+    // Create the return object
+    var obj = {};
+  
+    if (xml.nodeType == 1) {
+      // element
+      // do attributes
+      if (xml.attributes.length > 0) {
+        obj["@attributes"] = {};
+        for (var j = 0; j < xml.attributes.length; j++) {
+          var attribute = xml.attributes.item(j);
+          obj["@attributes"][attribute.nodeName] = attribute.nodeValue;
+        }
+      }
+    } else if (xml.nodeType == 3) {
+      // text
+      obj = xml.nodeValue;
+    }
+  
+    // do children
+    // If all text nodes inside, get concatenated text from them.
+    var textNodes = [].slice.call(xml.childNodes).filter(function(node) {
+      return node.nodeType === 3;
+    });
+    if (xml.hasChildNodes() && xml.childNodes.length === textNodes.length) {
+      obj = [].slice.call(xml.childNodes).reduce(function(text, node) {
+        return text + node.nodeValue;
+      }, "");
+    } else if (xml.hasChildNodes()) {
+      for (var i = 0; i < xml.childNodes.length; i++) {
+        var item = xml.childNodes.item(i);
+        var nodeName = item.nodeName;
+        if (typeof obj[nodeName] == "undefined") {
+          obj[nodeName] = xmlToJson(item);
+        } else {
+          if (typeof obj[nodeName].push == "undefined") {
+            var old = obj[nodeName];
+            obj[nodeName] = [];
+            obj[nodeName].push(old);
+          }
+          obj[nodeName].push(xmlToJson(item));
+        }
+      }
+    }
+    return obj;
+  }
+  function drop() {
+  for (var i =0; i < markerArray.length; i++) {
+    setTimeout(function() {
+      addMarkerMethod();
+    }, i * 200);
+  }
 }
-function drop() {
-	for (var i = 0; i < markerArray.length; i++) {
-		setTimeout(function() {
-			addMarkerMethod();
-		}, i * 200);
-	}
-}
 
-function baseLog(x, base) {
-	return Math.log(x) / Math.log(base);
+function baseLog(x, base){
+	return Math.log(x)/Math.log(base);
 }
