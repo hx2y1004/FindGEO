@@ -25,19 +25,19 @@ public class Svmark {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long svmarkid;
-	
+
 	private String svlat;
 	private String svlng;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "clipid")
 	private Clipping clipping;
-	
+
 	@Builder
 	public Svmark(String svlat, String svlng, Clipping clipping) {
 		this.svlat = svlat;
 		this.svlng = svlng;
 		this.clipping = clipping;
 	}
-	
+
 }

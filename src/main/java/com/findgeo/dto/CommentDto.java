@@ -13,7 +13,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @NoArgsConstructor
 public class CommentDto {
@@ -23,17 +22,13 @@ public class CommentDto {
 	private Long parentid;
 	private String email;
 
-    public CommentDto(Long commentid, String content, Long boardid, Long parentid, String email) {
-    	this.commentid = commentid;
-    	this.content = content;
-    	this.email = email;
-    	this.boardid = boardid;
-    	this.parentid = parentid;
+	public CommentDto(Long commentid, String content, Long boardid, Long parentid, String email) {
+		this.commentid = commentid;
+		this.content = content;
+		this.email = email;
+		this.boardid = boardid;
+		this.parentid = parentid;
 
-    }
-    
- 
-
-    
+	}
 
 }

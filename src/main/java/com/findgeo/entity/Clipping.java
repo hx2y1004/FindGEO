@@ -27,16 +27,16 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class Clipping {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long clipid;
-	
-	@Column( nullable = false)
+
+	@Column(nullable = false)
 	private String areaname;
-	
+
 	private String email;
-	
+
 	private String congest;
 	private float rate0;
 	private float rate10;
@@ -59,8 +59,7 @@ public class Clipping {
 	private String areaoption;
 	private String trafcate;
 	private String trafoption;
-	
-	
+
 //	@OneToMany(mappedBy="clipping", cascade = CascadeType.ALL)
 //	private List<Trafmark> trafmark;
 //
@@ -77,12 +76,10 @@ public class Clipping {
 //	private List<Armark> armark;
 
 	@Builder
-	public Clipping(String areaname,String email ,String congest, float rate0, float rate10, float rate20, 
-			float rate30, float rate40, float rate50, float rate60, float rate70, 
-			float female, float male, float resnt, float nonresnt, 
-			String selectlat, String selectlng, String areagrade, String category, 
-			String seloption, String areacate,String areaoption, String trafcate, String trafoption
-			) {
+	public Clipping(String areaname, String email, String congest, float rate0, float rate10, float rate20,
+			float rate30, float rate40, float rate50, float rate60, float rate70, float female, float male, float resnt,
+			float nonresnt, String selectlat, String selectlng, String areagrade, String category, String seloption,
+			String areacate, String areaoption, String trafcate, String trafoption) {
 
 		this.email = email;
 		this.areaname = areaname;
@@ -103,12 +100,11 @@ public class Clipping {
 		this.selectlng = selectlng;
 		this.areagrade = areagrade;
 		this.category = category;
-		this.seloption= seloption;
+		this.seloption = seloption;
 		this.areacate = areacate;
 		this.areaoption = areaoption;
 		this.trafcate = trafcate;
 		this.trafoption = trafoption;
 	}
-	
-	
+
 }

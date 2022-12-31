@@ -22,32 +22,28 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Service
 public class CommentService {
-	
+
 //	private final MemberRepository memberRepository;
 //	private final PostsRepository postsRepository;
 	private final CommentRepository commentRepository;
 	private final CommentRepositoryImpl commentRepositoryImpl;
-	
+
 	@Transactional
-    public List<CommentDto> readCommentFromParentid(Long boardid) throws Exception { 
-        return commentRepositoryImpl.findAllCommentFromParentid(boardid);
-        
-    }
-	
+	public List<CommentDto> readCommentFromParentid(Long boardid) throws Exception {
+		return commentRepositoryImpl.findAllCommentFromParentid(boardid);
+	}
+
 	@Transactional
 	public List<Comment> readComment(Long boardid) {
 		return commentRepository.findByBoardid(boardid);
 	}
 
-    @Transactional
-    public Long create(Comment comment) { 
-        return commentRepository.save(comment).getCommentid();
-    }
+	@Transactional
+	public Long create(Comment comment) {
+		return commentRepository.save(comment).getCommentid();
+	}
 
-    @Transactional
-    public void delete(Long id) { 
-        
-    }
-    
-   
+	@Transactional
+	public void delete(Long id) {}
+
 }

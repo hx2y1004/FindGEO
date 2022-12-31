@@ -1,41 +1,41 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout2}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout2}">
+
 <head>
 	<meta charset="UTF-8">
-<title>아이디 비밀번호</title>
-<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
-<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+	<title>아이디 비밀번호</title>
+	<meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
+	<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
 </head>
 <th:block layout:fragment="css">
-<style>
-	#findid{
-	  display: flex;
-	  flex-direction: column;
-      align-items: center;
-	  border: 1px solid lightgray;
-	  margin : auto;
-	  margin-top: 10%;
-	  width: 30%;
-	}
-	span{
-	background-color: #ffeb3b;
-	}
-	
-</style>
+	<style>
+		#findid {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			border: 1px solid lightgray;
+			margin: auto;
+			margin-top: 10%;
+			width: 30%;
+		}
+
+		span {
+			background-color: #ffeb3b;
+		}
+	</style>
 </th:block>
 
 <body>
-<div layout:fragment="content2">
-<div id="findid">
-	<img src="/images/logo.png" onclick="location.href='/'" width="200px;" style="display:block;">
-	<h4>고객님의 아이디는 <span th:text="|${#strings.substring(email, 0, 5)}*** |"></span> 입니다.</h4>
-</div>
-</div>
-	<button type="button" onclick="location.href='/members/memberLoginForm'">로그인하기</button>
-<br/>
-<br/>
+	<div layout:fragment="content2">
+		<div id="findid">
+			<img src="/images/logo.png" onclick="location.href='/'" width="200px;" style="display:block;">
+			<h4>고객님의 아이디는 <span th:text="|${#strings.substring(email, 0, 5)}*** |"></span> 입니다.</h4>
+		</div>
+		<button type="button" onclick="location.href='/members/memberLoginForm'">로그인하기</button>
+		<br />
+		<br />
+	</div>
 </body>
+
 </html>

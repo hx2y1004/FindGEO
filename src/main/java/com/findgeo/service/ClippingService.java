@@ -38,78 +38,60 @@ public class ClippingService {
 	private final SvRepository svRepository;
 	private final RetaRepository retaRepository;
 	private final ArRepository arRepository;
-	private final ClippingRepositoryImpl clippingRepositoryImpl; 
-	
+	private final ClippingRepositoryImpl clippingRepositoryImpl;
+
 	public Long savePingInfo(SelectPingDto selectPingDto) {
 		return clippingRepository.save(selectPingDto.toClip()).getClipid();
 	}
-	
-	public Long saveTraf(TrafDto trafdto,Long id) {
+
+	public Long saveTraf(TrafDto trafdto, Long id) {
 		Clipping clipping = clippingRepository.findByClipid(id);
-		Trafmark trafmark = Trafmark.builder()
-				.clipping(clipping)
-				.traflat(trafdto.getTraflat())
-				.traflng(trafdto.getTraflng())
-				.build();
-		
+		Trafmark trafmark = Trafmark.builder().clipping(clipping).traflat(trafdto.getTraflat())
+				.traflng(trafdto.getTraflng()).build();
+
 		return trafRepository.save(trafmark).getTrafmarkid();
 	}
-	
+
 	public Long savefd(FdDto fddto, Long id) {
 		Clipping clipping = clippingRepository.findByClipid(id);
-		Fdmark fdmark = Fdmark.builder()
-				.clipping(clipping)
-				.fdlat(fddto.getFdlat())
-				.fdlng(fddto.getFdlng())
-				.build();
-		
+		Fdmark fdmark = Fdmark.builder().clipping(clipping).fdlat(fddto.getFdlat()).fdlng(fddto.getFdlng()).build();
+
 		return fdRepository.save(fdmark).getFdmarkid();
 	}
-	
+
 	public Long savesv(SvDto svdto, Long id) {
 		Clipping clipping = clippingRepository.findByClipid(id);
-		Svmark svmark = Svmark.builder()
-				.clipping(clipping)
-				.svlat(svdto.getSvlat())
-				.svlng(svdto.getSvlng())
-				.build();
-		
+		Svmark svmark = Svmark.builder().clipping(clipping).svlat(svdto.getSvlat()).svlng(svdto.getSvlng()).build();
+
 		return svRepository.save(svmark).getSvmarkid();
 	}
-	
+
 	public Long savereta(RetaDto retadto, Long id) {
 		Clipping clipping = clippingRepository.findByClipid(id);
-		Retamark retamark = Retamark.builder()
-				.clipping(clipping)
-				.retalat(retadto.getRetalat())
-				.retalng(retadto.getRetalng())
-				.build();
-		
+		Retamark retamark = Retamark.builder().clipping(clipping).retalat(retadto.getRetalat())
+				.retalng(retadto.getRetalng()).build();
+
 		return retaRepository.save(retamark).getRetamarkid();
 	}
-	
+
 	public Long savear(ArDto ardto, Long id) {
 		Clipping clipping = clippingRepository.findByClipid(id);
-		Armark armark = Armark.builder()
-				.clipping(clipping)
-				.arlat(ardto.getArlat())
-				.arlng(ardto.getArlng())
-				.build();
-		
+		Armark armark = Armark.builder().clipping(clipping).arlat(ardto.getArlat()).arlng(ardto.getArlng()).build();
+
 		return arRepository.save(armark).getArmarkid();
 	}
-	
+
 	public List<Clipping> selMyClip(Long clipid) {
 //		List<MyClipDto> myClipList = clippingRepositoryImpl.findByEmailQuerydsl(clipid);
 		List<Clipping> myClipList = clippingRepository.findByClipidList(clipid);
 		return myClipList;
 	}
-	
-	public List<Clipping> selClipList(String email){
+
+	public List<Clipping> selClipList(String email) {
 		List<Clipping> clipList = clippingRepository.findByEmail(email);
 		return clipList;
 	}
-	
+
 	public int delMyClip(Long clipid) {
 		int delchk = clippingRepository.delMyClip(clipid);
 		return delchk;

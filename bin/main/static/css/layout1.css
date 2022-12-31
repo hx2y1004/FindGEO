@@ -6,8 +6,8 @@
 }
 *{font-family: 'GmarketSansMedium';}
 #nav{
-background-color:#4caf50 !important;
-color: white !important;
+	background-color:#4caf50 !important;
+	color: white !important;
 }
 .navbar-collapse {
     display: flex!important;
@@ -16,8 +16,8 @@ color: white !important;
 }
 img:hover{cursor: pointer;}
 a{
-font-size: 20px;
+	font-size: 20px;
 }
 #nav:hover{
-color:yellow !important;
+	color:yellow !important;
 }

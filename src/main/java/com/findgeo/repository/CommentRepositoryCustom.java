@@ -9,5 +9,5 @@ import com.findgeo.entity.Comment;
 
 public interface CommentRepositoryCustom {
 	List<CommentDto> findAllCommentFromParentid(Long boardid);
-	
+
 }

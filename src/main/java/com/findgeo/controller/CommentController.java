@@ -12,12 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import com.findgeo.dto.CommentDto;
 
 import com.findgeo.entity.Comment;
 import com.findgeo.service.CommentService;
-
 
 import io.swagger.models.Response;
 import lombok.RequiredArgsConstructor;
@@ -26,19 +24,19 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CommentController {
 	private final CommentService commentService;
-	
-    @GetMapping("/comments/{boardid}")
-    public List<Comment> readComment(@PathVariable Long boardid) throws Exception {
-        return commentService.readComment(boardid);
-    }
 
-    @PostMapping("/comments/save")
-    public Long create(@RequestBody Comment comment) {
-        return commentService.create(comment);
-    }
+	@GetMapping("/comments/{boardid}")
+	public List<Comment> readComment(@PathVariable Long boardid) throws Exception {
+		return commentService.readComment(boardid);
+	}
 
-    @DeleteMapping("/comments/{id}")
-    public void delete(@PathVariable Long id) {
-        commentService.delete(id);
-    }
+	@PostMapping("/comments/save")
+	public Long create(@RequestBody Comment comment) {
+		return commentService.create(comment);
+	}
+
+	@DeleteMapping("/comments/{id}")
+	public void delete(@PathVariable Long id) {
+		commentService.delete(id);
+	}
 }

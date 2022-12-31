@@ -17,65 +17,41 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfig{
+public class SecurityConfig {
 
 	private MemberService memberService;
 	private final CustomOAuth2UserService customOAuth2UserService;
-	
-    @Autowired
-    public SecurityConfig(MemberService memberService,@Lazy CustomOAuth2UserService customOAuth2UserService){
+
+	@Autowired
+	public SecurityConfig(MemberService memberService, @Lazy CustomOAuth2UserService customOAuth2UserService) {
 		this.memberService = memberService;
 		this.customOAuth2UserService = customOAuth2UserService;
-    }
-	
+	}
+
 	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http.authorizeRequests()
-	        .mvcMatchers("/css/**", "/js/**", "/images/**").permitAll()
-	        .mvcMatchers("/", "/members/**", "/item/**", "/images/**","/board/**","/post/**","/clipping/**","/comments/**","/news/**").permitAll()
-	        .mvcMatchers("/admin/**").hasRole("ADMIN")
-	        .anyRequest().authenticated()
-		;
-        
-        http.formLogin()
-	        .loginPage("/members/login")
-	        .defaultSuccessUrl("/")
-	        .usernameParameter("email")
-	        .passwordParameter("password")
-	        .failureUrl("/members/login/error")
-	        .and()
-	        .logout()
-	        .logoutRequestMatcher(new AntPathRequestMatcher("/members/logout"))
-	        .logoutSuccessUrl("/")
-		;
+		http.authorizeRequests().mvcMatchers("/css/**", "/js/**", "/images/**").permitAll()
+				.mvcMatchers("/", "/members/**", "/item/**", "/images/**", "/board/**", "/post/**", "/clipping/**",
+						"/comments/**", "/news/**")
+				.permitAll().mvcMatchers("/admin/**").hasRole("ADMIN").anyRequest().authenticated();
 
-        http.oauth2Login()
-	        .userInfoEndpoint()
-	        .userService(customOAuth2UserService)
-	        .and()
-	        .loginPage("/members/login")
-	        .defaultSuccessUrl("/")
-	        .failureUrl("/members/login/error")
-	        .and()
-	        .logout()
-	        .logoutRequestMatcher(new AntPathRequestMatcher("/members/logout"))
-	        .logoutSuccessUrl("/");
+		http.formLogin().loginPage("/members/login").defaultSuccessUrl("/").usernameParameter("email")
+				.passwordParameter("password").failureUrl("/members/login/error").and().logout()
+				.logoutRequestMatcher(new AntPathRequestMatcher("/members/logout")).logoutSuccessUrl("/");
 
-	
-		http.exceptionHandling()
-		    .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
-		;
-		
+		http.oauth2Login().userInfoEndpoint().userService(customOAuth2UserService).and().loginPage("/members/login")
+				.defaultSuccessUrl("/").failureUrl("/members/login/error").and().logout()
+				.logoutRequestMatcher(new AntPathRequestMatcher("/members/logout")).logoutSuccessUrl("/");
+
+		http.exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint());
 
 //		http.csrf().disable();
-        return http.build();
+		return http.build();
 	}
-	
 
 	@Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-    	return new BCryptPasswordEncoder();
-    }
+	public BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 }
-

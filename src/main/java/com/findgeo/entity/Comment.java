@@ -31,26 +31,26 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Comment{
-	
+public class Comment {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long commentid;
-	
+
 	@Column(nullable = false)
 	private String email;
-	
+
 	@Column(nullable = false)
 	private String nickname;
-	
+
 	@Column(nullable = false)
 	private Long boardid;
-	
+
 	private Long parentid;
-	
+
 	@Column(nullable = false)
 	private String content;
-	
+
 	@Builder
 	public Comment(String content, String email, String nickname, Long boardid, Long parentid) {
 		this.boardid = boardid;
@@ -60,6 +60,4 @@ public class Comment{
 		this.parentid = parentid;
 	}
 
-	
-	
 }

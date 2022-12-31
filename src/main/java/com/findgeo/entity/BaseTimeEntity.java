@@ -15,10 +15,10 @@ import lombok.Getter;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class BaseTimeEntity {
-	
+
 	@CreatedDate
 	private LocalDateTime createDate;
-	
+
 	@LastModifiedDate
 	private LocalDateTime modifiedDate;
 }

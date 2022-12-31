@@ -88,6 +88,5 @@ public class MyClipDto {
 //		this.traflng = traflng;
 //		
 //	}
-			
-	
+
 }

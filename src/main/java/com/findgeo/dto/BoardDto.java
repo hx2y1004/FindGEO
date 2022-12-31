@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 public class BoardDto {
-	
+
 	private Long boardid;
 	private String boardtitle;
 	private String boardcontent;
@@ -25,6 +25,5 @@ public class BoardDto {
 	private int views;
 	private String fileinput;
 	private String email;
-
 
 }

@@ -1,5 +1,3 @@
-
-
 function SaveBoard(){
          var fileinput = $('#file').val();
            console.log(fileinput+"dzcxvzxcvzxv");
@@ -242,4 +240,3 @@ function myPage_postDelete(){
               console.log(data.boardcontent)
               
            }; 
- 

@@ -22,39 +22,39 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class PostService {
 	private final PostsRepository postsRepository;
-	
+
 	@Transactional
 	public Long save(PostsSaveRequestDto requestDto) {
 		return postsRepository.save(requestDto.toPosts()).getBoardid();
 	}
-	
+
 	@Transactional
-	public Page<Posts> list(int page){
-		return postsRepository.findAll(PageRequest.of(page, 10,Sort.by(Sort.Direction.DESC,"boardid")));
+	public Page<Posts> list(int page) {
+		return postsRepository.findAll(PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "boardid")));
 	}
-	
+
 	public PostsResponseDto findById(Long boardid) {
 		Posts posts = postsRepository.findById(boardid)
-				.orElseThrow(()->new IllegalArgumentException("해당 게시글이 없습니다. boardid="+ boardid));
+				.orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. boardid=" + boardid));
 		return new PostsResponseDto(posts);
 	}
-	
-	//게시글 수정
-   @Transactional
-   public Long update(Long boardid, PostsUpdateRequestDto requestDto) {
-      Posts posts = postsRepository.findById(boardid)
-               .orElseThrow(()->new IllegalArgumentException("해당 게시글이 없습니다. boardid=" + boardid));
-      posts.update(requestDto.getBoardtitle(), requestDto.getBoardcontent(),requestDto.getFileinput());
-      return boardid;
-   }
-	
+
+	// 게시글 수정
+	@Transactional
+	public Long update(Long boardid, PostsUpdateRequestDto requestDto) {
+		Posts posts = postsRepository.findById(boardid)
+				.orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. boardid=" + boardid));
+		posts.update(requestDto.getBoardtitle(), requestDto.getBoardcontent(), requestDto.getFileinput());
+		return boardid;
+	}
+
 	@Transactional
 	public void delete(Long boardid) {
 		Posts posts = postsRepository.findById(boardid)
-				.orElseThrow(()->new IllegalArgumentException("해당 게시글이 없습니다. boardid=" + boardid));
+				.orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. boardid=" + boardid));
 		postsRepository.delete(posts);
 	}
-	
+
 	/* Views Counting */
 	@Transactional
 	public int updateView(Long boardid) {

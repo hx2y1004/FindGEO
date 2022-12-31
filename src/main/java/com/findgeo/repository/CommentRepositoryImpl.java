@@ -16,10 +16,9 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
-
 @Repository
 @RequiredArgsConstructor
-public class CommentRepositoryImpl implements CommentRepositoryCustom{
+public class CommentRepositoryImpl implements CommentRepositoryCustom {
 
 	private final JPAQueryFactory queryFactory;
 
@@ -27,25 +26,12 @@ public class CommentRepositoryImpl implements CommentRepositoryCustom{
 	public List<CommentDto> findAllCommentFromParentid(Long boardid) {
 		QComment comment1 = QComment.comment;
 		QComment comment2 = QComment.comment;
-		
-		List<CommentDto> result = queryFactory.select(
-				Projections.constructor(CommentDto.class,
-					comment1.boardid,
-					comment1.commentid,
-					comment1.content,
-					comment1.email,
-					
-					comment1.parentid
-					)
-				)
-				.from(comment1)
-				.join(comment2).on(comment2.commentid.eq(comment1.commentid))
-				.where(comment1.boardid.eq(boardid))
-				.fetch();
-				
-		return null;	
-	}
 
-	
+		List<CommentDto> result = queryFactory
+				.select(Projections.constructor(CommentDto.class, comment1.boardid, comment1.commentid,	comment1.content, comment1.email, comment1.parentid))
+				.from(comment1).join(comment2).on(comment2.commentid.eq(comment1.commentid))
+				.where(comment1.boardid.eq(boardid)).fetch();
+		return null;
+	}
 
 }

@@ -16,7 +16,7 @@ public class PostsListResponseDto {
 	private LocalDateTime regdate;
 	private int views;
 	private String email;
-	
+
 	public PostsListResponseDto(Posts posts) {
 		this.boardid = posts.getBoardid();
 		this.boardtitle = posts.getBoardtitle();
