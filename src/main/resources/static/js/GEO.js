@@ -214,13 +214,13 @@ window.initMap = function() {
 						congest = liveSt["AREA_CONGEST_LVL"];
 						var htmlCongest = document.getElementById("areaCongest");
 						htmlCongest.innerText = congest;
-						if(congest === '붐빔'){
+						if (congest === '붐빔') {
 							htmlCongest.style.color = 'red';
-						}else if(congest === '약간 붐빔'){
+						} else if (congest === '약간 붐빔') {
 							htmlCongest.style.color = 'orange';
-						}else if(congest === '보통'){
+						} else if (congest === '보통') {
 							htmlCongest.style.color = 'yellow';
-						}else if(congest === '여유'){
+						} else if (congest === '여유') {
 							htmlCongest.style.color = 'green';
 						}
 
@@ -311,120 +311,128 @@ window.initMap = function() {
 								console.log(selected);
 								category = "food";
 								seloption = selected;
+								if (selLats === null || selLngs === null) {
+									console.log("삭제");
+									fdlength = 0;
+									alert("찾으시는 지역을 우클릭 해주세요");
+									none;
+								} else {
+									fetch('https://apis.openapi.sk.com/tmap/pois/search/around?version=1&centerLon=' + selLngs
+										+ '&centerLat=' + selLats
+										+ '&categories=' + selected
+										+ '&page=1&count=100&radius=1&reqCoordType=WGS84GEO&resCoordType=WGS84GEO&multiPoint=N', options)
+										.then(locCate => locCate.json())
+										.then(locCate => {
+											var poiInfo = locCate.searchPoiInfo.pois.poi;
+											//console.log(locCate);
+											var icon;
+											switch (selected) {
+												case "음식점":
+													alert("카테고리를 선택해주세요");
+													none;
+													break;
+												case "한식":
+													icon = new google.maps.MarkerImage("/images/한식.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "중식":
+													icon = new google.maps.MarkerImage("/images/중식.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "일식":
+													icon = new google.maps.MarkerImage("/images/일식.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "카페":
+													icon = new google.maps.MarkerImage("/images/카페.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "패밀리레스토랑":
+													icon = new google.maps.MarkerImage("/images/패밀리레스토랑.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "전문음식점":
+													icon = new google.maps.MarkerImage("/images/전문음식점.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "피자":
+													icon = new google.maps.MarkerImage("/images/피자.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "치킨":
+													icon = new google.maps.MarkerImage("/images/치킨.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "디저트":
+													icon = new google.maps.MarkerImage("/images/디저트.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "제과점":
+													icon = new google.maps.MarkerImage("/images/제과점.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "패스트푸드":
+													icon = new google.maps.MarkerImage("/images/패스트푸드.png", null, null, null, new google.maps.Size(35, 35));
+													break;
 
-								fetch('https://apis.openapi.sk.com/tmap/pois/search/around?version=1&centerLon=' + selLngs
-									+ '&centerLat=' + selLats
-									+ '&categories=' + selected
-									+ '&page=1&count=100&radius=1&reqCoordType=WGS84GEO&resCoordType=WGS84GEO&multiPoint=N', options)
-									.then(locCate => locCate.json())
-									.then(locCate => {
-										var poiInfo = locCate.searchPoiInfo.pois.poi;
-										//console.log(locCate);
-										var icon;
-										switch (selected) {
-											case "음식점":
-												none;
-												break;
-											case "한식":
-												icon = new google.maps.MarkerImage("/images/한식.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "중식":
-												icon = new google.maps.MarkerImage("/images/중식.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "일식":
-												icon = new google.maps.MarkerImage("/images/일식.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "카페":
-												icon = new google.maps.MarkerImage("/images/카페.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "패밀리레스토랑":
-												icon = new google.maps.MarkerImage("/images/패밀리레스토랑.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "전문음식점":
-												icon = new google.maps.MarkerImage("/images/전문음식점.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "피자":
-												icon = new google.maps.MarkerImage("/images/피자.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "치킨":
-												icon = new google.maps.MarkerImage("/images/치킨.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "디저트":
-												icon = new google.maps.MarkerImage("/images/디저트.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "제과점":
-												icon = new google.maps.MarkerImage("/images/제과점.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "패스트푸드":
-												icon = new google.maps.MarkerImage("/images/패스트푸드.png", null, null, null, new google.maps.Size(35, 35));
-												break;
 
+											};
+											//let marker = []
+											for (var i = 0; i < poiInfo.length; i++) {
+												let searchMark = [
+													{
+														icon: icon, name: poiInfo[i].name,
+														lat: Number(poiInfo[i].frontLat),
+														lng: Number(poiInfo[i].frontLon)
+													},
+												];
+												//console.log(searchMark);
+												fdlength = poiInfo.length;
+												console.log(poiInfo.length);
 
-										};
-										//let marker = []
-										for (var i = 0; i < poiInfo.length; i++) {
-											let searchMark = [
-												{
-													icon: icon, name: poiInfo[i].name,
-													lat: Number(poiInfo[i].frontLat),
-													lng: Number(poiInfo[i].frontLon)
-												},
-											];
-											//console.log(searchMark);
-											fdlength = poiInfo.length;
-											console.log(poiInfo.length);
+												fdlat.push(Number(poiInfo[i].frontLat));
+												fdlng.push(Number(poiInfo[i].frontLon));
 
-											fdlat.push(Number(poiInfo[i].frontLat));
-											fdlng.push(Number(poiInfo[i].frontLon));
+												const infowindow = new google.maps.InfoWindow(); //클릭시 정보 보여주기
 
-											const infowindow = new google.maps.InfoWindow(); //클릭시 정보 보여주기
-
-											searchMark.forEach(({ icon, name, lat, lng }) => {
-												let marker = new google.maps.Marker({
-													position: { lat, lng },
-													icon,
-													animation: google.maps.Animation.DROP,
-													map: map2
-												});
-
-												marker.addListener("mouseover", () => {
-													infowindow.setContent(name);
-													infowindow.open({
-														anchor: marker,
-														map2
+												searchMark.forEach(({ icon, name, lat, lng }) => {
+													let marker = new google.maps.Marker({
+														position: { lat, lng },
+														icon,
+														animation: google.maps.Animation.DROP,
+														map: map2
 													});
-												});
-												marker.addListener("mouseout", () => {
-													infowindow.close();
-												})
-												marker.addListener("click", () => { //지도 정보 
-													map2.panTo(marker.position); //마커 위치로 중심 이동
-													infowindow.setContent(name);
 
-												});
-												$('#delMark2').click(function() {
-													console.log("삭제");
-													fdlength = 0;
-													searchMark.forEach(() => {
-														fdlat.splice(0);
-														fdlng.splice(0);
-														marker.setMap(null);
+													marker.addListener("mouseover", () => {
+														infowindow.setContent(name);
+														infowindow.open({
+															anchor: marker,
+															map2
+														});
+													});
+													marker.addListener("mouseout", () => {
+														infowindow.close();
 													})
+													marker.addListener("click", () => { //지도 정보 
+														map2.panTo(marker.position); //마커 위치로 중심 이동
+														infowindow.setContent(name);
 
-												});
-											})
-										}
+													});
+													$('#delMark2').click(function() {
+														console.log("삭제");
+														fdlength = 0;
+														searchMark.forEach(() => {
+															fdlat.splice(0);
+															fdlng.splice(0);
+															marker.setMap(null);
+														})
 
-									})
-									.catch(
-										err => console.error(err)
-									);
+													});
+
+												})
+											}
+
+										})
+										.catch(
+											err => console.error(err)
+										);
+								}
 							} else {
 								alert("장소를 선택(검색) 해주세요");
 							}
 
 						});
-						console.log(fdlat);
+
 						$('#serviceSelc').click(function() {
 							if (typeof selLats != "undefined" || typeof selLngs != "undefined") {
 								var servicesel = document.getElementById('serviceData');
@@ -436,120 +444,130 @@ window.initMap = function() {
 								console.log(selected);
 								category = "service";
 								seloption = selected;
+								if (selLats === null || selLngs === null) {
+									svlength = 0;
+									console.log("삭제");
 
-								fetch('https://apis.openapi.sk.com/tmap/pois/search/around?version=1&centerLon=' + selLngs
-									+ '&centerLat=' + selLats
-									+ '&categories=' + selected
-									+ '&page=1&count=100&radius=1&reqCoordType=WGS84GEO&resCoordType=WGS84GEO&multiPoint=N', options)
-									.then(locCate => locCate.json())
-									.then(locCate => {
-										var poiInfo = locCate.searchPoiInfo.pois.poi;
-										//console.log(locCate);
-										var icon;
-										switch (selected) {
-											case "서비스업":
-												none;
-												break;
-											case "목욕탕":
-												icon = new google.maps.MarkerImage("/images/목욕탕.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "미용실":
-												icon = new google.maps.MarkerImage("/images/미용실.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "이발소":
-												icon = new google.maps.MarkerImage("/images/이발소.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "호텔":
-												icon = new google.maps.MarkerImage("/images/호텔.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "병원;내과;안과;외과;의원":
-												icon = new google.maps.MarkerImage("/images/병원.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "치과":
-												icon = new google.maps.MarkerImage("/images/치과.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "보건소":
-												icon = new google.maps.MarkerImage("/images/보건소.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "한의원":
-												icon = new google.maps.MarkerImage("/images/한의원.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "영화관":
-												icon = new google.maps.MarkerImage("/images/영화관.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "약국":
-												icon = new google.maps.MarkerImage("/images/약국.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "노래방":
-												icon = new google.maps.MarkerImage("/images/노래방.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "PC방":
-												icon = new google.maps.MarkerImage("/images/PC방.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "스크린골프장":
-												icon = new google.maps.MarkerImage("/images/스크린골프장.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "은행":
-												icon = new google.maps.MarkerImage("/images/BANK.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "정비소":
-												icon = new google.maps.MarkerImage("/images/정비소.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-										};
-										for (var i = 0; i < poiInfo.length; i++) {
-											let searchMark = [
-												{
-													icon: icon, name: poiInfo[i].name,
-													lat: Number(poiInfo[i].frontLat),
-													lng: Number(poiInfo[i].frontLon)
-												},
-											];
-											//console.log(searchMark);
-											svlength = poiInfo.length;
-											svlat.push(Number(poiInfo[i].frontLat));
-											svlng.push(Number(poiInfo[i].frontLon));
+									alert("찾으시는 지역을 우클릭 해주세요");
+									none;
+								} else {
+									fetch('https://apis.openapi.sk.com/tmap/pois/search/around?version=1&centerLon=' + selLngs
+										+ '&centerLat=' + selLats
+										+ '&categories=' + selected
+										+ '&page=1&count=100&radius=1&reqCoordType=WGS84GEO&resCoordType=WGS84GEO&multiPoint=N', options)
+										.then(locCate => locCate.json())
+										.then(locCate => {
+											var poiInfo = locCate.searchPoiInfo.pois.poi;
+											//console.log(locCate);
+											var icon;
+											switch (selected) {
+												case "서비스업":
+													alert("카테고리를 선택해주세요");
+													none;
+													break;
+												case "목욕탕":
+													icon = new google.maps.MarkerImage("/images/목욕탕.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "미용실":
+													icon = new google.maps.MarkerImage("/images/미용실.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "이발소":
+													icon = new google.maps.MarkerImage("/images/이발소.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "호텔":
+													icon = new google.maps.MarkerImage("/images/호텔.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "병원;내과;안과;외과;의원":
+													icon = new google.maps.MarkerImage("/images/병원.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "치과":
+													icon = new google.maps.MarkerImage("/images/치과.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "보건소":
+													icon = new google.maps.MarkerImage("/images/보건소.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "한의원":
+													icon = new google.maps.MarkerImage("/images/한의원.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "영화관":
+													icon = new google.maps.MarkerImage("/images/영화관.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "약국":
+													icon = new google.maps.MarkerImage("/images/약국.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "노래방":
+													icon = new google.maps.MarkerImage("/images/노래방.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "PC방":
+													icon = new google.maps.MarkerImage("/images/PC방.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "스크린골프장":
+													icon = new google.maps.MarkerImage("/images/스크린골프장.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "은행":
+													icon = new google.maps.MarkerImage("/images/BANK.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "정비소":
+													icon = new google.maps.MarkerImage("/images/정비소.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+											};
+											for (var i = 0; i < poiInfo.length; i++) {
+												let searchMark = [
+													{
+														icon: icon, name: poiInfo[i].name,
+														lat: Number(poiInfo[i].frontLat),
+														lng: Number(poiInfo[i].frontLon)
+													},
+												];
+												//console.log(searchMark);
+												svlength = poiInfo.length;
+												svlat.push(Number(poiInfo[i].frontLat));
+												svlng.push(Number(poiInfo[i].frontLon));
 
-											const infowindow = new google.maps.InfoWindow(); //클릭시 정보 보여주기
+												const infowindow = new google.maps.InfoWindow(); //클릭시 정보 보여주기
 
-											searchMark.forEach(({ icon, name, lat, lng }) => {
-												let marker = new google.maps.Marker({
-													position: { lat, lng },
-													icon,
-													animation: google.maps.Animation.DROP,
-													map: map2
-												});
-
-
-												marker.addListener("mouseover", () => {
-													infowindow.setContent(name);
-													infowindow.open({
-														anchor: marker,
-														map2
+												searchMark.forEach(({ icon, name, lat, lng }) => {
+													let marker = new google.maps.Marker({
+														position: { lat, lng },
+														icon,
+														animation: google.maps.Animation.DROP,
+														map: map2
 													});
-												});
-												marker.addListener("mouseout", () => {
-													infowindow.close();
-												})
-												marker.addListener("click", () => { //지도 정보 
-													map2.panTo(marker.position); //마커 위치로 중심 이동
-													infowindow.setContent(name);
 
-												});
-												$('#delMark2').click(function() {
-													svlength = 0;
-													console.log("삭제");
-													searchMark.forEach(() => {
-														marker.setMap(null);
+
+													marker.addListener("mouseover", () => {
+														infowindow.setContent(name);
+														infowindow.open({
+															anchor: marker,
+															map2
+														});
+													});
+													marker.addListener("mouseout", () => {
+														infowindow.close();
 													})
+													marker.addListener("click", () => { //지도 정보 
+														map2.panTo(marker.position); //마커 위치로 중심 이동
+														infowindow.setContent(name);
 
-												});
-											})
-										}
+													});
+													$('#delMark2').click(function() {
+														svlength = 0;
+														console.log("삭제");
+														searchMark.forEach(() => {
+															svlat.splice(0);
+															svlng.splice(0);
+															marker.setMap(null);
+														})
 
-									})
-									.catch(
-										err => console.error(err)
-									);
+													});
+												})
+											}
+
+										})
+										.catch(
+											err => console.error(err)
+										);
+								}
 							} else {
 								alert("장소를 선택(검색) 해주세요");
 							}
@@ -562,87 +580,97 @@ window.initMap = function() {
 								console.log(selected);
 								category = "reta";
 								seloption = selected;
+								if (selLats === null || selLngs === null) {
+									retalength = 0;
+									console.log("삭제");
 
-								fetch('https://apis.openapi.sk.com/tmap/pois/search/around?version=1&centerLon=' + selLngs
-									+ '&centerLat=' + selLats
-									+ '&categories=' + selected
-									+ '&page=1&count=100&radius=1&reqCoordType=WGS84GEO&resCoordType=WGS84GEO&multiPoint=N', options)
-									.then(locCate => locCate.json())
-									.then(locCate => {
-										var poiInfo = locCate.searchPoiInfo.pois.poi;
-										//console.log(locCate);
-										var icon;
-										switch (selected) {
-											case "도/소매업":
-												none;
-												break;
-											case "쇼핑":
-												icon = new google.maps.MarkerImage("/images/쇼핑.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "편의점":
-												icon = new google.maps.MarkerImage("/images/편의점.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "대형마트":
-												icon = new google.maps.MarkerImage("/images/대형마트.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "마트":
-												icon = new google.maps.MarkerImage("/images/마트.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-										};
-										for (var i = 0; i < poiInfo.length; i++) {
-											let searchMark = [
-												{
-													icon: icon, name: poiInfo[i].name,
-													lat: Number(poiInfo[i].frontLat),
-													lng: Number(poiInfo[i].frontLon)
-												},
-											];
-											//console.log(searchMark);
-											retalength = poiInfo.length;
-											retalat.push(Number(poiInfo[i].frontLat));
-											retalng.push(Number(poiInfo[i].frontLon));
+									alert("찾으시는 지역을 우클릭 해주세요");
+									none;
+								} else {
+									fetch('https://apis.openapi.sk.com/tmap/pois/search/around?version=1&centerLon=' + selLngs
+										+ '&centerLat=' + selLats
+										+ '&categories=' + selected
+										+ '&page=1&count=100&radius=1&reqCoordType=WGS84GEO&resCoordType=WGS84GEO&multiPoint=N', options)
+										.then(locCate => locCate.json())
+										.then(locCate => {
+											var poiInfo = locCate.searchPoiInfo.pois.poi;
+											//console.log(locCate);
+											var icon;
+											switch (selected) {
+												case "도/소매업":
+													alert("카테고리를 선택해주세요");
+													none;
+													break;
+												case "쇼핑":
+													icon = new google.maps.MarkerImage("/images/쇼핑.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "편의점":
+													icon = new google.maps.MarkerImage("/images/편의점.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "대형마트":
+													icon = new google.maps.MarkerImage("/images/대형마트.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "마트":
+													icon = new google.maps.MarkerImage("/images/마트.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+											};
+											for (var i = 0; i < poiInfo.length; i++) {
+												let searchMark = [
+													{
+														icon: icon, name: poiInfo[i].name,
+														lat: Number(poiInfo[i].frontLat),
+														lng: Number(poiInfo[i].frontLon)
+													},
+												];
+												//console.log(searchMark);
+												retalength = poiInfo.length;
+												retalat.push(Number(poiInfo[i].frontLat));
+												retalng.push(Number(poiInfo[i].frontLon));
 
-											const infowindow = new google.maps.InfoWindow(); //클릭시 정보 보여주기
+												const infowindow = new google.maps.InfoWindow(); //클릭시 정보 보여주기
 
-											searchMark.forEach(({ icon, name, lat, lng }) => {
-												let marker = new google.maps.Marker({
-													position: { lat, lng },
-													icon,
-													animation: google.maps.Animation.DROP,
-													map: map2
-												});
-
-
-												marker.addListener("mouseover", () => {
-													infowindow.setContent(name);
-													infowindow.open({
-														anchor: marker,
-														map2
+												searchMark.forEach(({ icon, name, lat, lng }) => {
+													let marker = new google.maps.Marker({
+														position: { lat, lng },
+														icon,
+														animation: google.maps.Animation.DROP,
+														map: map2
 													});
-												});
-												marker.addListener("mouseout", () => {
-													infowindow.close();
-												})
-												marker.addListener("click", () => { //지도 정보 
-													map2.panTo(marker.position); //마커 위치로 중심 이동
-													infowindow.setContent(name);
 
-												});
-												$('#delMark2').click(function() {
-													retalength = 0;
-													console.log("삭제");
-													searchMark.forEach(() => {
-														marker.setMap(null);
+
+													marker.addListener("mouseover", () => {
+														infowindow.setContent(name);
+														infowindow.open({
+															anchor: marker,
+															map2
+														});
+													});
+													marker.addListener("mouseout", () => {
+														infowindow.close();
 													})
+													marker.addListener("click", () => { //지도 정보 
+														map2.panTo(marker.position); //마커 위치로 중심 이동
+														infowindow.setContent(name);
 
-												});
-											})
-										}
+													});
+													$('#delMark2').click(function() {
+														retalength = 0;
+														console.log("삭제");
+														searchMark.forEach(() => {
+															retalat.splice(0);
+															retalng.splice(0);
+															marker.setMap(null);
+														})
 
-									})
-									.catch(
-										err => console.error(err)
-									);
+													});
+												})
+											}
+
+										})
+										.catch(
+											err => console.error(err)
+										);
+								}
 							} else {
 								alert("장소를 선택(검색) 해주세요");
 							}
@@ -656,95 +684,103 @@ window.initMap = function() {
 
 								areacate = "area";
 								areaoption = selected;
+								if (selLats === null || selLngs === null) {
+									console.log("삭제");
+									alert("찾으시는 지역을 우클릭 해주세요");
+									none;
+								} else {
+									fetch('https://apis.openapi.sk.com/tmap/pois/search/around?version=1&centerLon=' + selLngs
+										+ '&centerLat=' + selLats
+										+ '&categories=' + selected
+										+ '&page=1&count=100&radius=1&reqCoordType=WGS84GEO&resCoordType=WGS84GEO&multiPoint=N', options)
+										.then(locCate => locCate.json())
+										.then(locCate => {
+											var poiInfo = locCate.searchPoiInfo.pois.poi;
+											//console.log(locCate);
+											var icon;
+											switch (selected) {
+												case "지역정보":
+													alert("카테고리를 선택해주세요");
+													none;
+													break;
+												case "관공서":
+													icon = new google.maps.MarkerImage("/images/관공서.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "주요시설물":
+													icon = new google.maps.MarkerImage("/images/주요시설물.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "ATM":
+													icon = new google.maps.MarkerImage("/images/ATM.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "화장실":
+													icon = new google.maps.MarkerImage("/images/화장실.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "공연장":
+													icon = new google.maps.MarkerImage("/images/공연장.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "공원":
+													icon = new google.maps.MarkerImage("/images/공원.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "문화시설":
+													icon = new google.maps.MarkerImage("/images/지하철.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+											};
+											for (var i = 0; i < poiInfo.length; i++) {
+												let searchMark = [
+													{
+														icon: icon, name: poiInfo[i].name,
+														lat: Number(poiInfo[i].frontLat),
+														lng: Number(poiInfo[i].frontLon)
+													},
+												];
+												//console.log(searchMark);
+												arlength = poiInfo.length;
+												arlat.push(Number(poiInfo[i].frontLat));
+												arlng.push(Number(poiInfo[i].frontLon));
 
-								fetch('https://apis.openapi.sk.com/tmap/pois/search/around?version=1&centerLon=' + selLngs
-									+ '&centerLat=' + selLats
-									+ '&categories=' + selected
-									+ '&page=1&count=100&radius=1&reqCoordType=WGS84GEO&resCoordType=WGS84GEO&multiPoint=N', options)
-									.then(locCate => locCate.json())
-									.then(locCate => {
-										var poiInfo = locCate.searchPoiInfo.pois.poi;
-										//console.log(locCate);
-										var icon;
-										switch (selected) {
-											case "지역정보":
-												none;
-												break;
-											case "관공서":
-												icon = new google.maps.MarkerImage("/images/관공서.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "주요시설물":
-												icon = new google.maps.MarkerImage("/images/주요시설물.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "ATM":
-												icon = new google.maps.MarkerImage("/images/ATM.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "화장실":
-												icon = new google.maps.MarkerImage("/images/화장실.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "공연장":
-												icon = new google.maps.MarkerImage("/images/공연장.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "공원":
-												icon = new google.maps.MarkerImage("/images/공원.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "문화시설":
-												icon = new google.maps.MarkerImage("/images/지하철.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-										};
-										for (var i = 0; i < poiInfo.length; i++) {
-											let searchMark = [
-												{
-													icon: icon, name: poiInfo[i].name,
-													lat: Number(poiInfo[i].frontLat),
-													lng: Number(poiInfo[i].frontLon)
-												},
-											];
-											//console.log(searchMark);
-											arlength = poiInfo.length;
-											arlat.push(Number(poiInfo[i].frontLat));
-											arlng.push(Number(poiInfo[i].frontLon));
+												const infowindow = new google.maps.InfoWindow(); //클릭시 정보 보여주기
 
-											const infowindow = new google.maps.InfoWindow(); //클릭시 정보 보여주기
-
-											searchMark.forEach(({ icon, name, lat, lng }) => {
-												let marker = new google.maps.Marker({
-													position: { lat, lng },
-													icon,
-													animation: google.maps.Animation.DROP,
-													map: map2
-												});
-
-
-												marker.addListener("mouseover", () => {
-													infowindow.setContent(name);
-													infowindow.open({
-														anchor: marker,
-														map2
+												searchMark.forEach(({ icon, name, lat, lng }) => {
+													let marker = new google.maps.Marker({
+														position: { lat, lng },
+														icon,
+														animation: google.maps.Animation.DROP,
+														map: map2
 													});
-												});
-												marker.addListener("mouseout", () => {
-													infowindow.close();
-												})
-												marker.addListener("click", () => { //지도 정보 
-													map2.panTo(marker.position); //마커 위치로 중심 이동
-													infowindow.setContent(name);
 
-												});
-												$('#delMark2').click(function() {
-													console.log("삭제");
-													searchMark.forEach(() => {
-														marker.setMap(null);
+
+													marker.addListener("mouseover", () => {
+														infowindow.setContent(name);
+														infowindow.open({
+															anchor: marker,
+															map2
+														});
+													});
+													marker.addListener("mouseout", () => {
+														infowindow.close();
 													})
+													marker.addListener("click", () => { //지도 정보 
+														map2.panTo(marker.position); //마커 위치로 중심 이동
+														infowindow.setContent(name);
 
-												});
-											})
-										}
+													});
+													$('#delMark2').click(function() {
+														console.log("삭제");
+														searchMark.forEach(() => {
+															arlat.splice(0);
+															arlng.splice(0);
+															marker.setMap(null);
+														})
 
-									})
-									.catch(
-										err => console.error(err)
-									);
+													});
+												})
+											}
+
+										})
+										.catch(
+											err => console.error(err)
+										);
+								}
 							} else {
 								alert("장소를 선택(검색) 해주세요");
 							}
@@ -759,92 +795,100 @@ window.initMap = function() {
 
 								trafcate = "traf";
 								trafoption = selected;
+								if (selLats === null || selLngs === null) {
+									console.log("삭제");
+									alert("찾으시는 지역을 우클릭 해주세요");
+									none;
+								} else {
+									fetch('https://apis.openapi.sk.com/tmap/pois/search/around?version=1&centerLon=' + selLngs
+										+ '&centerLat=' + selLats
+										+ '&categories=' + selected
+										+ '&page=1&count=100&radius=1&reqCoordType=WGS84GEO&resCoordType=WGS84GEO&multiPoint=N', options)
+										.then(locCate => locCate.json())
+										.then(locCate => {
+											var poiInfo = locCate.searchPoiInfo.pois.poi;
+											//console.log(locCate);
+											var icon;
+											switch (selected) {
+												case "교통정보":
+													alert("카테고리를 선택해주세요");
+													none;
+													break;
+												case "지하철":
+													icon = new google.maps.MarkerImage("/images/지하철.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "버스정류장":
+													icon = new google.maps.MarkerImage("/images/버스.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "주차장":
+													icon = new google.maps.MarkerImage("/images/주차장.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "주유소":
+													icon = new google.maps.MarkerImage("/images/주유소.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "EV충전소":
+													icon = new google.maps.MarkerImage("/images/EV 충전소.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+												case "EV충전소/가스충전소":
+													icon = new google.maps.MarkerImage("/images/가스충전소.png", null, null, null, new google.maps.Size(35, 35));
+													break;
+											}
+											for (var i = 0; i < poiInfo.length; i++) {
+												let searchMark = [
+													{
+														icon: icon, name: poiInfo[i].name,
+														lat: Number(poiInfo[i].frontLat),
+														lng: Number(poiInfo[i].frontLon)
+													},
+												];
+												//console.log(searchMark);
+												traflat.push(Number(poiInfo[i].frontLat));
+												traflng.push(Number(poiInfo[i].frontLon));
+												traflength = poiInfo.length;
+												console.log(poiInfo.length);
+												const infowindow = new google.maps.InfoWindow(); //클릭시 정보 보여주기
 
-								fetch('https://apis.openapi.sk.com/tmap/pois/search/around?version=1&centerLon=' + selLngs
-									+ '&centerLat=' + selLats
-									+ '&categories=' + selected
-									+ '&page=1&count=100&radius=1&reqCoordType=WGS84GEO&resCoordType=WGS84GEO&multiPoint=N', options)
-									.then(locCate => locCate.json())
-									.then(locCate => {
-										var poiInfo = locCate.searchPoiInfo.pois.poi;
-										//console.log(locCate);
-										var icon;
-										switch (selected) {
-											case "교통정보":
-												none;
-												break;
-											case "지하철":
-												icon = new google.maps.MarkerImage("/images/지하철.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "버스정류장":
-												icon = new google.maps.MarkerImage("/images/버스.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "주차장":
-												icon = new google.maps.MarkerImage("/images/주차장.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "주유소":
-												icon = new google.maps.MarkerImage("/images/주유소.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "EV충전소":
-												icon = new google.maps.MarkerImage("/images/EV 충전소.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-											case "EV충전소/가스충전소":
-												icon = new google.maps.MarkerImage("/images/가스충전소.png", null, null, null, new google.maps.Size(35, 35));
-												break;
-										}
-										for (var i = 0; i < poiInfo.length; i++) {
-											let searchMark = [
-												{
-													icon: icon, name: poiInfo[i].name,
-													lat: Number(poiInfo[i].frontLat),
-													lng: Number(poiInfo[i].frontLon)
-												},
-											];
-											//console.log(searchMark);
-											traflat.push(Number(poiInfo[i].frontLat));
-											traflng.push(Number(poiInfo[i].frontLon));
-											traflength = poiInfo.length;
-											console.log(poiInfo.length);
-											const infowindow = new google.maps.InfoWindow(); //클릭시 정보 보여주기
-
-											searchMark.forEach(({ icon, name, lat, lng }) => {
-												let marker = new google.maps.Marker({
-													position: { lat, lng },
-													icon,
-													animation: google.maps.Animation.DROP,
-													map: map2
-												});
-
-												marker.addListener("mouseover", () => {
-													infowindow.setContent(name);
-													infowindow.open({
-														anchor: marker,
-														map2
+												searchMark.forEach(({ icon, name, lat, lng }) => {
+													let marker = new google.maps.Marker({
+														position: { lat, lng },
+														icon,
+														animation: google.maps.Animation.DROP,
+														map: map2
 													});
-												});
-												marker.addListener("mouseout", () => {
-													infowindow.close();
-												})
-												marker.addListener("click", () => { //지도 정보 
-													map2.panTo(marker.position); //마커 위치로 중심 이동
-													infowindow.setContent(name);
 
-												});
-												$('#delMark2').click(function() {
-													console.log("삭제");
-													searchMark.forEach(() => {
-														marker.setMap(null);
+													marker.addListener("mouseover", () => {
+														infowindow.setContent(name);
+														infowindow.open({
+															anchor: marker,
+															map2
+														});
+													});
+													marker.addListener("mouseout", () => {
+														infowindow.close();
 													})
+													marker.addListener("click", () => { //지도 정보 
+														map2.panTo(marker.position); //마커 위치로 중심 이동
+														infowindow.setContent(name);
 
-												});
-											})
-										}
+													});
+													$('#delMark2').click(function() {
+														console.log("삭제");
+														searchMark.forEach(() => {
+															traflat.splice(0);
+															traflng.splice(0);
+															marker.setMap(null);
+														})
+
+													});
+												})
+											}
 
 
-									})
-									.catch(
-										err => console.error(err)
-									);
+										})
+										.catch(
+											err => console.error(err)
+										);
+								}
 							} else {
 								alert("장소를 선택(검색) 해주세요");
 							}
@@ -973,6 +1017,10 @@ window.initMap = function() {
 							areaAgeChart.destroy();
 							genderChart.destroy();
 							resntChart.destroy();
+							mymark.setMap(null);
+							selLats = null;
+							selLngs = null;
+							fdlength = 0;
 
 							modal.style.display = "none";
 
@@ -983,6 +1031,10 @@ window.initMap = function() {
 								areaAgeChart.destroy();
 								genderChart.destroy();
 								resntChart.destroy();
+								mymark.setMap(null);
+								selLats = null;
+								selLngs = null;
+								fdlength = 0;
 
 								modal.style.display = "none"
 							}
@@ -1048,7 +1100,7 @@ function saveInfo() {
 		data: JSON.stringify(data)
 	}).done(function() {
 		var tomypage = confirm("스크랩이 완료되었습니다. 확인하시겠습니까?");
-		if(tomypage){
+		if (tomypage) {
 			location.href = '/members/mypage';
 		}
 	}).fail(function(error) {
