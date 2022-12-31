@@ -214,6 +214,15 @@ window.initMap = function() {
 						congest = liveSt["AREA_CONGEST_LVL"];
 						var htmlCongest = document.getElementById("areaCongest");
 						htmlCongest.innerText = congest;
+						if(congest === '붐빔'){
+							htmlCongest.style.color = 'red';
+						}else if(congest === '약간 붐빔'){
+							htmlCongest.style.color = 'orange';
+						}else if(congest === '보통'){
+							htmlCongest.style.color = 'yellow';
+						}else if(congest === '여유'){
+							htmlCongest.style.color = 'green';
+						}
 
 						var areaName = document.getElementById("areaName");
 						areaName.innerText = areaname;
@@ -1038,7 +1047,10 @@ function saveInfo() {
 		contentType: 'application/json; charset=utf-8',
 		data: JSON.stringify(data)
 	}).done(function() {
-		alert("스크랩 완료");
+		var tomypage = confirm("스크랩이 완료되었습니다. 확인하시겠습니까?");
+		if(tomypage){
+			location.href = '/members/mypage';
+		}
 	}).fail(function(error) {
 		alert(JSON.stringify(error));
 	})
