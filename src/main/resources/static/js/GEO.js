@@ -313,6 +313,9 @@ window.initMap = function() {
 										//console.log(locCate);
 										var icon;
 										switch (selected) {
+											case "음식점":
+												none;
+												break;
 											case "한식":
 												icon = new google.maps.MarkerImage("/images/한식.png", null, null, null, new google.maps.Size(35, 35));
 												break;
@@ -435,6 +438,9 @@ window.initMap = function() {
 										//console.log(locCate);
 										var icon;
 										switch (selected) {
+											case "서비스업":
+												none;
+												break;
 											case "목욕탕":
 												icon = new google.maps.MarkerImage("/images/목욕탕.png", null, null, null, new google.maps.Size(35, 35));
 												break;
@@ -558,6 +564,9 @@ window.initMap = function() {
 										//console.log(locCate);
 										var icon;
 										switch (selected) {
+											case "도/소매업":
+												none;
+												break;
 											case "쇼핑":
 												icon = new google.maps.MarkerImage("/images/쇼핑.png", null, null, null, new google.maps.Size(35, 35));
 												break;
@@ -649,6 +658,9 @@ window.initMap = function() {
 										//console.log(locCate);
 										var icon;
 										switch (selected) {
+											case "지역정보":
+												none;
+												break;
 											case "관공서":
 												icon = new google.maps.MarkerImage("/images/관공서.png", null, null, null, new google.maps.Size(35, 35));
 												break;
@@ -749,6 +761,9 @@ window.initMap = function() {
 										//console.log(locCate);
 										var icon;
 										switch (selected) {
+											case "교통정보":
+												none;
+												break;
 											case "지하철":
 												icon = new google.maps.MarkerImage("/images/지하철.png", null, null, null, new google.maps.Size(35, 35));
 												break;
@@ -826,6 +841,8 @@ window.initMap = function() {
 							}
 						});
 						$('#scorebutton').click(function() {
+							document.getElementById('areaScore1').style.display = "inline-block";
+							document.getElementById('areaScore').style.display = "inline-block";
 							console.log("fd 갯수" + fdlength + "//" + "sv 갯수" + svlength + "//" + "reta 갯수" + retalength);
 							if ((svlength === null || svlength === "" || typeof svlength === "undefined" || svlength === 0) &&
 								(retalength === null || retalength === "" || typeof retalength === "undefined" || retalength === 0)) {
@@ -860,22 +877,27 @@ window.initMap = function() {
 								var scorechk = "주의";
 								areaScore.innerText = scorechk;
 								areagrade = scorechk;
+								areaScore.style.color = 'orange';
 							} else if (areascore > 70 && areascore < 80) {
 								var scorechk = "보통";
 								areaScore.innerText = scorechk;
 								areagrade = scorechk;
+								areaScore.style.color = 'gray';
 							} else if (areascore > 80 && areascore < 90) {
 								var scorechk = "양호";
 								areaScore.innerText = scorechk;
 								areagrade = scorechk;
+								areaScore.style.color = 'green';
 							} else if (areascore > 90 && areascore < 100) {
 								var scorechk = "완벽"
 								areaScore.innerText = scorechk;
 								areagrade = scorechk;
+								areaScore.style.color = 'blue';
 							} else {
 								var scorechk = "위험"
 								areaScore.innerText = scorechk;
 								areagrade = scorechk;
+								areaScore.style.color = 'red';
 							}
 
 
@@ -902,7 +924,8 @@ window.initMap = function() {
 								title: {
 									display: true,
 									text: '유동인구별 나이 비율'
-								}
+								},
+								plugins: { legend: { display: false } }
 							}
 						};
 						config2 = {

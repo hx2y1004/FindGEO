@@ -22,17 +22,6 @@
 			display: none;
 		}
 
-		html,
-		body {
-			width: 100%;
-			height: 100%;
-		}
-
-		div#map {
-			width: 100%;
-			height: 100%;
-		}
-
 		#checkpp {
 			width: 100px;
 			height: 100px;
@@ -45,6 +34,14 @@
 			height: 50px;
 			margin: auto;
 			display: block;
+		}
+
+		select {
+			width: 200px;
+		}
+
+		button {
+			width: 90px;
 		}
 	</style>
 </th:block>
@@ -64,66 +61,84 @@
 					<div class="title">
 						<h2>실시간 데이터</h2>
 					</div>
-					<div>
-						<div id="map2" style="height: 400px;"></div>
-
-						<select id="trafficData">
-							<th:block th:each="traffic : ${trafficDataList}">
-								<option th:value="${traffic.category}" th:text="${traffic.category}"></option>
-							</th:block>
-						</select>
-						<button type="button" name="trafficSelc" id="trafficSelc">교통정보 추가</button><br />
-						<select id="foodData">
-							<th:block th:each="food : ${foodDataList}">
-								<option th:value="${food.category}" th:text="${food.category}"></option>
-							</th:block>
-						</select>
-						<button type="button" name="foodSelc" id="foodSelc">음식점 추가</button><br />
-						<select id="serviceData">
-							<th:block th:each="service : ${serviceDataList}">
-								<option th:value="${service.category}" th:text="${service.category}"></option>
-							</th:block>
-						</select>
-						<button type="button" name="serviceSelc" id="serviceSelc">서비스업 추가</button><br />
-						<select id="retailData">
-							<th:block th:each="retail : ${retailDataList}">
-								<option th:value="${retail.category}" th:text="${retail.category}"></option>
-							</th:block>
-						</select>
-						<button type="button" name="retailSelc" id="retailSelc">도/소매업 추가</button><br />
-						<select id="areaData">
-							<th:block th:each="areaData : ${areaDataList}">
-								<option th:value="${areaData.category}" th:text="${areaData.category}"></option>
-							</th:block>
-						</select>
-						<button type="button" name="areaSelc" id="areaSelc">지역 정보</button><br />
-						<button type="button" name="savedata" id="savedata" sec:authorize="isAuthenticated()"
-							onClick="saveInfo();">정보 저장</button>
-						<button type="button" name="delMark2" id="delMark2">마커 삭제</button>
-						<br />
-						<button type="button" name="scorebutton" id="scorebutton" sec:authorize="isAuthenticated()">점수
-							계산</button>
-						<p sec:authorize="isAuthenticated()">적합도 점수</p>
-						<h2 id="areaScore" sec:authorize="isAuthenticated()">적합도 점수</h2>
-					</div>
-
 					<div class="close-area">X</div>
 					<div class="content">
-						<h3 id="areaName">지역이름</h3>
-						<h4 id="areaCongest">혼잡정도</h4>
-
-						<p>나이</p>
-						<canvas id="bar-chart-horizontal" width="700" height="250"></canvas>
-						<div class="piechart">
-							<p>성비</p>
-							<canvas id="pieChart" width="200" height="200"></canvas>
+						<h3 style="display: inline-block;">지역명: </h3>
+						<h3 id="areaName" style="display: inline-block;">지역이름</h3>
+						<br />
+						<h4 style="display: inline-block;">혼잡정도: </h4>
+						<h4 id="areaCongest" style="display: inline-block;">혼잡정도</h4>
+						<br />
+						<br />
+						<p>연령 별 인구 비율</p>
+						<canvas id="bar-chart-horizontal" width="700" height="150"></canvas>
+						<br />
+						<div id="cchart">
+							<div class="piechart">
+								<p>성비 별 인구 비율</p>
+								<canvas id="pieChart" width="300px" height="250"></canvas>
+							</div>
+							<div class="piechart">
+								<p>거주/비거주 별 인구 비율</p>
+								<canvas id="resntChart" width="300px" height="250"></canvas>
+							</div>
 						</div>
-						<div class="piechart">
-							<p>거주/비거주</p>
-							<canvas id="resntChart" width="200" height="200"></canvas>
+						<br />
+						<br />
+						<div class="title" style="display:block;">
+							<h2>근처 상권 정보</h2>
 						</div>
 						<div>
-							<p>근처 상권 정보</p>
+							<div id="map2" style="height: 600px; width: 70%; float:left; margin: 15px;"></div>
+							<div id="selec" style="margin: 15px; padding: 15px;">
+								<select id="foodData">
+									<th:block th:each="food : ${foodDataList}">
+										<option th:value="${food.category}" th:text="${food.category}"></option>
+									</th:block>
+								</select>
+								<button type="button" name="foodSelc" id="foodSelc">추가하기</button><br />
+								<br />
+								<select id="serviceData">
+									<th:block th:each="service : ${serviceDataList}">
+										<option th:value="${service.category}" th:text="${service.category}"></option>
+									</th:block>
+								</select>
+								<button type="button" name="serviceSelc" id="serviceSelc">추가하기</button><br />
+								<br />
+								<select id="retailData">
+									<th:block th:each="retail : ${retailDataList}">
+										<option th:value="${retail.category}" th:text="${retail.category}"></option>
+									</th:block>
+								</select>
+								<button type="button" name="retailSelc" id="retailSelc">추가하기</button><br />
+								<br />
+								<select id="trafficData">
+									<th:block th:each="traffic : ${trafficDataList}">
+										<option th:value="${traffic.category}" th:text="${traffic.category}"></option>
+									</th:block>
+								</select>
+								<button type="button" name="trafficSelc" id="trafficSelc">추가하기</button><br />
+								<br />
+								<select id="areaData">
+									<th:block th:each="areaData : ${areaDataList}">
+										<option th:value="${areaData.category}" th:text="${areaData.category}"></option>
+									</th:block>
+								</select>
+								<button type="button" name="areaSelc" id="areaSelc">추가하기</button><br />
+							</div>
+							<button type="button" name="savedata" id="savedata" sec:authorize="isAuthenticated()"
+								onClick="saveInfo();" style="display:block;">정보 저장</button>
+							<br />
+							<button type="button" name="delMark2" id="delMark2" style="display:block;">마커 삭제</button>
+							<br />
+							<button type="button" name="scorebutton" id="scorebutton" sec:authorize="isAuthenticated()"
+								style="display: bolck;">점수 계산</button>
+							<br />
+							<div id="grade">
+								<p sec:authorize="isAuthenticated()" id="areaScore1" style="display:none; margin: 5px;">
+									적합도:</p>
+								<h2 id="areaScore" sec:authorize="isAuthenticated()" style="display:none;">적합도 점수</h2>
+							</div>
 						</div>
 					</div>
 				</div>

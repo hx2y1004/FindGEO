@@ -1,6 +1,6 @@
 #modal.modal-overlay {
     width: 100%;
-    height: 100%;
+    height: 930px;
     position: absolute;
     left: 0;
     top: 0;
@@ -15,6 +15,7 @@
     border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.18);
 }
+
 #modal .modal-window {
     background: #ffee76b8;
     box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
@@ -25,10 +26,11 @@
     width: 70%;
     height: 75%;
     position: relative;
-    top: -100px;
+    top: 10px;
     padding: 10px;
     overflow-y: auto;
 }
+
 #modal .title {
     padding-left: 10px;
     display: inline;
@@ -36,9 +38,11 @@
     color: white;
     
 }
+
 #modal .title h2 {
     display: inline;
 }
+
 #modal .close-area {
     display: inline;
     float: right;
@@ -55,20 +59,33 @@
     text-shadow: 1px 1px 2px gray;
     color: black;
 }
+
 #areaCongest{
 	color:red;
 }
+
 #areaName{
 	color:black;
 }
+
 #modal button{
 	border-radius: 5px;
 	border: 1px solid;
 	height:23px;
 	background-color: #ffc3d8;	
 }
+
 #modal .piechart{
 	display: inline-block;
-	margin: 5%;
+}
+
+#modal #cchart {
+	display: flex;
+	justify-content: space-around;
+	
+}
+
+#modal #grade {
+	margin: 30px;
 }
 
