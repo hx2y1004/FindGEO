@@ -17,74 +17,54 @@
 	console.log(comment);
 	/*]]>*/
 
-	$(document)
-			.ready(
-					function() {
-						var boardid = $('#boardid').val();
-						var token = $("meta[name='_csrf']").attr("content");
-						var header = $("meta[name='_csrf_header']").attr(
-								"content");
-						$
-								.ajax({
-									beforeSend : function(xhr) {
-										xhr.setRequestHeader(header, token);
-									},
-									dataType : 'json',
-									url : '/comments/' + boardid
-								})
-								.done(
-										function(data) {
-											console.log(data);
-											if (data.length === 0) {
-												var html = "<table border = '1'>";
-												html += "<tr>";
-												html += "<p>댓글이 없습니다.</p>";
-												html += "</tr>";
-												html += "</table>";
-												$("#comments").empty();
-												$("#comments").append(html);
-											} else {
-												var html = "<table border = '1'>";
-												html += "<tr>";
-												html += "<th>댓글번호</th>";
-												html += "<th>작성자</th>";
-												html += "<th>이메일</th>";
-												html += "<th>댓글내용</th>";
-												html += "<th>추가</th>";
-												html += "</tr>";
-												html += "<div id='commentFromP'>"
-												$
-														.each(
-																data,
-																function(key,
-																		value) {
-																	html += "<tr align = 'center'>";
-																	html += "<td>"
-																			+ value.commentid
-																			+ "</td>";
-																	html += "<td>"
-																			+ value.nickname
-																			+ "</td>";
-																	html += "<td>"
-																			+ value.email
-																			+ "</td>"
-																	html += "<td>"
-																			+ value.content
-																			+ "</td>";
-																	html += "<td><button onClick='clickcommentadd()'>답글</button>";
-																	html += "<button>수정</button>";
-																	html += "<button>삭제</button></td>";
-																	html += "</tr>";
-																});
-												html += "</table>";
-												$("#comments").empty();
-												$("#comments").append(html);
-											}
+	$(document).ready(function() {
+		var boardid = $('#boardid').val();
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajax({
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(header, token);
+			},
+			dataType : 'json',
+			url : '/comments/' + boardid
+		}).done(function(data) {
+			console.log(data);
+			if (data.length === 0) {
+				var html = "<table border = '1'>";
+				html += "<tr>";
+				html += "<p>댓글이 없습니다.</p>";
+				html += "</tr>";
+				html += "</table>";
+				$("#comments").empty();
+				$("#comments").append(html);
+			} else {
+				var html = "<table border = '1'>";
+				html += "<tr>";
+				html += "<th>댓글번호</th>";
+				html += "<th>작성자</th>";
+				html += "<th>이메일</th>";
+				html += "<th>댓글내용</th>";
+				html += "<th>추가</th>";
+				html += "</table>";
 
-										}).fail(function(e) {
-									alert("불러오기 에러");
-								})
-					});
+				$.each(data, function(key, value) {
+					html += "<p id='ch_cmt_cid'>" + value.commentid + "</p>";
+					html += "<p id='login_name'>" + value.nickname + "</p>";
+					html += "<p id='login_email'>" + value.email + "</p>"
+					html += "<p id='cmt_content'>" + value.content + "</p>";
+					html += "<button onClick='clickcommentadd()'>답글</button>";
+					html += "<button>수정</button>";
+					html += "<button>삭제</button>";
+					html += "<div id='commentFromP"+value.commentid+"'></div>";
+				});
+				$("#comments").empty();
+				$("#comments").append(html);
+			}
+
+		}).fail(function(e) {
+			alert("불러오기 에러");
+		})
+	});
 </script>
 <title>게시물 상세보기</title>
 </head>

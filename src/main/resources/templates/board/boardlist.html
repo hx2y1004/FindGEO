@@ -126,7 +126,7 @@
 							</a>
 							</sec:authorize>
 						</td>
-						<td th:text="|${p.nickname}(${sub_Email})|"></td>
+						<td th:text="|${p.nickname}(${#strings.substringBefore(p.email,'@')}@******) |"></td>
 						<td th:text="${#temporals.format(p.regdate,'yyyy-MM-dd')}"></td>
 						<td th:text="${p.views}"></td>
 					</tr>
