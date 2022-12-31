@@ -858,7 +858,7 @@ window.initMap = function () {
 											
 											console.log(areascore);
 										 });	
-									ctx1 = document.getElementById("bar-chart-horizontal");
+									ctx1 = document.getElementById("barchart");
 									ctx2 = document.getElementById("pieChart");
 									ctx3 = document.getElementById("resntChart");
 									config1 = {
@@ -868,7 +868,7 @@ window.initMap = function () {
 										datasets:[
 													{
 														label: "나이별 인구 비율",
-														backgroundColor: ["#FFE45C","#FD7B49","#E8395C","#B137A3","#6957CB","#43ABAF","#6cd6ff","#3d474a"],
+														backgroundColor: ["#E8395C","#FD7B49","#FFE45C","#B137A3","#6957CB","#43ABAF","#6cd6ff","#3d474a"],
 														data: [rate0,rate10,rate20,rate30,rate40,rate50,rate60,rate70]
 													}
 												]

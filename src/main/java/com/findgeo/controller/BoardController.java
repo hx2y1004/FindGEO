@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.findgeo.service.*;
@@ -70,7 +72,7 @@ public class BoardController {
 		return "/board/postsSave";
 	}
 	
-	//조회
+
 	   @GetMapping("/post/info/{boardid}")
 	   public String postsInfo(@PathVariable Long boardid, Model model, Principal principal) {
 	      postService.updateView(boardid); // views ++
@@ -105,5 +107,6 @@ public class BoardController {
 	      model.addAttribute("posts", dto);
 	      return "/board/postsUpdate";
 	   }
+
 
 }

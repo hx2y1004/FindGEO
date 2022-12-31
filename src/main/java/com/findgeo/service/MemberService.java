@@ -30,7 +30,9 @@ import lombok.AllArgsConstructor;
 public class MemberService implements UserDetailsService{
 
 	private final MemberRepository memberRepository;
+
 	private final PostsRepository postRepository;
+
 	
 	public Member saveMember(Member member) {
 		validateDuplicateMember(member);
