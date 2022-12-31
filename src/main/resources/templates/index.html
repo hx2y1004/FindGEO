@@ -54,37 +54,12 @@
 			<div class="modal-window">
 				<div>
 					<img src="/images/loading.gif" display="none" id="checkpp">
-					<div style="display:none;" id="checkppn">로딩중...</div>
+					<div style="display:none; color:rgb(14, 14, 14)" id="checkppn">로딩중...</div>
 				</div>
-
 				<div id="checkp">
-					<div class="title">
-						<h2>실시간 데이터</h2>
-					</div>
 					<div class="close-area">X</div>
-					<div class="content">
-						<h3 style="display: inline-block;">지역명: </h3>
-						<h3 id="areaName" style="display: inline-block;">지역이름</h3>
-						<br />
-						<h4 style="display: inline-block;">혼잡정도: </h4>
-						<h4 id="areaCongest" style="display: inline-block;">혼잡정도</h4>
-						<br />
-						<br />
-						<p>연령 별 인구 비율</p>
-						<canvas id="bar-chart-horizontal" width="700" height="150"></canvas>
-						<br />
-						<div id="cchart">
-							<div class="piechart">
-								<p>성비 별 인구 비율</p>
-								<canvas id="pieChart" width="300px" height="250"></canvas>
-							</div>
-							<div class="piechart">
-								<p>거주/비거주 별 인구 비율</p>
-								<canvas id="resntChart" width="300px" height="250"></canvas>
-							</div>
-						</div>
-						<br />
-						<br />
+					<br />
+					<div style="display: block; height: 650px">
 						<div class="title" style="display:block;">
 							<h2>근처 상권 정보</h2>
 						</div>
@@ -135,12 +110,42 @@
 								style="display: bolck;">점수 계산</button>
 							<br />
 							<div id="grade">
-								<p sec:authorize="isAuthenticated()" id="areaScore1" style="display:none; margin: 5px;">
-									적합도:</p>
+								<p sec:authorize="isAuthenticated()" id="areaScore1" style="display:none; ">적합도:</p>
 								<h2 id="areaScore" sec:authorize="isAuthenticated()" style="display:none;">적합도 점수</h2>
 							</div>
 						</div>
 					</div>
+					<br />
+					<br />
+					<br />
+					<div id="modaldata">
+						<div class="title">
+							<h2>실시간 데이터</h2>
+						</div>
+						<div class="content">
+							<h3 style="display: inline-block;">지역명: </h3>
+							<h3 id="areaName" style="display: inline-block;">지역이름</h3>
+							<br />
+							<h4 style="display: inline-block;">혼잡정도: </h4>
+							<h4 id="areaCongest" style="display: inline-block;">혼잡정도</h4>
+							<br />
+							<br />
+							<p>연령 별 인구 비율</p>
+							<canvas id="bar-chart-horizontal" width="700" height="150"></canvas>
+							<br />
+							<div id="cchart">
+								<div class="piechart">
+									<p>성비 별 인구 비율</p>
+									<canvas id="pieChart" width="300px" height="250"></canvas>
+								</div>
+								<div class="piechart">
+									<p>거주/비거주 별 인구 비율</p>
+									<canvas id="resntChart" width="300px" height="250"></canvas>
+								</div>
+							</div>
+						</div>
+					</div>
+					<br />
 				</div>
 			</div>
 		</div>
