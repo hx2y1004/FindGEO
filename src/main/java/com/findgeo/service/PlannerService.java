@@ -30,7 +30,7 @@ public class PlannerService {
 
 	// 계획서 리스트
 	public Page<Planner> selectPlannerListPage(String emailId, Pageable pageable) {
-		return plannerRepository.findByEmailId(emailId, pageable);
+		return plannerRepository.findByEmailIdOrderByPlannerIdDesc(emailId, pageable);
 	}
 
 	public Planner selectPlanner(Long plannerId) {

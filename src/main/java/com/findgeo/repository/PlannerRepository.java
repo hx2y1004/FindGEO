@@ -13,7 +13,7 @@ import com.findgeo.entity.Planner;
 @Repository
 public interface PlannerRepository extends JpaRepository<Planner, Long> {
 
-	Page<Planner> findByEmailId(String emailId, Pageable pageable);
+	Page<Planner> findByEmailIdOrderByPlannerIdDesc(String emailId, Pageable pageable);
 
 	Optional<Planner> findById(Long idx);
 
