@@ -48,15 +48,6 @@
 				doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
 				heightLeft -= pageHeight;
 
-				// 한 페이지 이상일 경우 루프 돌면서 출력
-				while (heightLeft >= 20) {			// 35
-					position = heightLeft - imgHeight;
-					position = position - 20;		// -25
-
-					doc.addPage();
-					doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
-					heightLeft -= pageHeight;
-				}
 				document.getElementById("checkpp").style.display = "none";
 				// 파일 저장
 				doc.save('계획서.pdf');
@@ -668,47 +659,55 @@
 			justify-content: space-around;
 
 		}
+		
+		#checkpp {
+			width: 324px;
+			position: relative;
+			left: 45%;
+		}
 	</style>
 </head>
 
 <body>
-	<div layout:fragment="content" id="pdfArea">
-		<br />
-		<h3>&nbsp;실시간 상권 정보</h3>
-		<div id="map3" style="height: 600px; width: 90%"></div>
-		<div class="content">
+	<div layout:fragment="content">
+		<div id="pdfArea">
 			<br />
-			<h3 id="place">&nbsp;★지역:&nbsp;</h3>
-			<h3 id="areaName" th:text="${mycliplist[0].areaname}">지역이름</h3><br />
-			<h3 id="congestion">&nbsp;★혼잡도:&nbsp;</h3>
-			<h3 id="areaCongest" th:text="${mycliplist[0].congest}">혼잡정도</h3><br />
-			<h3 id="grade">&nbsp;★창업 적합도:&nbsp;</h3>
-			<h3 id="areaGrade" th:text="${mycliplist[0].areagrade}"></h3><br /><br /><br /><br />
-			<hr /><br /><br />
-			<h3 id="age">&nbsp;나이별</h3><br />
-			<canvas id="barchart" width="400" height="100"></canvas> <br /><br /><br /><br />
-			<div id="cchart">
-				<div id="rate1">
-					<h3 id="gender">&nbsp;성비별</h3><br />
-					<canvas id="pieChart" width="300" height="300"></canvas> <br /><br />
-				</div>
-				<div id="rate2">
-					<h3 id="reside">&nbsp;거주/비거주별</h3><br />
-					<canvas id="resntChart" width="300" height="300"></canvas> <br /><br />
-				</div>
+			<h3>&nbsp;실시간 상권 정보</h3>
+			<div id="map3" style="height: 500px; width: 90%"></div>
+			<div class="content">
+				<br />
+				<h4 id="place">&nbsp;★지역:&nbsp;</h2>
+					<h4 id="areaName" th:text="${mycliplist[0].areaname}">지역이름</h4><br />
+					<h4 id="congestion">&nbsp;★혼잡도:&nbsp;</h3>
+						<h4 id="areaCongest" th:text="${mycliplist[0].congest}">혼잡정도</h4><br />
+						<h4 id="grade">&nbsp;★창업 적합도:&nbsp;</h3>
+							<h4 id="areaGrade" th:text="${mycliplist[0].areagrade}"></h4><br /><br />
+							<hr /><br />
+							<h5 id="age">&nbsp;나이별</h5>
+							<canvas id="barchart" width="400" height="100"></canvas> <br /><br />
+							<div id="cchart">
+								<div id="rate1">
+									<h5 id="gender">&nbsp;성비별</h5>
+									<canvas id="pieChart" width="300" height="300"></canvas> <br /><br />
+								</div>
+								<div id="rate2">
+									<h5 id="reside">&nbsp;거주/비거주별</h5>
+									<canvas id="resntChart" width="300" height="300"></canvas> <br /><br />
+								</div>
+							</div>
 			</div>
-		</div>
-		<br /><br />
-		<hr />
-		<div id="buttons">
-			<button type="button" id="delbtn">삭제</button>
-			<button type="button" id="pdf" onclick="savePDF()">PDF로 다운받기</button>
-			<div style="display:none;" id="checkpp">
-				다운로드 중입니다.
-				<img src="/images/loading.gif" width="15px" height="15px">
+			<br /><br />
+			<hr />
+			<div id="buttons">
+				<button type="button" id="delbtn">삭제</button>
+				<button type="button" id="pdf" onclick="savePDF()">PDF로 다운받기</button>
 			</div>
+			<br />
 		</div>
-		<br /><br />
+		<div style="display:none;" id="checkpp">
+			다운로드 중입니다.
+			<img src="/images/loading.gif" width="15px" height="15px">
+		</div>
 	</div>
 
 </body>
