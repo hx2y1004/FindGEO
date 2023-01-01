@@ -150,6 +150,9 @@ window.initMap = function() {
 		RTmarker.addListener("click", () => { //지도 정보 
 			const modal = document.getElementById("modal");
 			modal.style.display = "flex";
+			document.getElementById("modal1").style.display = "flex";
+			document.getElementById("modal2").style.display = "none";
+
 			document.getElementById("checkp").style.display = "none";
 			document.getElementById("checkpp").style.display = "block";
 			document.getElementById("checkppn").style.display = "block";
@@ -897,6 +900,7 @@ window.initMap = function() {
 						$('#scorebutton').click(function() {
 							if (isNaN(selLats) == true || isNaN(selLngs) == true) {
 								alert("장소를 선택 해주세요")
+								none;
 							} else {
 								document.getElementById('areaScore1').style.display = "inline-block";
 								document.getElementById('areaScore').style.display = "inline-block";
@@ -1035,7 +1039,8 @@ window.initMap = function() {
 							selLats = null;
 							selLngs = null;
 							fdlength = 0;
-
+							areagrade = null;
+							areaScore.innerText = "다시 선택후 계산해주세요.";
 							modal.style.display = "none";
 
 						});
@@ -1049,7 +1054,8 @@ window.initMap = function() {
 								selLats = null;
 								selLngs = null;
 								fdlength = 0;
-
+								areagrade = null;
+								areaScore.innerText = "다시 선택후 계산해주세요.";
 								modal.style.display = "none"
 							}
 						})
@@ -1069,7 +1075,45 @@ window.initMap = function() {
 		});
 	});
 
+	const firstvisit = document.createElement("input");
+	firstvisit.type = "button";
+	firstvisit.value = "사용방법";
+	firstvisit.style.backgroundColor = "#fff";
+	firstvisit.style.border = "2px solid #fff";
+	firstvisit.style.borderRadius = "3px";
+	firstvisit.style.boxShadow = "0 2px 6px rgba(0,0,0,.3)";
+	firstvisit.style.color = "rgb(25,25,25)";
+	firstvisit.style.cursor = "pointer";
+	firstvisit.style.fontFamily = "Roboto,Arial,sans-serif";
+	firstvisit.style.fontSize = "16px";
+	firstvisit.style.lineHeight = "38px";
+	firstvisit.style.margin = "8px 0 22px";
+	firstvisit.style.padding = "0 5px";
+	firstvisit.style.textAlign = "center";
+
+	map.controls[google.maps.ControlPosition.TOP_LEFT].push(firstvisit);
+
+	firstvisit.addEventListener("click", () => {
+		const modal = document.getElementById("modal");
+		modal.style.display = "flex";
+		document.getElementById("modal1").style.display = 'none';
+		const modal2 = document.getElementById('modal2');
+		modal2.style.display = 'block';
+
+		const closeBtn = modal2.querySelector('.close-area');
+		closeBtn.addEventListener("click", e => {
+			modal.style.display = "none";
+		});
+		modal.addEventListener("click", e => {
+			const evTarget = e.target
+			if (evTarget.classList.contains("modal-overlay")) {
+				modal.style.display = "none"
+			}
+		})
+	});
+	return firstvisit;
 }
+
 
 function saveInfo() {
 	var data = {
