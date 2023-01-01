@@ -63,6 +63,7 @@ window.initMap = function() {
 
 		mapId: 'findGeo'
 	});
+
 	const options = {
 		method: 'GET',
 		headers: { accept: 'application/json', appKey: 'l7xx2d78afef8d7647288413de25f6dc43e5' }
@@ -121,8 +122,6 @@ window.initMap = function() {
 		{ label: "용", name: "용산역", lat: 37.52953539910786, lng: 126.9636943682725, img: 'https://data.seoul.go.kr/SeoulRtd/images/hotspot/용산역.jpg' },
 	];
 
-
-
 	RTloc.forEach(({ label, name, lat, lng, img }) => {
 		let RTmarker = new google.maps.Marker({
 			position: { lat, lng },
@@ -150,6 +149,8 @@ window.initMap = function() {
 		RTmarker.addListener("click", () => { //지도 정보 
 			const modal = document.getElementById("modal");
 			modal.style.display = "flex";
+			document.getElementById("modal1").style.display = "flex";
+			document.getElementById("modal2").style.display = "none";
 			document.getElementById("checkp").style.display = "none";
 			document.getElementById("checkpp").style.display = "block";
 			document.getElementById("checkppn").style.display = "block";
@@ -161,6 +162,7 @@ window.initMap = function() {
 				anchor: RTmarker,
 				map
 			});
+
 			var xhr = new XMLHttpRequest();
 			var url = 'http://openapi.seoul.go.kr:8088/6b797a4d7a677573373961756c5169/xml/citydata/1/5/' + selLoc; /*URL*/
 			xhr.open('GET', url);
@@ -392,7 +394,6 @@ window.initMap = function() {
 														animation: google.maps.Animation.DROP,
 														map: map2
 													});
-
 
 													marker.addListener("mouseover", () => {
 														infowindow.setContent(name);
@@ -895,82 +896,69 @@ window.initMap = function() {
 							}
 						});
 						$('#scorebutton').click(function() {
-							if (isNaN(selLats) == true || isNaN(selLngs) == true) {
-								alert("장소를 선택 해주세요")
+							document.getElementById('areaScore1').style.display = "inline-block";
+							document.getElementById('areaScore').style.display = "inline-block";
+							console.log("fd 갯수" + fdlength + "//" + "sv 갯수" + svlength + "//" + "reta 갯수" + retalength);
+							if ((svlength === null || svlength === "" || typeof svlength === "undefined" || svlength === 0) &&
+								(retalength === null || retalength === "" || typeof retalength === "undefined" || retalength === 0)) {
+								var areaScore = document.getElementById("areaScore");
+								areascore = baseLog(((male * 4 + female * 6) *
+									(rate0 * 5 + rate10 * 6 + rate20 * 8 + rate30 * 10 + rate40 * 12 + rate50 * 10 + rate60 * 9 + rate70 * 8) *
+									(resnt * 3 + nonresnt * 7) / (fdlength + 1)), 5000) * (100 / baseLog(504000000, 3000));
+
+							} else if ((fdlength === null || fdlength === "" || typeof fdlength === "undefined" || fdlength === 0) &&
+								(retalength === null || retalength === "" || typeof retalength === "undefined" || retalength === 0)) {
+								var areaScore = document.getElementById("areaScore");
+								areascore = baseLog(((male * 4 + female * 6) *
+									(rate0 * 5 + rate10 * 6 + rate20 * 8 + rate30 * 10 + rate40 * 12 + rate50 * 10 + rate60 * 9 + rate70 * 8) *
+									(resnt * 3 + nonresnt * 7) / (svlength + 1)), 5000) * (100 / baseLog(504000000, 3000));
+							} else if ((fdlength === null || fdlength === "" || typeof fdlength === "undefined" || fdlength === 0) &&
+								(svlength === null || svlength === "" || typeof svlength === "undefined" || svlength === 0)) {
+								var areaScore = document.getElementById("areaScore");
+								areascore = baseLog(((male * 4 + female * 6) *
+									(rate0 * 5 + rate10 * 6 + rate20 * 8 + rate30 * 10 + rate40 * 12 + rate50 * 10 + rate60 * 9 + rate70 * 8) *
+									(resnt * 3 + nonresnt * 7) / (retalength + 1)), 5000) * (100 / baseLog(504000000, 3000));
+							} else if ((fdlength === null || fdlength === "" || typeof fdlength === "undefined" || fdlength === 0) &&
+								(svlength === null || svlength === "" || typeof svlength === "undefined" || svlength === 0) &&
+								(retalength === null || retalength === "" || typeof retalength === "undefined" || retalength === 0)) {
+								alert("업종 마커 한종류를 추가해주세요.")
 							} else {
-								document.getElementById('areaScore1').style.display = "inline-block";
-								document.getElementById('areaScore').style.display = "inline-block";
-								console.log("fd 갯수" + fdlength + "//" + "sv 갯수" + svlength + "//" + "reta 갯수" + retalength);
-
-								console.log((fdlength === null || fdlength === "" || typeof fdlength === "undefined" || fdlength === 0) &&
-									(svlength === null || svlength === "" || typeof svlength === "undefined" || svlength === 0) &&
-									(retalength === null || retalength === "" || typeof retalength === "undefined" || retalength === 0) + "chk");
-
-
-								if ((fdlength === null || fdlength === "" || typeof fdlength === "undefined" || fdlength === 0) &&
-									(svlength === null || svlength === "" || typeof svlength === "undefined" || svlength === 0) &&
-									(retalength === null || retalength === "" || typeof retalength === "undefined" || retalength === 0)) {
-									alert("업종 마커 한종류를 추가해주세요.")
-								} else if ((svlength === null || svlength === "" || typeof svlength === "undefined" || svlength === 0) &&
-									(retalength === null || retalength === "" || typeof retalength === "undefined" || retalength === 0)) {
-									var areaScore = document.getElementById("areaScore");
-									areascore = baseLog(((male * 4 + female * 6) *
-										(rate0 * 5 + rate10 * 6 + rate20 * 8 + rate30 * 10 + rate40 * 12 + rate50 * 10 + rate60 * 9 + rate70 * 8) *
-										(resnt * 3 + nonresnt * 7) / (fdlength + 1)), 5000) * (100 / baseLog(504000000, 3000));
-
-								} else if ((fdlength === null || fdlength === "" || typeof fdlength === "undefined" || fdlength === 0) &&
-									(retalength === null || retalength === "" || typeof retalength === "undefined" || retalength === 0)) {
-									var areaScore = document.getElementById("areaScore");
-									areascore = baseLog(((male * 4 + female * 6) *
-										(rate0 * 5 + rate10 * 6 + rate20 * 8 + rate30 * 10 + rate40 * 12 + rate50 * 10 + rate60 * 9 + rate70 * 8) *
-										(resnt * 3 + nonresnt * 7) / (svlength + 1)), 5000) * (100 / baseLog(504000000, 3000));
-								} else if ((fdlength === null || fdlength === "" || typeof fdlength === "undefined" || fdlength === 0) &&
-									(svlength === null || svlength === "" || typeof svlength === "undefined" || svlength === 0)) {
-									var areaScore = document.getElementById("areaScore");
-									areascore = baseLog(((male * 4 + female * 6) *
-										(rate0 * 5 + rate10 * 6 + rate20 * 8 + rate30 * 10 + rate40 * 12 + rate50 * 10 + rate60 * 9 + rate70 * 8) *
-										(resnt * 3 + nonresnt * 7) / (retalength + 1)), 5000) * (100 / baseLog(504000000, 3000));
-								} else {
-									alert("마커를 삭제후 업종을 한개만 선택하여 계산해주세요");
-									category = null;
-									none;
-								}
-								if (areascore == null || typeof areascore === "undefined") {
-									var areaScore = document.getElementById("areaScore");
-									areaScore.innerText = "다시 선택후 계산해주세요.";
-								} else {
-									if (areascore > 60 && areascore < 70) {
-										var scorechk = "주의";
-										areaScore.innerText = scorechk;
-										areagrade = scorechk;
-										areaScore.style.color = 'orange';
-									} else if (areascore > 70 && areascore < 80) {
-										var scorechk = "보통";
-										areaScore.innerText = scorechk;
-										areagrade = scorechk;
-										areaScore.style.color = 'gray';
-									} else if (areascore > 80 && areascore < 90) {
-										var scorechk = "양호";
-										areaScore.innerText = scorechk;
-										areagrade = scorechk;
-										areaScore.style.color = 'green';
-									} else if (areascore > 90 && areascore < 100) {
-										var scorechk = "완벽"
-										areaScore.innerText = scorechk;
-										areagrade = scorechk;
-										areaScore.style.color = 'blue';
-									} else {
-										var scorechk = "위험"
-										areaScore.innerText = scorechk;
-										areagrade = scorechk;
-										areaScore.style.color = 'red';
-									}
-								}
+								alert("업종을 한개만 선택하여 계산해주세요");
+								alert("마커를 삭제후 다시 추가해주세요");
+								category = null;
 							}
+
+							if (areascore > 60 && areascore < 70) {
+								var scorechk = "주의";
+								areaScore.innerText = scorechk;
+								areagrade = scorechk;
+								areaScore.style.color = 'orange';
+							} else if (areascore > 70 && areascore < 80) {
+								var scorechk = "보통";
+								areaScore.innerText = scorechk;
+								areagrade = scorechk;
+								areaScore.style.color = 'gray';
+							} else if (areascore > 80 && areascore < 90) {
+								var scorechk = "양호";
+								areaScore.innerText = scorechk;
+								areagrade = scorechk;
+								areaScore.style.color = 'green';
+							} else if (areascore > 90 && areascore < 100) {
+								var scorechk = "완벽"
+								areaScore.innerText = scorechk;
+								areagrade = scorechk;
+								areaScore.style.color = 'blue';
+							} else {
+								var scorechk = "위험"
+								areaScore.innerText = scorechk;
+								areagrade = scorechk;
+								areaScore.style.color = 'red';
+							}
+
 
 							console.log(areascore);
 						});
-						ctx1 = document.getElementById("bar-chart-horizontal");
+						ctx1 = document.getElementById("barchart");
 						ctx2 = document.getElementById("pieChart");
 						ctx3 = document.getElementById("resntChart");
 						config1 = {
@@ -991,8 +979,7 @@ window.initMap = function() {
 								title: {
 									display: true,
 									text: '유동인구별 나이 비율'
-								},
-								plugins: { legend: { display: false } }
+								}
 							}
 						};
 						config2 = {
@@ -1068,10 +1055,47 @@ window.initMap = function() {
 			xhr.send('');
 		});
 	});
+	const firstvisit = document.createElement("input");
+	firstvisit.type = "button";
+	firstvisit.value = "사용방법";
+	firstvisit.style.backgroundColor = "#fff";
+	firstvisit.style.border = "2px solid #fff";
+	firstvisit.style.borderRadius = "3px";
+	firstvisit.style.boxShadow = "0 2px 6px rgba(0,0,0,.3)";
+	firstvisit.style.color = "rgb(25,25,25)";
+	firstvisit.style.cursor = "pointer";
+	firstvisit.style.fontFamily = "Roboto,Arial,sans-serif";
+	firstvisit.style.fontSize = "16px";
+	firstvisit.style.lineHeight = "38px";
+	firstvisit.style.margin = "8px 0 22px";
+	firstvisit.style.padding = "0 5px";
+	firstvisit.style.textAlign = "center";
 
+	map.controls[google.maps.ControlPosition.TOP_LEFT].push(firstvisit);
+
+	firstvisit.addEventListener("click", () => {
+		const modal = document.getElementById("modal");
+		modal.style.display = "flex";
+		document.getElementById("modal1").style.display = 'none';
+		const modal2 = document.getElementById('modal2');
+		modal2.style.display = 'block';
+
+		const closeBtn = modal2.querySelector('.close-area');
+		closeBtn.addEventListener("click", e => {
+			modal.style.display = "none";
+		});
+		modal.addEventListener("click", e => {
+			const evTarget = e.target
+			if (evTarget.classList.contains("modal-overlay")) {
+				modal.style.display = "none"
+			}
+		})
+	});
+	return firstvisit;
 }
 
 function saveInfo() {
+	console.log(trafMark);
 	var data = {
 		email: $("#email").val(),
 		areaname: areaname,
@@ -1102,31 +1126,23 @@ function saveInfo() {
 	var email = $("#email").val();
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
-	if (isNaN(selLats) == true || isNaN(selLngs) == true) {
-		alert("장소를 선택해주세요")
-	} else {
-		if (areagrade == null) {
-			alert("점수를 계산해주세요");
-		} else {
-			$.ajax({
-				beforeSend: function(xhr) {
-					xhr.setRequestHeader(header, token);
-				},
-				type: 'POST',
-				url: 'clipping/' + email,
-				dataType: 'json',
-				contentType: 'application/json; charset=utf-8',
-				data: JSON.stringify(data)
-			}).done(function() {
-				var tomypage = confirm("스크랩이 완료되었습니다. 확인하시겠습니까?");
-				if (tomypage) {
-					location.href = '/members/mypage';
-				}
-			}).fail(function(error) {
-				alert(JSON.stringify(error));
-			})
+	$.ajax({
+		beforeSend: function(xhr) {
+			xhr.setRequestHeader(header, token);
+		},
+		type: 'POST',
+		url: 'clipping/' + email,
+		dataType: 'json',
+		contentType: 'application/json; charset=utf-8',
+		data: JSON.stringify(data)
+	}).done(function() {
+		var tomypage = confirm("스크랩이 완료되었습니다. 확인하시겠습니까?");
+		if (tomypage) {
+			location.href = '/members/mypage';
 		}
-	}
+	}).fail(function(error) {
+		alert(JSON.stringify(error));
+	})
 }
 
 /* 테이블 연결 저장 

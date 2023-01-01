@@ -1,6 +1,12 @@
-#modal.modal-overlay {
+#modal .content {
+    margin-top: 20px;
+    padding: 0px 10px;
+    text-shadow: 1px 1px 2px gray;
+}
+
+.modal-overlay {
     width: 100%;
-    height: 930px;
+    height: 100%;
     position: absolute;
     left: 0;
     top: 0;
@@ -16,7 +22,7 @@
     border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
-#modal .modal-window {
+#modal1.modal-window {
     background: #ffee76b8;
     box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
     backdrop-filter: blur( 13.5px );
@@ -25,37 +31,30 @@
     border: 1px solid rgba( 255, 255, 255, 0.18 );
     width: 70%;
     height: 70%;
-    position: relative;
     top: 10px;
     padding: 10px;
     overflow-y: auto;
+    justify-content: center;
 }
 
-#modal .title {
+.title {
     padding-left: 10px;
-    display: inline-block;
+    display: block;
     text-shadow: 1px 1px 2px gray;
     color: white;
 }
 
-#modal .title h2 {
+.title h2 {
     display: inline-block;
 }
 
-#modal .close-area {
+.close-area {
     display: inline-block;
     float: right;
     padding-right: 10px;
     cursor: pointer;
     text-shadow: 1px 1px 2px gray;
     color: pink;
-    
-}
-
-#modal .content {
-    margin-top: 20px;
-    padding: 0px 10px;
-    text-shadow: 1px 1px 2px gray;
 }
 
 #modal button{
@@ -65,27 +64,31 @@
 	background-color: #ffc3d8;	
 }
 
-#modal .piechart{
+.piechart{
 	display: inline-block;
 }
 
-#modal #cchart {
+#cchart {
 	display: flex;
 	justify-content: space-around;
 	
 }
 
-#modal #grade {
+#grade {
 	margin: 30px 30px 0px 30px;
 	display: relative;
 }
 
-#modal #modaldata {
+#modaldata {
 	display: block;
 }
 
 #back {
 	display: none;
+}
+
+#checkp {
+	width: 100%;	
 }
 
 #checkpp {
@@ -109,4 +112,30 @@ select {
 
 button {
 	width: 90px;
+}
+
+#modal2.modal-window {
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 13.5px );
+    -webkit-backdrop-filter: blur( 13.5px );
+    border: 1px solid rgba( 255, 255, 255, 0.18 );
+    width: 100%;
+    height: 100%;
+    top: 10px;
+    padding: 10px;
+    overflow-y: auto;
+    justify-content: center;
+}
+
+#modal2.close-area {
+    display: inline-block;
+    float: right;
+    padding-right: 10px;
+    cursor: pointer;
+    text-shadow: 1px 1px 2px gray;
+    color: pink;
+}
+
+.content {
+	display: block;
 }
