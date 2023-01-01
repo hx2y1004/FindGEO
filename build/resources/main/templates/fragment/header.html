@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<div th:fragment="header">
+		<nav id="nav" class="navbar navbar-expand-lg bg-light">
+			<div id="nav" class="container-fluid" style="height:60px">
+				<img src="/images/logo.png" onclick="location.href='/'" width="100px;">
+				<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+					<div class="navbar-nav">
+						<a id="nav" class="nav-link" sec:authorize="isAnonymous()"
+							href="http://localhost:8080/">뉴스게시판</a>
+						</sec:authorize>
+						<a id="nav" class="nav-link" sec:authorize="isAuthenticated()"
+							href="http://localhost:8080/">뉴스게시판</a>
+						</sec:authorize>
+						<a id="nav" class="nav-link" sec:authorize="isAnonymous()" href="/board/boardlist">소통게시판</a>
+						</sec:authorize>
+						<a id="nav" class="nav-link" sec:authorize="isAuthenticated()" href="/board/boardlist">소통게시판</a>
+						</sec:authorize>
+						<a id="nav" class="nav-link" sec:authorize="isAnonymous()"
+							href="javascript:alert('로그인 후 이용해주세요.')">사업계획서</a>
+						</sec:authorize>
+						<a id="nav" class="nav-link" sec:authorize="isAuthenticated()" href="/planner/list">사업계획서</a>
+						</sec:authorize>
+						<a id="nav" class="nav-link" sec:authorize="isAuthenticated()" href="/members/mypage">마이페이지</a>
+						</sec:authorize>
+						<a id="nav" class="nav-link" sec:authorize="isAuthenticated()" href="/members/logout"> 로그아웃</a>
+						</sec:authorize>
+						<a id="nav" class="nav-link" sec:authorize="isAnonymous()" href="/members/login">로그인</a>
+						</sec:authorize>
+					</div>
+				</div>
+			</div>
+		</nav>
+	</div>
+</body>
+
+</html>

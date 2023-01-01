@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+<head>
+<meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
+<meta id="_csrf_header" name="_csrf_header"
+	th:content="${_csrf.headerName}" />
+<script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+
+<meta charset="UTF-8">
+<title>게시판목록</title>
+</head>
+<th:block layout:fragment="css">
+	<style>
+table {
+	margin: auto;
+	margin-top: 20px;
+	width: 70%;
+}
+
+td {
+	text-align: center;
+	border-bottom: 1px solid gray;
+}
+
+.post {
+	float: right;
+	border: 2px solid #4caf50;
+	width: 100px;
+	border-radius: 5px;
+	margin-right: 30px;
+}
+
+ul {
+	list-style: none;
+	display: flex;
+	justify-content: center;
+}
+
+li>a:focus {
+	color: red;
+}
+
+li {
+	float: left;
+	margin: 5px;
+}
+
+#index {
+	background-color: lightgray;
+	text-align: center;
+	height: 40px;
+}
+
+.title:visited {
+	color: purple;
+}
+
+h1 {
+	text-align: center;
+	margin-top: 20px;
+}
+
+#search {
+	display: flex;
+	justify-content: center;
+	margin-left: 55%;
+}
+</style>
+</th:block>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"
+	integrity="sha512-6UofPqm0QupIL0kzS/UIzekR73/luZdC6i/kXDbWnLOJoqwklBK6519iUnShaYceJ0y4FaiPtX/hRnV/X/xlUQ=="
+	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script th:inline="javascript">
+	$(document).ready(function() {
+		$("#searchBtn").on("click", function(e) {
+			e.preventDefault();
+			page(0);
+		});
+	});
+
+	function page(page) {
+		var searchDateType = $("#searchDateType").val();
+		var searchSellStatus = $("#searchSellStatus").val();
+		var searchBy = $("#searchBy").val();
+		var searchQuery = $("#searchQuery").val();
+		location.href = "/board/list/" + page;
+	}
+</script>
+
+<body>
+	<div layout:fragment="content">
+		<div id="table">
+			<h1>질문게시판🌠</h1>
+			<div>
+				<form id="search" class="form-inline my-2 my-lg-0"
+					th:action="@{/post/search}" method="get">
+					<input name="searchQuery" class="form-control mr-sm-2"
+						type="search" aria-label="Search">
+					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
+				</form>
+			</div>
+			<table>
+				<thead>
+					<tr id="index">
+						<th>글번호</th>
+						<th>제목</th>
+						<th>작성자명</th>
+						<th>작성일자</th>
+						<th>조회수</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr th:each="p : ${posts}">
+						<td th:text="${p.boardid}"></td>
+						<td><a class="title" sec:authorize="isAnonymous()"
+							href="javascript:alert('로그인 후 이용해주세요.')"> <span class="title"
+								th:text="${p.boardtitle}"></span>
+						</a> </sec:authorize> <a class="title" id="title" sec:authorize="isAuthenticated()"
+							th:href="@{'/post/info/' + ${p.boardid}}" th:onClick="comment()">
+								<span class="title" id="title" th:text="${p.boardtitle}"></span>
+						</a> </sec:authorize></td>
+						<td th:text="|${p.nickname}(${sub_Email})|"></td>
+						<td th:text="${#temporals.format(p.regdate,'yyyy-MM-dd')}"></td>
+						<td th:text="${p.views}"></td>
+					</tr>
+				</tbody>
+			</table>
+
+			<span class="posting" sec:authorize="isAuthenticated()">
+				<button type="button" class="post"
+					onClick="location.href='/board/postssave'">글등록</button>
+			</span>
+
+			<div class="paging">
+				<ul>
+					<li th:each="page : ${#numbers.sequence(0,totalPage-1)}"><a
+						th:href="@{/board/boardlist(page=${pageStat.index})}"
+						th:text="${pageStat.index+1}"></a></li>
+				</ul>
+			</div>
+
+		</div>
+	</div>
+</body>
+
+</html>
