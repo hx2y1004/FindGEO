@@ -1,50 +1,53 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout1}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout1}">
+
 <head>
-<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
-<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
-<meta charset="UTF-8">
-<title>스크랩</title>
-<th:block layout:fragment="css">
+	<meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
+	<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
+	<meta charset="UTF-8">
+	<title>스크랩</title>
+	<th:block layout:fragment="css">
 
 
-</th:block>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js" integrity="sha512-6UofPqm0QupIL0kzS/UIzekR73/luZdC6i/kXDbWnLOJoqwklBK6519iUnShaYceJ0y4FaiPtX/hRnV/X/xlUQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
-<script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-<script th:inline="javascript" >
+	</th:block>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"
+		integrity="sha512-6UofPqm0QupIL0kzS/UIzekR73/luZdC6i/kXDbWnLOJoqwklBK6519iUnShaYceJ0y4FaiPtX/hRnV/X/xlUQ=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+	<script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+	<script th:inline="javascript">
 
-function savePDF(){
-    //저장 영역 div id
-    html2canvas($('#pdfArea')[0] ,{	
-      //logging : true,		// 디버그 목적 로그
-      //proxy: "html2canvasproxy.php",
-      allowTaint : true,	// cross-origin allow 
-      useCORS: true,		// CORS 사용한 서버로부터 이미지 로드할 것인지 여부
-      scale : 2			// 기본 96dpi에서 해상도를 두 배로 증가
-    }).then(function(canvas) {	
-      // 캔버스를 이미지로 변환
-      var imgData = canvas.toDataURL('image/png');
+		function savePDF() {
+			document.getElementById("checkpp").style.display = "inline-block";
+			//저장 영역 div id
+			html2canvas($('#pdfArea')[0], {
+				//logging : true,		// 디버그 목적 로그
+				//proxy: "html2canvasproxy.php",
+				allowTaint: true,	// cross-origin allow 
+				useCORS: true,		// CORS 사용한 서버로부터 이미지 로드할 것인지 여부
+				scale: 2			// 기본 96dpi에서 해상도를 두 배로 증가
+			}).then(function (canvas) {
+				// 캔버스를 이미지로 변환
+				var imgData = canvas.toDataURL('image/png');
 
-      var imgWidth = 190; // 이미지 가로 길이(mm) / A4 기준 210mm
-      var pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
-      var imgHeight = canvas.height * imgWidth / canvas.width;
-      var heightLeft = imgHeight;
-      var margin = 10; // 출력 페이지 여백설정
-      var doc = new jsPDF('p', 'mm');
-      var position = 0;
+				var imgWidth = 190; // 이미지 가로 길이(mm) / A4 기준 210mm
+				var pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
+				var imgHeight = canvas.height * imgWidth / canvas.width;
+				var heightLeft = imgHeight;
+				var margin = 10; // 출력 페이지 여백설정
+				var doc = new jsPDF('p', 'mm');
+				var position = 0;
 
-      // 첫 페이지 출력
-      doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
+				// 첫 페이지 출력
+				doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+				heightLeft -= pageHeight;
+
 				document.getElementById("checkpp").style.display = "none";
 				// 파일 저장
 				doc.save('계획서.pdf');
@@ -333,267 +336,258 @@ function savePDF(){
 						}
 
 					})
-	 	}
-	 	let trafcate = mycliplist[0].trafcate;
-	 	let trafoption = mycliplist[0].trafoption;
-	 	if(trafcate === "traf" ){
-	 		fetch('https://apis.openapi.sk.com/tmap/pois/search/around?version=1&centerLon='+mycliplng
-			  		+'&centerLat='+mycliplat
-			  		+'&categories='+trafoption
-			  		+'&page=1&count=100&radius=1&reqCoordType=WGS84GEO&resCoordType=WGS84GEO&multiPoint=N', options)
-			    .then(locCate => locCate.json())
-			    .then(locCate => {
-				  var poiInfo = locCate.searchPoiInfo.pois.poi;	
-				  //console.log(locCate);
-				  var icon;
-				  switch(trafoption){
-				  	case "지하철":
-					   icon = new google.maps.MarkerImage("/images/지하철.png", null, null, null, new google.maps.Size(35,35));
-					   break;
-					  case "버스정류장":
-					   icon = new google.maps.MarkerImage("/images/버스.png", null, null, null, new google.maps.Size(35,35));
-					   break;
-					  case "주차장":
-					   icon = new google.maps.MarkerImage("/images/주차장.png", null, null, null, new google.maps.Size(35,35));
-					   break;
-					  case "주유소":
-					   icon = new google.maps.MarkerImage("/images/주유소.png", null, null, null, new google.maps.Size(35,35));
-					   break;
-					  case "EV충전소":
-					   icon = new google.maps.MarkerImage("/images/EV 충전소.png", null, null, null, new google.maps.Size(35,35));
-					   break;
-					  case "EV충전소/가스충전소":
-					  icon = new google.maps.MarkerImage("/images/가스충전소.png", null, null, null, new google.maps.Size(35,35));
-					   break;
-	   
-				  };
-				  //let marker = []
-				  for(var i=0; i < poiInfo.length; i++){
-					let searchMark = [
-				    { icon: icon , name: poiInfo[i].name ,
-				     lat: Number(poiInfo[i].frontLat),
-				     lng: Number(poiInfo[i].frontLon) },
-				  ];
-				  //console.log(searchMark);
-					  
-					  const infowindow = new google.maps.InfoWindow(); //클릭시 정보 보여주기
-					  
-					  searchMark.forEach(({ icon, name, lat, lng }) => {
-					      let marker = new google.maps.Marker({
-					      position: { lat, lng },
-					      icon,
-					      map : map3
-					    });
-					   
-					    marker.addListener("mouseover",()=>{
-							infowindow.setContent(name);
-							infowindow.open({
-								anchor: marker,
-								map3
-							});
-						});
-						marker.addListener("mouseout",()=>{
-							infowindow.close();
-						})
-					    marker.addListener("click", () => { //지도 정보 
-					      map3.panTo(marker.position); //마커 위치로 중심 이동
-					      infowindow.setContent(name);
-					      
-					    });	
-					    
-					   })
-					  }
-					  
-					})
-	 		
-	 	}
-	 	let areacate = mycliplist[0].areacate;
-	 	let areaoption = mycliplist[0].areaoption;
-	 	if(areacate === "area"){
-	 		fetch('https://apis.openapi.sk.com/tmap/pois/search/around?version=1&centerLon='+mycliplng
-			  		+'&centerLat='+mycliplat
-			  		+'&categories='+areaoption
-			  		+'&page=1&count=100&radius=1&reqCoordType=WGS84GEO&resCoordType=WGS84GEO&multiPoint=N', options)
-			    .then(locCate => locCate.json())
-			    .then(locCate => {
-				  var poiInfo = locCate.searchPoiInfo.pois.poi;	
-				  //console.log(locCate);
-				  var icon;
-				  switch(areaoption){
-				  	case "관공서":
-					   icon = new google.maps.MarkerImage("/images/관공서.png", null, null, null, new google.maps.Size(35,35));
-					   break;
-					 case "주요시설물":
-					   icon = new google.maps.MarkerImage("/images/주요시설물.png", null, null, null, new google.maps.Size(35,35));
-					   break;
-					 case "ATM":
-					   icon = new google.maps.MarkerImage("/images/ATM.png", null, null, null, new google.maps.Size(35,35));
-					   break;
-					 case "화장실":
-					   icon = new google.maps.MarkerImage("/images/화장실.png", null, null, null, new google.maps.Size(35,35));
-					   break;
-					 case "공연장":
-					   icon = new google.maps.MarkerImage("/images/공연장.png", null, null, null, new google.maps.Size(35,35));
-					   break;
-					 case "공원":
-					   icon = new google.maps.MarkerImage("/images/공원.png", null, null, null, new google.maps.Size(35,35));
-					   break;
-					 case "문화시설":
-					   icon = new google.maps.MarkerImage("/images/지하철.png", null, null, null, new google.maps.Size(35,35));
-					   break;
-	   
-				  };
-				  //let marker = []
-				  for(var i=0; i < poiInfo.length; i++){
-					let searchMark = [
-				    { icon: icon , name: poiInfo[i].name ,
-				     lat: Number(poiInfo[i].frontLat),
-				     lng: Number(poiInfo[i].frontLon) },
-				  ];
-				  //console.log(searchMark);
-					  
-					  
-					  const infowindow = new google.maps.InfoWindow(); //클릭시 정보 보여주기
-					  
-					  searchMark.forEach(({ icon, name, lat, lng }) => {
-					      let marker = new google.maps.Marker({
-					      position: { lat, lng },
-					      icon,
-					      map : map3
-					    });
-					   
-					    marker.addListener("mouseover",()=>{
-							infowindow.setContent(name);
-							infowindow.open({
-								anchor: marker,
-								map3
-							});
-						});
-						marker.addListener("mouseout",()=>{
-							infowindow.close();
-						})
-					    marker.addListener("click", () => { //지도 정보 
-					      map3.panTo(marker.position); //마커 위치로 중심 이동
-					      infowindow.setContent(name);
-					      
-					    });	
-					    
-					   })
-					  }
-					  
-					})
-	 	}
-	 
-	 
-	 }
-
-var rate0 = Number(mycliplist[0].rate0);
-var rate10 = Number(mycliplist[0].rate10);
-var rate20 = Number(mycliplist[0].rate20);
-var rate30 = Number(mycliplist[0].rate30);
-var rate40 = Number(mycliplist[0].rate40);
-var rate50 = Number(mycliplist[0].rate50);
-var rate60 = Number(mycliplist[0].rate60);
-var rate70 = Number(mycliplist[0].rate70);
-var male = Number(mycliplist[0].male);
-var female = Number(mycliplist[0].female);
-var resnt = Number(mycliplist[0].resnt);
-var nonresnt = Number(mycliplist[0].nonresnt);
-var congest = mycliplist[0].congest;
-var areaname = mycliplist[0].areaname;
-
-
-console.log(male);
-document.addEventListener("DOMContentLoaded", function () {
-ctx1 = document.getElementById("barchart");
-ctx2 = document.getElementById("pieChart");
-ctx3 = document.getElementById("resntChart");
-config1 = {
-	type: 'bar',
-	data: {
-	labels: ["0~10세", "10대", "20대", "30대", "40대", "50대", "60대", "70대"],
-	datasets:[
-				{
-					label: "나이별 인구 비율",
-					backgroundColor: ["#E8395C","#FD7B49","#FFE45C","#B137A3","#6957CB","#43ABAF","#6cd6ff","#3d474a"],
-					data: [rate0,rate10,rate20,rate30,rate40,rate50,rate60,rate70]
-				}
-			]
-	},
-	options: {
-	indexAxis: 'y',
-	legend: { display: false },
-	title: {
-			  display: true,
-			  text: '유동인구별 나이 비율'
 			}
+			let trafcate = mycliplist[0].trafcate;
+			let trafoption = mycliplist[0].trafoption;
+			if (trafcate === "traf") {
+				fetch('https://apis.openapi.sk.com/tmap/pois/search/around?version=1&centerLon=' + mycliplng
+					+ '&centerLat=' + mycliplat
+					+ '&categories=' + trafoption
+					+ '&page=1&count=100&radius=1&reqCoordType=WGS84GEO&resCoordType=WGS84GEO&multiPoint=N', options)
+					.then(locCate => locCate.json())
+					.then(locCate => {
+						var poiInfo = locCate.searchPoiInfo.pois.poi;
+						//console.log(locCate);
+						var icon;
+						switch (trafoption) {
+							case "지하철":
+								icon = new google.maps.MarkerImage("/images/지하철.png", null, null, null, new google.maps.Size(35, 35));
+								break;
+							case "버스정류장":
+								icon = new google.maps.MarkerImage("/images/버스.png", null, null, null, new google.maps.Size(35, 35));
+								break;
+							case "주차장":
+								icon = new google.maps.MarkerImage("/images/주차장.png", null, null, null, new google.maps.Size(35, 35));
+								break;
+							case "주유소":
+								icon = new google.maps.MarkerImage("/images/주유소.png", null, null, null, new google.maps.Size(35, 35));
+								break;
+							case "EV충전소":
+								icon = new google.maps.MarkerImage("/images/EV 충전소.png", null, null, null, new google.maps.Size(35, 35));
+								break;
+							case "EV충전소/가스충전소":
+								icon = new google.maps.MarkerImage("/images/가스충전소.png", null, null, null, new google.maps.Size(35, 35));
+								break;
+
+						};
+						//let marker = []
+						for (var i = 0; i < poiInfo.length; i++) {
+							let searchMark = [
+								{
+									icon: icon, name: poiInfo[i].name,
+									lat: Number(poiInfo[i].frontLat),
+									lng: Number(poiInfo[i].frontLon)
+								},
+							];
+							//console.log(searchMark);
+
+							const infowindow = new google.maps.InfoWindow(); //클릭시 정보 보여주기
+
+							searchMark.forEach(({icon, name, lat, lng}) => {
+								let marker = new google.maps.Marker({
+									position: {lat, lng},
+									icon,
+									map: map3
+								});
+
+								marker.addListener("mouseover", () => {
+									infowindow.setContent(name);
+									infowindow.open({
+										anchor: marker,
+										map3
+									});
+								});
+								marker.addListener("mouseout", () => {
+									infowindow.close();
+								})
+								marker.addListener("click", () => { //지도 정보 
+									map3.panTo(marker.position); //마커 위치로 중심 이동
+									infowindow.setContent(name);
+
+								});
+
+							})
+						}
+
+					})
+
+			}
+			let areacate = mycliplist[0].areacate;
+			let areaoption = mycliplist[0].areaoption;
+			if (areacate === "area") {
+				fetch('https://apis.openapi.sk.com/tmap/pois/search/around?version=1&centerLon=' + mycliplng
+					+ '&centerLat=' + mycliplat
+					+ '&categories=' + areaoption
+					+ '&page=1&count=100&radius=1&reqCoordType=WGS84GEO&resCoordType=WGS84GEO&multiPoint=N', options)
+					.then(locCate => locCate.json())
+					.then(locCate => {
+						var poiInfo = locCate.searchPoiInfo.pois.poi;
+						//console.log(locCate);
+						var icon;
+						switch (areaoption) {
+							case "관공서":
+								icon = new google.maps.MarkerImage("/images/관공서.png", null, null, null, new google.maps.Size(35, 35));
+								break;
+							case "주요시설물":
+								icon = new google.maps.MarkerImage("/images/주요시설물.png", null, null, null, new google.maps.Size(35, 35));
+								break;
+							case "ATM":
+								icon = new google.maps.MarkerImage("/images/ATM.png", null, null, null, new google.maps.Size(35, 35));
+								break;
+							case "화장실":
+								icon = new google.maps.MarkerImage("/images/화장실.png", null, null, null, new google.maps.Size(35, 35));
+								break;
+							case "공연장":
+								icon = new google.maps.MarkerImage("/images/공연장.png", null, null, null, new google.maps.Size(35, 35));
+								break;
+							case "공원":
+								icon = new google.maps.MarkerImage("/images/공원.png", null, null, null, new google.maps.Size(35, 35));
+								break;
+							case "문화시설":
+								icon = new google.maps.MarkerImage("/images/지하철.png", null, null, null, new google.maps.Size(35, 35));
+								break;
+
+						};
+						//let marker = []
+						for (var i = 0; i < poiInfo.length; i++) {
+							let searchMark = [
+								{
+									icon: icon, name: poiInfo[i].name,
+									lat: Number(poiInfo[i].frontLat),
+									lng: Number(poiInfo[i].frontLon)
+								},
+							];
+							//console.log(searchMark);
+
+
+							const infowindow = new google.maps.InfoWindow(); //클릭시 정보 보여주기
+
+							searchMark.forEach(({icon, name, lat, lng}) => {
+								let marker = new google.maps.Marker({
+									position: {lat, lng},
+									icon,
+									map: map3
+								});
+
+								marker.addListener("mouseover", () => {
+									infowindow.setContent(name);
+									infowindow.open({
+										anchor: marker,
+										map3
+									});
+								});
+								marker.addListener("mouseout", () => {
+									infowindow.close();
+								})
+								marker.addListener("click", () => { //지도 정보 
+									map3.panTo(marker.position); //마커 위치로 중심 이동
+									infowindow.setContent(name);
+
+								});
+
+							})
+						}
+
+					})
+			}
+
+
 		}
-};
-config2 = {
-	type: 'pie',
-	data: {
-		labels: ['남성','여성'],
-		datasets: [{
-			data: [male,female],
-			backgroundColor: ["skyblue","pink"]
-		}]
-	},
-	options: {
-		responsive : false
-	}
-	
-};
-config3 = {
-	type: 'pie',
-	data: {
-		labels: ["거주","비거주"],
-		datasets: [{
-			data: [resnt, nonresnt],
-			backgroundColor: ['#bd8cff','lightgray']
-		}]
-	},
-	options:{
-		responsive: false
-	}
-}
-areaAgeChart = new Chart(ctx1,config1);
-genderChart = new Chart(ctx2,config2);
-resntChart = new Chart(ctx3,config3);
-})
-var clipid = mycliplist[0].clipid;
-$(document).ready(function (){
-	$("#delbtn").on("click", function(){
-		var del
-		del = confirm("삭제하시겠습니까?");
-		if(del){
-			location.href = "/members/clipping/myclip/delete/"+clipid
-			alert("삭제되었습니다.")
-		}else{
-			
+
+		var rate0 = Number(mycliplist[0].rate0);
+		var rate10 = Number(mycliplist[0].rate10);
+		var rate20 = Number(mycliplist[0].rate20);
+		var rate30 = Number(mycliplist[0].rate30);
+		var rate40 = Number(mycliplist[0].rate40);
+		var rate50 = Number(mycliplist[0].rate50);
+		var rate60 = Number(mycliplist[0].rate60);
+		var rate70 = Number(mycliplist[0].rate70);
+		var male = Number(mycliplist[0].male);
+		var female = Number(mycliplist[0].female);
+		var resnt = Number(mycliplist[0].resnt);
+		var nonresnt = Number(mycliplist[0].nonresnt);
+		var congest = mycliplist[0].congest;
+		var areaname = mycliplist[0].areaname;
+
+
+		console.log(male);
+		document.addEventListener("DOMContentLoaded", function () {
+			ctx1 = document.getElementById("barchart");
+			ctx2 = document.getElementById("pieChart");
+			ctx3 = document.getElementById("resntChart");
+			config1 = {
+				type: 'bar',
+				data: {
+					labels: ["0~10세", "10대", "20대", "30대", "40대", "50대", "60대", "70대"],
+					datasets: [
+						{
+							label: "나이별 인구 비율",
+							backgroundColor: ["#FFE45C", "#FD7B49", "#E8395C", "#B137A3", "#6957CB", "#43ABAF", "#6cd6ff", "#3d474a"],
+							data: [rate0, rate10, rate20, rate30, rate40, rate50, rate60, rate70]
+						}
+					]
+				},
+				options: {
+					indexAxis: 'y',
+					plugins: {legend: {display: false}},
+					title: {
+						display: true,
+						text: '유동인구별 나이 비율'
+					}
+				}
+			};
+			config2 = {
+				type: 'pie',
+				data: {
+					labels: ['남성', '여성'],
+					datasets: [{
+						data: [male, female],
+						backgroundColor: ["skyblue", "pink"]
+					}]
+				},
+				options: {
+					responsive: false
+				}
+
+			};
+			config3 = {
+				type: 'pie',
+				data: {
+					labels: ["거주", "비거주"],
+					datasets: [{
+						data: [resnt, nonresnt],
+						backgroundColor: ['#bd8cff', 'lightgray']
+					}]
+				},
+				options: {
+					responsive: false
+				}
+			}
+			areaAgeChart = new Chart(ctx1, config1);
+			genderChart = new Chart(ctx2, config2);
+			resntChart = new Chart(ctx3, config3);
+		})
+		var clipid = mycliplist[0].clipid;
+		$(document).ready(function () {
+			$("#delbtn").on("click", function () {
+				var del
+				del = confirm("삭제하시겠습니까?");
+				if (del) {
+					location.href = "/members/clipping/myclip/delete/" + clipid
+					alert("삭제되었습니다.")
+				} else {
+
+				}
+			})
+		})
+	</script>
+	<script defer
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABlqSxHcQF3ZT1Uyc2cEcidYHAOLhHfNY&callback=initMap"></script>
+	<style>
+		#pdfArea {
+			width: 70%;
+			margin: auto;
 		}
-	})
-})
-</script>
-<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABlqSxHcQF3ZT1Uyc2cEcidYHAOLhHfNY&callback=initMap"></script>	
-<style>
-#place,#areaName {display:inline-block;}
-#congestion,#areaCongest {display:inline-block;}
-#grade,#areaGrade {display:inline-block;}
-#delbtn,#pdf {
-border:2px solid #4caf50;
-border-radius:5px;
-color:black; background-color:#f0f0f0;
-text-decoration: none;
-font-size:17px;padding:2px; 
-width: 150px; height: 30px; text-align: center;
-} 
-#rate1,#rate2 {display:inline-block;}
-#rate1{position:relative; left:500px;}
-#gender{position:relative; left:100px;}
-#rate2{position:relative; left:750px;}
-#age{text-align:center;}
-#buttons{position:relative; left:750px;}
-#reside{position:relative; left: 50px;}
 
 		#place,
 		#areaName {
@@ -673,6 +667,7 @@ width: 150px; height: 30px; text-align: center;
 		}
 	</style>
 </head>
+
 <body>
 	<div layout:fragment="content">
 		<div id="pdfArea">
@@ -716,4 +711,5 @@ width: 150px; height: 30px; text-align: center;
 	</div>
 
 </body>
+
 </html>
