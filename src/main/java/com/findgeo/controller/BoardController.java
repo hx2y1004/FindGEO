@@ -1,6 +1,8 @@
 package com.findgeo.controller;
 
 import java.security.Principal;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.Email;
 
@@ -116,6 +118,16 @@ public class BoardController {
 		PostsResponseDto dto = postService.findById(boardid);
 		model.addAttribute("posts", dto);
 		return "/board/postsUpdate";
+	}
+
+	// 검색
+	@GetMapping("/post/search")
+	public String search(@RequestParam("searchQuery") String keyword, Model model) {
+		List<Posts> searchList = postService.search(keyword);
+		System.out.println(searchList.get(0).getEmail());
+		model.addAttribute("posts", searchList);
+
+		return "board/boardlist";
 	}
 
 }

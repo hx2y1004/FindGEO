@@ -54,7 +54,7 @@
 					html += "<p id='cmt_content'>" + value.content + "</p>";
 					html += "<button onClick='clickcommentadd()'>답글</button>";
 					html += "<button>수정</button>";
-					html += "<button>삭제</button>";
+					html += "<button onClick='deletecomment("+value.commentid+")'>삭제</button>";
 					html += "<div id='commentFromP"+value.commentid+"'></div>";
 				});
 				$("#comments").empty();

@@ -30,6 +30,18 @@ public class PostService {
 	}
 
 	@Transactional
+	public Page<Posts> getPage(Pageable pageable) {
+		// int page = (pageable.getPageNumber() == 0) ? 0:(pageable.getPageNumber() -1);
+		int page = 0;
+		if (pageable.getPageNumber() != 0) { // if (2 != 0)
+			page = pageable.getPageNumber() - 1; // page = 2 - 1
+		}
+		pageable = PageRequest.of(page, 10, Sort.Direction.DESC, "boardid");
+
+		return postsRepository.findAll(pageable);
+	}
+
+	@Transactional
 	public Page<Posts> list(int page) {
 		return postsRepository.findAll(PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "boardid")));
 	}
@@ -61,12 +73,12 @@ public class PostService {
 	public int updateView(Long boardid) {
 		return this.postsRepository.updateView(boardid);
 	}
-	
-	//사용자가 검색창에 입력한 값 제목 검색
-    @Transactional
-    public List<Posts> search(String keyword) {
-        List<Posts> postsList = postsRepository.findByBoardtitleContaining(keyword);
-        return postsList;
-    }
+
+	// 사용자가 검색창에 입력한 값 제목 검색
+	@Transactional
+	public List<Posts> search(String keyword) {
+		List<Posts> postsList = postsRepository.findByBoardtitleContaining(keyword);
+		return postsList;
+	}
 
 }
