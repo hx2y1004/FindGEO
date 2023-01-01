@@ -68,7 +68,7 @@ public class PlannerController {
 			return "/members/login";
 		}
 		System.out.println(emailId);
-		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 5);
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
 		Page<Planner> planners = plannerService.selectPlannerListPage(emailId, pageable);
 		model.addAttribute("plannerFormDto", planners);
 		model.addAttribute("maxPage", 5);
