@@ -67,8 +67,10 @@ public class ArticleController {
 		List<ArticleDto> listDto;
 		if (key1 == null && key2 == null && key3 == null && key4 == null && key5 == null) {
 			listDto = articleDao.articleAllDao(inputMap);
+			System.out.println("articleAllDao");
 		} else {
 			listDto = articleDao.articleListDao(inputMap);
+			System.out.println("articleListDao");
 		}
 		List<Map> list = new ArrayList<Map>();
 		for (ArticleDto dto : listDto) {
