@@ -611,13 +611,13 @@ width: 150px; height: 30px; text-align: center;
         <h3 id="place">&nbsp;★지역:&nbsp;</h3><h3 id="areaName" th:text = "${mycliplist[0].areaname}">지역이름</h3><br/>
         <h3 id="congestion">&nbsp;★혼잡도:&nbsp;</h3><h3 id="areaCongest" th:text="${mycliplist[0].congest}">혼잡정도</h3><br/>
         <h3 id="grade">&nbsp;★창업 적합도:&nbsp;</h3><h3 id="areaGrade" th:text="${mycliplist[0].areagrade}"></h3><br/><br/><br/><br/><hr/><br/><br/>
-        <h3 id="age">&nbsp;나이</h3><br/>
+        <h3 id="age">&nbsp;연령별 인구 비율</h3><br/>
 		<canvas id="barchart" width="400" height="200"></canvas> <br/><br/><br/><br/>
 		<div id="rate1">
-		<h3 id="gender">&nbsp;성비</h3><br/>
+		<h3 id="gender">&nbsp;성비 별 인구 비율</h3><br/>
 		<canvas id="pieChart" width="300" height="300"></canvas> <br/><br/></div>
 		<div id="rate2">
-		<h3 id="reside">&nbsp;거주/비거주</h3><br/>
+		<h3 id="reside">&nbsp;거주/비거주 별 인구 비율</h3><br/>
 		<canvas id="resntChart" width="300" height="300"></canvas> <br/><br/></div>
 		</div>
 		<br/><br/><hr/>
