@@ -72,4 +72,9 @@ public class PlannerService {
 		plannerRepository.deleteById(plannerId);
 	}
 
+	public void plannerDeleteByEmail(String email) {
+		plannerRepository.deleteByEmailId(email);
+		
+	}
+
 }

@@ -30,7 +30,7 @@
     border-radius: 10px;
     border: 1px solid rgba( 255, 255, 255, 0.18 );
     width: 70%;
-    height: 70%;
+    height: 85%;
     top: 10px;
     padding: 10px;
     overflow-y: auto;
@@ -61,7 +61,9 @@
    border-radius: 5px;
    border: 1px solid;
    height:23px;
+   width: 85px;
    background-color: #ffc3d8;   
+   display: inline-block;
 }
 
 .piechart{
@@ -88,13 +90,14 @@
 }
 
 #checkp {
-   width: 100%;   
+   width: 100%;  
+   display: relative; 
 }
 
 #checkpp {
    width: 100px;
    height: 100px;
-   margin: 200px auto auto auto;
+   margin: 350px auto auto auto;
    display: block;
 }
 
@@ -107,11 +110,7 @@
 
 select {
    width: 200px;
-   display: block;
-}
-
-button {
-   width: 90px;
+   display: inline-block;
 }
 
 #modal2.modal-window {
@@ -127,15 +126,20 @@ button {
     justify-content: center;
 }
 
-#modal2.close-area {
+#modal2 .close-area {
     display: inline-block;
     float: right;
     padding-right: 10px;
     cursor: pointer;
     text-shadow: 1px 1px 2px gray;
-    color: pink;
+    color: black;
 }
 
 .content {
    display: block;
+   text-align: center;
+}
+
+#charname {
+	text-align: center;
 }

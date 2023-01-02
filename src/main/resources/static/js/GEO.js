@@ -904,6 +904,8 @@ window.initMap = function() {
 							} else {
 								document.getElementById('areaScore1').style.display = "inline-block";
 								document.getElementById('areaScore').style.display = "inline-block";
+
+								document.getElementById("grade").style.display = "inline-block";
 								console.log("fd 갯수" + fdlength + "//" + "sv 갯수" + svlength + "//" + "reta 갯수" + retalength);
 
 								console.log((fdlength === null || fdlength === "" || typeof fdlength === "undefined" || fdlength === 0) &&
@@ -1040,7 +1042,8 @@ window.initMap = function() {
 							selLngs = null;
 							fdlength = 0;
 							areagrade = null;
-							areaScore.innerText = "다시 선택후 계산해주세요.";
+							category = null;
+							document.getElementById("grade").style.display = "none";
 							modal.style.display = "none";
 
 						});
@@ -1055,7 +1058,8 @@ window.initMap = function() {
 								selLngs = null;
 								fdlength = 0;
 								areagrade = null;
-								areaScore.innerText = "다시 선택후 계산해주세요.";
+								category = null;
+								document.getElementById("grade").style.display = "none";
 								modal.style.display = "none"
 							}
 						})
