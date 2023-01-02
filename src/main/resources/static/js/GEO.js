@@ -282,13 +282,13 @@ window.initMap = function() {
 						const submitButton = document.createElement("input");
 
 						submitButton.type = "button";
-						submitButton.value = "Geocode";
+						submitButton.value = "검색하기";
 						submitButton.classList.add("button", "button-primary");
 
 						const clearButton = document.createElement("input");
 
 						clearButton.type = "button";
-						clearButton.value = "Clear";
+						clearButton.value = "삭제하기";
 						clearButton.classList.add("button", "button-secondary");
 
 						map2.controls[google.maps.ControlPosition.TOP_LEFT].push(inputText);
@@ -1043,6 +1043,11 @@ window.initMap = function() {
 							fdlength = 0;
 							areagrade = null;
 							category = null;
+							$("#foodData").find("option:eq(0)").prop("selected", true);
+							$("#serviceData").find("option:eq(0)").prop("selected", true);
+							$("#retailData").find("option:eq(0)").prop("selected", true);
+							$("#trafficData").find("option:eq(0)").prop("selected", true);
+							$("#areaData").find("option:eq(0)").prop("selected", true);
 							document.getElementById("grade").style.display = "none";
 							modal.style.display = "none";
 
@@ -1059,6 +1064,11 @@ window.initMap = function() {
 								fdlength = 0;
 								areagrade = null;
 								category = null;
+								$("#foodData").find("option:eq(0)").prop("selected", true);
+								$("#serviceData").find("option:eq(0)").prop("selected", true);
+								$("#retailData").find("option:eq(0)").prop("selected", true);
+								$("#trafficData").find("option:eq(0)").prop("selected", true);
+								$("#areaData").find("option:eq(0)").prop("selected", true);
 								document.getElementById("grade").style.display = "none";
 								modal.style.display = "none"
 							}
@@ -1082,9 +1092,10 @@ window.initMap = function() {
 	const firstvisit = document.createElement("input");
 	firstvisit.type = "button";
 	firstvisit.value = "사용방법";
-	firstvisit.style.backgroundColor = "#fff";
-	firstvisit.style.border = "2px solid #fff";
-	firstvisit.style.borderRadius = "3px";
+	firstvisit.id = "help";
+	firstvisit.style.width = "90px";
+	firstvisit.style.border = "3px solid #77af9c";
+	firstvisit.style.borderRadius = "7px";
 	firstvisit.style.boxShadow = "0 2px 6px rgba(0,0,0,.3)";
 	firstvisit.style.color = "rgb(25,25,25)";
 	firstvisit.style.cursor = "pointer";
