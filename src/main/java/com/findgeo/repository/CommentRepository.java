@@ -19,5 +19,7 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
 	@Query("SELECT c FROM Comment c where c.boardid = :boardid")
 	List<Comment> findByBoardid(@Param("boardid") Long boardid);
+	
+	Comment findByCommentid(Long commentid);
 
 }

@@ -44,6 +44,10 @@ public class CommentService {
 	}
 
 	@Transactional
-	public void delete(Long id) {}
+	public void delete(Long commentid) {
+		Comment comment = commentRepository.findByCommentid(commentid);
+		System.out.println(comment.getCommentid());
+		commentRepository.delete(comment);
+	}
 
 }
