@@ -282,13 +282,13 @@ window.initMap = function() {
 						const submitButton = document.createElement("input");
 
 						submitButton.type = "button";
-						submitButton.value = "Geocode";
+						submitButton.value = "검색하기";
 						submitButton.classList.add("button", "button-primary");
 
 						const clearButton = document.createElement("input");
 
 						clearButton.type = "button";
-						clearButton.value = "Clear";
+						clearButton.value = "삭제하기";
 						clearButton.classList.add("button", "button-secondary");
 
 						map2.controls[google.maps.ControlPosition.TOP_LEFT].push(inputText);
