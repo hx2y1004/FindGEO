@@ -2,7 +2,6 @@ package com.findgeo.controller;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -26,29 +25,29 @@ import com.findgeo.config.dto.SessionMember;
 import com.findgeo.dto.CheckSmsIdDto;
 import com.findgeo.dto.MemberFormDto;
 import com.findgeo.dto.MessageDto;
-import com.findgeo.dto.MyClipDto;
 import com.findgeo.dto.PostsResponseDto;
 import com.findgeo.dto.SmsResponseDto;
-import com.findgeo.dto.SelectPingDto;
 import com.findgeo.entity.Clipping;
 import com.findgeo.entity.Member;
 import com.findgeo.entity.Posts;
-import com.findgeo.repository.ClippingRepository;
 import com.findgeo.repository.MemberRepository;
 import com.findgeo.service.ClippingService;
+import com.findgeo.service.CommentService;
 import com.findgeo.service.MemberService;
+import com.findgeo.service.PlannerService;
 import com.findgeo.service.PostService;
 import com.findgeo.service.SmsService;
 import com.findgeo.util.Script;
 
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.PackagePrivate;
 
 @Controller
 @RequestMapping("/members")
 @RequiredArgsConstructor 
 public class MemberController {
 	
+	private final PlannerService plannerService;
+	private final CommentService commentService;
 	private final PasswordEncoder passwordEncoder;
 	private final MemberService memberService;
 	private final HttpSession httpSession;
@@ -206,6 +205,11 @@ public class MemberController {
     
 	@GetMapping("/delete/{email}")
 	public String deleteById(@PathVariable String email,Model model,Principal principal) {
+		
+		plannerService.plannerDeleteByEmail(email);
+		commentService.commentDeleteByEmail(email);
+		postService.postDeleteByEmail(email);
+		
 		memberService.deleteByEmail(email);
         Member userEmail = memberRepository.findByEmail(principal.getName());
         model.addAttribute("name",userEmail);

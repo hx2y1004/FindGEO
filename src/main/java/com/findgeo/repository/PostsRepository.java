@@ -29,5 +29,8 @@ public interface PostsRepository extends JpaRepository<Posts, Long> {
 
 	// Containing을 붙이면 like 검색
 	List<Posts> findByBoardtitleContaining(String keyword);
+	
+	@Transactional
+	void deleteByEmail(String email);
 
 }

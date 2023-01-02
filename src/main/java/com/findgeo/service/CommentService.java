@@ -3,19 +3,13 @@ package com.findgeo.service;
 import java.util.List;
 
 import javax.transaction.Transactional;
-import javax.validation.Valid;
 
 import org.springframework.stereotype.Service;
 
 import com.findgeo.dto.CommentDto;
-
 import com.findgeo.entity.Comment;
-import com.findgeo.entity.Member;
-import com.findgeo.entity.Posts;
 import com.findgeo.repository.CommentRepository;
 import com.findgeo.repository.CommentRepositoryImpl;
-import com.findgeo.repository.MemberRepository;
-import com.findgeo.repository.PostsRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -48,6 +42,15 @@ public class CommentService {
 		Comment comment = commentRepository.findByCommentid(commentid);
 		System.out.println(comment.getCommentid());
 		commentRepository.delete(comment);
+	}
+
+	public void commentDeleteByEmail(String email) {
+		commentRepository.deleteByEmail(email);
+	}
+	
+	public void deleteByBoardid(Long boardid) {
+		commentRepository.deleteByBoardid(boardid);
+		
 	}
 
 }

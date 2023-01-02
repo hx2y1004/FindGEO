@@ -81,4 +81,8 @@ public class PostService {
 		return postsList;
 	}
 
+	public void postDeleteByEmail(String email) {
+		postsRepository.deleteByEmail(email);
+	}
+
 }
