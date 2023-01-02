@@ -6,7 +6,7 @@
 	<meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
 	<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
 	<meta charset="UTF-8">
-	<title>사업계획서</title>
+	<title>사업계획서 작성</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 </head>
 <script th:inline="javascript">
@@ -19,37 +19,71 @@
 </script>
 <th:block layout:fragment="css">
 	<style>
-		input[readonly] {
-			background-color: #8BD145;
+		input[readonly] {background-color: #8BD145;}
+		#post {text-align: center;}
+		#Title {text-align: center;}
+		#comment {
+			width: 250px;
+      		height: 26px;
+      		background: lightgray;
+      		position: relative;
+      		-moz-border-radius: 10px;
+      		-webkit-border-radius: 10px;
+      		border-radius: 5px;
+			position: absolute;
+			display: none;
+			color: purple;
 		}
-
-		#post {
-			text-align: center;
+		
+	  	#comment:before {
+      		content: "";
+      		position: absolute;
+      		right: 95%;
+      		top: 0px;
+      		width: 0;
+      		height: 10;
+      		border-top: 13px solid transparent;
+      		border-right: 26px solid lightgray;
+      		border-bottom: 13px solid transparent;
+      	}
+      	
+      	#comment1 {
+			width: 190px;
+      		height: 26px;
+      		background: lightgray;
+      		position: relative;
+      		-moz-border-radius: 10px;
+      		-webkit-border-radius: 10px;
+      		border-radius: 5px;
+			position: absolute;
+			display: none;
+			color: purple;
 		}
-
-		#Title {
-			text-align: center;
-		}
-
-		#btn {
+		
+	  	#comment1:before {
+      		content: "";
+      		position: absolute;
+      		right: 95%;
+      		top: 0px;
+      		width: 0;
+      		height: 10;
+      		border-top: 13px solid transparent;
+      		border-right: 26px solid lightgray;
+      		border-bottom: 13px solid transparent;
+      	}
+  
+		#com:hover+#comment {display: inline-block;}
+		#com:hover+#comment1 {display: inline-block;}		
+		#days,#ends{width:80px;}
+		#plannerpost{
 			width: 120px;
-			display: inline-block;
 			border-radius: 5px;
 			border: 2px solid #4caf50;
 		}
-
-		#comment {
-			background-color: red;
-			position: absolute;
-			display: none;
-		}
-
-		#com:hover+#comment {
-			display: inline-block;
-		}
+		#delRatio,#costRate,#profitRatio{position:relative; right:9px;}
 	</style>
 </th:block>
-
+ 
 <body>
 	<div layout:fragment="content">
 		<form onSubmit="return validateForm(this);">
@@ -68,7 +102,7 @@
 				<br />
 				<fieldset>
 					<legend>월매출 계산</legend>
-					<table align="center" width="70%" border="1">
+					<table align="center" width="65%" border="1">
 						<thead>
 							<tr>
 								<th>구분</th>
@@ -79,8 +113,8 @@
 							<tr>
 								<td>
 									평균객단가
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
-									<div id="comment">고객 1인당 평균매입</div>
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
+									<div id="comment1">고객 1인당 평균매입</div>
 								</td>
 								<td>
 									<input type="text" id="avgPrice" th:name="avgPrice" onkeyup="inputComma(this)" />원
@@ -89,12 +123,12 @@
 							<tr>
 								<td class="res-ser">
 									평일방문고객수
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
 									<div id="comment">평일에 방문하는 고객의 추정치</div>
 								</td>
 								<td class="retail" style="display:none">
 									평일매장판매
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
 									<div id="comment">평일에 판매하는 상품개수의 추정치</div>
 								</td>
 								<td><input type="text" id="avgDayVisit" th:name="avgDayVisit"
@@ -103,12 +137,12 @@
 							<tr class="res-ret">
 								<td class="restaurants">
 									평일배달건수
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
 									<div id="comment">평일 배달건수의 추정치</div>
 								</td>
 								<td class="retail" style="display:none">
 									평일택배건수
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
 									<div id="comment">평일 택배건수의 추정치</div>
 								</td>
 								<td><input type="text" id="avgDayDeli" th:name="avgDayDeli"
@@ -117,20 +151,20 @@
 							<tr>
 								<td>
 									평일일일매출
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
-									<div id="comment">판매단가x판매수</div>
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
+									<div id="comment1">판매단가x판매수</div>
 								</td>
 								<td><input type="text" id="avgDaySales" onchange="inputComma(this)" readonly />원</td>
 							</tr>
 							<tr>
 								<td class="res-ser">
 									주말방문고객수
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
 									<div id="comment">주말에 방문하는 고객의 추정치</div>
 								</td>
 								<td class="retail" style="display:none">
 									주말매장판매
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
 									<div id="comment">주말에 판매하는 상품개수의 추정치</div>
 								</td>
 								<td><input type="text" id="avgEndVisit" th:name="avgEndVisit"
@@ -139,12 +173,12 @@
 							<tr class="res-ret">
 								<td class="restaurants">
 									주말배달건수
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
 									<div id="comment">주말 배달건수의 추정치</div>
 								</td>
 								<td class="retail" style="display:none">
 									주말택배건수
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
 									<div id="comment">주말 택배건수의 추정치</div>
 								</td>
 								<td><input type="text" id="avgEndDeli" th:name="avgEndDeli" class="res-ret"
@@ -153,8 +187,8 @@
 							<tr>
 								<td>
 									주말일일매출
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
-									<div id="comment">판매단가x판매수</div>
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
+									<div id="comment1">판매단가x판매수</div>
 								</td>
 								<td id="won"><input type="text" id="avgEndSales" readonly />원</td>
 							</tr>
@@ -162,7 +196,7 @@
 								<td>
 									월평일매출(<input type="text" id='days' value='1' th:name="days"
 										onkeyup="inputComma(this)" />일)
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
 									<div id="comment">평일매출x한달평일영업일</div>
 								</td>
 								<td id="won"><input type="text" id="avgMonDaySales" readonly>원</td>
@@ -171,7 +205,7 @@
 								<td>
 									월주말매출(<input type="text" id='ends' value='1' th:name="ends"
 										onkeyup="inputComma(this)" />일)
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
 									<div id="comment">주말매출x한달주영업일</div>
 								</td>
 								<td id="won"><input type="text" id="avgMonEndSales" readonly>원</td>
@@ -179,7 +213,7 @@
 							<tr class="restaurants">
 								<td>
 									배달비율(0.0~1.0)
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
 									<div id="comment">총 판매건수 대비 배달 비율</div>
 								</td>
 								<td><input type="text" id="delRatio" readonly> </td>
@@ -187,16 +221,16 @@
 							<tr>
 								<td>
 									총매출
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
-									<div id="comment">한달 총 매출</div>
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
+									<div id="comment1">한달 총 매출</div>
 								</td>
 								<td><input type="text" id="totalSales" readonly>원</td>
 							</tr>
 							<tr>
 								<td>
 									일평균매출
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
-									<div id="comment">총매출/총영업일</div>
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
+									<div id="comment1">총매출/총영업일</div>
 								</td>
 								<td id="won"><input type="text" id="avgSalesPerDay" readonly>원</td>
 							</tr>
@@ -207,7 +241,7 @@
 				<br />
 				<fieldset>
 					<legend>손익계산서</legend>
-					<table align="center" width="70%" border="1">
+					<table align="center" width="65%" border="1">
 						<thead>
 							<tr>
 								<th colspan="2">월매출</th>
@@ -219,7 +253,7 @@
 								<td>초기비용</td>
 								<td>
 									시설비
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
 									<div id="comment">장비, 집기, 인테리어 등</div>
 								</td>
 								<td><input type="text" id="initCost" th:name="initCost" onkeyup="inputComma(this)" />원
@@ -231,8 +265,8 @@
 								<td class="services" rowspan="9" style="display:none">고정비</td>
 								<td>
 									임차관리비
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
-									<div id="comment">임차비+관리비</div>
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
+									<div id="comment1">임차비+관리비</div>
 								</td>
 								<td><input type="text" id="rentCost" th:name="rentCost" onkeyup="inputComma(this)" />원
 								</td>
@@ -240,8 +274,8 @@
 							<tr>
 								<td>
 									인건비
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
-									<div id="comment">총 인건비</div>
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
+									<div id="comment1">총 인건비</div>
 								</td>
 								<td><input type="text" id="totalSalary" th:name="totalSalary"
 										onkeyup="inputComma(this)" />원</td>
@@ -249,23 +283,23 @@
 							<tr>
 								<td>
 									4대보험
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
-									<div id="comment">인건비의 9%</div>
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
+									<div id="comment1">인건비의 9%</div>
 								</td>
 								<td><input type="text" id="insurance4" readonly>원</td>
 							</tr>
 							<tr>
 								<td>
 									퇴직충당금
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
-									<div id="comment">인건비의 8.3%</div>
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
+									<div id="comment1">인건비의 8.3%</div>
 								</td>
 								<td><input type="text" id="retire" readonly>원</td>
 							</tr>
 							<tr>
 								<td>
 									보험료(책임배상+화재)
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
 									<div id="comment">책임배상, 화제 등 각종 보험료</div>
 								</td>
 								<td><input type="text" id="insurance" th:name="totInsurance"
@@ -274,12 +308,12 @@
 							<tr class="res-ret">
 								<td class="restaurants">
 									배달앱사용료(15%)
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
-									<div id="comment">총 배달비의 15%</div>
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
+									<div id="comment1">총 배달비의 15%</div>
 								</td>
 								<td class="retail" style="display:none">
 									배송비용(3000원)
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
 									<div id="comment">택배비 3000원 산정</div>
 								</td>
 								<td id="won"><input type="text" id="deliCost" readonly>원</td>
@@ -287,8 +321,8 @@
 							<tr>
 								<td>
 									렌탈비
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
-									<div id="comment">각종 장비 렌탈비</div>
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
+									<div id="comment1">각종 장비 렌탈비</div>
 								</td>
 								<td><input type="text" id="etcRent" th:name="etcRent" onkeyup="inputComma(this)" />원
 								</td>
@@ -296,15 +330,15 @@
 							<tr class="restaurants">
 								<td>
 									요식중앙회
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
-									<div id="comment">요식중앙회 회비</div>
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
+									<div id="comment1">요식중앙회 회비</div>
 								</td>
 								<td><input type="text" id="dues" th:name="dues" onkeyup="inputComma(this)" />원</td>
 							</tr>
 							<tr>
 								<td>
 									감가상각비
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
 									<div id="comment">60개월 기준 감가상각비</div>
 								</td>
 								<td><input type="text" id="depreciation" readonly>원</td>
@@ -312,7 +346,7 @@
 							<tr>
 								<td>
 									대출이자
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
 									<div id="comment">월 납입 대출이자</div>
 								</td>
 								<td><input type="text" id="interest" th:name="interest" onkeyup="inputComma(this)" />원
@@ -330,8 +364,8 @@
 								<td class="services" rowspan="8" style="display:none">변동비</td>
 								<td class="res-ret">
 									원가율(0.0~1.0)
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
-									<div id="comment">원가율 설명</div>
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
+									<div id="comment1">원가율 설명</div>
 								</td>
 								<td class="res-ret"><input class="res-ret" type="text" id="costRate"
 										th:name="costRate" /></td>
@@ -340,21 +374,22 @@
 							<tr class="res-ret">
 								<td class="restaurants">
 									식재료비
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
-									<div id="comment">식재료비 설명</div>
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
+									<div id="comment1">식재료비 설명</div>
 								</td>
+							
 								<td class="retail" style="display:none">
 									매입비
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
-									<div id="comment">매입비 설명</div>
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
+									<div id="comment1">매입비 설명</div>
 								</td>
 								<td class="res-ret"><input type="text" id="foodCost" readonly>원</td>
 							</tr>
 							<tr>
 								<td>
 									아르바이트
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
-									<div id="comment">아르바이트 설명</div>
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
+									<div id="comment1">아르바이트 설명</div>
 								</td>
 								<td id="won"><input type="text" id="partTime" th:name="partTime"
 										onkeyup="inputComma(this)" />원</td>
@@ -362,7 +397,7 @@
 							<tr>
 								<td>
 									수도,전기,가스
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
 									<div id="comment">수도,전기,가스 설명</div>
 								</td>
 								<td id="won"><input type="text" id="w_e_g" th:name="w_e_g"
@@ -371,8 +406,8 @@
 							<tr>
 								<td>
 									소모품비
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
-									<div id="comment">소모품비 설명</div>
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
+									<div id="comment1">소모품비 설명</div>
 								</td>
 								<td id="won"><input type="text" id="expand" th:name="expand"
 										onkeyup="inputComma(this)" />원</td>
@@ -380,8 +415,8 @@
 							<tr>
 								<td>
 									광고비
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
-									<div id="comment">광고비 설명</div>
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
+									<div id="comment1">광고비 설명</div>
 								</td>
 								<td id="won"><input type="text" id="advertise" th:name="advertise"
 										onkeyup="inputComma(this)" />원</td>
@@ -389,7 +424,7 @@
 							<tr>
 								<td>
 									각종 세금(6개월)매달 충당
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
 									<div id="comment">각종 세금(6개월)매달 충당 설명</div>
 								</td>
 								<td id="won"><input type="text" id="taxCost" readonly>원</td>
@@ -397,8 +432,8 @@
 							<tr>
 								<td>
 									기타비용
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
-									<div id="comment">기타비용 설명</div>
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
+									<div id="comment1">기타비용 설명</div>
 								</td>
 								<td id="won"><input type="text" id="etc" th:name="etc" onkeyup="inputComma(this)" />원
 								</td>
@@ -406,7 +441,7 @@
 							<tr>
 								<td>
 									변동비소계
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
 									<div id="comment">변동비소계 설명</div>
 								</td>
 								<td id="won"><input type="text" id="flexCost" readonly>원</td>
@@ -414,16 +449,16 @@
 							<tr>
 								<td colspan="2">
 									순이익
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
-									<div id="comment">순이익 설명</div>
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
+									<div id="comment1">순이익 설명</div>
 								</td>
 								<td id="won"><input type="text" id="netProfit" readonly>원</td>
 							</tr>
 							<tr>
 								<td colspan="2">
 									영업이익률(0.0~1.0)
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
-									<div id="comment">영업이익률 설명</div>
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
+									<div id="comment1">영업이익률 설명</div>
 								</td>
 								<td><input type="text" id="profitRatio" readonly></td>
 							</tr>

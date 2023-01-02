@@ -6,7 +6,7 @@
 	<meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
 	<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
 	<meta charset="UTF-8">
-	<title>사업계획서</title>
+	<title>사업계획서 작성</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 </head>
 <script th:inline="javascript">
@@ -39,17 +39,40 @@
 		}
 
 		#comment {
-			background-color: red;
+			width: 250px;
+      		height: 26px;
+      		background: lightgray;
+      		position: relative;
+      		-moz-border-radius: 10px;
+      		-webkit-border-radius: 10px;
+      		border-radius: 5px;
 			position: absolute;
 			display: none;
+			color: purple;
 		}
-
+		
+	  	#comment:before {
+      		content: "";
+      		position: absolute;
+      		right: 95%;
+      		top: 0px;
+      		width: 0;
+      		height: 10;
+      		border-top: 13px solid transparent;
+      		border-right: 26px solid lightgray;
+      		border-bottom: 13px solid transparent;
+      	}
+  
+  	
 		#com:hover+#comment {
 			display: inline-block;
 		}
+		
+		#days,#ends{width:80px;}
+		
 	</style>
 </th:block>
-
+ 
 <body>
 	<div layout:fragment="content">
 		<form onSubmit="return validateForm(this);">
@@ -79,7 +102,7 @@
 							<tr>
 								<td>
 									평균객단가
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
 									<div id="comment">고객 1인당 평균매입</div>
 								</td>
 								<td>
@@ -89,7 +112,7 @@
 							<tr>
 								<td class="res-ser">
 									평일방문고객수
-									<img src="/images/q1.png" width="30px" height="30px" id="com">
+									<img src="/images/search.PNG" width="30px" height="30px" id="com">
 									<div id="comment">평일에 방문하는 고객의 추정치</div>
 								</td>
 								<td class="retail" style="display:none">

@@ -46,36 +46,33 @@
 	</script>
 </head>
 <th:block layout:fragment="css">
-	<style>
-		#post {
-			text-align: center;
-		}
+<style>
+#post {text-align: center;}
+#Title {text-align: center;}
+#btn {
+width: 120px;
+display: inline-block;
+border-radius: 5px;
+border: 2px solid #4caf50;
+}
 
-		#Title {
-			text-align: center;
-		}
+input[type=text] {
+border: none;
+text-align: right;
+}
 
-		#btn {
-			width: 120px;
-			display: inline-block;
-			border-radius: 5px;
-			border: 2px solid #4caf50;
-		}
-
-		input[type=text] {
-			border: none;
-			text-align: right;
-		}
-
-		select {
-			display: none;
-		}
-		#checkpp {
-			width: 324px;
-			position: relative;
-			left: 45%;
-		}
-	</style>
+select {display: none;}
+#checkpp {
+width: 324px;
+position: relative;
+left: 45%;
+}
+#savepdf{
+width: 150px;
+border-radius: 5px;
+border: 2px solid #4caf50;		
+}
+</style>
 </th:block>
 
 <body>
@@ -304,7 +301,7 @@
 						<br />
 					</fieldset>
 					<div>
-						<button type="button" onclick="savePDF()">PDF로 다운받기</button>
+						<button type="button" id="savepdf" onclick="savePDF()">PDF로 다운받기</button>
 						<br />
 					</div>
 				</div>
