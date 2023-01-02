@@ -1043,6 +1043,11 @@ window.initMap = function() {
 							fdlength = 0;
 							areagrade = null;
 							category = null;
+							$("#foodData").find("option:eq(0)").prop("selected", true);
+							$("#serviceData").find("option:eq(0)").prop("selected", true);
+							$("#retailData").find("option:eq(0)").prop("selected", true);
+							$("#trafficData").find("option:eq(0)").prop("selected", true);
+							$("#areaData").find("option:eq(0)").prop("selected", true);
 							document.getElementById("grade").style.display = "none";
 							modal.style.display = "none";
 
@@ -1059,6 +1064,11 @@ window.initMap = function() {
 								fdlength = 0;
 								areagrade = null;
 								category = null;
+								$("#foodData").find("option:eq(0)").prop("selected", true);
+								$("#serviceData").find("option:eq(0)").prop("selected", true);
+								$("#retailData").find("option:eq(0)").prop("selected", true);
+								$("#trafficData").find("option:eq(0)").prop("selected", true);
+								$("#areaData").find("option:eq(0)").prop("selected", true);
 								document.getElementById("grade").style.display = "none";
 								modal.style.display = "none"
 							}
