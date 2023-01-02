@@ -121,6 +121,8 @@ window.initMap = function() {
 		{ label: "용", name: "용산역", lat: 37.52953539910786, lng: 126.9636943682725, img: 'https://data.seoul.go.kr/SeoulRtd/images/hotspot/용산역.jpg' },
 	];
 
+
+
 	RTloc.forEach(({ label, name, lat, lng, img }) => {
 		let RTmarker = new google.maps.Marker({
 			position: { lat, lng },
@@ -280,13 +282,13 @@ window.initMap = function() {
 						const submitButton = document.createElement("input");
 
 						submitButton.type = "button";
-						submitButton.value = "검색하기";
+						submitButton.value = "Geocode";
 						submitButton.classList.add("button", "button-primary");
 
 						const clearButton = document.createElement("input");
 
 						clearButton.type = "button";
-						clearButton.value = "삭제하기";
+						clearButton.value = "Clear";
 						clearButton.classList.add("button", "button-secondary");
 
 						map2.controls[google.maps.ControlPosition.TOP_LEFT].push(inputText);
@@ -902,6 +904,8 @@ window.initMap = function() {
 							} else {
 								document.getElementById('areaScore1').style.display = "inline-block";
 								document.getElementById('areaScore').style.display = "inline-block";
+
+								document.getElementById("grade").style.display = "inline-block";
 								console.log("fd 갯수" + fdlength + "//" + "sv 갯수" + svlength + "//" + "reta 갯수" + retalength);
 
 								console.log((fdlength === null || fdlength === "" || typeof fdlength === "undefined" || fdlength === 0) &&
@@ -1028,7 +1032,7 @@ window.initMap = function() {
 						genderChart = new Chart(ctx2, config2);
 						resntChart = new Chart(ctx3, config3);
 
-						const closeBtn = modal1.querySelector('.close-area');
+						const closeBtn = modal.querySelector('.close-area');
 						closeBtn.addEventListener("click", e => {
 							areaAgeChart.destroy();
 							genderChart.destroy();
@@ -1056,7 +1060,7 @@ window.initMap = function() {
 								areagrade = null;
 								category = null;
 								document.getElementById("grade").style.display = "none";
-								modal.style.display = "none";
+								modal.style.display = "none"
 							}
 						})
 
@@ -1078,10 +1082,11 @@ window.initMap = function() {
 	const firstvisit = document.createElement("input");
 	firstvisit.type = "button";
 	firstvisit.value = "사용방법";
-	firstvisit.id = "help";
-	firstvisit.style.width = "90px";
-	firstvisit.style.border = "3px solid #77af9c";
-	firstvisit.style.borderRadius = "7px";
+	firstvisit.style.backgroundColor = "#fff";
+	firstvisit.style.border = "2px solid #fff";
+	firstvisit.style.borderRadius = "3px";
+	firstvisit.style.boxShadow = "0 2px 6px rgba(0,0,0,.3)";
+	firstvisit.style.color = "rgb(25,25,25)";
 	firstvisit.style.cursor = "pointer";
 	firstvisit.style.fontFamily = "Roboto,Arial,sans-serif";
 	firstvisit.style.fontSize = "16px";
@@ -1089,7 +1094,6 @@ window.initMap = function() {
 	firstvisit.style.margin = "8px 0 22px";
 	firstvisit.style.padding = "0 5px";
 	firstvisit.style.textAlign = "center";
-
 
 	map.controls[google.maps.ControlPosition.TOP_LEFT].push(firstvisit);
 
@@ -1104,6 +1108,12 @@ window.initMap = function() {
 		closeBtn.addEventListener("click", e => {
 			modal.style.display = "none";
 		});
+		modal.addEventListener("click", e => {
+			const evTarget = e.target
+			if (evTarget.classList.contains("modal-overlay")) {
+				modal.style.display = "none"
+			}
+		})
 	});
 	return firstvisit;
 }
