@@ -89,78 +89,93 @@ h1 {
    integrity="sha512-6UofPqm0QupIL0kzS/UIzekR73/luZdC6i/kXDbWnLOJoqwklBK6519iUnShaYceJ0y4FaiPtX/hRnV/X/xlUQ=="
    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <link rel="stylesheet"
-   href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script th:inline="javascript">
-</script>
+   	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<div layout:fragment="content">
+	<script th:inline="javascript">
+		$(document).ready(function() {
+			$("#searchBtn").on("click", function(e) {
+				e.preventDefault();
+				page(0);
+			});
+		});
 
-<body>
-   <div layout:fragment="content">
-      <div id="table">
-         <h1>커뮤니티🌠</h1>
-         <div>
-            <form id="search" class="form-inline my-2 my-lg-0"
-               th:action="@{/post/search}" method="get">
-               <input name="searchQuery" class="form-control mr-sm-2"
-                  type="search" aria-label="Search">
-               <button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
-            </form>
-         </div>
-         <table>
-            <thead>
-               <tr id="index">
-                  <th>글번호</th>
-                  <th>제목</th>
-                  <th>작성자명</th>
-                  <th>작성일자</th>
-                  <th>조회수</th>
-               </tr>
-            </thead>
+		function page(page) {
+			var searchQuery = $("#searchQuery").val();
 
-            <tbody>
-               <tr th:each="p : ${posts}">
-                  <td th:text="${p.boardid}"></td>
-                  <td class="title"><a class="title" sec:authorize="isAnonymous()"
-                     href="javascript:alert('로그인 후 이용해주세요.')"> <span class="title"
-                        th:text="${p.boardtitle}"></span>
-                  </a> </sec:authorize> <a class="title" id="title" sec:authorize="isAuthenticated()"
-                     th:href="@{'/post/info/' + ${p.boardid}}" th:onClick="comment()">
-                        <span class="title" id="title" th:text="${p.boardtitle}"></span>
-                  </a> </sec:authorize></td>
-                  <td
-                     th:text="|${p.nickname}(${#strings.substringBefore(p.email,'@')}@******) |"></td>
-                  <td th:text="${#temporals.format(p.regdate,'yyyy-MM-dd')}"></td>
-                  <td th:text="${p.views}"></td>
-               </tr>
-            </tbody>
-         </table>
-      
-            <div class="posting" sec:authorize="isAuthenticated()">
-               <button type="button" class="post" onClick="location.href='/board/postssave'">글등록</button>
-            </div>
-            <br/>
-            <br/>
-            <!-- 
-            <div>
-            <ul class="pagination justify-content-center" th:with="start=${T(java.lang.Math).floor(posts.number/10) * 10 + 1},
-             last=${start + 9 < posts.totalPages ? start + 9 : posts.totalPages}">
-               <li class="page-item" th:classappend="${posts.first} ? 'disabled'">
-                  <a  class="page-link" th:href="${posts.first} ? '#' : @{/board/boardlist(page=${posts.number})}" aria-label="Previous"> 
-                     <span aria-hidden="true">이전</span>
-                  </a>
-               </li>
-               <li class="page-item" th:each="page: ${#numbers.sequence(start, last)}" th:classappend="${page == posts.number + 1} ? 'active'">
-                  <a class="page-link" th:text="${page}" th:href="@{/board/boardlist(page=${page})}"></a>
-               </li>
+			location.href = "/board/boardlist/" + page + "?searchQuery=" +searchQuery;
+		}
+	</script>
 
-               <li class="page-item" th:classappend="${posts.last} ? 'disabled'">
-                  <a class="page-link" th:href="${posts.last} ? '#' : @{/board/boardlist(page=${posts.number + 2})}" aria-label="Next"> 
-                     <span aria-hidden="true">다음</span>
-                  </a>
-               </li>
-            </ul>
-            </div>
-			-->
-      </div>
-   </div>
+	<body>
+		<div id="table">
+			<h1>소통게시판🌠</h1>
+			<div>
+				<form id="search" class="form-inline my-2 my-lg-0"
+					th:object="${postSearchDto}">
+					<input th:field="*{searchQuery}" class="form-control mr-sm-2"
+						type="search" aria-label="Search">
+					<button id="searchQuery" class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
+				</form>
+			</div>
+			<table>
+				<thead>
+					<tr id="index">
+						<th>글번호</th>
+						<th>제목</th>
+						<th>작성자명</th>
+						<th>작성일자</th>
+						<th>조회수</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr th:each="p : ${posts}">
+						<td th:text="${p.boardid}"></td>
+						<td class="title"><a class="title"
+							sec:authorize="isAnonymous()"
+							href="javascript:alert('로그인 후 이용해주세요.')"> <span class="title"
+								th:text="${p.boardtitle}"></span>
+						</a> </sec:authorize> <a class="title" id="title" sec:authorize="isAuthenticated()"
+							th:href="@{'/post/info/' + ${p.boardid}}" th:onClick="comment()">
+								<span class="title" id="title" th:text="${p.boardtitle}"></span>
+						</a> </sec:authorize></td>
+						<td
+							th:text="|${p.nickname}(${#strings.substringBefore(p.email,'@')}@******) |"></td>
+						<td th:text="${#temporals.format(p.regdate,'yyyy-MM-dd')}"></td>
+						<td th:text="${p.views}"></td>
+					</tr>
+				</tbody>
+			</table>
+
+			<div
+				th:with="start=${(posts.number/maxPage)*maxPage + 1}, end=(${(posts.totalPages == 0) ? 1 : (start + (maxPage - 1) < posts.totalPages ? start + (maxPage - 1) : posts.totalPages)})">
+				<ul class="pagination justify-content-center">
+
+					<li class="page-item" th:classappend="${posts.first}?'disabled'">
+						<a th:onclick="'javascript:page(' + ${posts.number - 1} + ')'"
+						aria-label='Previous' class="page-link"> <span
+							aria-hidden='true'>이전</span>
+					</a>
+					</li>
+					<li class="page-item"
+						th:each="page: ${#numbers.sequence(start, end)}"
+						th:classappend="${posts.number eq page-1}?'active':''"><a
+						th:onclick="'javascript:page(' + ${page - 1} + ')'"
+						th:inline="text" class="page-link">[[${page}]]</a></li>
+
+					<li class="page-item" th:classappend="${posts.last}?'disabled'">
+						<a th:onclick="'javascript:page(' + ${posts.number + 1} + ')'"
+						aria-label='Next' class="page-link"> <span aria-hidden='true'>다음</span>
+					</a>
+					</li>
+				</ul>
+			</div>
+			<div class="posting" sec:authorize="isAuthenticated()">
+				<button type="button" class="post"
+					onClick="location.href='/board/postssave'">글등록</button>
+			</div>
+			<br /> <br />
+		</div>
+</div>
 </body>
 </html>
