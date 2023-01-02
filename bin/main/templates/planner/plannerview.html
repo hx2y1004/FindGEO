@@ -371,7 +371,7 @@ border-bottom: 13px solid transparent;
 								<td class="res-ret">
 									원가율(0.0~1.0)
 									<img src="/images/search.PNG" width="30px" height="30px" id="com">
-									<div id="comment1">원가율 설명</div>
+									<div id="comment1">매출액에서 원가가 차지하는 비율</div>
 								</td>
 								<td class="res-ret"><input class="res-ret" type="text" id="costRate" th:name="costRate"
 										th:value=${plannerView.costRate} /></td>
@@ -381,12 +381,12 @@ border-bottom: 13px solid transparent;
 								<td class="restaurants">
 									식재료비
 									<img src="/images/search.PNG" width="30px" height="30px" id="com">
-									<div id="comment1">식재료비 설명</div>
+									<div id="comment1">매출액x원가율</div>
 								</td>
 								<td class="retail" style="display:none">
 									매입비
 									<img src="/images/search.PNG" width="30px" height="30px" id="com">
-									<div id="comment">매입비 설명</div>
+									<div id="comment">매출액x원가율</div>
 								</td>
 								<td class="res-ret"><input type="text" id="foodCost" readonly>원</td>
 							</tr>
@@ -394,7 +394,7 @@ border-bottom: 13px solid transparent;
 								<td>
 									아르바이트
 									<img src="/images/search.PNG" width="30px" height="30px" id="com">
-									<div id="comment1">아르바이트 설명</div>
+									<div id="comment1">총 아르바이트 비용</div>
 								</td>
 								<td id="won"><input type="text" id="partTime" th:name="partTime"
 										th:value="${plannerView.partTime}" onkeyup="inputComma(this)" />원</td>
@@ -403,7 +403,7 @@ border-bottom: 13px solid transparent;
 								<td>
 									수도,전기,가스
 									<img src="/images/search.PNG" width="30px" height="30px" id="com">
-									<div id="comment">수도,전기,가스 설명</div>
+									<div id="comment">수도, 전기, 가스비</div>
 								</td>
 								<td id="won"><input type="text" id="w_e_g" th:name="w_e_g"
 										th:value="${plannerView.w_e_g}" onkeyup="inputComma(this)" />원</td>
@@ -412,7 +412,7 @@ border-bottom: 13px solid transparent;
 								<td>
 									소모품비
 									<img src="/images/search.PNG" width="30px" height="30px" id="com">
-									<div id="comment1">소모품비 설명</div>
+									<div id="comment1">소모품비</div>
 								</td>
 								<td id="won"><input type="text" id="expand" th:name="expand"
 										th:value="${plannerView.expand}" onkeyup="inputComma(this)" />원</td>
@@ -421,7 +421,7 @@ border-bottom: 13px solid transparent;
 								<td>
 									광고비
 									<img src="/images/search.PNG" width="30px" height="30px" id="com">
-									<div id="comment1">광고비 설명</div>
+									<div id="comment1">광고비</div>
 								</td>
 								<td id="won"><input type="text" id="advertise" th:name="advertise"
 										th:value="${plannerView.advertise}" onkeyup="inputComma(this)" />원</td>
@@ -430,7 +430,7 @@ border-bottom: 13px solid transparent;
 								<td>
 									각종 세금(6개월)매달 충당
 									<img src="/images/search.PNG" width="30px" height="30px" id="com">
-									<div id="comment">각종 세금(6개월)매달 충당 설명</div>
+									<div id="comment">부가가치세 및 각종 세금</div>
 								</td>
 								<td id="won"><input type="text" id="taxCost" readonly>원</td>
 							</tr>
@@ -438,7 +438,7 @@ border-bottom: 13px solid transparent;
 								<td>
 									기타비용
 									<img src="/images/search.PNG" width="30px" height="30px" id="com">
-									<div id="comment1">기타비용 설명</div>
+									<div id="comment1">기타비용</div>
 								</td>
 								<td id="won"><input type="text" id="etc" th:name="etc" th:value="${plannerView.etc}"
 										onkeyup="inputComma(this)" />원</td>
@@ -446,8 +446,6 @@ border-bottom: 13px solid transparent;
 							<tr>
 								<td>
 									변동비소계
-									<img src="/images/search.PNG" width="30px" height="30px" id="com">
-									<div id="comment1">변동비소계 설명</div>
 								</td>
 								<td id="won"><input type="text" id="flexCost" readonly>원</td>
 							</tr>
@@ -463,7 +461,7 @@ border-bottom: 13px solid transparent;
 								<td colspan="2">
 									영업이익률(0.0~1.0)
 									<img src="/images/search.PNG" width="30px" height="30px" id="com">
-									<div id="comment1">영업이익률 설명</div>
+									<div id="comment1">매출액에서 발생한 영업수익에 대한 영업이익의 비율</div>
 								</td>
 								<td><input type="text" id="profitRatio" readonly></td>
 							</tr>
