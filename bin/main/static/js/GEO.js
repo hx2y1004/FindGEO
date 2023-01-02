@@ -121,8 +121,6 @@ window.initMap = function() {
 		{ label: "용", name: "용산역", lat: 37.52953539910786, lng: 126.9636943682725, img: 'https://data.seoul.go.kr/SeoulRtd/images/hotspot/용산역.jpg' },
 	];
 
-
-
 	RTloc.forEach(({ label, name, lat, lng, img }) => {
 		let RTmarker = new google.maps.Marker({
 			position: { lat, lng },
@@ -282,13 +280,13 @@ window.initMap = function() {
 						const submitButton = document.createElement("input");
 
 						submitButton.type = "button";
-						submitButton.value = "Geocode";
+						submitButton.value = "검색하기";
 						submitButton.classList.add("button", "button-primary");
 
 						const clearButton = document.createElement("input");
 
 						clearButton.type = "button";
-						clearButton.value = "Clear";
+						clearButton.value = "삭제하기";
 						clearButton.classList.add("button", "button-secondary");
 
 						map2.controls[google.maps.ControlPosition.TOP_LEFT].push(inputText);
@@ -1040,6 +1038,7 @@ window.initMap = function() {
 							selLngs = null;
 							fdlength = 0;
 							areagrade = null;
+							category = null;
 							document.getElementById("grade").style.display = "none";
 							modal.style.display = "none";
 
@@ -1055,6 +1054,7 @@ window.initMap = function() {
 								selLngs = null;
 								fdlength = 0;
 								areagrade = null;
+								category = null;
 								document.getElementById("grade").style.display = "none";
 								modal.style.display = "none";
 							}

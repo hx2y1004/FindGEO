@@ -1,33 +1,35 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layouts/layout1}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout1}">
 
 <head>
-<meta charset="UTF-8">
-<title>찾아 가게</title>
-<meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
-<meta id="_csrf_header" name="_csrf_header"
-	th:content="${_csrf.headerName}" />
-<link rel="stylesheet" media="screen" th:href="@{/css/Modal.css}" />
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script
-	src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
-<script th:inline="javascript" th:src="@{/js/GEO.js}"></script>
-<script defer
-	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABlqSxHcQF3ZT1Uyc2cEcidYHAOLhHfNY&callback=initMap"></script>
+	<meta charset="UTF-8">
+	<title>찾아 가게</title>
+	<meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
+	<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
+	<link rel="stylesheet" media="screen" th:href="@{/css/Modal.css}" />
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
+	<script th:inline="javascript" th:src="@{/js/GEO.js}"></script>
+	<script defer
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABlqSxHcQF3ZT1Uyc2cEcidYHAOLhHfNY&callback=initMap"></script>
 	<style>
-		#help{
+		#help {
 			background-color: #fff;
-			transition:0.5s;
+			transition: 0.5s;
 		}
+
 		#help:hover {
 			background-color: #77af9c;
+		}
+
+		#guide {
+			height: 90%;
+			width: 95%;
+			position: relative;
+			justify-content: center;
 		}
 	</style>
 </head>
@@ -53,62 +55,56 @@
 							<h2>근처 상권 정보</h2>
 						</div>
 						<div>
-							<div id="map2"
-								style="height: 600px; width: 70%; float: left; margin: 15px;"></div>
-							<div id="selec"
-								style="margin: 15px; padding: 15px; display: block;">
+							<div id="map2" style="height: 600px; width: 70%; float: left; margin: 15px;"></div>
+							<div id="selec" style="margin: 15px; padding: 15px; display: block;">
 								<select id="foodData">
 									<th:block th:each="food : ${foodDataList}">
 										<option th:value="${food.category}" th:text="${food.category}"></option>
 									</th:block>
 								</select>
 								<button type="button" name="foodSelc" id="foodSelc">추가하기</button>
-								<br /> <br /> <select id="serviceData">
+								<br /> <br />
+								<select id="serviceData">
 									<th:block th:each="service : ${serviceDataList}">
-										<option th:value="${service.category}"
-											th:text="${service.category}"></option>
+										<option th:value="${service.category}" th:text="${service.category}"></option>
 									</th:block>
 								</select>
 								<button type="button" name="serviceSelc" id="serviceSelc">추가하기</button>
-								<br /> <br /> <select id="retailData">
+								<br /> <br />
+								<select id="retailData">
 									<th:block th:each="retail : ${retailDataList}">
-										<option th:value="${retail.category}"
-											th:text="${retail.category}"></option>
+										<option th:value="${retail.category}" th:text="${retail.category}"></option>
 									</th:block>
 								</select>
 								<button type="button" name="retailSelc" id="retailSelc">추가하기</button>
-								<br /> <br /> <select id="trafficData">
+								<br /> <br />
+								<select id="trafficData">
 									<th:block th:each="traffic : ${trafficDataList}">
-										<option th:value="${traffic.category}"
-											th:text="${traffic.category}"></option>
+										<option th:value="${traffic.category}" th:text="${traffic.category}"></option>
 									</th:block>
 								</select>
 								<button type="button" name="trafficSelc" id="trafficSelc">추가하기</button>
-								<br /> <br /> <select id="areaData">
+								<br /> <br />
+								<select id="areaData">
 									<th:block th:each="areaData : ${areaDataList}">
-										<option th:value="${areaData.category}"
-											th:text="${areaData.category}"></option>
+										<option th:value="${areaData.category}" th:text="${areaData.category}"></option>
 									</th:block>
 								</select>
 								<button type="button" name="areaSelc" id="areaSelc">추가하기</button>
 								<br />
 							</div>
-							<button type="button" name="savedata" id="savedata"
-								sec:authorize="isAuthenticated()" onClick="saveInfo();"
-								style="display: block;">정보 저장</button>
+							<button type="button" name="savedata" id="savedata" sec:authorize="isAuthenticated()"
+								onClick="saveInfo();" style="display: block;">정보 저장</button>
 							<br />
-							<button type="button" name="delMark2" id="delMark2"
-								style="display: block;">마커 삭제</button>
+							<button type="button" name="delMark2" id="delMark2" style="display: block;">마커 삭제</button>
 							<br />
-							<button type="button" name="scorebutton" id="scorebutton"
-								sec:authorize="isAuthenticated()" style="display: bolck;">점수
+							<button type="button" name="scorebutton" id="scorebutton" sec:authorize="isAuthenticated()"
+								style="display: bolck;">점수
 								계산</button>
 							<br />
 							<div id="grade">
-								<p sec:authorize="isAuthenticated()" id="areaScore1"
-									style="display: none;">적합도:</p>
-								<h2 id="areaScore" sec:authorize="isAuthenticated()"
-									style="display: none;">적합도 점수</h2>
+								<p sec:authorize="isAuthenticated()" id="areaScore1" style="display: none;">적합도:</p>
+								<h2 id="areaScore" sec:authorize="isAuthenticated()" style="display: none;">적합도 점수</h2>
 							</div>
 						</div>
 					</div>
@@ -125,16 +121,16 @@
 							<h4 style="display: inline-block;">혼잡정도:</h4>
 							<h4 id="areaCongest" style="display: inline-block;">혼잡정도</h4>
 							<br /> <br />
-							<p>연령 별 인구 비율</p>
+							<p>연령별 인구 비율</p>
 							<canvas id="bar-chart-horizontal" width="700" height="150"></canvas>
 							<br />
 							<div id="cchart">
 								<div class="piechart">
-									<p>성비 별 인구 비율</p>
+									<p id="charname">성비별 인구 비율</p>
 									<canvas id="pieChart" width="300px" height="250"></canvas>
 								</div>
 								<div class="piechart">
-									<p>거주/비거주 별 인구 비율</p>
+									<p id="charname">거주/비거주별 인구 비율</p>
 									<canvas id="resntChart" width="300px" height="250"></canvas>
 								</div>
 							</div>
@@ -146,12 +142,11 @@
 			<!-- 사용 방법 모달 -->
 			<div id="modal2" class="modal-window">
 				<div id="checkp">
-					<div class="close-area">X</div>
+					<div class="close-area" style="font-size: 40px; font-weight: bold;">X</div>
 					<br />
-					<div class="title">
-						<h2>이용 방법</h2>
+					<div class="content"f style="height: 890px;">
+						<img src="/images/찾아가게가이드.png" id="guide" style="height: 100%;">
 					</div>
-					<div class="content">이용방법 어떻게 넣을까요</div>
 				</div>
 			</div>
 		</div>
