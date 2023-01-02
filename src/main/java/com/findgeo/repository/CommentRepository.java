@@ -3,6 +3,8 @@ package com.findgeo.repository;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,5 +21,10 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
 	@Query("SELECT c FROM Comment c where c.boardid = :boardid")
 	List<Comment> findByBoardid(@Param("boardid") Long boardid);
+	
+	@Transactional
+	void deleteByEmail(String email);
 
+	@Transactional
+	void deleteByBoardid(Long boardid);
 }
