@@ -1030,7 +1030,7 @@ window.initMap = function() {
 						genderChart = new Chart(ctx2, config2);
 						resntChart = new Chart(ctx3, config3);
 
-						const closeBtn = modal.querySelector('.close-area');
+						const closeBtn = modal1.querySelector('.close-area');
 						closeBtn.addEventListener("click", e => {
 							areaAgeChart.destroy();
 							genderChart.destroy();
@@ -1040,7 +1040,7 @@ window.initMap = function() {
 							selLngs = null;
 							fdlength = 0;
 							areagrade = null;
-							areaScore.innerText = "다시 선택후 계산해주세요.";
+							document.getElementById("grade").style.display = "none";
 							modal.style.display = "none";
 
 						});
@@ -1055,8 +1055,8 @@ window.initMap = function() {
 								selLngs = null;
 								fdlength = 0;
 								areagrade = null;
-								areaScore.innerText = "다시 선택후 계산해주세요.";
-								modal.style.display = "none"
+								document.getElementById("grade").style.display = "none";
+								modal.style.display = "none";
 							}
 						})
 
@@ -1089,7 +1089,7 @@ window.initMap = function() {
 	firstvisit.style.margin = "8px 0 22px";
 	firstvisit.style.padding = "0 5px";
 	firstvisit.style.textAlign = "center";
-	
+
 
 	map.controls[google.maps.ControlPosition.TOP_LEFT].push(firstvisit);
 
@@ -1104,12 +1104,6 @@ window.initMap = function() {
 		closeBtn.addEventListener("click", e => {
 			modal.style.display = "none";
 		});
-		modal.addEventListener("click", e => {
-			const evTarget = e.target
-			if (evTarget.classList.contains("modal-overlay")) {
-				modal.style.display = "none"
-			}
-		})
 	});
 	return firstvisit;
 }
