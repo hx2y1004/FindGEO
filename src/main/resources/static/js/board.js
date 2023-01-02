@@ -129,7 +129,7 @@ function commentSave() {
 			alert("내용을 작성해주세요");
 			none;
 		}
-		
+
 		var boardid = $('#boardid').val();
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
@@ -157,7 +157,7 @@ function commentSave() {
 				html += "<p id='cmt_content'>" + value.content + "</p>";
 				html += "<button onClick='clickcommentadd()'>답글</button>";
 				html += "<button>수정</button>";
-				html += "<button>삭제</button>";
+				html += "<button onClick='deletecomment(" + value.commentid + ")'>삭제</button>";
 				html += "<div id='commentFromP" + value.commentid + "'></div>";
 			});
 
@@ -173,6 +173,28 @@ function commentSave() {
 	})
 }
 
+function deletecomment(commentid) {
+	console.log("삭제" + commentid);
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	var boardid = $('#boardid').val();
+	console.log("boardid chk"+boardid);
+	$.ajax({
+		beforeSend: function(xhr) {
+			xhr.setRequestHeader(header, token);
+		},
+		type: 'DELETE',
+		url: '/comments/delete/' + commentid,
+		//dataType: 'json',
+		//contentType: 'application/json; charset=utf-8'
+	}).done(function(data) {
+		alert("삭제 완료");
+		window.location.reload();
+	}).fail(function(e) {
+		alert("삭제 실패" + JSON.stringify(e));
+	})
+}
+
 function clickcommentadd() {
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
@@ -185,10 +207,10 @@ function clickcommentadd() {
 	}).done(function(data) {
 		var html = "<div class='card-body'><textarea class='form-control' id='cmt_add_cont' rows='1'></textarea></div>";
 		html += "<div class='card-footer'><button onClick = 'commentchildsave()'>등록</button></div>";
-		$("#commentFromP"+commentid).empty();
-		$("#commentFromP"+commentid).append(html);
+		$("#commentFromP" + commentid).empty();
+		$("#commentFromP" + commentid).append(html);
 	}).fail(function(e) {
-		alert("추가실패"+"#commentFromP"+commentid+"//"+e);
+		alert("추가실패" + "#commentFromP" + commentid + "//" + e);
 	})
 }
 

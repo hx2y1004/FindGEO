@@ -24,6 +24,8 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 	
 	@Transactional
 	void deleteByEmail(String email);
+	
+	Comment findByCommentid(Long commentid);
 
 	@Transactional
 	void deleteByBoardid(Long boardid);

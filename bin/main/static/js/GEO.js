@@ -1078,11 +1078,10 @@ window.initMap = function() {
 	const firstvisit = document.createElement("input");
 	firstvisit.type = "button";
 	firstvisit.value = "사용방법";
-	firstvisit.style.backgroundColor = "#fff";
-	firstvisit.style.border = "2px solid #fff";
-	firstvisit.style.borderRadius = "3px";
-	firstvisit.style.boxShadow = "0 2px 6px rgba(0,0,0,.3)";
-	firstvisit.style.color = "rgb(25,25,25)";
+	firstvisit.id = "help";
+	firstvisit.style.width = "90px";
+	firstvisit.style.border = "3px solid #77af9c";
+	firstvisit.style.borderRadius = "7px";
 	firstvisit.style.cursor = "pointer";
 	firstvisit.style.fontFamily = "Roboto,Arial,sans-serif";
 	firstvisit.style.fontSize = "16px";
@@ -1090,6 +1089,7 @@ window.initMap = function() {
 	firstvisit.style.margin = "8px 0 22px";
 	firstvisit.style.padding = "0 5px";
 	firstvisit.style.textAlign = "center";
+	
 
 	map.controls[google.maps.ControlPosition.TOP_LEFT].push(firstvisit);
 
