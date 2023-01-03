@@ -77,4 +77,9 @@ public class PlannerService {
 		
 	}
 
+	public int isPlannerExist(Long plannerId) {
+		System.out.println(plannerRepository.countByPlannerId(plannerId));
+		return plannerRepository.countByPlannerId(plannerId);
+	}
+
 }

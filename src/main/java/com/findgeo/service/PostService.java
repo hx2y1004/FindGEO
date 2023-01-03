@@ -73,6 +73,10 @@ public class PostService {
 	      postsRepository.deleteByEmail(email);
 	   }
 
+	public int isPostExist(Long boardid) {
+		return postsRepository.countByBoardid(boardid);
+	}
+
 //	// 사용자가 검색창에 입력한 값 제목 검색
 //	@Transactional
 //	public List<Posts> search(String keyword, @PageableDefault(size = 10, sort = "boardid", direction = Sort.Direction.DESC) Pageable pageable) {

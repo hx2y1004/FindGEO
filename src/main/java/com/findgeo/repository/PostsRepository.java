@@ -36,4 +36,6 @@ public interface PostsRepository extends JpaRepository<Posts, Long> ,QuerydslPre
 	@Transactional
 	void deleteByEmail(String email);
 
+	int countByBoardid(Long boardid);
+
 }

@@ -77,10 +77,15 @@ public class PlannerController {
 
 	@GetMapping("/view/{plannerid}")
 	public String plannerView(Model model, @PathVariable("plannerid") Long plannerId) {
-		Planner plannerFormDto = plannerService.selectPlanner(plannerId);
-		model.addAttribute("planner", new PlannerFormDto());
-		model.addAttribute("plannerView", plannerFormDto);
-		return "planner/plannerview";
+		int isPlannerExist = plannerService.isPlannerExist(plannerId);
+		if(isPlannerExist == 1) {
+			Planner plannerFormDto = plannerService.selectPlanner(plannerId);
+			model.addAttribute("planner", new PlannerFormDto());
+			model.addAttribute("plannerView", plannerFormDto);
+			return "planner/plannerview";
+		} else {
+			return "redirect:/planner/list";
+		}
 	}
 
 	@GetMapping("/pdf/{plannerid}")

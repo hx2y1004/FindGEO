@@ -58,36 +58,42 @@ public class BoardController {
 	@GetMapping("/post/info/{boardid}")
 	public String postsInfo(@PathVariable Long boardid, Model model, Principal principal) {
 		postService.updateView(boardid); // views ++
-		PostsResponseDto dto = postService.findById(boardid);
-		Member member = memberRepository.findByEmail(dto.getEmail());
-
-		String email = member.getEmail();
-
-		// @를 기준으로 문자열을 추출할 것.
-		String sub_email = member.getEmail();
-		// 먼저 @의 인덱스를 찾는다.
-		int idx = sub_email.indexOf("@");
-		// @ 앞 부분을 추출
-		String sub_Email = sub_email.substring(0, idx) + "@******";
-		System.out.println(sub_Email + "@*****이거 해도되냐 썅!!!!!!!??????????");
-		SessionMember mem = (SessionMember) httpSession.getAttribute("user");
-		if (principal != null && mem == null) {
-			Member user = memberRepository.findByEmail(principal.getName());
-			model.addAttribute("member", user);
-		} else if (principal != null && mem != null) {
-			model.addAttribute("member", mem);
-			model.addAttribute("loginInfo", "social");
+		int isPostExist = postService.isPostExist(boardid);
+		if(isPostExist==1) {
+			
+			PostsResponseDto dto = postService.findById(boardid);
+			Member member = memberRepository.findByEmail(dto.getEmail());
+			
+			String email = member.getEmail();
+			
+			// @를 기준으로 문자열을 추출할 것.
+			String sub_email = member.getEmail();
+			// 먼저 @의 인덱스를 찾는다.
+			int idx = sub_email.indexOf("@");
+			// @ 앞 부분을 추출
+			String sub_Email = sub_email.substring(0, idx) + "@******";
+			System.out.println(sub_Email + "@*****이거 해도되냐 썅!!!!!!!??????????");
+			SessionMember mem = (SessionMember) httpSession.getAttribute("user");
+			if (principal != null && mem == null) {
+				Member user = memberRepository.findByEmail(principal.getName());
+				model.addAttribute("member", user);
+			} else if (principal != null && mem != null) {
+				model.addAttribute("member", mem);
+				model.addAttribute("loginInfo", "social");
+			}
+			
+			if (principal.getName().equals(email)) {
+				model.addAttribute("check", true);
+			}
+			System.out.println(principal.getName() + "====");
+			System.out.println(email + "*****");
+			model.addAttribute("posts", dto);
+			model.addAttribute("sub_Email", sub_Email);
+			
+			return "/board/postsInfo";
+		} else {
+			return "redirect:/board/boardlist";
 		}
-
-		if (principal.getName().equals(email)) {
-			model.addAttribute("check", true);
-		}
-		System.out.println(principal.getName() + "====");
-		System.out.println(email + "*****");
-		model.addAttribute("posts", dto);
-		model.addAttribute("sub_Email", sub_Email);
-
-		return "/board/postsInfo";
 	}
 
 	// 수정
