@@ -70,6 +70,9 @@ public class PlannerController {
 		System.out.println(emailId);
 		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
 		Page<Planner> planners = plannerService.selectPlannerListPage(emailId, pageable);
+		int plannerTotal = plannerService.countPlanner(emailId);
+		System.out.println(plannerTotal);
+		model.addAttribute("plannerTotal", plannerTotal);
 		model.addAttribute("plannerFormDto", planners);
 		model.addAttribute("maxPage", 5);
 		return "planner/plannerlist";

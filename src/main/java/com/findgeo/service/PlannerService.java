@@ -82,4 +82,8 @@ public class PlannerService {
 		return plannerRepository.countByPlannerId(plannerId);
 	}
 
+	public int countPlanner(String emailId) {
+		return plannerRepository.countByEmailId(emailId);
+	}
+
 }

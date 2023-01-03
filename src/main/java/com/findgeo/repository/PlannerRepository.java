@@ -25,4 +25,6 @@ public interface PlannerRepository extends JpaRepository<Planner, Long> {
 	void deleteByEmailId(String emailId);
 
 	int countByPlannerId(Long plannerId);
+
+	int countByEmailId(String emailId);
 }
