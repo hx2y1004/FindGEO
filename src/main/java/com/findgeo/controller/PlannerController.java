@@ -4,8 +4,6 @@ import java.security.Principal;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
