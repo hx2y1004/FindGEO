@@ -1,6 +1,7 @@
 package com.findgeo.controller;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
@@ -61,13 +62,10 @@ public class BoardController {
 	public String postsInfo(@PathVariable Long boardid, Model model, Principal principal) {
 		postService.updateView(boardid); // views ++
 		int isPostExist = postService.isPostExist(boardid);
-		List<Comment> comment = commentRepository.findByBoardid(boardid);
 		if(isPostExist==1) {
 			
 			PostsResponseDto dto = postService.findById(boardid);
 			Member member = memberRepository.findByEmail(dto.getEmail());
-			model.addAttribute("comment",comment);
-			System.out.println(comment.get(0).getEmail()+"email`````````````````````");
 			String email = member.getEmail();
 			
 			// @를 기준으로 문자열을 추출할 것.
