@@ -40,5 +40,7 @@ public interface PostsRepository extends JpaRepository<Posts, Long> ,QuerydslPre
 	int countByBoardid(Long boardid);
 
 	Page<Posts> findByEmailOrderByBoardidDesc(String email, Pageable pageable);
+	
+	int countBy();
 
 }

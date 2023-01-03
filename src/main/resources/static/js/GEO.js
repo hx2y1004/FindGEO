@@ -574,9 +574,7 @@ window.initMap = function() {
 											}
 
 										})
-										.catch(
-											//err => console.error(err)
-											alert("해당 장소가 없습니다.")
+										.catch((err) => {alert("해당 장소가 없습니다.");}
 										);
 								}
 							} else {
@@ -678,9 +676,7 @@ window.initMap = function() {
 											}
 
 										})
-										.catch(
-											//err => console.error(err)
-											alert("해당 장소가 없습니다.")
+										.catch((err) => {alert("해당 장소가 없습니다.");}
 										);
 								}
 							} else {
@@ -789,9 +785,7 @@ window.initMap = function() {
 											}
 
 										})
-										.catch(
-											//err => console.error(err)
-											alert("해당 장소가 없습니다.")
+										.catch((err) => {alert("해당 장소가 없습니다.");}
 										);
 								}
 							} else {
@@ -898,9 +892,7 @@ window.initMap = function() {
 
 
 										})
-										.catch(
-											//err => console.error(err)
-											alert("해당 장소가 없습니다.")
+										.catch((err) => {alert("해당 장소가 없습니다.");}
 										);
 								}
 							} else {
