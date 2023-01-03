@@ -16,10 +16,8 @@ import com.findgeo.service.*;
 import com.findgeo.config.dto.SessionMember;
 import com.findgeo.dto.PostsResponseDto;
 import com.findgeo.dto.postSearchDto;
-import com.findgeo.entity.Comment;
 import com.findgeo.entity.Member;
 import com.findgeo.entity.Posts;
-import com.findgeo.repository.CommentRepository;
 import com.findgeo.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -30,7 +28,6 @@ public class BoardController {
 	public final PostService postService;
 	private final HttpSession httpSession;
 	private final MemberRepository memberRepository;
-	private final CommentRepository commentRepository;
 
 	@GetMapping(value = { "/board/boardlist", "/board/boardlist/{page}" })
 	public String boardlist(postSearchDto postSearchDto, Model model, @PathVariable("page") Optional<Integer> page) {
@@ -62,12 +59,14 @@ public class BoardController {
 	public String postsInfo(@PathVariable Long boardid, Model model, Principal principal) {
 		postService.updateView(boardid); // views ++
 		int isPostExist = postService.isPostExist(boardid);
-		if(isPostExist==1) {
-			
+		if (isPostExist == 1) {
+
 			PostsResponseDto dto = postService.findById(boardid);
 			Member member = memberRepository.findByEmail(dto.getEmail());
+
+
 			String email = member.getEmail();
-			
+
 			// @를 기준으로 문자열을 추출할 것.
 			String sub_email = member.getEmail();
 			// 먼저 @의 인덱스를 찾는다.
@@ -83,7 +82,7 @@ public class BoardController {
 				model.addAttribute("member", mem);
 				model.addAttribute("loginInfo", "social");
 			}
-			
+
 			if (principal.getName().equals(email)) {
 				model.addAttribute("check", true);
 			}
@@ -91,7 +90,7 @@ public class BoardController {
 			System.out.println(email + "*****");
 			model.addAttribute("posts", dto);
 			model.addAttribute("sub_Email", sub_Email);
-			
+
 			return "/board/postsInfo";
 		} else {
 			return "redirect:/board/boardlist";
@@ -105,15 +104,5 @@ public class BoardController {
 		model.addAttribute("posts", dto);
 		return "/board/postsUpdate";
 	}
-
-//	// 검색
-//	@GetMapping("/post/search")
-//	public String search(@RequestParam("searchQuery") String keyword, Pageable pageable, Model model) {
-//		List<Posts> searchList = postService.search(keyword, pageable);
-//		System.out.println(searchList.get(0).getEmail());
-//		model.addAttribute("posts", searchList);
-//
-//		return "board/boardlist";
-//	}
 
 }

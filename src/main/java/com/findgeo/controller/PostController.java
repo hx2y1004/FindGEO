@@ -17,24 +17,24 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RestController
 public class PostController {
-	private final PostService postService;
-	private final CommentService commentService;
+   private final PostService postService;
+   private final CommentService commentService;
 
-	@PostMapping("/post/boardsave")
-	public Long save(@RequestBody PostsSaveRequestDto requestDto) {
-		return postService.save(requestDto);
-	}
+   @PostMapping("/post/boardsave")
+   public Long save(@RequestBody PostsSaveRequestDto requestDto) {
+      return postService.save(requestDto);
+   }
 
-	@PutMapping("/post/boardupdate/{boardid}")
-	public Long update(@PathVariable Long boardid, @RequestBody PostsUpdateRequestDto requestDto) {
-		return postService.update(boardid, requestDto);
-	}
+   @PutMapping("/post/boardupdate/{boardid}")
+   public Long update(@PathVariable Long boardid, @RequestBody PostsUpdateRequestDto requestDto) {
+      return postService.update(boardid, requestDto);
+   }
 
-	@DeleteMapping("/post/boarddelete/{boardid}")
-	public Long delete(@PathVariable Long boardid) {
-		commentService.deleteByBoardid(boardid);
-		postService.delete(boardid);
-		return boardid;
-	}
+   @DeleteMapping("/post/boarddelete/{boardid}")
+   public Long delete(@PathVariable Long boardid) {
+      commentService.deleteByBoardid(boardid);
+      postService.delete(boardid);
+      return boardid;
+   }
 
 }
