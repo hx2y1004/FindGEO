@@ -96,4 +96,8 @@ public class ClippingService {
 		int delchk = clippingRepository.delMyClip(clipid);
 		return delchk;
 	}
+
+	public int isClipPresent(Long clipid) {
+		return clippingRepository.countByClipid(clipid);
+	}
 }

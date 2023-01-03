@@ -306,10 +306,15 @@ public class MemberController {
     @GetMapping("/clipping/myclip/{clipid}")
 	public String myclip(Model model,@PathVariable Long clipid) {
     	System.out.println(clipid);
-    	List<Clipping> myClipList = clippingService.selMyClip(clipid);
-    	model.addAttribute("mycliplist", myClipList);
-    	
-		return "mypage/clip";
+    	int isClipPresent = clippingService.isClipPresent(clipid);
+    	if(isClipPresent==1) {
+    		List<Clipping> myClipList = clippingService.selMyClip(clipid);
+    		model.addAttribute("mycliplist", myClipList);
+    		
+    		return "mypage/clip";
+    	} else {
+    		return "redirect:/members/mypage";
+    	}
 	}
     
     @GetMapping("/clipping/myclip/delete/{clipid}")
