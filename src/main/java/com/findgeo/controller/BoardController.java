@@ -96,12 +96,12 @@ public class BoardController {
 	}
 
 	// 수정
-	@GetMapping("/post/update/{boardid}")
-	public String postsUpdate(@PathVariable Long boardid, Model model) {
-		PostsResponseDto dto = postService.findById(boardid);
-		model.addAttribute("posts", dto);
-		return "/board/postsUpdate";
-	}
+//	@GetMapping("/post/update/{boardid}")
+//	public String postsUpdate(@PathVariable Long boardid, Model model) {
+//		PostsResponseDto dto = postService.findById(boardid);
+//		model.addAttribute("posts", dto);
+//		return "/board/postsUpdate";
+//	}
 
 //	// 검색
 //	@GetMapping("/post/search")
