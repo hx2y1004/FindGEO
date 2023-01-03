@@ -36,6 +36,9 @@ public class BoardController {
 	public String boardlist(postSearchDto postSearchDto, Model model, @PathVariable("page") Optional<Integer> page) {
 		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
 		Page<Posts> posts = postService.ListPage(postSearchDto, pageable);
+		int postsTotal = postService.countPosts();
+		System.out.println(postsTotal);
+		model.addAttribute("postsTotal", postsTotal);
 		model.addAttribute("posts", posts);
 		model.addAttribute("maxPage", 5);
 		return "board/boardlist";
