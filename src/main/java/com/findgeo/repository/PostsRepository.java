@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -35,5 +36,11 @@ public interface PostsRepository extends JpaRepository<Posts, Long> ,QuerydslPre
 	
 	@Transactional
 	void deleteByEmail(String email);
+
+	int countByBoardid(Long boardid);
+
+	Page<Posts> findByEmailOrderByBoardidDesc(String email, Pageable pageable);
+	
+	int countBy();
 
 }

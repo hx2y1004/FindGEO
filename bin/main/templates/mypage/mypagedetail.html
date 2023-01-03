@@ -1,75 +1,137 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-     xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout1}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout1}">
+
 <head>
-<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
-<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
-<meta charset="UTF-8">
-<title>내가 쓴 게시물 목록</title>
+	<meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
+	<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
+	<meta charset="UTF-8">
+	<title>내가 쓴 게시물 목록</title>
 </head>
 <th:block layout:fragment="css">
 	<style>
-	table{
-	margin: auto; margin-top:20px;
-	width:70%;
-	}
-	#write {
-	width: 1000px;
-	text-align: center;
-	position:absolute;
-	left:50%;
-	top:50%;
-	transform:translate(-50%,-50%);
-	}
-	#index{
-	background-color: lightgray;
-	text-align: center;
-	height: 40px;
-	}
-	td{ 
-	text-align:center;
-	border-bottom: 1px solid gray;
-	}
-	h2{
-	text-align: center;
-	margin-top:20px;
-	}
-	.title:visited {
-	color:purple;
-	}
+		table {
+			margin: auto;
+			margin-top: 20px;
+			width: 70%;
+		}
+
+		#write {
+			width: 1000px;
+			text-align: center;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+		}
+
+		#index {
+			background-color: lightgray;
+			text-align: center;
+			height: 40px;
+		}
+
+		td {
+			text-align: center;
+			border-bottom: 1px solid gray;
+		}
+
+		h2 {
+			text-align: center;
+			margin-top: 20px;
+		}
+
+		.title:visited {
+			color: purple;
+		}
 	</style>
 </th:block>
+
 <body>
-<div layout:fragment="content">
-<div id="table">
-<h2>내가 쓴 글📝</h2>
-<table>
-	  <thead>
-      <tr id="index">
-        <th>글번호</th>
-        <th>제목</th>
-        <th>작성자명</th>      
-        <th>작성일자</th>  
-      </tr>
-      </thead>
-      <br/>
-      
-      <tbody>
-      <tr th:each="my : ${mypostList}">
-        <td th:text="${my.boardid}"></td>
-        <td>
-           <a class="mypage_title" th:href="@{'/members/mypage/info/' + ${my.boardid}}">
-            <span class="title" th:text="${my.boardtitle}"></span>
-         </a>
-      </td>
-        <td th:text="${my.nickname}"></td>
-        <td th:text="${#temporals.format(my.regdate,'yyyy-MM-dd')}"></td>
-      </tr>
-      </tbody>  
-</table>      
- </div>
-</div>
+	<div layout:fragment="content">
+<script th:inline="javascript">
+
+	$(document).ready(function () {
+		$("#searchBtn").on("click", function (e) {
+			e.preventDefault();
+			page(0);
+		});
+	});
+
+	function page(page) {
+		var email = [[${email}]];
+
+		location.href = "/members/mypage/detail/" +email +"/"+ page;
+	}
+
+</script>
+		<div id="table">
+			<h2>내가 쓴 글📝</h2>
+			<table>
+				<thead>
+					<tr id="index">
+						<th>글번호</th>
+						<th>제목</th>
+						<th>작성자명</th>
+						<th>작성일자</th>
+					</tr>
+				</thead>
+				<br />
+
+				<tbody>
+					<tr th:each="my : ${mypostList}">
+						<td th:text="${my.boardid}"></td>
+						<td>
+							<a class="mypage_title" th:href="@{'/post/info/' + ${my.boardid}}">
+								<span class="title" th:text="${my.boardtitle}"></span>
+							</a>
+						</td>
+						<td th:text="${my.nickname}"></td>
+						<td th:text="${#temporals.format(my.regdate,'yyyy-MM-dd')}"></td>
+					</tr>
+				</tbody>
+			</table>
+			
+				<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		
+		<div
+			th:with="start=${(mypostList.number/maxPage)*maxPage + 1}, end=(${(mypostList.totalPages == 0) ? 1 : (start + (maxPage - 1) < mypostList.totalPages ? start + (maxPage - 1) : mypostList.totalPages)})">
+			<ul class="pagination justify-content-center">
+
+				<li class="page-item" th:classappend="${mypostList.first}?'disabled'">
+					<a th:onclick="'javascript:page(' + ${mypostList.number - 1} + ')'" aria-label='Previous'
+						class="page-link">
+						<span aria-hidden='true'>이전</span>
+					</a>
+				</li>
+				<li class="page-item" th:each="page: ${#numbers.sequence(start, end)}"
+					th:classappend="${mypostList.number eq page-1}?'active':''">
+					<a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text"
+						class="page-link">[[${page}]]</a>
+				</li>
+
+				<li class="page-item" th:classappend="${mypostList.last}?'disabled'">
+					<a th:onclick="'javascript:page(' + ${mypostList.number + 1} + ')'" aria-label='Next'
+						class="page-link">
+						<span aria-hidden='true'>다음</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+			
+		</div>
+	</div>
 </body>
+
 </html>

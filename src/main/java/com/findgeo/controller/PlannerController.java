@@ -4,8 +4,6 @@ import java.security.Principal;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -70,6 +68,9 @@ public class PlannerController {
 		System.out.println(emailId);
 		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
 		Page<Planner> planners = plannerService.selectPlannerListPage(emailId, pageable);
+		int plannerTotal = plannerService.countPlanner(emailId);
+		System.out.println(plannerTotal);
+		model.addAttribute("plannerTotal", plannerTotal);
 		model.addAttribute("plannerFormDto", planners);
 		model.addAttribute("maxPage", 5);
 		return "planner/plannerlist";
@@ -77,10 +78,15 @@ public class PlannerController {
 
 	@GetMapping("/view/{plannerid}")
 	public String plannerView(Model model, @PathVariable("plannerid") Long plannerId) {
-		Planner plannerFormDto = plannerService.selectPlanner(plannerId);
-		model.addAttribute("planner", new PlannerFormDto());
-		model.addAttribute("plannerView", plannerFormDto);
-		return "planner/plannerview";
+		int isPlannerExist = plannerService.isPlannerExist(plannerId);
+		if(isPlannerExist == 1) {
+			Planner plannerFormDto = plannerService.selectPlanner(plannerId);
+			model.addAttribute("planner", new PlannerFormDto());
+			model.addAttribute("plannerView", plannerFormDto);
+			return "planner/plannerview";
+		} else {
+			return "redirect:/planner/list";
+		}
 	}
 
 	@GetMapping("/pdf/{plannerid}")

@@ -2,10 +2,11 @@ package com.findgeo.service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,7 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.findgeo.dto.SelectPingDto;
 import com.findgeo.entity.Member;
 import com.findgeo.entity.Posts;
 import com.findgeo.repository.MemberRepository;
@@ -113,6 +113,11 @@ public class MemberService implements UserDetailsService{
 	      List<Posts> mypostList = postRepository.findBymypageSelfemail(email);
 	      return mypostList;
 	   }
+	   
+	//마이페이지 내가 쓴 게시글 페이징처리해서 게시글 불러오기
+	public Page<Posts> selectPostList(String email, Pageable pageable) {
+		return postRepository.findByEmailOrderByBoardidDesc(email,pageable);
+	}
 	
 
 }

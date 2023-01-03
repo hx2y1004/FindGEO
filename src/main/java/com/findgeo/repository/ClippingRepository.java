@@ -34,4 +34,6 @@ public interface ClippingRepository extends JpaRepository<Clipping, String> {
 	@Query("DELETE FROM Clipping c WHERE c.clipid = ?1")
 	Integer delMyClip(@Param("clipid") Long clipid);
 
+	int countByClipid(Long clipid);
+
 }

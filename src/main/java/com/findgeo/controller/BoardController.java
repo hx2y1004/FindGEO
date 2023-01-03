@@ -1,20 +1,16 @@
 package com.findgeo.controller;
 
 import java.security.Principal;
-import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import com.findgeo.service.*;
 import com.findgeo.config.dto.SessionMember;
 import com.findgeo.dto.PostsResponseDto;
@@ -36,6 +32,9 @@ public class BoardController {
 	public String boardlist(postSearchDto postSearchDto, Model model, @PathVariable("page") Optional<Integer> page) {
 		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
 		Page<Posts> posts = postService.ListPage(postSearchDto, pageable);
+		int postsTotal = postService.countPosts();
+		System.out.println(postsTotal);
+		model.addAttribute("postsTotal", postsTotal);
 		model.addAttribute("posts", posts);
 		model.addAttribute("maxPage", 5);
 		return "board/boardlist";
@@ -58,36 +57,42 @@ public class BoardController {
 	@GetMapping("/post/info/{boardid}")
 	public String postsInfo(@PathVariable Long boardid, Model model, Principal principal) {
 		postService.updateView(boardid); // views ++
-		PostsResponseDto dto = postService.findById(boardid);
-		Member member = memberRepository.findByEmail(dto.getEmail());
-
-		String email = member.getEmail();
-
-		// @를 기준으로 문자열을 추출할 것.
-		String sub_email = member.getEmail();
-		// 먼저 @의 인덱스를 찾는다.
-		int idx = sub_email.indexOf("@");
-		// @ 앞 부분을 추출
-		String sub_Email = sub_email.substring(0, idx) + "@******";
-		System.out.println(sub_Email + "@*****이거 해도되냐 썅!!!!!!!??????????");
-		SessionMember mem = (SessionMember) httpSession.getAttribute("user");
-		if (principal != null && mem == null) {
-			Member user = memberRepository.findByEmail(principal.getName());
-			model.addAttribute("member", user);
-		} else if (principal != null && mem != null) {
-			model.addAttribute("member", mem);
-			model.addAttribute("loginInfo", "social");
+		int isPostExist = postService.isPostExist(boardid);
+		if(isPostExist==1) {
+			
+			PostsResponseDto dto = postService.findById(boardid);
+			Member member = memberRepository.findByEmail(dto.getEmail());
+			
+			String email = member.getEmail();
+			
+			// @를 기준으로 문자열을 추출할 것.
+			String sub_email = member.getEmail();
+			// 먼저 @의 인덱스를 찾는다.
+			int idx = sub_email.indexOf("@");
+			// @ 앞 부분을 추출
+			String sub_Email = sub_email.substring(0, idx) + "@******";
+			System.out.println(sub_Email + "@*****이거 해도되냐 썅!!!!!!!??????????");
+			SessionMember mem = (SessionMember) httpSession.getAttribute("user");
+			if (principal != null && mem == null) {
+				Member user = memberRepository.findByEmail(principal.getName());
+				model.addAttribute("member", user);
+			} else if (principal != null && mem != null) {
+				model.addAttribute("member", mem);
+				model.addAttribute("loginInfo", "social");
+			}
+			
+			if (principal.getName().equals(email)) {
+				model.addAttribute("check", true);
+			}
+			System.out.println(principal.getName() + "====");
+			System.out.println(email + "*****");
+			model.addAttribute("posts", dto);
+			model.addAttribute("sub_Email", sub_Email);
+			
+			return "/board/postsInfo";
+		} else {
+			return "redirect:/board/boardlist";
 		}
-
-		if (principal.getName().equals(email)) {
-			model.addAttribute("check", true);
-		}
-		System.out.println(principal.getName() + "====");
-		System.out.println(email + "*****");
-		model.addAttribute("posts", dto);
-		model.addAttribute("sub_Email", sub_Email);
-
-		return "/board/postsInfo";
 	}
 
 	// 수정
