@@ -133,6 +133,9 @@ function commentSave() {
 		var boardid = $('#boardid').val();
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
+		var email = data.email;
+		var c_email = email.split('@');
+		
 		$.ajax({
 			beforeSend: function(xhr) {
 				xhr.setRequestHeader(header, token);
@@ -141,24 +144,23 @@ function commentSave() {
 			url: '/comments/' + boardid
 		}).done(function(data) {
 
-			var html = "<table border = '1'>";
+			var html = "<table>";
 			html += "<tr>";
-			html += "<th>댓글번호</th>";
-			html += "<th>작성자</th>";
-			html += "<th>이메일</th>";
-			html += "<th>댓글내용</th>";
-			html += "<th>추가</th>";
+			html += "<th></th>";
+			html += "<th></th>";
+			html += "<th></th>";
+			html += "<th></th>";
 			html += "</table>";
 
 			$.each(data, function(key, value) {
-				html += "<p id='ch_cmt_cid'>" + value.commentid + "</p>";
-				html += "<p id='login_name'>" + value.nickname + "</p>";
-				html += "<p id='login_email'>" + value.email + "</p>"
-				html += "<p id='cmt_content'>" + value.content + "</p>";
-				html += "<button onClick='clickcommentadd()'>답글</button>";
-				html += "<button>수정</button>";
-				html += "<button onClick='deletecomment(" + value.commentid + ")'>삭제</button>";
-				html += "<div id='commentFromP" + value.commentid + "'></div>";
+				html += "<div style='display: none;'><p id='ch_cmt_cid'>" + value.commentid + "</p></div>";
+					html += "<span id='login_name'>" + value.nickname + "</span>";
+					html += "<span style='display:inline-block;' id='login_email'>" + "\u00A0" + "(" +  c_email[0]+ "@*******" + ")" + "</span>"
+					html += "<p id='cmt_content'>" + "\u00A0" + "💬" + value.content + "</p>";
+					//html += "<button id='c_btn' onClick='clickcommentadd()'>답글</button>";
+					//html += "<button>수정</button>";
+					html += "<button id='c_btn' onClick='deletecomment("+value.commentid+")'>❎</button>";
+					html += "<div id='commentFromP"+value.commentid+"'></div>";
 			});
 
 

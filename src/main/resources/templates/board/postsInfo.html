@@ -21,6 +21,9 @@
 		var boardid = $('#boardid').val();
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
+		var email = $("#login_email").val();
+		var c_email = email.split('@');
+		console.log(c_email[0]);
 		$.ajax({
 			beforeSend : function(xhr) {
 				xhr.setRequestHeader(header, token);
@@ -38,24 +41,23 @@
 				$("#comments").empty();
 				$("#comments").append(html);
 			} else {
-				var html = "<table border = '1'>";
+				var html = "<table>";
 				html += "<tr>";
-				html += "<th>댓글번호</th>";
-				html += "<th>작성자</th>";
-				html += "<th>이메일</th>";
-				html += "<th>댓글내용</th>";
-				html += "<th>추가</th>";
+				html += "<th></th>";
+				html += "<th></th>";
+				html += "<th></th>";
+				html += "<th></th>";
 				html += "</table>";
 
 				$.each(data, function(key, value) {
-					html += "<p id='ch_cmt_cid'>" + value.commentid + "</p>";
-					html += "<p id='login_name'>" + value.nickname + "</p>";
-					html += "<p id='login_email'>" + value.email + "</p>"
-					html += "<p id='cmt_content'>" + value.content + "</p>";
-					html += "<button onClick='clickcommentadd()'>답글</button>";
-					html += "<button>수정</button>";
-					html += "<button onClick='deletecomment("+value.commentid+")'>삭제</button>";
-					html += "<div id='commentFromP"+value.commentid+"'></div>";
+					html += "<div style='display: none;'><p id='ch_cmt_cid'>" + value.commentid + "</p></div>";
+					html += "<span id='login_name'>" + value.nickname + "</span>";
+					html += "<span style='display:inline-block;' id='login_email'>" + "(" + c_email[0]+ "@*******" + ")" + "</span>"
+					html += "<p id='cmt_content'>" + "\u00A0" + "💬" + value.content + "</p>";
+					//html += "<button id='c_btn' onClick='clickcommentadd()'>답글</button>";
+					//html += "<button>수정</button>";
+					html += "<button id='c_btn' onClick='deletecomment("+value.commentid+")'>❎</button>";
+					html += "<div id='commentFromP"+ value.commentid+"'></div>";
 				});
 				$("#comments").empty();
 				$("#comments").append(html);
@@ -91,7 +93,7 @@
 	word-wrap: break-word;
 }
 
-#list, #edit, #btn-delete {
+#list, #edit, #btn-delete,#card-footer {
 	border: 2px solid #4caf50;
 	border-radius: 5px;
 	float: right;
@@ -135,6 +137,48 @@ label {
 	color: gray;
 	font-size: 16px;
 }
+#login_name{
+font-weight: bold;
+color:hotpink;
+font-size: 20px;
+margin: 5px;
+
+}
+
+#c_btn{
+border: none;
+border-radius: 5px;
+background-color: transparent;
+float : right;
+}
+#card-footer{
+border: 1px solid #607d8b;
+border-radius: 5px;
+width: 100px;
+}
+
+#login_email{
+font-size: 13px;
+margin-top: 30px;
+font-size: 15px;
+}
+#c_btn{
+margin-bottom: 20px;
+}
+#c_btn:focus{
+outline: none;
+}
+#cmt_content{
+margin-left: 15px;
+font-size: 16px;
+}
+
+#comments{
+background-color: #fafafa;
+}
+
+
+
 </style>
 </th:block>
 
@@ -183,7 +227,7 @@ label {
 					<textarea class="form-control" id="cmt_content" rows="1"></textarea>
 				</div>
 				<div class="card-footer">
-					<button onClick="commentSave()">등록</button>
+					<button id="card-footer" onClick="commentSave()">등록</button>
 				</div>
 			</div>
 			<br />
@@ -191,9 +235,9 @@ label {
 				<ul id="comment--box" class="list-group">
 					<li id="comment--1"
 						class="list-goup-item d-flex justify-content-between">
-						<div id="comments">댓글</div>
 					</li>
 				</ul>
+						<div id="comments">댓글</div>
 			</div>
 			<br /> <br />
 		</div>

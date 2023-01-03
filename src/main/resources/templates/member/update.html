@@ -10,51 +10,51 @@
 </head>
 <th:block layout:fragment="css">
 	<style>
-		#edit {
-			border: 2px solid #4caf50;
-			border-radius: 5px;
-			width: 100px;
-			font-size: 15px;
-		}
+#edit {
+	border: 2px solid #4caf50;
+	border-radius: 5px;
+	width: 100px;
+	font-size: 15px;
+}
 
-		#email,
-		#nickname,
-		#password_2,
-		#phone {
-			border: 1px solid gray;
-			border-radius: 5px;
-			height: 25px;
-			width: 400px;
-		}
+#email, #nickname, #password_2, #phone, #password_1 {
+    border: 2px solid olive;
+	border-radius: 5px;
+	height: 30px;
+	width: 440px;
+	margin-bottom: 5px;
+}
 
-		#password_1 {
-			border: 1px solid gray;
-			border-radius: 5px;
-			height: 25px;
-			width: 440px;
-		}
+form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: #fffde7;
+	margin-top: 10%;
+	margin-left: 20%;
+	margin-right: 20%;
+	padding: 10px;
+}
 
-		form {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			background-color: #fffde7;
-			margin-top: 10%;
-			margin-left: 20%;
-			margin-right: 20%;
-			padding: 10px;
-		}
+#preview-image {
+	border-radius: 70%;
+	transform: translate(130%);
+}
 
-		#preview-image {
-			border-radius: 70%;
-			transform: translate(130%);
-		}
+#picture {
+	transform: translate(20%);
+	margin-bottom: 5%;
+}
 
-		#picture {
-			transform: translate(20%);
-			margin-bottom: 5%;
-		}
-	</style>
+#update {
+	width: 400px;
+	margin: auto;
+}
+
+label {
+	margin-bottom: 0;
+}
+</style>
 </th:block>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -121,35 +121,35 @@
 	<div layout:fragment="content">
 		<form action="/members/update3" method="post" name="updateForm" enctype="multipart/form-data"
 			th:onsubmit="return validateForm(this);">
-			<h2>회원정보 수정</h2>
-			<div>
+			<h2>회원정보 수정🎈</h2>
+			<div id="update">
 				<img style="width: 100px; height: 100px;" id="preview-image" th:src="@{ ${name.picture} }" />
 				<input type="hidden" name="picture" th:value=${name.picture} />
 				<input style="display: block;" type="file" id="picture" name="file" onchange="readImage(this)"
 					accept="image/png, image/jpg, image/jpeg">
 			</div>
-			<div>
+			<div id="update">
 				<label th:for="email">이메일</label>
 				<input type="email" th:value="${name.email}" name="email" id="email" readonly
 					style="background: lightgray;">
 			</div>
-			<div>
+			<div id="update">
 				<label th:for="nickname">닉네임</label>
 				<input type="text" id="nickname" th:value="${name.nickname}" name="nickname"
 					placeholder="닉네임을 입력해주세요."><br>
 			</div>
-			<div>
+			<div id="update">
 				<label th:for="password">비밀번호</label>
 				<input type="password" id="password_1" name="password"
 					placeholder="영문+숫자+특수문자를 혼합하여 8자 이상으로 입력해주세요."><br>
 			</div>
-			<div>
+			<div id="update">
 				<label th:for="password2">비밀번호 확인</label>
 				<input type="password" placeholder="비밀번호를 다시 입력해주세요." id="password_2" name="password2">
 			</div>
 			<font id="checkPw" size="2"></font>
 			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-			<div>
+			<div id="update">
 				<label th:for="phone">전화번호</label>
 				<input type="text" th:value="${name.phone}" name="phone" id="phone" placeholder="전화번호를 입력해주세요."><br>
 			</div>
