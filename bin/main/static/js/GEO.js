@@ -249,7 +249,13 @@ window.initMap = function() {
 
 									map2.setCenter(results[0].geometry.location);
 									mymark.setPosition(results[0].geometry.location);
+									console.log(JSON.stringify(results[0].geometry) + "검색");
+									var resLocation = JSON.stringify(results[0].geometry.location);
+									mymark.setAnimation(google.maps.Animation.DROP);
+									selLats = JSON.parse(resLocation).lat;
+									selLngs = JSON.parse(resLocation).lng;
 									mymark.setMap(map2);
+
 									return results;
 								})
 								.catch((e) => {
@@ -427,9 +433,7 @@ window.initMap = function() {
 											}
 
 										})
-										.catch(
-											//err => console.error(err)
-											alert("해당 장소가 없습니다.")
+										.catch((err) => { alert("해당 장소가 없습니다."); }
 										);
 								}
 							} else {
