@@ -2,9 +2,13 @@ package com.findgeo.controller;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -131,41 +135,28 @@ public class MemberController {
     }
     
     //마이페이지 내가 쓴 게시글 리스트로 불러오기
-    @GetMapping("/mypage/detail/{email}")
-    public String myContents(Model model, @PathVariable String email) {
-       System.out.println(email+"여기는 마이페이지 내가 쓴 글 게시글 불러오기 위함.");
-       List<Posts> mypostList = memberService.selpostList(email);
+    @GetMapping(value={"/mypage/detail/{email}","/mypage/detail/{email}/{page}"})
+    public String myContents(Principal principal, Model model, @PathVariable String email, @PathVariable("page") Optional<Integer> page) {
+       
+       Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
+       Page<Posts> mypostList = memberService.selectPostList(email, pageable);
+       //List<Posts> mypostList = memberService.selpostList(email);
+       SessionMember member = (SessionMember) httpSession.getAttribute("user");
+		String emailId = "";
+		if (principal != null && member == null) {
+			emailId = principal.getName();
+		} else if (principal != null && member != null) {
+			emailId = member.getEmail();
+		} else {
+			model.addAttribute("message", "다시 로그인 해주세요");
+			return "redirect:/";
+		}
+       model.addAttribute("email", emailId);
        model.addAttribute("mypostList",mypostList);
-       System.out.println(mypostList+"여기는 멤버컨틍롤러 지금 실헝중");
-       System.out.println("움머ㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓ");
+       model.addAttribute("maxPage", 5);
+       
        return "mypage/mypagedetail";
     }
-    
-    //마이페이지에서 내가 쓴 게시글 상세 조회
-    @GetMapping("/mypage/info/{boardid}")
-    public String mypageInfo(@PathVariable Long boardid, Model model,Principal principal) {
-       
-       PostsResponseDto dto = postService.findById(boardid);
-       Member member = memberRepository.findByEmail(dto.getEmail());
-       
-       String email = member.getEmail();
-       
-       if(principal.getName().equals(email)) {
-         model.addAttribute("check",true);
-      }
-       System.out.println(principal.getName()+"====");
-      System.out.println(email+"*****");
-      model.addAttribute("mypageinfo",dto);      
-      System.out.println(dto.getBoardcontent()+"내가쓴게시글만 보는데 여기서 상세보기가 도니ㅡㄴ지 타는거 연습 여기는 멤버컨트롤러");
-      
-      return "mypage/mypageInfo";
-    }
-    
-    
-    
-    
-    
-    
     
     //수정화면 요청
     //내가 로그인한 거에서 내가 수정하는 것이기 때문에 세션값을 사용하는 것이다.

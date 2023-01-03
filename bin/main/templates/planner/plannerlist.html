@@ -120,6 +120,42 @@ margin-left: 55%;
 				</tr>
 			</tbody>
 		</table>
+			<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<div
+			th:with="start=${(plannerFormDto.number/maxPage)*maxPage + 1}, end=(${(plannerFormDto.totalPages == 0) ? 1 : (start + (maxPage - 1) < plannerFormDto.totalPages ? start + (maxPage - 1) : plannerFormDto.totalPages)})">
+			<ul class="pagination justify-content-center">
+
+				<li class="page-item" th:classappend="${plannerFormDto.first}?'disabled'">
+					<a th:onclick="'javascript:page(' + ${plannerFormDto.number - 1} + ')'" aria-label='Previous'
+						class="page-link">
+						<span aria-hidden='true'>이전</span>
+					</a>
+				</li>
+				<li class="page-item" th:each="page: ${#numbers.sequence(start, end)}"
+					th:classappend="${plannerFormDto.number eq page-1}?'active':''">
+					<a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text"
+						class="page-link">[[${page}]]</a>
+				</li>
+
+				<li class="page-item" th:classappend="${plannerFormDto.last}?'disabled'">
+					<a th:onclick="'javascript:page(' + ${plannerFormDto.number + 1} + ')'" aria-label='Next'
+						class="page-link">
+						<span aria-hidden='true'>다음</span>
+					</a>
+				</li>
+			</ul>
+		</div>
 		
 		<div id="post">
 			<span class="posting" sec:authorize="isAuthenticated()">
