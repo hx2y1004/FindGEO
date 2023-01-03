@@ -1,141 +1,141 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layouts/layout1}">
+   xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+   layout:decorate="~{layouts/layout1}">
 
 <head>
 <meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
 <meta id="_csrf_header" name="_csrf_header"
-	th:content="${_csrf.headerName}" />
+   th:content="${_csrf.headerName}" />
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script th:inline="javascript" th:src="@{/js/board.js}"></script>
 <script th:inline="javascript">
-	/*<![CDATA[*/
-	const comment = /*[[${comment}]]*/
-	console.log(comment);
-	/*]]>*/
+   /*<![CDATA[*/
+   const comment = /*[[${comment}]]*/
+   console.log(comment);
+   /*]]>*/
 
-	$(document).ready(function() {
-		var boardid = $('#boardid').val();
-		var token = $("meta[name='_csrf']").attr("content");
-		var header = $("meta[name='_csrf_header']").attr("content");
-		var email = $("#login_email").val();
-		var c_email = email.split('@');
-		console.log(c_email[0]);
-		$.ajax({
-			beforeSend : function(xhr) {
-				xhr.setRequestHeader(header, token);
-			},
-			dataType : 'json',
-			url : '/comments/' + boardid
-		}).done(function(data) {
-			console.log(data);
-			if (data.length === 0) {
-				var html = "<table border = '1'>";
-				html += "<tr>";
-				html += "<p>댓글이 없습니다.</p>";
-				html += "</tr>";
-				html += "</table>";
-				$("#comments").empty();
-				$("#comments").append(html);
-			} else {
-				var html = "<table>";
-				html += "<tr>";
-				html += "<th></th>";
-				html += "<th></th>";
-				html += "<th></th>";
-				html += "<th></th>";
-				html += "</table>";
+   $(document).ready(function() {
+      var boardid = $('#boardid').val();
+      var token = $("meta[name='_csrf']").attr("content");
+      var header = $("meta[name='_csrf_header']").attr("content");
+      var email = $("#login_email").val();
+      var c_email = email.split('@');
+      console.log(c_email[0]);
+      $.ajax({
+         beforeSend : function(xhr) {
+            xhr.setRequestHeader(header, token);
+         },
+         dataType : 'json',
+         url : '/comments/' + boardid
+      }).done(function(data) {
+         console.log(data);
+         if (data.length === 0) {
+            var html = "<table border = '1'>";
+            html += "<tr>";
+            html += "<p>댓글이 없습니다.</p>";
+            html += "</tr>";
+            html += "</table>";
+            $("#comments").empty();
+            $("#comments").append(html);
+         } else {
+            var html = "<table>";
+            html += "<tr>";
+            html += "<th></th>";
+            html += "<th></th>";
+            html += "<th></th>";
+            html += "<th></th>";
+            html += "</table>";
 
-				$.each(data, function(key, value) {
-					html += "<div style='display: none;'><p id='ch_cmt_cid'>" + value.commentid + "</p></div>";
-					html += "<span id='login_name'>" + value.nickname + "</span>";
-					html += "<span style='display:inline-block;' id='login_email'>" + "(" + c_email[0]+ "@*******" + ")" + "</span>"
-					html += "<p id='cmt_content'>" + "\u00A0" + "💬" + value.content + "</p>";
-					//html += "<button id='c_btn' onClick='clickcommentadd()'>답글</button>";
-					//html += "<button>수정</button>";
-					html += "<button id='c_btn' onClick='deletecomment("+value.commentid+")'>❎</button>";
-					html += "<div id='commentFromP"+ value.commentid+"'></div>";
-				});
-				$("#comments").empty();
-				$("#comments").append(html);
-			}
+            $.each(data, function(key, value) {
+               html += "<div style='display: none;'><p id='ch_cmt_cid'>" + value.commentid + "</p></div>";
+               html += "<span id='login_name'>" + value.nickname + "</span>";
+               html += "<span style='display:inline-block;' id='login_email'>" + "(" + c_email[0]+ "@*******" + ")" + "</span>"
+               html += "<p id='cmt_content'>" + "\u00A0" + "💬" + value.content + "</p>";
+               //html += "<button id='c_btn' onClick='clickcommentadd()'>답글</button>";
+               //html += "<button>수정</button>";
+               html += "<button id='c_btn' onClick='deletecomment("+value.commentid+")'>❎</button>";
+               html += "<div id='commentFromP"+ value.commentid+"'></div>";
+            });
+            $("#comments").empty();
+            $("#comments").append(html);
+         }
 
-		}).fail(function(e) {
-			alert("불러오기 에러");
-		})
-	});
+      }).fail(function(e) {
+         alert("불러오기 에러");
+      })
+   });
 </script>
 <title>게시물 상세보기</title>
 </head>
 <th:block layout:fragment="css">
-	<style>
+   <style>
 #boardid {
-	border-style: none;
+   border-style: none;
 }
 
 #posting {
-	position: absolute;
-	left: 50%;
-	transform: translate(-60%, 3%);
+   width:50%;
+   margin:auto;
 }
 
 #content {
-	border-style: none;
-	width: max-content;
-	height: 30%;
-	border-radius: 5px;
-	font-size: 20px;
-	max-width: 600px;
-	white-space: pre-wrap;
-	word-wrap: break-word;
+   border-style: none;
+   width: max-content;
+   height: 30%;
+   border-radius: 5px;
+   font-size: 20px;
+   max-width: 600px;
+   white-space: pre-wrap;
+   word-wrap: break-word;
 }
 
 #list, #edit, #btn-delete,#card-footer {
-	border: 2px solid #4caf50;
-	border-radius: 5px;
-	float: right;
-	color: black;
-	background-color: #f0f0f0;
-	text-decoration: none;
-	margin: 3px;
-	font-size: 17px;
-	padding: 2px;
-	width: 100px;
-	height: 30px;
-	text-align: center;
+   border: 2px solid #4caf50;
+   border-radius: 5px;
+   float: right;
+   color: black;
+   background-color: #f0f0f0;
+   text-decoration: none;
+   margin: 3px;
+   font-size: 17px;
+   padding: 2px;
+   width: 100px;
+   height: 30px;
+   text-align: center;
 }
 
 label {
-	margin-bottom: -5px;
-	margin-top: 5px;
+   margin-bottom: -5px;
+   margin-top: 5px;
 }
 
 #author {
-	background-color: lightgray;
-	font-size: 13px;
-	font-weight: bold;
-	border: none;
+   background-color: lightgray;
+   font-size: 13px;
+   font-weight: bold;
+   border: none;
 }
 
 .author {
-	font-size: 14px;
+   font-size: 14px;
 }
 
 #title {
-	margin-bottom: 5px;
-	font-size: 25px;
+   margin-bottom: 5px;
+   font-size: 25px;
 }
 
 .title {
-	font-size: 17px;
+   font-size: 17px;
 }
 
 .num, #boardid {
-	color: gray;
-	font-size: 16px;
+   color: gray;
+   font-size: 16px;
+   margin-top: 20px;
 }
 #login_name{
 font-weight: bold;
@@ -183,65 +183,65 @@ background-color: #fafafa;
 </th:block>
 
 <body>
-	<div layout:fragment="content">
-		<div id="posting">
-			<form>
-				<div class="num">
-					<label>글번호</label> <input type="text" id="boardid" name="boardid"
-						th:value="${posts.boardid}" readonly> <label>작성일 </label>
-					<span th:text="${#temporals.format(posts.regdate,'yyyy-MM-dd')}"></span>
-					<label>조회수</label> <span th:text="${posts.views}"></span>
-				</div>
-				<hr>
-				<div>
-					<label class="author">작성자</label> <input type="text" id="author"
-						th:value="|${posts.nickname} (${sub_Email} ) |" readonly>
-				</div>
-				<label class="title" for="title" style="display: block;">제목</label>
-				<p id="title">[[${posts.boardtitle}]]</p>
-				<hr>
-				<div>
-					<label for="content" style="display: block;"></label>
-					<p id="content">[[${posts.boardcontent}]]</p>
-				</div>
-				<hr>
-				<div>
-					<label for="FILE" style="display: block;"></label>
-					<p th:if="${posts.fileinput !='/images/'}">
-						<img class="fileimg" th:src="${posts.fileinput}" width="auto"
-							height="auto">
-					</p>
-				</div>
-			</form>
-			<span sec:authorize="isAuthenticated()"> <span
-				th:if="${check}"> <a href="#" id="btn-delete"
-					onclick="postDelete()">삭제</a> <a id="edit"
-					th:href="@{/post/update/{boardid}(boardid = ${posts.boardid})}">수정</a>
-			</span>
-			</span> <a id="list" href="/board/boardlist">목록</a> <br /> <br />
-			<div class="card">
-				<input type="hidden" name="login_name" id="login_name"
-					th:value="${member.nickname}" /> <input type="hidden"
-					name="login_email" id="login_email" th:value="${member.email}" />
-				<div class="card-body">
-					<textarea class="form-control" id="cmt_content" rows="1"></textarea>
-				</div>
-				<div class="card-footer">
-					<button id="card-footer" onClick="commentSave()">등록</button>
-				</div>
-			</div>
-			<br />
-			<div class="card">
-				<ul id="comment--box" class="list-group">
-					<li id="comment--1"
-						class="list-goup-item d-flex justify-content-between">
-					</li>
-				</ul>
-						<div id="comments">댓글</div>
-			</div>
-			<br /> <br />
-		</div>
-	</div>
+   <div layout:fragment="content">
+      <div id="posting">
+         <form>
+            <div class="num">
+               <label>글번호</label> <input type="text" id="boardid" name="boardid"
+                  th:value="${posts.boardid}" readonly> <label>작성일 </label>
+               <span th:text="${#temporals.format(posts.regdate,'yyyy-MM-dd')}"></span>
+               <label>조회수</label> <span th:text="${posts.views}"></span>
+            </div>
+            <hr>
+            <div>
+               <label class="author">작성자</label> <input type="text" id="author"
+                  th:value="|${posts.nickname} (${sub_Email} ) |" readonly>
+            </div>
+            <label class="title" for="title" style="display: block;">제목</label>
+            <p id="title">[[${posts.boardtitle}]]</p>
+            <hr>
+            <div>
+               <label for="content" style="display: block;"></label>
+               <p id="content">[[${posts.boardcontent}]]</p>
+            </div>
+            <hr>
+            <div>
+               <label for="FILE" style="display: block;"></label>
+               <p th:if="${posts.fileinput !='/images/'}">
+                  <img class="fileimg" th:src="${posts.fileinput}" width="auto"
+                     height="auto">
+               </p>
+            </div>
+         </form>
+         <span sec:authorize="isAuthenticated()"> <span
+            th:if="${check}"> <a href="#" id="btn-delete"
+               onclick="postDelete()">삭제</a> <a id="edit"
+               th:href="@{/post/update/{boardid}(boardid = ${posts.boardid})}">수정</a>
+         </span>
+         </span> <a id="list" href="/board/boardlist">목록</a> <br /> <br />
+         <div class="card">
+            <input type="hidden" name="login_name" id="login_name"
+               th:value="${member.nickname}" /> <input type="hidden"
+               name="login_email" id="login_email" th:value="${member.email}" />
+            <div class="card-body">
+               <textarea class="form-control" id="cmt_content" rows="1"></textarea>
+            </div>
+            <div class="card-footer">
+               <button id="card-footer" onClick="commentSave()">등록</button>
+            </div>
+         </div>
+         <br />
+         <div class="card">
+            <ul id="comment--box" class="list-group">
+               <li id="comment--1"
+                  class="list-goup-item d-flex justify-content-between">
+               </li>
+            </ul>
+                  <div id="comments">댓글</div>
+         </div>
+         <br /> <br />
+      </div>
+   </div>
 </body>
 
 </html>

@@ -262,7 +262,6 @@ window.initMap = function() {
 									alert("정확한 주소를 입력해주세요. : " + e);
 								})
 						}
-
 						map2.addListener("rightclick", (e) => {
 							var latlng = {
 								lat: e.latLng.lat(),
@@ -270,7 +269,7 @@ window.initMap = function() {
 							}
 							selLats = latlng.lat;
 							selLngs = latlng.lng;
-							selectlat = selLats;
+							selectlat = selLats;     
 							selectlng = selLngs;
 							clear();
 							mymark = new google.maps.Marker({
@@ -312,7 +311,9 @@ window.initMap = function() {
 						clearButton.addEventListener("click", () => {
 							mymark.setMap(null);
 						})
-
+						
+						
+						
 						$('#foodSelc').click(function() {
 							if (typeof selLats != "undefined" || typeof selLngs != "undefined") {
 								var foodsel = document.getElementById('foodData');
