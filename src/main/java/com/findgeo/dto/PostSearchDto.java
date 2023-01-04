@@ -5,6 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class postSearchDto {
+public class PostSearchDto {
 	private String searchQuery="";
 }

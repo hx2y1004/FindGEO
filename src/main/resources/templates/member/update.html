@@ -4,7 +4,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>회원정보수정</title>
+	<title>개인정보수정</title>
 	<meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
 	<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
 </head>
@@ -121,7 +121,7 @@ label {
 	<div layout:fragment="content">
 		<form action="/members/update3" method="post" name="updateForm" enctype="multipart/form-data"
 			th:onsubmit="return validateForm(this);">
-			<h2>회원정보 수정🎈</h2>
+			<h2>개인정보 수정🎈</h2>
 			<div id="update">
 				<img style="width: 100px; height: 100px;" id="preview-image" th:src="@{ ${name.picture} }" />
 				<input type="hidden" name="picture" th:value=${name.picture} />

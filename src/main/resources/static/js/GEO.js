@@ -730,7 +730,7 @@ window.initMap = function() {
 													icon = new google.maps.MarkerImage("/images/공원.png", null, null, null, new google.maps.Size(35, 35));
 													break;
 												case "문화시설":
-													icon = new google.maps.MarkerImage("/images/지하철.png", null, null, null, new google.maps.Size(35, 35));
+													icon = new google.maps.MarkerImage("/images/문화시설.png", null, null, null, new google.maps.Size(35, 35));
 													break;
 											};
 											for (var i = 0; i < poiInfo.length; i++) {

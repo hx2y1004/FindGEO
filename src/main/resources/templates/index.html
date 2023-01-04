@@ -15,22 +15,18 @@
 	<script th:inline="javascript" th:src="@{/js/GEO.js}"></script>
 	<script defer
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABlqSxHcQF3ZT1Uyc2cEcidYHAOLhHfNY&callback=initMap"></script>
-	<style>
-		#help {
-			background-color: #fff;
-			transition: 0.5s;
-		}
-
-		#help:hover {
-			background-color: #77af9c;
-		}
-
-		#guide {
-			height: 90%;
-			width: 95%;
-			position: relative;
-			justify-content: center;
-		}
+	<style>   	
+						
+		#help,h2{display:inline-block;}
+		#icon,#exp{display:inline-block;}
+		#box{border: 1px solid;
+    	     
+    	     background-color: #f5f5f5;
+    		
+    		 border-radius:5px;
+    		 
+        }
+        
 	</style>
 </head>
 <th:block layout:fragment="css">
@@ -51,9 +47,105 @@
 					<div class="close-area">X</div>
 					<br />
 					<div style="clear: both;">
-						<div class="title" style="display: block;">
+						<div id="title" style="display: block;">
 							<h2>근처 상권 정보</h2>
+							<img src="/images/help.png" id="help">
 						</div>
+						
+						<div id="box">
+						<img src="/images/한식.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 한식</div>
+						<img src="/images/중식.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 중식</div>
+						<img src="/images/일식.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 일식</div>
+						<img src="/images/카페.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 카페</div>
+						<img src="/images/패밀리레스토랑.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 패밀리레스토랑</div>
+						<img src="/images/전문음식점.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 전문음식점</div>
+						<img src="/images/피자.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 피자</div>
+						<img src="/images/치킨.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 치킨</div>
+						<img src="/images/디저트.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 디저트</div>
+						<img src="/images/제과점.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 제과점</div><br/>
+						<img src="/images/패스트푸드.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 패스트푸드</div><br/>
+						<img src="/images/목욕탕.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 목욕탕</div>
+						<img src="/images/미용실.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 미용실</div>
+						<img src="/images/이발소.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 이발소</div>
+						<img src="/images/호텔.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 호텔</div>
+						<img src="/images/병원.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 병원</div>
+						<img src="/images/약국.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 약국</div>
+						<img src="/images/치과.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 치과</div>
+						<img src="/images/보건소.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 보건소</div>
+						<img src="/images/한의원.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 한의원</div>
+						<img src="/images/영화관.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 영화관</div>
+						<img src="/images/노래방.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 노래방</div><br/>
+						<img src="/images/PC방.png" width="30px" height="30px" id="icon">
+						<div id="exp">: PC방</div>
+						<img src="/images/스크린골프.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 스크린골프장</div>
+						<img src="/images/BANK.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 은행</div>
+						<img src="/images/정비소.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 정비소</div><br/>
+						<img src="/images/쇼핑.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 쇼핑</div>
+						<img src="/images/편의점.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 편의점</div>
+						<img src="/images/대형마트.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 대형마트</div>
+						<img src="/images/마트.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 마트</div><br/>
+						<img src="/images/bus_icon.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 버스정류장</div>
+						<img src="/images/지하철.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 지하철</div>
+						<img src="/images/주유소.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 주유소</div>
+						<img src="/images/charge_icon.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 충전소</div>
+						<img src="/images/주차장.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 주차장</div>
+						<img src="/images/EV 충전소.png" width="30px" height="30px" id="icon">
+						<div id="exp">: EV충전소</div>
+						<img src="/images/ev_charger_icon.png" width="30px" height="30px" id="icon">
+						<div id="exp">: EV/가스충전소</div><br/>
+						<img src="/images/관공서.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 관공서</div>
+						<img src="/images/주요시설물.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 주요시설물</div>
+						<img src="/images/ATM.png" width="30px" height="30px" id="icon">
+						<div id="exp">: ATM</div>
+						<img src="/images/화장실.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 화장실</div>
+						<img src="/images/공원.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 공원</div>
+						<img src="/images/공연장.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 공연장</div>
+						<img src="/images/문화시설.png" width="30px" height="30px" id="icon">
+						<div id="exp">: 문화시설</div></div>
+						
+						
+						
+						
+						
 						<div>
 							<div id="map2" style="height: 600px; width: 70%; float: left; margin: 15px;"></div>
 							<div id="selec" style="margin: 15px; padding: 15px; display: block;">
@@ -112,13 +204,13 @@
 					<div id="modaldata" style="clear: both;">
 						<hr width="100%" color="black" size="3">
 						<div class="title">
-							<h2>실시간 데이터</h2>
+							<h2>실시간 유동인구 데이터</h2>
 						</div>
 						<div class="content" style="display: block;">
 							<h3 style="display: inline-block;">지역명:</h3>
 							<h3 id="areaName" style="display: inline-block;">지역이름</h3>
 							<br />
-							<h4 style="display: inline-block;">혼잡정도:</h4>
+							<h4 style="display: inline-block;">유동인구 혼잡정도:</h4>
 							<h4 id="areaCongest" style="display: inline-block;">혼잡정도</h4>
 							<br /> <br />
 							<p>연령별 인구 비율</p>

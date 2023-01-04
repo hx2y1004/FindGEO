@@ -41,12 +41,13 @@ public class IndexController {
 	@GetMapping("/")
 	public String index(Model model, Principal principal) {
 		SessionMember member = (SessionMember) httpSession.getAttribute("user");
+		
 
 		String[] foodData = { "음식점", "한식", "중식", "일식", "카페", "패밀리레스토랑", "전문음식점", "피자", "치킨", "디저트", "제과점", "패스트푸드" };
 		String[] serviceData = { "서비스업", "목욕탕", "미용실", "이발소", "호텔", "병원", "약국", "치과", "보건소", "한의원", "영화관", "노래방", "PC방",
 				"스크린골프장", "은행", "정비소" };
 		String[] retailData = { "도/소매업", "쇼핑", "편의점", "대형마트", "마트" };
-		String[] trafficData = { "교통정보", "버스정류장", "지하철", "주유소", "충전소", "주차장", "EV충전소", "EV/가스충전소" };
+		String[] trafficData = { "교통정보", "버스정류장", "지하철", "주유소", "충전소", "주차장", "EV충전소", "가스충전소" };
 		String[] areaData = { "지역정보", "관공서", "주요시설물", "ATM", "화장실", "공원", "공연장", "문화시설" };
 		List<AreaDataDto> serviceDataList = new ArrayList<>();
 		for (int i = 0; i < serviceData.length; i++) {
