@@ -8,7 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
-import com.findgeo.dto.postSearchDto;
+import com.findgeo.dto.PostSearchDto;
 import com.findgeo.entity.Posts;
 import com.findgeo.entity.QPosts;
 import com.querydsl.core.types.dsl.Wildcard;
@@ -22,7 +22,7 @@ public class PostsRepositoryImpl implements PostsRepositoryCustom {
 	}
 	
 	@Override
-	public Page<Posts> getPostPage(postSearchDto postSearchDto, Pageable pageable) {
+	public Page<Posts> getPostPage(PostSearchDto postSearchDto, Pageable pageable) {
 		
 		List<Posts> content = queryFactory
                 .selectFrom(QPosts.posts)

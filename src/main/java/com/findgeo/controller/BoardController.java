@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.findgeo.service.*;
 import com.findgeo.config.dto.SessionMember;
 import com.findgeo.dto.PostsResponseDto;
-import com.findgeo.dto.postSearchDto;
+import com.findgeo.dto.PostSearchDto;
 import com.findgeo.entity.Member;
 import com.findgeo.entity.Posts;
 import com.findgeo.repository.MemberRepository;
@@ -29,7 +29,7 @@ public class BoardController {
 	private final MemberRepository memberRepository;
 
 	@GetMapping(value = { "/board/boardlist", "/board/boardlist/{page}" })
-	public String boardlist(postSearchDto postSearchDto, Model model, @PathVariable("page") Optional<Integer> page) {
+	public String boardlist(PostSearchDto postSearchDto, Model model, @PathVariable("page") Optional<Integer> page) {
 		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
 		Page<Posts> posts = postService.ListPage(postSearchDto, pageable);
 		int postsTotal = postService.countPosts();

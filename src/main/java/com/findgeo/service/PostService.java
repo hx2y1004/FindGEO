@@ -1,22 +1,18 @@
 package com.findgeo.service;
 
-import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
+
+import com.findgeo.dto.PostSearchDto;
 import com.findgeo.dto.PostsResponseDto;
 import com.findgeo.dto.PostsSaveRequestDto;
 import com.findgeo.entity.Posts;
 import com.findgeo.repository.PostsRepository;
 
 import com.findgeo.dto.PostsUpdateRequestDto;
-import com.findgeo.dto.postSearchDto;
-
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -30,7 +26,7 @@ public class PostService {
 	}
 	
 	@Transactional
-	public Page<Posts> ListPage(postSearchDto postSearchDto , Pageable pageable){
+	public Page<Posts> ListPage(PostSearchDto postSearchDto , Pageable pageable){
 //		int page = 0;
 //		if (pageable.getPageNumber() != 0) { // if (2 != 0)
 //			page = pageable.getPageNumber(); // page = 2 - 1
@@ -81,13 +77,6 @@ public class PostService {
 		return postsRepository.countBy();
 	}
 
-//	// 사용자가 검색창에 입력한 값 제목 검색
-//	@Transactional
-//	public List<Posts> search(String keyword, @PageableDefault(size = 10, sort = "boardid", direction = Sort.Direction.DESC) Pageable pageable) {
-//		List<Posts> postsList = postsRepository.findByBoardtitleContaining(keyword, pageable);
-//		return postsList;
-//	}
-	
 
 
 }

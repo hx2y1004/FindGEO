@@ -54,8 +54,6 @@
 					html += "<span id='login_name'>" + value.nickname + "</span>";
 					html += "<span style='display:inline-block;' id='login_email'>" + "(" + c_email[0]+ "@*******" + ")" + "</span>"
 					html += "<p id='cmt_content'>" + "\u00A0" + "💬" + value.content + "</p>";
-					//html += "<button id='c_btn' onClick='clickcommentadd()'>답글</button>";
-					//html += "<button>수정</button>";
 					html += "<button id='c_btn' onClick='deletecomment("+value.commentid+")'>❎</button>";
 					html += "<div id='commentFromP"+ value.commentid+"'></div>";
 				});
