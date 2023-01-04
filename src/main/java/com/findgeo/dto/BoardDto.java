@@ -23,7 +23,6 @@ public class BoardDto {
 	private String nickname;
 	private LocalDateTime regdate;
 	private int views;
-	private String fileinput;
 	private String email;
 
 }

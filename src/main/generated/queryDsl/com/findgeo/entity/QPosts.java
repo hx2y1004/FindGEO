@@ -27,8 +27,6 @@ public class QPosts extends EntityPathBase<Posts> {
 
     public final StringPath email = createString("email");
 
-    public final StringPath fileinput = createString("fileinput");
-
     public final StringPath nickname = createString("nickname");
 
     public final DateTimePath<java.time.LocalDateTime> regdate = createDateTime("regdate", java.time.LocalDateTime.class);

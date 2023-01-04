@@ -111,13 +111,6 @@
 					<label for="content" style="display:block;"></label>
 					<p id="content">[[${mypageinfo.boardcontent}]]</p>
 				</div>
-				<div>
-					<label for="FILE" style="display:block;"></label>
-					<p>
-						<img class="mypagefileimg" th:src="${mypageinfo.fileinput}" alt="첨부파일" width="200px"
-							height="200px">
-					</p>
-				</div>
 				<hr>
 			</form>
 			<span sec:authorize="isAuthenticated()">

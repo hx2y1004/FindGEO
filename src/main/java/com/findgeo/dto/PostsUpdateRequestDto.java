@@ -9,12 +9,10 @@ import lombok.NoArgsConstructor;
 public class PostsUpdateRequestDto {
 	private String boardtitle;
 	private String boardcontent;
-	private String fileinput;
 
 	@Builder
-	public PostsUpdateRequestDto(String boardtitle, String boardcontent, String fileinput) {
+	public PostsUpdateRequestDto(String boardtitle, String boardcontent) {
 		this.boardtitle = boardtitle;
 		this.boardcontent = boardcontent;
-		this.fileinput = fileinput;
 	}
 }

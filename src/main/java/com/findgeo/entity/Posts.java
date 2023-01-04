@@ -35,9 +35,6 @@ public class Posts {
 	@Column(length = 500, nullable = false)
 	private String boardtitle;
 
-	@Column(length = 2000)
-	private String fileinput;
-
 	@Column(length = 2000, nullable = false)
 	private String boardcontent;
 
@@ -54,21 +51,18 @@ public class Posts {
 	private String email;
 
 	@Builder
-	public Posts(String boardtitle, String boardcontent, String nickname, int views, String fileinput, String email) {
+	public Posts(String boardtitle, String boardcontent, String nickname, int views, String email) {
 		this.boardtitle = boardtitle;
 		this.boardcontent = boardcontent;
 		this.nickname = nickname;
 		this.email = email;
 		this.views = views;
-		this.fileinput = fileinput;
-		this.email = email;
 
 	}
 
-	public void update(String boardtitle, String boardcontent, String fileinput) {
+	public void update(String boardtitle, String boardcontent) {
 		this.boardtitle = boardtitle;
 		this.boardcontent = boardcontent;
-		this.fileinput = fileinput;
 	}
 
 }

@@ -15,7 +15,6 @@ public class PostsResponseDto {
 	private String nickname;
 	private LocalDateTime regdate;
 	private int views;
-	private String fileinput;
 	private String email;
 
 	public PostsResponseDto(Posts entity) {
@@ -25,7 +24,6 @@ public class PostsResponseDto {
 		this.nickname = entity.getNickname();
 		this.regdate = entity.getRegdate();
 		this.views = entity.getViews();
-		this.fileinput = entity.getFileinput();
 		this.email = entity.getEmail();
 	}
 }

@@ -181,13 +181,6 @@ label {
 					<p id="content">[[${posts.boardcontent}]]</p>
 				</div>
 				<hr>
-				<div>
-					<label for="FILE" style="display: block;"></label>
-					<p th:if="${posts.fileinput !='/images/'}">
-						<img class="fileimg" th:src="${posts.fileinput}" width="auto"
-							height="auto">
-					</p>
-				</div>
 			</form>
 			<span sec:authorize="isAuthenticated()"> <span
 				th:if="${check}"> <a href="#" id="btn-delete"

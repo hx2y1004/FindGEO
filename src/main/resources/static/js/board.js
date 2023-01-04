@@ -1,15 +1,8 @@
 function SaveBoard() {
-   var fileinput = $('#file').val();
-   console.log(fileinput + "dzcxvzxcvzxv");
-   var file = "/images/" + fileinput.substr(12, 100); // 파일명 출력
-   console.log(file);
-
-
    var data = {
       boardtitle: $('#boardtitle').val(),
       nickname: $('#nickname').val(),
       boardcontent: $('#boardcontent').val(),
-      fileinput: file,
       email: $('#email').val()
    };
    console.log(data)
@@ -49,14 +42,9 @@ function SaveBoard() {
 }
 
 function postUpdate() {
-   var fileinput = $('#file').val();
-   console.log(fileinput + "dzcxvzxcvzxv");
-   var file = "/images/" + fileinput.substr(12, 100); // 파일명 출력
-   console.log(file);
    var data = {
       boardtitle: $('#boardtitle').val(),
-      boardcontent: $('#boardcontent').val(),
-      fileinput: file
+      boardcontent: $('#boardcontent').val()
    };
    var boardid = $("#boardid").val();
    var token = $("meta[name='_csrf']").attr("content");
