@@ -144,8 +144,6 @@
 				<button type="submit" class="btn btn-primary" disabled="disabled" id="submit">가입하기</button>
 			</div>
 		</form>
-		<img src="/images/b1.png" width="50px" height="50px" onclick="window.history.back();"
-			style="position: fixed; bottom:20px; right:20px;" id="back">
 
 		<script>
 			$('#password_2').keyup(function () {
@@ -180,6 +178,7 @@
 			$('#password_1').keyup(function () {
 				let pass1 = document.getElementById('password_1').value;
 				let pass2 = document.getElementById('password_2').value;
+				const target = document.getElementById("submit");
 
 				if (pass1 != "" && pass2 != "") {
 					if (pass1 == pass2) {
@@ -188,12 +187,14 @@
 						$("#password_2").addClass("is-valid");
 						$("#password_2").removeClass("is-invalid");
 						$("#btnConfirm").prop("disabled", false);
+						target.disabled = false;
 					} else {
 						$("#checkPw").html('비밀번호가 일치하지 않습니다');
 						$("#checkPw").attr('color', '#dc3545');
 						$("#password_2").removeClass("is-valid");
 						$("#password_2").addClass("is-invalid");
 						$("#btnConfirm").prop("disabled", true);
+						target.disabled = true;
 					}
 				}
 			});

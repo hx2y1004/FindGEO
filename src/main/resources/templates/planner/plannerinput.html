@@ -93,7 +93,8 @@
 					onFocus="this.value='';return true;"><br>
 				<label>업종 : </label>
 				<select th:name="category" onchange="changeSelect()">
-					<option value="restaurants" selected>음식점</option>
+					<option value="none">==선택==</option>
+					<option value="restaurants">음식점</option>
 					<option value="retail">도/소매점</option>
 					<option value="services">서비스업</option>
 				</select>
@@ -937,6 +938,10 @@
 				}
 				if (form.hetc.value == "" || !patternInt.test(form.hetc.value)) {
 					alert("올바른 기타비용을 입력해주세요.")
+					return false;
+				}
+				if (form.hselect.value != "restaurants" || form.hselect.value != "retail" || form.hselect.value != "services"){
+					alert("업종을 선택해주세요.")
 					return false;
 				}
 				return true;
