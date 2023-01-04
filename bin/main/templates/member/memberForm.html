@@ -180,6 +180,7 @@
 			$('#password_1').keyup(function () {
 				let pass1 = document.getElementById('password_1').value;
 				let pass2 = document.getElementById('password_2').value;
+				const target = document.getElementById("submit");
 
 				if (pass1 != "" && pass2 != "") {
 					if (pass1 == pass2) {
@@ -188,12 +189,14 @@
 						$("#password_2").addClass("is-valid");
 						$("#password_2").removeClass("is-invalid");
 						$("#btnConfirm").prop("disabled", false);
+						target.disabled = false;
 					} else {
 						$("#checkPw").html('비밀번호가 일치하지 않습니다');
 						$("#checkPw").attr('color', '#dc3545');
 						$("#password_2").removeClass("is-valid");
 						$("#password_2").addClass("is-invalid");
 						$("#btnConfirm").prop("disabled", true);
+						target.disabled = true;
 					}
 				}
 			});
