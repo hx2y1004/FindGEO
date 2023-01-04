@@ -156,7 +156,7 @@
 
 						AuthTimer.comSecond = 180; // 제한 시간
 
-						AuthTimer.fnCallback = function () {alert("다시인증을 시도해주세요.")}; // 제한 시간 만료 메세지
+						AuthTimer.fnCallback = function () {alert("인증을 다시 시도해주세요.")}; // 제한 시간 만료 메세지
 
 						AuthTimer.timer = setInterval(function () {AuthTimer.fnTimer()}, 1000);
 
