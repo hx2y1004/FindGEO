@@ -636,6 +636,7 @@
 
 		#gender {
 			position: relative;
+			text-align: center;
 		}
 
 		#rate2 {
@@ -643,7 +644,7 @@
 		}
 
 		#age {
-			text-align: center;
+			text-align: left;
 		}
 
 		button {
@@ -652,6 +653,7 @@
 
 		#reside {
 			position: relative;
+			text-align: center;
 		}
 
 		#cchart {
@@ -672,29 +674,31 @@
 	<div layout:fragment="content">
 		<div id="pdfArea">
 			<br />
-			<h3>&nbsp;실시간 상권 정보</h3>
-			<div id="map3" style="height: 500px; width: 90%"></div>
 			<div class="content">
+				<h3>&nbsp;근처 상권 정보</h3>
+				<div id="map3" style="height: 500px; width: 90%"></div>
 				<br />
-				<h4 id="place">&nbsp;★지역:&nbsp;</h2>
-					<h4 id="areaName" th:text="${mycliplist[0].areaname}">지역이름</h4><br />
-					<h4 id="congestion">&nbsp;★혼잡도:&nbsp;</h3>
-						<h4 id="areaCongest" th:text="${mycliplist[0].congest}">혼잡정도</h4><br />
-						<h4 id="grade">&nbsp;★창업 적합도:&nbsp;</h3>
-							<h4 id="areaGrade" th:text="${mycliplist[0].areagrade}"></h4><br /><br />
-							<hr /><br />
-							<h5 id="age">&nbsp;나이별</h5>
-							<canvas id="barchart" width="400" height="100"></canvas> <br /><br />
-							<div id="cchart">
-								<div id="rate1">
-									<h5 id="gender">&nbsp;성비별</h5>
-									<canvas id="pieChart" width="300" height="300"></canvas> <br /><br />
-								</div>
-								<div id="rate2">
-									<h5 id="reside">&nbsp;거주/비거주별</h5>
-									<canvas id="resntChart" width="300" height="300"></canvas> <br /><br />
-								</div>
-							</div>
+				<h4 id="place">&nbsp;★지역:&nbsp;</h4>
+				<h4 id="areaName" th:text="${mycliplist[0].areaname}">지역이름</h4><br />
+				<h4 id="congestion">&nbsp;★혼잡도:&nbsp;</h4>
+				<h4 id="areaCongest" th:text="${mycliplist[0].congest}">혼잡정도</h4><br />
+				<h4 id="grade">&nbsp;★창업 적합도:&nbsp;</h4>
+				<h4 id="areaGrade" th:text="${mycliplist[0].areagrade}"></h4><br /><br />
+				<hr /><br />
+				<h3>&nbsp;인구 정보</h3>
+				<br />
+				<h5 id="age">&nbsp;나이별</h5>
+				<canvas id="barchart" width="400" height="100"></canvas> <br /><br />
+				<div id="cchart">
+					<div id="rate1">
+						<h5 id="gender">&nbsp;성비별</h5>
+						<canvas id="pieChart" width="300" height="300"></canvas> <br /><br />
+					</div>
+					<div id="rate2">
+						<h5 id="reside">&nbsp;거주/비거주별</h5>
+						<canvas id="resntChart" width="300" height="300"></canvas> <br /><br />
+					</div>
+				</div>
 			</div>
 			<br /><br />
 			<hr />
@@ -708,8 +712,8 @@
 			다운로드 중입니다.
 			<img src="/images/loading.gif" width="15px" height="15px">
 		</div>
-	<br />
-	<br />
+		<br />
+		<br />
 	</div>
 </body>
 
