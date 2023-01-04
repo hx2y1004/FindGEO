@@ -16,6 +16,7 @@
 		#findid {
 			text-align: center;
 			margin-top: 15%;
+			display: absolute;
 		}
 
 		table {
@@ -34,8 +35,7 @@
 			border-radius: 5px;
 			background-color: #d3d3d38a;
 			height: 35px;
-			width: 300px;
-			margin-left: -65px;
+			width: 100%;
 		}
 
 		#to {
@@ -59,6 +59,12 @@
 		#num td {
 			margin-top: -5px;
 		}
+		
+		#num2 td {
+			margin-top: -5px;
+			visibility:hidden;
+		}
+		
 	</style>
 </th:block>
 
@@ -80,11 +86,15 @@
 				<tr>
 					<td colspan="2" id="num">인증번호</td>
 					<td>
-						<input type="text" id="checknuminput" name="checknuminput"><span id="timer"></span>
+						<input type="text" id="checknuminput" name="checknuminput">
 					</td>
 					<td>
 						<button class="checknum" id="checknum" name="checknum" disabled="disabled">인증번호 확인</button>
-
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3" id="num" style="text-align: left;">
+						<span id="timer" style="padding-left: 125px; color: red;"></span>
 					</td>
 				</tr>
 			</table>
@@ -129,7 +139,7 @@
 								var m = Math.floor(this.comSecond / 60) + "분 " + (this.comSecond % 60) + "초";	// 남은 시간 계산
 								this.comSecond--;					// 1초씩 감소
 								console.log(m);
-								this.domId.innerText = m;
+								this.domId.innerText = "남은 시간 :  "+m;
 								if (this.comSecond < 0) {			// 시간이 종료 되었으면..
 									clearInterval(this.timer);		// 타이머 해제
 									alert("인증시간이 초과하였습니다. 다시 인증해주시기 바랍니다.");
