@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-   xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-   layout:decorate="~{layouts/layout1}">
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
 
 <head>
 <meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
 <meta id="_csrf_header" name="_csrf_header"
-   th:content="${_csrf.headerName}" />
+	th:content="${_csrf.headerName}" />
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script th:inline="javascript" th:src="@{/js/board.js}"></script>
 <script th:inline="javascript">
-   /*<![CDATA[*/
-   const comment = /*[[${comment}]]*/
-   console.log(comment);
-   /*]]>*/
+	/*<![CDATA[*/
+	const comment = /*[[${comment}]]*/
+	console.log(comment);
+	/*]]>*/
 
 	$(document).ready(function() {
 		var boardid = $('#boardid').val();
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 		var email = $("#login_email").val();
-		console.log(email);
+		var c_email = email.split('@');
+		console.log(c_email[0]);
 		$.ajax({
 			beforeSend : function(xhr) {
 				xhr.setRequestHeader(header, token);
@@ -51,92 +52,90 @@
 				$.each(data, function(key, value) {
 					html += "<div style='display: none;'><p id='ch_cmt_cid'>" + value.commentid + "</p></div>";
 					html += "<span id='login_name'>" + value.nickname + "</span>";
-					html += "<span style='display:inline-block;' id='login_email'>" + "(" + value.email.split('@')[0]+ "@*******" + ")" + "</span>"
+					html += "<span style='display:inline-block;' id='login_email'>" + "(" + c_email[0]+ "@*******" + ")" + "</span>"
 					html += "<p id='cmt_content'>" + "\u00A0" + "💬" + value.content + "</p>";
 					//html += "<button id='c_btn' onClick='clickcommentadd()'>답글</button>";
 					//html += "<button>수정</button>";
-					if(email === value.email){
-						html += "<button id='c_btn' onClick='deletecomment("+value.commentid+")'>❎</button>";
-					}
+					html += "<button id='c_btn' onClick='deletecomment("+value.commentid+")'>❎</button>";
 					html += "<div id='commentFromP"+ value.commentid+"'></div>";
 				});
 				$("#comments").empty();
 				$("#comments").append(html);
 			}
 
-      }).fail(function(e) {
-         alert("불러오기 에러");
-      })
-   });
+		}).fail(function(e) {
+			alert("불러오기 에러");
+		})
+	});
 </script>
 <title>게시물 상세보기</title>
 </head>
 <th:block layout:fragment="css">
-   <style>
+	<style>
 #boardid {
-   border-style: none;
+	border-style: none;
 }
 
 #posting {
-   width:50%;
-   margin:auto;
+	width:50%;
+	margin:auto;
 }
 
 #content {
-   border-style: none;
-   width: max-content;
-   height: 30%;
-   border-radius: 5px;
-   font-size: 20px;
-   max-width: 600px;
-   white-space: pre-wrap;
-   word-wrap: break-word;
+	border-style: none;
+	width: max-content;
+	height: 30%;
+	border-radius: 5px;
+	font-size: 20px;
+	max-width: 600px;
+	white-space: pre-wrap;
+	word-wrap: break-word;
 }
 
 #list, #edit, #btn-delete,#card-footer {
-   border: 2px solid #4caf50;
-   border-radius: 5px;
-   float: right;
-   color: black;
-   background-color: #f0f0f0;
-   text-decoration: none;
-   margin: 3px;
-   font-size: 17px;
-   padding: 2px;
-   width: 100px;
-   height: 30px;
-   text-align: center;
+	border: 2px solid #4caf50;
+	border-radius: 5px;
+	float: right;
+	color: black;
+	background-color: #f0f0f0;
+	text-decoration: none;
+	margin: 3px;
+	font-size: 17px;
+	padding: 2px;
+	width: 100px;
+	height: 30px;
+	text-align: center;
 }
 
 label {
-   margin-bottom: -5px;
-   margin-top: 5px;
+	margin-bottom: -5px;
+	margin-top: 5px;
 }
 
 #author {
-   background-color: lightgray;
-   font-size: 13px;
-   font-weight: bold;
-   border: none;
+	background-color: lightgray;
+	font-size: 13px;
+	font-weight: bold;
+	border: none;
 }
 
 .author {
-   font-size: 14px;
+	font-size: 14px;
 }
 
 #title {
-   margin-bottom: 5px;
-   font-size: 25px;
+	margin-bottom: 5px;
+	font-size: 25px;
 }
 
 .title {
-   font-size: 17px;
+	font-size: 17px;
 }
 
 .num, #boardid {
-   color: gray;
-   font-size: 16px;
-   margin-top: 20px;
+	color: gray;
+	font-size: 16px;
+	margin-top: 20px;
 }
 #login_name{
 font-weight: bold;
@@ -239,3 +238,7 @@ background-color: #fafafa;
 </body>
 
 </html>
+
+
+
+
