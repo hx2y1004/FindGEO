@@ -52,7 +52,7 @@
 					html += "<span id='login_name'>" + value.nickname + "</span>";
 					html += "<span style='display:inline-block;' id='login_email'>" + "(" + value.email.split('@')[0]+ "@*******" + ")" + "</span>"
 					html += "<p id='cmt_content'>" + "\u00A0" + "💬" + value.content + "</p>";
-					if(email !== value.email){
+					if(email === value.email){
 						html += "<button id='c_btn' onClick='deletecomment("+value.commentid+")'>❎</button>";					
 					}
 					html += "<div id='commentFromP"+ value.commentid+"'></div>";
