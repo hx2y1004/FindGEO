@@ -197,6 +197,7 @@ public class MemberController {
 		plannerService.plannerDeleteByEmail(email);
 		commentService.commentDeleteByEmail(email);
 		postService.postDeleteByEmail(email);
+		clippingService.clippingDeleteByEmail(email);
 
 		memberService.deleteByEmail(email);
 		Member userEmail = memberRepository.findByEmail(principal.getName());
@@ -230,7 +231,7 @@ public class MemberController {
 
 	@GetMapping("/viewId/{phone}")
 	public String viewId(@PathVariable String phone, Model model) {
-		String email = memberRepository.findIdByPhone(phone);
+		List<String> email = memberRepository.findIdByPhone(phone);
 		model.addAttribute("email", email);
 		return "member/foundId";
 	}
@@ -254,7 +255,7 @@ public class MemberController {
 
 	@GetMapping("/changePw/{phone}")
 	public String changePw(@PathVariable String phone, Model model) {
-		String email = memberRepository.findIdByPhone(phone);
+		List<String> email = memberRepository.findIdByPhone(phone);
 		System.out.println(email + "멤버 컨트롤러 이멜 확인");
 		model.addAttribute("email", email);
 		System.out.println(model.getAttribute("email") + "멤버 컨트롤러 모델 이멜");

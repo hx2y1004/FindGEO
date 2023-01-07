@@ -23,11 +23,12 @@
 		span {
 			background-color: #ffeb3b;
 		}
-		button{
-		 border: 2px solid #04479b;
-         border-radius: 5px;
-         background-color: #d3d3d38a;
-         margin-left: 60%;
+
+		button {
+			border: 2px solid #04479b;
+			border-radius: 5px;
+			background-color: #d3d3d38a;
+			margin-left: 60%;
 		}
 	</style>
 
@@ -37,13 +38,15 @@
 	<div layout:fragment="content2">
 		<div id="findid">
 			<img src="/images/logo.png" onclick="location.href='/'" width="200px;" style="display:block;">
-			<h4>고객님의 아이디는 <span th:text="|${#strings.substring(email, 0, 5)}*** |"></span> 입니다.</h4>
+			<h4>고객님의 아이디는 
+			<div th:each="email : ${email}" 
+			<span th:text="|${#strings.substringBefore(email, '@')}@*** |"></span>
+			</div> 입니다.</h4>
 		</div>
 		<button type="button" onclick="location.href='/members/memberLoginForm'">로그인하기</button>
 		<br />
 		<br />
 	</div>
-
 </body>
 
 </html>

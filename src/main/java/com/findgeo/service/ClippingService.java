@@ -100,4 +100,8 @@ public class ClippingService {
 	public int isClipPresent(Long clipid) {
 		return clippingRepository.countByClipid(clipid);
 	}
+	
+	public void clippingDeleteByEmail(String email) {
+		clippingRepository.deleteByEmail(email);
+	}
 }

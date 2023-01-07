@@ -1,5 +1,6 @@
 package com.findgeo.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -34,7 +35,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
 	@Transactional
 	@Query("SELECT M.email from Member M WHERE M.phone = ?1")
-	String findIdByPhone(@Param("phone") String phone);
+	List<String> findIdByPhone(@Param("phone") String phone);
 
 	@Transactional
 	@Query("SELECT M FROM Member M where M.email=?1 and M.phone=?2")

@@ -36,4 +36,6 @@ public interface ClippingRepository extends JpaRepository<Clipping, String> {
 
 	int countByClipid(Long clipid);
 
+	@Transactional
+	void deleteByEmail(String email);
 }

@@ -49,6 +49,7 @@
 
 				$.each(data, function(key, value) {
 					html += "<div style='display: none;'><p id='ch_cmt_cid'>" + value.commentid + "</p></div>";
+					html += "<img src='value.picture'>";
 					html += "<span id='login_name'>" + value.nickname + "</span>";
 					html += "<span style='display:inline-block;' id='login_email'>" + "(" + value.email.split('@')[0]+ "@*******" + ")" + "</span>"
 					html += "<p id='cmt_content'>" + "\u00A0" + "💬" + value.content + "</p>";
