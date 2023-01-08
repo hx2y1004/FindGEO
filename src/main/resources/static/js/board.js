@@ -124,7 +124,6 @@ function commentSave() {
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 		var email = $("#login_email").val();
-		var picture = $("#login_picture").val;
 		$.ajax({
 			beforeSend: function(xhr) {
 				xhr.setRequestHeader(header, token);
@@ -145,7 +144,7 @@ function commentSave() {
 
 			$.each(data, function(key, value) {
 				html += "<div style='display: none;'><p id='ch_cmt_cid'>" + value.commentid + "</p></div>";
-				html += "<img id='login_picture' src='../../../${"+value.picture+"}' />"
+				html += "<img id='login_picture' src='"+value.picture+"' />"
 				html += "<span id='login_name'>" + value.nickname + "</span>";
 				html += "<span style='display:inline-block;' id='login_email'>" + "\u00A0" + "(" + value.email.split('@')[0] + "@*******" + ")" + "</span>"
 				html += "<p id='cmt_content'>" + "\u00A0" + "💬" + value.content + "</p>";

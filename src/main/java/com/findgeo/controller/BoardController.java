@@ -71,7 +71,7 @@ public class BoardController {
 			int idx = sub_email.indexOf("@");
 			// @ 앞 부분을 추출
 			String sub_Email = sub_email.substring(0, idx) + "@******";
-			System.out.println(sub_Email + "@*****이거 해도되냐 썅!!!!!!!??????????");
+			System.out.println(member.getPicture()+"프로필 이미지 체크");
 			SessionMember mem = (SessionMember) httpSession.getAttribute("user");
 			if (principal != null && mem == null) {
 				Member user = memberRepository.findByEmail(principal.getName());
