@@ -1,198 +1,203 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layouts/layout1}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout1}">
+
 <head>
-<meta charset="UTF-8">
-<title>My Page</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<th:block layout:fragment="css">
-	<style>
-#modal.modal-overlay {
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	left: 0;
-	top: 0;
-	display: none;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	background: rgba(255, 255, 255, 0.25);
-	box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-	backdrop-filter: blur(1.5px);
-	-webkit-backdrop-filter: blur(1.5px);
-	border-radius: 10px;
-	border: 1px solid rgba(255, 255, 255, 0.18);
-}
+	<meta charset="UTF-8">
+	<title>My Page</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	<th:block layout:fragment="css">
+		<style>
+			#modal.modal-overlay {
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				left: 0;
+				top: 0;
+				display: none;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				background: rgba(255, 255, 255, 0.25);
+				box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+				backdrop-filter: blur(1.5px);
+				-webkit-backdrop-filter: blur(1.5px);
+				border-radius: 10px;
+				border: 1px solid rgba(255, 255, 255, 0.18);
+			}
 
-#modal .modal-window {
-	background: #4caf50b8;
-	box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-	backdrop-filter: blur(13.5px);
-	-webkit-backdrop-filter: blur(13.5px);
-	border-radius: 10px;
-	border: 1px solid rgba(255, 255, 255, 0.18);
-	width: 500px;
-	height: 300px;
-	position: relative;
-	top: 20px;
-	padding: 5px;
-	overflow-y: auto;
-}
+			#modal .modal-window {
+				background: #4caf50b8;
+				box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+				backdrop-filter: blur(13.5px);
+				-webkit-backdrop-filter: blur(13.5px);
+				border-radius: 10px;
+				border: 1px solid rgba(255, 255, 255, 0.18);
+				width: 500px;
+				height: 300px;
+				position: relative;
+				top: 20px;
+				padding: 5px;
+				overflow-y: auto;
+			}
 
-#modal .title {
-	padding-left: 10px;
-	display: inline;
-	text-shadow: 1px 1px 2px gray;
-	color: white;
-}
+			#modal .title {
+				padding-left: 10px;
+				display: inline;
+				text-shadow: 1px 1px 2px gray;
+				color: white;
+			}
 
-#modal .title h2 {
-	display: inline;
-}
+			#modal .title h2 {
+				display: inline;
+			}
 
-#modal .close-area {
-	display: inline;
-	float: right;
-	padding-right: 10px;
-	cursor: pointer;
-	text-shadow: 1px 1px 2px gray;
-	color: white;
-}
+			#modal .close-area {
+				display: inline;
+				float: right;
+				padding-right: 10px;
+				cursor: pointer;
+				text-shadow: 1px 1px 2px gray;
+				color: white;
+			}
 
-#modal .content {
-	margin-top: 20px;
-	padding: 0px 10px;
-	text-shadow: 1px 1px 2px gray;
-	color: white;
-}
+			#modal .content {
+				margin-top: 20px;
+				padding: 0px 10px;
+				text-shadow: 1px 1px 2px gray;
+				color: white;
+			}
 
-#btn-edit, #btnpwCheck {
-	border: 2px solid #4caf50;
-	width: 250px;
-	border-radius: 5px;
-}
+			#btn-edit,
+			#btnpwCheck {
+				border: 2px solid #4caf50;
+				width: 250px;
+				border-radius: 5px;
+			}
 
-#btn-all, #change1, #change2 {
-	border: 2px solid #4caf50;
-	width: 200px;
-	border-radius: 5px;
-}
+			#btn-all,
+			#change1,
+			#change2 {
+				border: 2px solid #4caf50;
+				width: 200px;
+				border-radius: 5px;
+			}
 
-#posting {
-	border: 2px solid #4caf50;
-	width: 200px;
-	border-radius: 5px;
-	position: absolute;
-	left: 200px;
-}
+			#posting {
+				border: 2px solid #4caf50;
+				width: 200px;
+				border-radius: 5px;
+				position: absolute;
+				left: 200px;
+			}
 
-#scraptable {
-	width: 90%;
-	margin: auto;
-	text-align: center;
-}
+			#scraptable {
+				width: 90%;
+				margin: auto;
+				text-align: center;
+			}
 
-#index {
-	background-color: lightgray;
-	text-align: center;
-	height: 40px;
-}
+			#index {
+				background-color: lightgray;
+				text-align: center;
+				height: 40px;
+			}
 
-#profile, #name, #btn-edit, #posting {
-	display: inline-block;
-	position: relative;
-	left: 350px;
-}
+			#profile,
+			#name,
+			#btn-edit,
+			#posting {
+				display: inline-block;
+				position: relative;
+				left: 350px;
+			}
 
-img {
-	border-radius: 50%;
-}
+			img {
+				border-radius: 50%;
+			}
 
-img {
-	border-radius: 50%;
-}
+			.content {
+				width: 70%;
+				margin: auto;
+			}
+		</style>
+	</th:block>
 
-.content {
-	width: 70%;
-	margin: auto;
-}
-</style>
-</th:block>
+	<script>
+		function passwordCheck() {
+			const modal = document.getElementById('modal');
+			modal.style.display = "flex";
 
-<script>
-function passwordCheck() {
-    const modal = document.getElementById('modal');
-    modal.style.display = "flex";
+			const closeBtn = modal.querySelector('.close-area');
+			closeBtn.addEventListener("click", e => {
+				const reset = document.getElementById('password');
+				const target1 = document.getElementById("change1");
+				const target2 = document.getElementById("change2");
+				reset.value = "";
+				$("#checkPw").html('');
+				target1.disabled = true;
+				target2.disabled = true;
+				modal.style.display = "none";
+			});
+			modal.addEventListener("click", e => {
+				const evTarget = e.target
+				if (evTarget.classList.contains("modal-overlay")) {
+					modal.style.display = "none"
+				}
+			})
+		}
 
-    const closeBtn = modal.querySelector('.close-area');
-    closeBtn.addEventListener("click", e => {
-       const reset = document.getElementById('password');
-       const target1 = document.getElementById("change1");
-       const target2 = document.getElementById("change2");
-       reset.value = "";
-       $("#checkPw").html('');
-       target1.disabled = true;
-       target2.disabled = true;
-       modal.style.display = "none";
-    });
-    modal.addEventListener("click", e => {
-       const evTarget = e.target
-       if (evTarget.classList.contains("modal-overlay")) {
-          modal.style.display = "none"
-       }
-    })
- }
+		$(document).ready(function () {
+			$("#btnpwCheck").on("click", function (event) {
+				const password = document.getElementById("password").value;
+				const email = document.getElementById("email").value;
+				const target1 = document.getElementById("change1");
+				const target2 = document.getElementById("change2");
 
- $(document).ready(function () {
-    $("#btnpwCheck").on("click", function (event) {
-       const password = document.getElementById("password").value;
-       const email = document.getElementById("email").value;
-       const target1 = document.getElementById("change1");
-       const target2 = document.getElementById("change2");
+				$.ajax({
+					type: "get",
+					url: "/members/pwCheck",
+					dataType: "text",
+					data: {
+						"password": password,
+						"email": email
+					},
+					success: function (result) {
+						if (result == 'true') {
+							$("#checkPw").html('원하는 서비스를 선택해주세요.');
+							$("#checkPw").attr('color', 'blue');
+							target1.disabled = false;
+							target2.disabled = false;
+						} else {
+							$("#checkPw").html('비밀번호를 다시 확인해주세요.');
+							$("#checkPw").attr('color', 'red');
+							target1.disabled = true;
+							target2.disabled = true;
+						}
+					},
+					error: function () {
+						alert("에러가 발생했습니다.");
+					}
+				});
+			});
+		});
 
-       $.ajax({
-          type: "get",
-          url: "/members/pwCheck",
-          dataType: "text",
-          data: {
-             "password": password,
-             "email": email
-          },
-          success: function (result) {
-             if (result == 'true') {
-                $("#checkPw").html('원하는 서비스를 선택해주세요.');
-                $("#checkPw").attr('color', 'blue');
-                target1.disabled = false;
-                target2.disabled = false;
-             } else {
-                $("#checkPw").html('비밀번호를 다시 확인해주세요.');
-                $("#checkPw").attr('color', 'red');
-                target1.disabled = true;
-                target2.disabled = true;
-             }
-          },
-          error: function () {
-             alert("에러가 발생했습니다.");
-          }
-       });
-    });
- });
-
-	
-</script>
+		function passwordCheck2(){
+			var toend = confirm("정말 탈퇴하시겠습니까?");
+			if(toend){
+				location.href = '/members/delete/{member.email}';
+			}
+		}
+	</script>
 </head>
+
 <body>
 	<div layout:fragment="content">
 		<table>
 			<tr>
 				<td><br />
 					<div id="profile">
-						<img class="profileImage" th:src="${member.picture}" alt="프로필 사진"
-							width="120px" height="120px">
+						<img class="profileImage" th:src="${member.picture}" alt="프로필 사진" width="120px" height="120px">
 					</div>
 					<div id="name">
 						<h4>
@@ -202,8 +207,11 @@ function passwordCheck() {
 					<button type="button" id="posting"
 						th:onclick="|location.href='@{/members/mypage/detail/{email}(email=${member.email})}'|">📋
 						게시글 보기</button>
-					<button type="button" id="btn-edit" onclick="passwordCheck()">🔒
-						개인정보 수정/탈퇴</button></td>
+					<button type="button" id="btn-edit" onclick="passwordCheck()" th:if="${member.phone}!='정보없음'">🔒
+						개인정보 수정/탈퇴</button>
+					<button type="button" id="btn-edit" onclick="passwordCheck2()" th:if="${member.phone}=='정보없음'">🔒
+						탈퇴하기</button>
+				</td>
 			</tr>
 		</table>
 		<hr />
@@ -226,7 +234,7 @@ function passwordCheck() {
 					<td th:text="${c.clipid}">
 					<td><a th:href="@{'/members/clipping/myclip/' + ${c.clipid}}">
 							<span th:text="${c.areaname}"></span>
-					</a></td>
+						</a></td>
 					<td th:text="${c.email}"></td>
 				</tr>
 			</tbody>
@@ -240,17 +248,16 @@ function passwordCheck() {
 				<div class="close-area">X</div>
 				<div class="content">
 					<div>
-						<label th:for="password">비밀번호</label> <input type="password"
-							id="password" name="password" placeholder="비밀번호를 입력해주세요"><br>
-						<input type="button" id="btnpwCheck" value="비밀번호 확인"
-							name="passwordCheck" />
+						<label th:for="password">비밀번호</label> <input type="password" id="password" name="password"
+							placeholder="비밀번호를 입력해주세요"><br>
+						<input type="button" id="btnpwCheck" value="비밀번호 확인" name="passwordCheck" />
 						<div style="display: inline-block">
 							<font id="checkPw" size="2"></font>
 						</div>
 						<input type="hidden" th:value="${member.email}" id="email" />
 					</div>
-					<button type="button" onclick="location.href='/members/update1'"
-						disabled="disabled" id="change1">수정하기</button>
+					<button type="button" onclick="location.href='/members/update1'" disabled="disabled"
+						id="change1">수정하기</button>
 					<button type="button"
 						th:onClick="|location.href='@{/members/delete/{email}(email=${member.email})}'|"
 						disabled="disabled" id="change2">탈퇴하기</button>
@@ -259,4 +266,5 @@ function passwordCheck() {
 		</div>
 	</div>
 </body>
+
 </html>

@@ -193,15 +193,27 @@ public class MemberController {
 
 	@GetMapping("/delete/{email}")
 	public String deleteById(@PathVariable String email, Model model, Principal principal) {
-
-		plannerService.plannerDeleteByEmail(email);
-		commentService.commentDeleteByEmail(email);
-		postService.postDeleteByEmail(email);
-		clippingService.clippingDeleteByEmail(email);
-
-		memberService.deleteByEmail(email);
-		Member userEmail = memberRepository.findByEmail(principal.getName());
-		model.addAttribute("name", userEmail);
+		SessionMember member = (SessionMember) httpSession.getAttribute("user");
+		if (principal != null && member == null) {
+			plannerService.plannerDeleteByEmail(email);
+			commentService.commentDeleteByEmail(email);
+			postService.postDeleteByEmail(email);
+			clippingService.clippingDeleteByEmail(email);
+			memberService.deleteByEmail(email);
+			System.out.println(email+"123124123124123delete email");
+			Member userEmail = memberRepository.findByEmail(principal.getName());
+			model.addAttribute("name", userEmail);
+		} else if (principal != null && member != null) {
+			email = member.getEmail();
+			plannerService.plannerDeleteByEmail(email);
+			commentService.commentDeleteByEmail(email);
+			postService.postDeleteByEmail(email);
+			clippingService.clippingDeleteByEmail(email);
+			memberService.deleteByEmail(email);
+			System.out.println(email+" 소셜 delete email");
+			Member userEmail = memberRepository.findByEmail(principal.getName());
+			model.addAttribute("name", userEmail);
+		}
 		return "redirect:/members/logout";
 	}
 

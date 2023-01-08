@@ -144,7 +144,7 @@ function commentSave() {
 
 			$.each(data, function(key, value) {
 				html += "<div style='display: none;'><p id='ch_cmt_cid'>" + value.commentid + "</p></div>";
-				html += "<img id='login_picture' src='"+value.picture+"' />"
+				html += "<img id='login_picture' src='"+value.picture+"' style=' height: 30px; width: 30px; border-radius: 50%;'/>";
 				html += "<span id='login_name'>" + value.nickname + "</span>";
 				html += "<span style='display:inline-block;' id='login_email'>" + "\u00A0" + "(" + value.email.split('@')[0] + "@*******" + ")" + "</span>"
 				html += "<p id='cmt_content'>" + "\u00A0" + "💬" + value.content + "</p>";
