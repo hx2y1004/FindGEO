@@ -46,18 +46,22 @@ public class Comment {
 	@Column(nullable = false)
 	private Long boardid;
 
-	private Long parentid;
+//	private Long parentid;
 
 	@Column(nullable = false)
 	private String content;
+	
+	@Column(nullable = false)
+	private String picture;
 
 	@Builder
-	public Comment(String content, String email, String nickname, Long boardid, Long parentid) {
+	public Comment(String content, String email, String nickname, Long boardid, String picture) {
 		this.boardid = boardid;
 		this.content = content;
 		this.email = email;
 		this.nickname = nickname;
-		this.parentid = parentid;
+//		this.parentid = parentid;
+		this.picture = picture;
 	}
 
 }

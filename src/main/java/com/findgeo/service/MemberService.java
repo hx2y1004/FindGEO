@@ -64,9 +64,7 @@ public class MemberService implements UserDetailsService{
 	}
 	
 	public String emailCheck(String email) {
-		System.out.println(email+ "여기는 ajax실험중 멤버서비스파일");
 		Optional<Member> optionalMemberEntity =memberRepository.findByEmails(email);
-		System.out.println(optionalMemberEntity+"ajax 실험중 여기는 멤버서비스");
 		if(optionalMemberEntity.isEmpty()) {
 			return "ok";
 		}else {
@@ -98,13 +96,8 @@ public class MemberService implements UserDetailsService{
 	
 	//비밀번호 체크
 	public boolean result(String password, String email, BCryptPasswordEncoder passwordEncoder) {
-		System.out.println(password+ "비번 체크 멤버서비스파일");
 		String dbpw = memberRepository.findpw(email);
-		System.out.println(dbpw+"ajax 실험중 여기는 멤버서비스");
 		boolean dbpw2 = passwordEncoder.matches(password, dbpw);
-		System.out.println(email+"이멜 서비스");
-    	System.out.println(password+"입력비번 서비스");
-    	System.out.println(dbpw2+"불리언");
 		return dbpw2;
 	}
 	

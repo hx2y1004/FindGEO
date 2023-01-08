@@ -19,15 +19,17 @@ public class CommentDto {
 	private Long commentid;
 	private String content;
 	private Long boardid;
-	private Long parentid;
+//	private Long parentid;
 	private String email;
+	private String pictuer;
 
-	public CommentDto(Long commentid, String content, Long boardid, Long parentid, String email) {
+	public CommentDto(Long commentid, String content, Long boardid, String email, String picture) {
 		this.commentid = commentid;
 		this.content = content;
 		this.email = email;
 		this.boardid = boardid;
-		this.parentid = parentid;
+//		this.parentid = parentid;
+		this.pictuer = picture;
 
 	}
 
