@@ -191,6 +191,7 @@ function deletecomment(commentid) {
 	})
 }
 
+/*
 function clickcommentadd() {
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
@@ -209,34 +210,8 @@ function clickcommentadd() {
 		alert("추가실패" + "#commentFromP" + commentid + "//" + e);
 	})
 }
+*/
 
-function commentchildsave() {
-	var data = {
-		content: $('#cmt_content').val(),
-		email: $('#login_email').val(),
-		nickname: $('#login_name').val(),
-		boardid: $('#boardid').val(),
-		parentid: $('#ch_cmt_cid').val()
-	};
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
-	console.log(data);
-	$.ajax({
-		beforeSend: function(xhr) {
-			xhr.setRequestHeader(header, token);
-		},
-		type: 'POST',
-		url: '/comments/save',
-		dataType: 'json',
-		contentType: 'application/json; charset=utf-8',
-		data: JSON.stringify(data)
-	}).done(function(data) {
-		alert("대댓글 등록");
-	}).fail(function(e) {
-		alert("전송 에러");
-	})
-
-}
 
 function myPage_postDelete() {
 	var boardid = $("#boardid").val();

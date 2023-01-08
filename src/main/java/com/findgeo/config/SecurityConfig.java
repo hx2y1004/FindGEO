@@ -45,7 +45,8 @@ public class SecurityConfig {
 				.logoutRequestMatcher(new AntPathRequestMatcher("/members/logout")).logoutSuccessUrl("/");
 
 		http.exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint());
-
+		
+		
 //		http.csrf().disable();
 		return http.build();
 	}

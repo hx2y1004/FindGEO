@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import com.findgeo.service.*;
+import com.findgeo.util.Script;
 import com.findgeo.config.dto.SessionMember;
 import com.findgeo.dto.PostsResponseDto;
 import com.findgeo.dto.PostSearchDto;
@@ -29,7 +30,12 @@ public class BoardController {
 	private final MemberRepository memberRepository;
 
 	@GetMapping(value = { "/board/boardlist", "/board/boardlist/{page}" })
-	public String boardlist(PostSearchDto postSearchDto, Model model, @PathVariable("page") Optional<Integer> page) {
+	public String boardlist(PostSearchDto postSearchDto, Model model, @PathVariable("page") Optional<Integer> page, Principal principal) {
+		SessionMember member = (SessionMember) httpSession.getAttribute("user");
+		if(principal == null && member == null) {
+			Script.href("http://localhost:8082/members/login", "세션이 만료되었습니다 로그인 해주세요");
+		}
+		
 		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
 		Page<Posts> posts = postService.ListPage(postSearchDto, pageable);
 		int postsTotal = postService.countPosts();
@@ -44,13 +50,17 @@ public class BoardController {
 	@GetMapping("/board/postssave")
 	public String postsSave(Model model, Principal principal) throws Exception {
 		SessionMember member = (SessionMember) httpSession.getAttribute("user");
+		if(principal == null && member == null) {
+			Script.href("http://localhost:8082/members/login", "세션이 만료되었습니다 로그인 해주세요");
+		}
+		
 		if (principal != null && member == null) {
 			Member user = memberRepository.findByEmail(principal.getName());
 			model.addAttribute("member", user);
 		} else if (principal != null && member != null) {
 			model.addAttribute("member", member);
 			model.addAttribute("loginInfo", "social");
-		}
+		} 
 		return "/board/postsSave";
 	}
 
